@@ -9,82 +9,92 @@ import UIKit
 
 class LoginView: UIViewController {
     
-    var viewElementsLibrary = ViewElementsLibrary()
+    let cardView = CustomViews(style: .withShadow)
+    let titleLabel = CustomLabels(title: "Вход для курьеров", textSize: 24, style: .bold)
+    let phoneNumberLabel = CustomLabels(title: "Номер телефона", textSize: 12, style: .light)
+    let phoneNumberTextField = CustomTextFields(pHolder: "  + 7 ( _ _ _ ) _ _ _ - _ _ - _ _", style: .withPhoneNumberFormatter)
+    let loginButton = CustomButtons(title: "Вход", style: .primary)
     
-    func setupViewPlane(){
-        view.addSubview(viewElementsLibrary.viewPlane)
+    func setupCardView(){
+        view.addSubview(cardView.view)
+        cardView.setView()
         
-        viewElementsLibrary.viewPlane.translatesAutoresizingMaskIntoConstraints = false
-
-        viewElementsLibrary.viewPlane.translatesAutoresizingMaskIntoConstraints = false
-        viewElementsLibrary.viewPlane.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        viewElementsLibrary.viewPlane.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        cardView.view.translatesAutoresizingMaskIntoConstraints = false
         
-        viewElementsLibrary.viewPlane.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
-        viewElementsLibrary.viewPlane.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
-        viewElementsLibrary.viewPlane.heightAnchor.constraint(equalToConstant: 254).isActive = true
-        viewElementsLibrary.viewPlane.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        cardView.view.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        cardView.view.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        cardView.view.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
+        cardView.view.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
+        cardView.view.heightAnchor.constraint(equalToConstant: 254).isActive = true
+        cardView.view.widthAnchor.constraint(equalToConstant: 340).isActive = true
     }
     
-    func setupBoldLabel(){
+    func setupTitleLabel(){
         
-        viewElementsLibrary.viewPlane.addSubview(viewElementsLibrary.boldLabel)
-        viewElementsLibrary.boldLabel.translatesAutoresizingMaskIntoConstraints = false
+        cardView.view.addSubview(titleLabel.label)
+        titleLabel.setLabel()
         
-        // связываем левую сторону маленького вью с левой стороной большого вью
-        viewElementsLibrary.boldLabel.topAnchor.constraint(equalTo:  viewElementsLibrary.viewPlane.topAnchor, constant: 39).isActive = true
-        viewElementsLibrary.boldLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleLabel.label.translatesAutoresizingMaskIntoConstraints = false
+        
+        titleLabel.label.topAnchor.constraint(equalTo:  cardView.view.topAnchor, constant: 39).isActive = true
+        titleLabel.label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
-    func setupLightLabel(){
-        viewElementsLibrary.viewPlane.addSubview(viewElementsLibrary.lightLabel)
+    func setupPhoneNumberLabel(){
+        cardView.view.addSubview(phoneNumberLabel.label)
+        phoneNumberLabel.setLabel()
         
-        viewElementsLibrary.lightLabel.translatesAutoresizingMaskIntoConstraints = false
+        phoneNumberLabel.label.translatesAutoresizingMaskIntoConstraints = false
         
-        viewElementsLibrary.lightLabel.topAnchor.constraint(equalTo:  viewElementsLibrary.boldLabel.bottomAnchor, constant: 25).isActive = true
-        viewElementsLibrary.lightLabel.leftAnchor.constraint(equalTo: viewElementsLibrary.viewPlane.leftAnchor, constant: 20).isActive = true
+        phoneNumberLabel.label.topAnchor.constraint(equalTo:  titleLabel.label.bottomAnchor, constant: 25).isActive = true
+        phoneNumberLabel.label.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 20).isActive = true
         
     }
     
-    func setupTextField(){
-        viewElementsLibrary.viewPlane.addSubview(viewElementsLibrary.textField)
+    func setupPhoneNumberTextField(){
+        cardView.view.addSubview(phoneNumberTextField.textField)
+        phoneNumberTextField.setTextField()
         
-        viewElementsLibrary.textField.translatesAutoresizingMaskIntoConstraints = false
-        viewElementsLibrary.textField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        viewElementsLibrary.textField.topAnchor.constraint(equalTo:  viewElementsLibrary.lightLabel.bottomAnchor, constant: 10).isActive = true
-        viewElementsLibrary.textField.leftAnchor.constraint(equalTo: viewElementsLibrary.viewPlane.leftAnchor, constant: 20).isActive = true
-        viewElementsLibrary.textField.rightAnchor.constraint(equalTo:  viewElementsLibrary.viewPlane.rightAnchor, constant: -20).isActive = true
+        phoneNumberTextField.textField.translatesAutoresizingMaskIntoConstraints = false
+        phoneNumberTextField.textField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        phoneNumberTextField.textField.topAnchor.constraint(equalTo:  phoneNumberLabel.label.bottomAnchor, constant: 10).isActive = true
+        phoneNumberTextField.textField.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 20).isActive = true
+        phoneNumberTextField.textField.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -20).isActive = true
         
-        viewElementsLibrary.textField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        viewElementsLibrary.textField.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        phoneNumberTextField.textField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        phoneNumberTextField.textField.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
-        viewElementsLibrary.textField.placeholder =  "  + 7 ( _ _ _ ) _ _ _ - _ _ - _ _"
-    
+        phoneNumberTextField.textField.placeholder =  "  + 7 ( _ _ _ ) _ _ _ - _ _ - _ _"
+        
         
     }
     
     func setupLoginButton(){
-        viewElementsLibrary.viewPlane.addSubview(viewElementsLibrary.orangeButton)
         
-        viewElementsLibrary.orangeButton.translatesAutoresizingMaskIntoConstraints = false
-
-        viewElementsLibrary.orangeButton.translatesAutoresizingMaskIntoConstraints = false
-        viewElementsLibrary.orangeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        viewElementsLibrary.orangeButton.topAnchor.constraint(equalTo:  viewElementsLibrary.textField.bottomAnchor, constant: 10).isActive = true
-        viewElementsLibrary.orangeButton.leftAnchor.constraint(equalTo: viewElementsLibrary.viewPlane.leftAnchor, constant: 20).isActive = true
-        viewElementsLibrary.orangeButton.rightAnchor.constraint(equalTo:  viewElementsLibrary.viewPlane.rightAnchor, constant: -20).isActive = true
-        viewElementsLibrary.orangeButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        viewElementsLibrary.orangeButton.widthAnchor.constraint(equalToConstant: 320).isActive = true
-        viewElementsLibrary.orangeButton.addTarget(self, action: #selector(orangeButtonAction), for: .touchUpInside)
+        loginButton.setButton()
+        
+        cardView.view.addSubview(loginButton.button)
+        
+        loginButton.button.translatesAutoresizingMaskIntoConstraints = false
+        
+        loginButton.button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loginButton.button.topAnchor.constraint(equalTo:  phoneNumberTextField.textField.bottomAnchor, constant: 10).isActive = true
+        loginButton.button.leftAnchor.constraint(equalTo:  cardView.view.leftAnchor, constant: 20).isActive = true
+        loginButton.button.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -20).isActive = true
+        loginButton.button.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        loginButton.button.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        loginButton.button.addTarget(self, action: #selector(orangeButtonAction), for: .touchUpInside)
+        
     }
     
     func setupView(){
         view.backgroundColor = Colors.lightGray // условно
         
-        setupViewPlane()
-        setupBoldLabel()
-        setupLightLabel()
-        setupTextField()
+        setupCardView()
+        setupTitleLabel()
+        setupPhoneNumberLabel()
+        setupPhoneNumberTextField()
         setupLoginButton()
     }
     
@@ -94,7 +104,7 @@ class LoginView: UIViewController {
         dismiss(animated: true, completion: nil)
         self.present(cofirmLoginView, animated: true)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()

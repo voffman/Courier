@@ -7,17 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		500B62E727990E7F00EDC58A /* CustomLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62E627990E7F00EDC58A /* CustomLabels.swift */; };
+		500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62E8279913B600EDC58A /* CustomTextFields.swift */; };
+		500B62EB279919A800EDC58A /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62EA279919A800EDC58A /* CustomViews.swift */; };
 		501630352796786A00D0734F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501630342796786A00D0734F /* AppDelegate.swift */; };
 		501630372796786A00D0734F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501630362796786A00D0734F /* SceneDelegate.swift */; };
 		501630392796786A00D0734F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501630382796786A00D0734F /* LoginView.swift */; };
 		5016303E2796786B00D0734F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5016303D2796786B00D0734F /* Assets.xcassets */; };
 		501630412796786B00D0734F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5016303F2796786B00D0734F /* LaunchScreen.storyboard */; };
 		5016304F27968D2100D0734F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5016304E27968D2100D0734F /* Colors.swift */; };
-		50163053279698B000D0734F /* ViewElementsLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50163052279698B000D0734F /* ViewElementsLibrary.swift */; };
 		5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5086CE752797CD4500972D6B /* ConfirmLoginView.swift */; };
+		50AD10B02798281000221873 /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AD10AF2798281000221873 /* CustomButtons.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		500B62E627990E7F00EDC58A /* CustomLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabels.swift; sourceTree = "<group>"; };
+		500B62E8279913B600EDC58A /* CustomTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFields.swift; sourceTree = "<group>"; };
+		500B62EA279919A800EDC58A /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 		501630312796786A00D0734F /* courier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = courier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		501630342796786A00D0734F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		501630362796786A00D0734F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,8 +32,8 @@
 		501630402796786B00D0734F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		501630422796786B00D0734F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5016304E27968D2100D0734F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		50163052279698B000D0734F /* ViewElementsLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewElementsLibrary.swift; sourceTree = "<group>"; };
 		5086CE752797CD4500972D6B /* ConfirmLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLoginView.swift; sourceTree = "<group>"; };
+		50AD10AF2798281000221873 /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +122,10 @@
 		501630512796988000D0734F /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
-				50163052279698B000D0734F /* ViewElementsLibrary.swift */,
+				50AD10AF2798281000221873 /* CustomButtons.swift */,
+				500B62E627990E7F00EDC58A /* CustomLabels.swift */,
+				500B62E8279913B600EDC58A /* CustomTextFields.swift */,
+				500B62EA279919A800EDC58A /* CustomViews.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -191,10 +200,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50AD10B02798281000221873 /* CustomButtons.swift in Sources */,
 				5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */,
-				50163053279698B000D0734F /* ViewElementsLibrary.swift in Sources */,
+				500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */,
+				500B62E727990E7F00EDC58A /* CustomLabels.swift in Sources */,
 				501630392796786A00D0734F /* LoginView.swift in Sources */,
 				5016304F27968D2100D0734F /* Colors.swift in Sources */,
+				500B62EB279919A800EDC58A /* CustomViews.swift in Sources */,
 				501630352796786A00D0734F /* AppDelegate.swift in Sources */,
 				501630372796786A00D0734F /* SceneDelegate.swift in Sources */,
 			);
