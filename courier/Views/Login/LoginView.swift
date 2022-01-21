@@ -84,8 +84,15 @@ class LoginView: UIViewController {
         loginButton.button.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -20).isActive = true
         loginButton.button.heightAnchor.constraint(equalToConstant: 48).isActive = true
         loginButton.button.widthAnchor.constraint(equalToConstant: 320).isActive = true
-        loginButton.button.addTarget(self, action: #selector(orangeButtonAction), for: .touchUpInside)
+        loginButton.button.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
         
+    }
+    func setupTabBar(){
+        self.navigationItem.title = "Вход"
+        
+        let tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
+        self.tabBarItem = tabBarItem
+        tabBarItem.isEnabled = false
     }
     
     func setupView(){
@@ -96,18 +103,20 @@ class LoginView: UIViewController {
         setupPhoneNumberLabel()
         setupPhoneNumberTextField()
         setupLoginButton()
+        setupTabBar()
     }
     
-    @objc func orangeButtonAction(sender: UIButton!){
-        let cofirmLoginView = ConfirmLoginView()
-        cofirmLoginView.modalPresentationStyle = .fullScreen
+    @objc func loginButtonAction(sender: UIButton!){
+        let ordersView = OrdersView()
+        ordersView.modalPresentationStyle = .fullScreen
         dismiss(animated: true, completion: nil)
-        self.present(cofirmLoginView, animated: true)
+        self.present(ordersView, animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        
         // Do any additional setup after loading the view.
         
     }

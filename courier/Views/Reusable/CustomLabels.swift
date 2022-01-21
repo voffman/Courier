@@ -19,6 +19,7 @@ class CustomLabels: UILabel {
     var title: String?
     let textSize: CGFloat
     let style: CustomLabelStyles?
+    var alignment: NSTextAlignment? = .justified
     
     let label = UILabel()
     
@@ -26,6 +27,14 @@ class CustomLabels: UILabel {
         self.title = title
         self.textSize = textSize
         self.style = style
+        super.init(frame: .zero)
+    }
+    
+    init(title: String, textSize: CGFloat, style: CustomLabelStyles, alignment: NSTextAlignment){
+        self.title = title
+        self.textSize = textSize
+        self.style = style
+        self.alignment = alignment
         super.init(frame: .zero)
     }
     
