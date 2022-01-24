@@ -11,7 +11,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
+    // navigation bar скрываемый, делать без тайтла self.navigationItem.title = ""
+    // в таб баре тоже можно отключать item-ы
+    // сделать 5 таб баров вместо 4х, таб бар на входе сделать неактивным или не инициализировать
     @available(iOS 13.0, *)
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.

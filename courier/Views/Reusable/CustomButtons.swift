@@ -13,6 +13,7 @@ class CustomButtons: UIButton {
         case primary
         case secondary
         case normal
+        case cellTransition
         // case phone
     }
     
@@ -49,6 +50,12 @@ class CustomButtons: UIButton {
         case .normal:
             button.backgroundColor = Colors.white
             button.layer.cornerRadius = 4
+            button.setTitle(title, for: .normal)
+            button.setTitleColor(Colors.black, for: .normal)
+            
+        case .cellTransition:
+            button.backgroundColor = Colors.lightGray
+            button.imageView?.image = UIImage(named: "Arrow")
             button.setTitle(title, for: .normal)
             button.setTitleColor(Colors.black, for: .normal)
             

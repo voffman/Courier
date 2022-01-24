@@ -11,12 +11,14 @@ class CustomViews: UIView {
     
     enum CustomViewStyles {
         case withShadow
-        
+        case timerRed
     }
     
     let style: CustomViewStyles?
     
     let view = UIView()
+    
+    let timerValue: String? = ""
     
     init(style: CustomViewStyles){
         self.style = style
@@ -36,6 +38,12 @@ class CustomViews: UIView {
             view.layer.shadowOffset = CGSize(width: 0, height: 2)
             view.layer.shadowRadius = 2 // Условно
             view.layer.shadowOpacity = 0.21
+        
+        case .timerRed:
+            view.backgroundColor = Colors.lightRed
+            view.layer.cornerRadius = 4
+            view.layer.borderWidth = 1
+            view.layer.borderColor = Colors.scarletRed.cgColor
             
         case .none:
             print("None")

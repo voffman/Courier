@@ -20,7 +20,9 @@ class CustomNavigationBars: UINavigationBar {
     
 
     let navigationItem = UINavigationItem()
-
+    
+    let barHeight: CGFloat = 44
+    
     init (targetView: UIView, navigationBarStyle: NavigationBarStyles){
         self.targetView = targetView
         self.navigationBarStyle = navigationBarStyle
@@ -39,10 +41,10 @@ class CustomNavigationBars: UINavigationBar {
     func setupNavigationBar(){
         
         if UIScreen.main.bounds.size.height > 750 {
-            navigationBar  = UINavigationBar(frame: CGRect(x: 0, y: 43, width: targetView.frame.size.width, height: 44))
+            navigationBar  = UINavigationBar(frame: CGRect(x: 0, y: 43, width: targetView.frame.size.width, height: barHeight))
         }
         else{
-            navigationBar  = UINavigationBar(frame: CGRect(x: 0, y: 20, width: targetView.frame.size.width, height: 44))
+            navigationBar  = UINavigationBar(frame: CGRect(x: 0, y: 20, width: targetView.frame.size.width, height: barHeight))
         }
         
         targetView.addSubview(navigationBar)

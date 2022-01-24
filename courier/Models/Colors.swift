@@ -23,6 +23,8 @@ struct Colors {
     static let lightBlueDark = UIColor(hexString: "#0090cc")
     static let lightBlue = UIColor(hexString: "#00a0e3")
     static let white3 = UIColor(hexString: "#fcfcfc") // не используется в XD
+    static let lightRed = UIColor(hexString: "#FFF5F5")
+    static let scarletRed = UIColor(hexString: "#FF8083")
     
 }
 
