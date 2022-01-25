@@ -14,15 +14,16 @@ class CustomLabels: UILabel {
         case regular
         case light
         case timerRed
+        case primary
         
     }
     
     var title: String?
     let textSize: CGFloat
-    let style: CustomLabelStyles?
+    var style: CustomLabelStyles?
     var alignment: NSTextAlignment? = .justified
     
-    let label = UILabel()
+    var label = UILabel()
     
     init(title: String, textSize: CGFloat, style: CustomLabelStyles){
         self.title = title
@@ -67,6 +68,11 @@ class CustomLabels: UILabel {
             label.text = title
             label.font = UIFont.systemFont(ofSize: textSize)
             label.textColor = Colors.red
+            
+        case .primary:
+            label.text = title
+            label.font = UIFont.systemFont(ofSize: textSize)
+            label.textColor = Colors.orange
             
         case .none:
             print("None")

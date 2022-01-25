@@ -17,7 +17,7 @@ class CustomButtons: UIButton {
         // case phone
     }
     
-    let title: String?
+    var title: String?
     var style: CustomButtonStyles?
     
     let button = UIButton()
@@ -40,25 +40,26 @@ class CustomButtons: UIButton {
             button.layer.cornerRadius = 4
             button.setTitle(title, for: .normal)
             button.setTitleColor(Colors.black, for: .normal)
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .secondary:
             button.backgroundColor = Colors.lightGray
             button.layer.cornerRadius = 4
             button.setTitle(title, for: .normal)
             button.setTitleColor(Colors.darkGray, for: .normal)
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .normal:
             button.backgroundColor = Colors.white
             button.layer.cornerRadius = 4
             button.setTitle(title, for: .normal)
             button.setTitleColor(Colors.black, for: .normal)
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .cellTransition:
-            button.backgroundColor = Colors.lightGray
-            button.imageView?.image = UIImage(named: "Arrow")
-            button.setTitle(title, for: .normal)
-            button.setTitleColor(Colors.black, for: .normal)
-            
+            button.setImage(UIImage(named: "Arrow"), for: .normal)
+            button.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+
         case .none:
             print("None")
         }

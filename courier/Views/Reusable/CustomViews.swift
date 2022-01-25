@@ -12,6 +12,7 @@ class CustomViews: UIView {
     enum CustomViewStyles {
         case withShadow
         case timerRed
+        case timerGray
     }
     
     let style: CustomViewStyles?
@@ -44,6 +45,12 @@ class CustomViews: UIView {
             view.layer.cornerRadius = 4
             view.layer.borderWidth = 1
             view.layer.borderColor = Colors.scarletRed.cgColor
+            
+        case .timerGray:
+            view.backgroundColor = Colors.white
+            view.layer.cornerRadius = 4
+            view.layer.borderWidth = 1
+            view.layer.borderColor = Colors.lightGray.cgColor
             
         case .none:
             print("None")

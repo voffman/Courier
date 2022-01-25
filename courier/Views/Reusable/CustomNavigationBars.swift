@@ -41,9 +41,13 @@ class CustomNavigationBars: UINavigationBar {
     func setupNavigationBar(){
         
         if UIScreen.main.bounds.size.height > 750 {
-            navigationBar  = UINavigationBar(frame: CGRect(x: 0, y: 43, width: targetView.frame.size.width, height: barHeight))
+            if #available(iOS 11.0, *) {
+                navigationBar  = UINavigationBar(frame: CGRect(x: 0, y: 43, width: targetView.frame.size.width, height: targetView.safeAreaInsets.top))
+            }
         }
-        else{
+        
+        
+        if UIScreen.main.bounds.size.height < 750{
             navigationBar  = UINavigationBar(frame: CGRect(x: 0, y: 20, width: targetView.frame.size.width, height: barHeight))
         }
         

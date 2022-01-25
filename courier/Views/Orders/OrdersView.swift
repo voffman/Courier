@@ -20,11 +20,24 @@ class OrdersView: UIViewController {
         view.addSubview(cardView.view)
         cardView.setView()
         
+        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .orderList)
+        navigationBar.setupNavigationBar()
+        
         cardView.view.translatesAutoresizingMaskIntoConstraints = false
         
         cardView.view.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+     
+   // MARK: Поправить
+        if #available(iOS 11.0, *) {
+            cardView.view.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 95).isActive = true
+        } else {
+            cardView.view.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight + 95).isActive = true
+        }
         
-        cardView.view.topAnchor.constraint(equalTo:  view.topAnchor, constant: 97).isActive = true
+        
+        
+        
+        
         cardView.view.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
         cardView.view.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
         cardView.view.heightAnchor.constraint(equalToConstant: 265).isActive = true
@@ -91,14 +104,12 @@ class OrdersView: UIViewController {
         let orderListTableView = OrderListTableView()
         orderListTableView.modalPresentationStyle = .fullScreen
         present(orderListTableView, animated: true)
-
-
+        
     }
 
     func setupView(){
         view.backgroundColor = Colors.lightGray // условно
-        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .orderList)
-        navigationBar.setupNavigationBar()
+
         setupNonActiveOrdersCardView()
         setupTitleLabel()
         setupHelpLabel()
