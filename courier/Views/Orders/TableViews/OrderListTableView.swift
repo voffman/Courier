@@ -11,10 +11,24 @@ class OrderListTableView: UIViewController {
     
     let tableView = UITableView()
     
+    let sc = CustomSegmentedControl(segments: .two, firstSegmentTitle: "ТЕКУЩИЕ", secondSegmentTitle: "ВЫПОЛНЕННЫЕ")
+    
+    @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        sc.changeSegmentedControlLinePosition()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-
+        view.addSubview(sc.segmentedControlContainerView)
+        sc.setContainerView()
+        view.backgroundColor = Colors.lightGray
+        
+        sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        sc.setupContainerConstraints()
+        
+        
     }
 }
 
@@ -36,11 +50,23 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .orderList)
         navigationBar.setupNavigationBar()
         
+        sc.segmentedControlContainerView.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 11.0, *) {
+            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight - 5).isActive = true
+        } else {
+            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight).isActive = true
+        }
+        sc.segmentedControlContainerView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        sc.segmentedControlContainerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        sc.segmentedControlContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
+        
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight - 5).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight + 35).isActive = true
         } else {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight + 35).isActive = true
         }
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

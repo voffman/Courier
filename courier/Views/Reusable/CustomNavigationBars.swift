@@ -62,6 +62,7 @@ class CustomNavigationBars: UINavigationBar {
             navigationBar.setItems([navigationItem], animated: false)
             
             let barButtonImage = UIImage(named: "SOSButton")
+            navigationBar.backgroundColor = .white
             
             let barButtonItem = UIBarButtonItem(image: barButtonImage, style: .plain, target: nil, action: #selector(orderListAction))
             barButtonItem.tintColor = .red
