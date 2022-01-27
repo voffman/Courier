@@ -11,7 +11,7 @@ class CustomNavigationBars: UINavigationBar {
     
     enum NavigationBarStyles {
         case orderList
-        case aboutOrder
+        case detailOrder
     }
     
     var navigationBar = UINavigationBar(frame: CGRect())
@@ -38,6 +38,11 @@ class CustomNavigationBars: UINavigationBar {
         print("open phone view")
     }
     
+    @objc func backButtonAction(){
+        //
+    }
+    
+    
     func setupNavigationBar(){
         
         if UIScreen.main.bounds.size.height > 750 {
@@ -57,8 +62,12 @@ class CustomNavigationBars: UINavigationBar {
         switch navigationBarStyle{
             
         case .orderList:
+            let title: String = "Заказы"
+            let label = UILabel()
+            label.text = title
+            label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+            label.textColor = Colors.black
             
-            navigationItem.title = "Заказы"
             navigationBar.setItems([navigationItem], animated: false)
             
             let barButtonImage = UIImage(named: "SOSButton")
@@ -67,9 +76,27 @@ class CustomNavigationBars: UINavigationBar {
             let barButtonItem = UIBarButtonItem(image: barButtonImage, style: .plain, target: nil, action: #selector(orderListAction))
             barButtonItem.tintColor = .red
             navigationItem.rightBarButtonItem = barButtonItem
+            navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
 
-        case .aboutOrder:
-            print("About order")
+        case .detailOrder:
+            print("Detail order")
+            let price: String = "4 000 ₸"
+            let orderId: String = "№ 356167"
+            let label = UILabel()
+            label.text = price
+            label.textColor = Colors.gray
+            label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+            // начать отсюда
+            navigationBar.setItems([navigationItem], animated: false)
+            
+            let barButtonImage = UIImage(named: "BackArrow")
+            navigationBar.backgroundColor = .white
+            
+            let barButtonItem = UIBarButtonItem(image: barButtonImage, style: .plain, target: nil, action: #selector(backButtonAction))
+            barButtonItem.tintColor = .black
+            navigationItem.leftBarButtonItem = barButtonItem
+            navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: label)
+            navigationItem.title = orderId
             
         case .none:
             print("None")

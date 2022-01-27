@@ -54,6 +54,8 @@ class CustomButtons: UIButton {
             button.layer.cornerRadius = 4
             button.setTitle(title, for: .normal)
             button.setTitleColor(Colors.black, for: .normal)
+            button.layer.borderWidth = 1
+            button.layer.borderColor = Colors.gray.cgColor
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .cellTransition:

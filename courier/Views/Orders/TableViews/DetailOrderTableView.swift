@@ -1,24 +1,24 @@
 //
-//  OrderListTableView.swift
+//  AboutOrderTableView.swift
 //  courier
 //
-//  Created by Владимир Свиридов on 21.01.2022.
+//  Created by Владимир Свиридов on 27.01.2022.
 //
 
 import UIKit
 
-class OrderListTableView: UIViewController {
+class DetailOrderTableView: UIViewController {
     
     let tableView = UITableView()
     
-    let sc = CustomSegmentedControl(segments: .two, firstSegmentTitle: "ТЕКУЩИЕ", secondSegmentTitle: "ВЫПОЛНЕННЫЕ")
+    let sc = CustomSegmentedControl(segments: .three, firstSegmentTitle: "ЗАВЕДЕНИЕ", secondSegmentTitle: "КЛИЕНТ", thirdSegmentTitle: "О ЗАКАЗЕ")
     
     var scValue: Int8 = 0
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         sc.changeSegmentedControlLinePosition()
         // MARK: Вынести потом в презентер
-        if scValue == 0 {
+        if scValue == 0 || scValue == 1 {
             scValue += 1
         }
         else{
@@ -26,8 +26,6 @@ class OrderListTableView: UIViewController {
         }
         tableView.reloadData()
     }
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,18 +37,17 @@ class OrderListTableView: UIViewController {
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
         
-        
     }
 }
 
-extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
+extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         
-        tableView.register(OrderListCell.self, forCellReuseIdentifier: OrderListCell.identifire)
-        tableView.register(OrderListCompletedOrdersCell.self, forCellReuseIdentifier: OrderListCompletedOrdersCell.identifire)
+        tableView.register(ShopCell.self, forCellReuseIdentifier: ShopCell.identifire)
+        tableView.register(ClientCell.self, forCellReuseIdentifier: ClientCell.identifire)
         
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -61,8 +58,9 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .orderList)
+        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .detailOrder)
         navigationBar.setupNavigationBar()
+        
         
         sc.segmentedControlContainerView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
@@ -73,8 +71,6 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         sc.segmentedControlContainerView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         sc.segmentedControlContainerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         sc.segmentedControlContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        
-        
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
@@ -90,27 +86,34 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch scValue {
         case 0:
-
-            return 5
+            return 1
+            
         case 1:
-
-            return 3
+            return 1
+            
+        case 2:
+            return 1
+            
         default:
             return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-  
+        
         switch scValue {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCell.identifire, for: indexPath) as! OrderListCell
-
+            let cell = tableView.dequeueReusableCell(withIdentifier: ShopCell.identifire, for: indexPath) as! ShopCell
+            
             return cell
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCompletedOrdersCell.identifire, for: indexPath) as! OrderListCompletedOrdersCell
-
+            let cell = tableView.dequeueReusableCell(withIdentifier: ClientCell.identifire, for: indexPath) as! ClientCell
             return cell
+        case 2:
+            print("Добавить третью ячейку")
+            
+            return UITableViewCell()
+            
         default:
             return UITableViewCell()
         }
@@ -124,18 +127,25 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch scValue{
         case 0:
-            return 341 // + 20 компенсировать отступы между ячейками
-
+            return 275 // + 20 компенсировать отступы между ячейками
+            
+        case 1:
+            return 254
+            
         default:
-            return 277
+            return 0
         }
         
     }
     
- //   func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
- //       return true
- //   }
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
 }
-
-

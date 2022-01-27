@@ -51,6 +51,7 @@ class CustomLabels: UILabel {
             label.text = title
             label.font = UIFont.boldSystemFont(ofSize: textSize)
             label.textColor = Colors.black
+            label.numberOfLines = 0
             
         case .regular:
             label.text = title

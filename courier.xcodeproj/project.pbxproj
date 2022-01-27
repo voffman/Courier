@@ -15,6 +15,10 @@
 		501630392796786A00D0734F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501630382796786A00D0734F /* LoginView.swift */; };
 		501630412796786B00D0734F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5016303F2796786B00D0734F /* LaunchScreen.storyboard */; };
 		5016304F27968D2100D0734F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5016304E27968D2100D0734F /* Colors.swift */; };
+		501D409727A248B900F67C6B /* OrderListCompletedOrdersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409627A248B900F67C6B /* OrderListCompletedOrdersCell.swift */; };
+		501D409927A26EE200F67C6B /* DetailOrderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409827A26EE200F67C6B /* DetailOrderTableView.swift */; };
+		501D409D27A27C2300F67C6B /* ShopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409C27A27C2300F67C6B /* ShopCell.swift */; };
+		501D409F27A27C4B00F67C6B /* ClientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409E27A27C4B00F67C6B /* ClientCell.swift */; };
 		5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316027A0F679000777A9 /* CustomAlerts.swift */; };
 		5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */; };
 		5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC7279A734100E4A686 /* OrderListTableView.swift */; };
@@ -37,6 +41,10 @@
 		501630402796786B00D0734F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		501630422796786B00D0734F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5016304E27968D2100D0734F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		501D409627A248B900F67C6B /* OrderListCompletedOrdersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListCompletedOrdersCell.swift; sourceTree = "<group>"; };
+		501D409827A26EE200F67C6B /* DetailOrderTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrderTableView.swift; sourceTree = "<group>"; };
+		501D409C27A27C2300F67C6B /* ShopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCell.swift; sourceTree = "<group>"; };
+		501D409E27A27C4B00F67C6B /* ClientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCell.swift; sourceTree = "<group>"; };
 		5043316027A0F679000777A9 /* CustomAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
 		5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		5062EFC7279A734100E4A686 /* OrderListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListTableView.swift; sourceTree = "<group>"; };
@@ -150,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				5062EFC7279A734100E4A686 /* OrderListTableView.swift */,
+				501D409827A26EE200F67C6B /* DetailOrderTableView.swift */,
 			);
 			path = TableViews;
 			sourceTree = "<group>";
@@ -158,6 +167,9 @@
 			isa = PBXGroup;
 			children = (
 				5062EFC9279A7CD400E4A686 /* OrderListCell.swift */,
+				501D409627A248B900F67C6B /* OrderListCompletedOrdersCell.swift */,
+				501D409C27A27C2300F67C6B /* ShopCell.swift */,
+				501D409E27A27C4B00F67C6B /* ClientCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -243,13 +255,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				50AD10B02798281000221873 /* CustomButtons.swift in Sources */,
+				501D409D27A27C2300F67C6B /* ShopCell.swift in Sources */,
 				5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */,
 				5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */,
 				5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */,
 				500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */,
+				501D409727A248B900F67C6B /* OrderListCompletedOrdersCell.swift in Sources */,
 				500B62E727990E7F00EDC58A /* CustomLabels.swift in Sources */,
 				501630392796786A00D0734F /* LoginView.swift in Sources */,
 				5065CCA82799606600B38BAB /* CustomNavigationBars.swift in Sources */,
+				501D409927A26EE200F67C6B /* DetailOrderTableView.swift in Sources */,
 				5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */,
 				5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */,
 				5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */,
@@ -257,6 +272,7 @@
 				500B62EB279919A800EDC58A /* CustomViews.swift in Sources */,
 				501630352796786A00D0734F /* AppDelegate.swift in Sources */,
 				501630372796786A00D0734F /* SceneDelegate.swift in Sources */,
+				501D409F27A27C4B00F67C6B /* ClientCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
