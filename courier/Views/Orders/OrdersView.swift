@@ -20,7 +20,7 @@ class OrdersView: UIViewController {
         view.addSubview(cardView.view)
         cardView.setView()
         
-        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .orderList)
+        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .withSOSButton)
         navigationBar.setupNavigationBar()
         
         cardView.view.translatesAutoresizingMaskIntoConstraints = false
@@ -33,10 +33,6 @@ class OrdersView: UIViewController {
         } else {
             cardView.view.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight + 95).isActive = true
         }
-        
-        
-        
-        
         
         cardView.view.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
         cardView.view.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true

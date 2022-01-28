@@ -87,13 +87,6 @@ class LoginView: UIViewController {
         loginButton.button.addTarget(self, action: #selector(loginButtonAction), for: .touchUpInside)
         
     }
-    func setupTabBar(){
-        self.navigationItem.title = "Вход"
-        
-        let tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
-        self.tabBarItem = tabBarItem
-        tabBarItem.isEnabled = false
-    }
     
     func setupView(){
         view.backgroundColor = Colors.lightGray // условно
@@ -103,7 +96,6 @@ class LoginView: UIViewController {
         setupPhoneNumberLabel()
         setupPhoneNumberTextField()
         setupLoginButton()
-        setupTabBar()
     }
     
     @objc func loginButtonAction(sender: UIButton!){

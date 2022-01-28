@@ -13,17 +13,9 @@ class OrderListTableView: UIViewController {
     
     let sc = CustomSegmentedControl(segments: .two, firstSegmentTitle: "ТЕКУЩИЕ", secondSegmentTitle: "ВЫПОЛНЕННЫЕ")
     
-    var scValue: Int8 = 0
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         sc.changeSegmentedControlLinePosition()
-        // MARK: Вынести потом в презентер
-        if scValue == 0 {
-            scValue += 1
-        }
-        else{
-            scValue -= 1
-        }
         tableView.reloadData()
     }
     
@@ -61,7 +53,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .orderList)
+        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .withSOSButton)
         navigationBar.setupNavigationBar()
         
         sc.segmentedControlContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -88,7 +80,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch scValue {
+        switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
 
             return 5
@@ -102,13 +94,19 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
   
-        switch scValue {
+        switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCell.identifire, for: indexPath) as! OrderListCell
 
+            cell.orderTransitionArrowButton.button.tag = indexPath.row
+            cell.orderTransitionArrowButton.button.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
+            
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCompletedOrdersCell.identifire, for: indexPath) as! OrderListCompletedOrdersCell
+            
+            cell.orderTransitionArrowButton.button.tag = indexPath.row
+            cell.orderTransitionArrowButton.button.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
 
             return cell
         default:
@@ -117,17 +115,32 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    
+    @objc func orderTransitionArrowButtonWasTapped(sender:UIButton){
+        let rowIndex:Int = sender.tag
+        print(rowIndex)
+        let detailOrderTableView = DetailOrderTableView()
+        detailOrderTableView.modalPresentationStyle = .fullScreen
+      //  dismiss(animated: true, completion: nil)
+        self.present(detailOrderTableView, animated: true)
+
+    }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch scValue{
+        switch sc.segmentedControl.selectedSegmentIndex{
         case 0:
             return 341 // + 20 компенсировать отступы между ячейками
 
-        default:
+        case 1:
             return 277
+            
+        default:
+            return 0
         }
         
     }

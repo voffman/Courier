@@ -13,18 +13,14 @@ class DetailOrderTableView: UIViewController {
     
     let sc = CustomSegmentedControl(segments: .three, firstSegmentTitle: "ЗАВЕДЕНИЕ", secondSegmentTitle: "КЛИЕНТ", thirdSegmentTitle: "О ЗАКАЗЕ")
     
-    var scValue: Int8 = 0
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         sc.changeSegmentedControlLinePosition()
-        // MARK: Вынести потом в презентер
-        if scValue == 0 || scValue == 1 {
-            scValue += 1
-        }
-        else{
-            scValue -= 1
-        }
         tableView.reloadData()
+    }
+    
+    @objc func backButtonAction(){
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -58,9 +54,9 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .detailOrder)
+        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .withBackButton)
         navigationBar.setupNavigationBar()
-        
+        navigationBar.barButton.action = #selector(backButtonAction)
         
         sc.segmentedControlContainerView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
@@ -84,7 +80,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch scValue {
+        switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
             return 1
             
@@ -101,7 +97,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        switch scValue {
+        switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: ShopCell.identifire, for: indexPath) as! ShopCell
             
@@ -125,12 +121,14 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch scValue{
+        switch sc.segmentedControl.selectedSegmentIndex{
         case 0:
             return 275 // + 20 компенсировать отступы между ячейками
             
         case 1:
             return 254
+        case 2:
+            return 0
             
         default:
             return 0
