@@ -17,8 +17,16 @@
 		5016304F27968D2100D0734F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5016304E27968D2100D0734F /* Colors.swift */; };
 		501D409727A248B900F67C6B /* OrderListCompletedOrdersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409627A248B900F67C6B /* OrderListCompletedOrdersCell.swift */; };
 		501D409927A26EE200F67C6B /* DetailOrderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409827A26EE200F67C6B /* DetailOrderTableView.swift */; };
-		501D409D27A27C2300F67C6B /* ShopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409C27A27C2300F67C6B /* ShopCell.swift */; };
-		501D409F27A27C4B00F67C6B /* ClientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409E27A27C4B00F67C6B /* ClientCell.swift */; };
+		501D409D27A27C2300F67C6B /* ShopSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409C27A27C2300F67C6B /* ShopSubview.swift */; };
+		501D409F27A27C4B00F67C6B /* ClientSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409E27A27C4B00F67C6B /* ClientSubview.swift */; };
+		502618B027A78E5A00CEA57C /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618AF27A78E5A00CEA57C /* LoginPresenter.swift */; };
+		502618B227A793FA00CEA57C /* ConfirmLoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618B127A793FA00CEA57C /* ConfirmLoginPresenter.swift */; };
+		502618B427A7957D00CEA57C /* OrdersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618B327A7957D00CEA57C /* OrdersPresenter.swift */; };
+		502618B927A7AB1800CEA57C /* OrderListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618B827A7AB1800CEA57C /* OrderListPresenter.swift */; };
+		502618BB27A7AEB300CEA57C /* DetailOrderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618BA27A7AEB300CEA57C /* DetailOrderPresenter.swift */; };
+		502618BD27A7B18F00CEA57C /* CustomTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618BC27A7B18F00CEA57C /* CustomTimer.swift */; };
+		502618E327A7EA2B00CEA57C /* ShopSubviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618E227A7EA2A00CEA57C /* ShopSubviewPresenter.swift */; };
+		502618E527A7EDC500CEA57C /* ClientSubviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618E427A7EDC500CEA57C /* ClientSubviewPresenter.swift */; };
 		5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316027A0F679000777A9 /* CustomAlerts.swift */; };
 		5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */; };
 		5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC7279A734100E4A686 /* OrderListTableView.swift */; };
@@ -43,8 +51,16 @@
 		5016304E27968D2100D0734F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		501D409627A248B900F67C6B /* OrderListCompletedOrdersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListCompletedOrdersCell.swift; sourceTree = "<group>"; };
 		501D409827A26EE200F67C6B /* DetailOrderTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrderTableView.swift; sourceTree = "<group>"; };
-		501D409C27A27C2300F67C6B /* ShopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCell.swift; sourceTree = "<group>"; };
-		501D409E27A27C4B00F67C6B /* ClientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCell.swift; sourceTree = "<group>"; };
+		501D409C27A27C2300F67C6B /* ShopSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopSubview.swift; sourceTree = "<group>"; };
+		501D409E27A27C4B00F67C6B /* ClientSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSubview.swift; sourceTree = "<group>"; };
+		502618AF27A78E5A00CEA57C /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
+		502618B127A793FA00CEA57C /* ConfirmLoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLoginPresenter.swift; sourceTree = "<group>"; };
+		502618B327A7957D00CEA57C /* OrdersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersPresenter.swift; sourceTree = "<group>"; };
+		502618B827A7AB1800CEA57C /* OrderListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListPresenter.swift; sourceTree = "<group>"; };
+		502618BA27A7AEB300CEA57C /* DetailOrderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrderPresenter.swift; sourceTree = "<group>"; };
+		502618BC27A7B18F00CEA57C /* CustomTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTimer.swift; sourceTree = "<group>"; };
+		502618E227A7EA2A00CEA57C /* ShopSubviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopSubviewPresenter.swift; sourceTree = "<group>"; };
+		502618E427A7EDC500CEA57C /* ClientSubviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSubviewPresenter.swift; sourceTree = "<group>"; };
 		5043316027A0F679000777A9 /* CustomAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
 		5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		5062EFC7279A734100E4A686 /* OrderListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListTableView.swift; sourceTree = "<group>"; };
@@ -86,6 +102,7 @@
 		501630332796786A00D0734F /* courier */ = {
 			isa = PBXGroup;
 			children = (
+				502618B527A79B5D00CEA57C /* Constants */,
 				5016304827968B4800D0734F /* Models */,
 				5016304B27968B7D00D0734F /* Presenters */,
 				5016304927968B6000D0734F /* Views */,
@@ -97,7 +114,6 @@
 		5016304827968B4800D0734F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5016304E27968D2100D0734F /* Colors.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -115,6 +131,13 @@
 		5016304B27968B7D00D0734F /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
+				502618AF27A78E5A00CEA57C /* LoginPresenter.swift */,
+				502618B127A793FA00CEA57C /* ConfirmLoginPresenter.swift */,
+				502618B327A7957D00CEA57C /* OrdersPresenter.swift */,
+				502618B827A7AB1800CEA57C /* OrderListPresenter.swift */,
+				502618BA27A7AEB300CEA57C /* DetailOrderPresenter.swift */,
+				502618E227A7EA2A00CEA57C /* ShopSubviewPresenter.swift */,
+				502618E427A7EDC500CEA57C /* ClientSubviewPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -150,8 +173,26 @@
 				5065CCA72799606600B38BAB /* CustomNavigationBars.swift */,
 				5043316027A0F679000777A9 /* CustomAlerts.swift */,
 				5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */,
+				502618BC27A7B18F00CEA57C /* CustomTimer.swift */,
 			);
 			path = Reusable;
+			sourceTree = "<group>";
+		};
+		502618B527A79B5D00CEA57C /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				5016304E27968D2100D0734F /* Colors.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		502618B727A7A80400CEA57C /* DetailOrderSubviews */ = {
+			isa = PBXGroup;
+			children = (
+				501D409C27A27C2300F67C6B /* ShopSubview.swift */,
+				501D409E27A27C4B00F67C6B /* ClientSubview.swift */,
+			);
+			path = DetailOrderSubviews;
 			sourceTree = "<group>";
 		};
 		5062EFC5279A723B00E4A686 /* TableViews */ = {
@@ -168,8 +209,6 @@
 			children = (
 				5062EFC9279A7CD400E4A686 /* OrderListCell.swift */,
 				501D409627A248B900F67C6B /* OrderListCompletedOrdersCell.swift */,
-				501D409C27A27C2300F67C6B /* ShopCell.swift */,
-				501D409E27A27C4B00F67C6B /* ClientCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -180,6 +219,7 @@
 				5065CCA127993A2700B38BAB /* OrdersView.swift */,
 				5062EFC6279A725400E4A686 /* TableViewCells */,
 				5062EFC5279A723B00E4A686 /* TableViews */,
+				502618B727A7A80400CEA57C /* DetailOrderSubviews */,
 			);
 			path = Orders;
 			sourceTree = "<group>";
@@ -255,24 +295,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				50AD10B02798281000221873 /* CustomButtons.swift in Sources */,
-				501D409D27A27C2300F67C6B /* ShopCell.swift in Sources */,
+				501D409D27A27C2300F67C6B /* ShopSubview.swift in Sources */,
+				502618B227A793FA00CEA57C /* ConfirmLoginPresenter.swift in Sources */,
 				5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */,
 				5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */,
+				502618B027A78E5A00CEA57C /* LoginPresenter.swift in Sources */,
 				5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */,
 				500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */,
 				501D409727A248B900F67C6B /* OrderListCompletedOrdersCell.swift in Sources */,
 				500B62E727990E7F00EDC58A /* CustomLabels.swift in Sources */,
+				502618B927A7AB1800CEA57C /* OrderListPresenter.swift in Sources */,
 				501630392796786A00D0734F /* LoginView.swift in Sources */,
+				502618BB27A7AEB300CEA57C /* DetailOrderPresenter.swift in Sources */,
 				5065CCA82799606600B38BAB /* CustomNavigationBars.swift in Sources */,
+				502618BD27A7B18F00CEA57C /* CustomTimer.swift in Sources */,
 				501D409927A26EE200F67C6B /* DetailOrderTableView.swift in Sources */,
+				502618B427A7957D00CEA57C /* OrdersPresenter.swift in Sources */,
 				5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */,
+				502618E527A7EDC500CEA57C /* ClientSubviewPresenter.swift in Sources */,
 				5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */,
 				5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */,
 				5016304F27968D2100D0734F /* Colors.swift in Sources */,
 				500B62EB279919A800EDC58A /* CustomViews.swift in Sources */,
 				501630352796786A00D0734F /* AppDelegate.swift in Sources */,
 				501630372796786A00D0734F /* SceneDelegate.swift in Sources */,
-				501D409F27A27C4B00F67C6B /* ClientCell.swift in Sources */,
+				502618E327A7EA2B00CEA57C /* ShopSubviewPresenter.swift in Sources */,
+				501D409F27A27C4B00F67C6B /* ClientSubview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

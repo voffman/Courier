@@ -19,8 +19,7 @@ class CustomButtons: UIButton {
     
     var title: String?
     var style: CustomButtonStyles?
-    
-    let button = UIButton()
+
     
     init(title: String, style: CustomButtonStyles){
         self.title = title
@@ -36,31 +35,31 @@ class CustomButtons: UIButton {
         
         switch style {
         case .primary:
-            button.backgroundColor = Colors.orange
-            button.layer.cornerRadius = 4
-            button.setTitle(title, for: .normal)
-            button.setTitleColor(Colors.black, for: .normal)
-            button.titleLabel?.adjustsFontSizeToFitWidth = true
+            self.backgroundColor = Colors.orange
+            self.layer.cornerRadius = 4
+            self.setTitle(title, for: .normal)
+            self.setTitleColor(Colors.black, for: .normal)
+            self.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .secondary:
-            button.backgroundColor = Colors.lightGray
-            button.layer.cornerRadius = 4
-            button.setTitle(title, for: .normal)
-            button.setTitleColor(Colors.darkGray, for: .normal)
-            button.titleLabel?.adjustsFontSizeToFitWidth = true
+            self.backgroundColor = Colors.lightGray
+            self.layer.cornerRadius = 4
+            self.setTitle(title, for: .normal)
+            self.setTitleColor(Colors.darkGray, for: .normal)
+            self.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .normal:
-            button.backgroundColor = Colors.white
-            button.layer.cornerRadius = 4
-            button.setTitle(title, for: .normal)
-            button.setTitleColor(Colors.black, for: .normal)
-            button.layer.borderWidth = 1
-            button.layer.borderColor = Colors.gray.cgColor
-            button.titleLabel?.adjustsFontSizeToFitWidth = true
+            self.backgroundColor = Colors.white
+            self.layer.cornerRadius = 4
+            self.setTitle(title, for: .normal)
+            self.setTitleColor(Colors.black, for: .normal)
+            self.layer.borderWidth = 1
+            self.layer.borderColor = Colors.gray.cgColor
+            self.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .cellTransition:
-            button.setImage(UIImage(named: "Arrow"), for: .normal)
-            button.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+            self.setImage(UIImage(named: "Arrow"), for: .normal)
+            self.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
 
         case .none:
             print("None")

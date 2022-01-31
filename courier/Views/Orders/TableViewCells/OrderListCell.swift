@@ -28,7 +28,7 @@ class OrderListCell: UITableViewCell {
     let orderToAddressLabel = CustomLabels(title: "Казыбек Би, Нуркена Абдирова, 7, дом 8, квартира 42", textSize: 14, style: .regular)
     let orderToLabel = CustomLabels(title: "Куда", textSize: 14, style: .light)
     
-    let orderTimerView = CustomViews(style: .timerRed)
+    let orderTimerView = CustomTimer(style: .timerRed)
     let orderTimerImage = UIImageView(image: UIImage(named: "Timer"))
     
     let orderTimerLabel = CustomLabels(title: "0:15", textSize: 20, style: .timerRed)
@@ -39,35 +39,35 @@ class OrderListCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         // добавление элементов на экран
-        contentView.addSubview(cardView.view)
+        contentView.addSubview(cardView)
         cardView.setView()
-        contentView.addSubview(orderIdLabel.label)
+        contentView.addSubview(orderIdLabel)
         orderIdLabel.setLabel()
-        contentView.addSubview(orderPriceLabel.label)
+        contentView.addSubview(orderPriceLabel)
         orderPriceLabel.setLabel()
-        contentView.addSubview(orderSourceLabel.label)
+        contentView.addSubview(orderSourceLabel)
         orderSourceLabel.setLabel()
-        contentView.addSubview(orderTransitionArrowButton.button)
+        contentView.addSubview(orderTransitionArrowButton)
         orderTransitionArrowButton.setButton()
         contentView.addSubview(orderLineImage)
         contentView.addSubview(orderFromImage)
-        contentView.addSubview(orderFromLabel.label)
+        contentView.addSubview(orderFromLabel)
         orderFromLabel.setLabel()
-        contentView.addSubview(orderFromAddressLabel.label)
+        contentView.addSubview(orderFromAddressLabel)
         orderFromAddressLabel.setLabel()
-        contentView.addSubview(orderToLabel.label)
+        contentView.addSubview(orderToLabel)
         orderToLabel.setLabel()
-        contentView.addSubview(orderToAddressLabel.label)
+        contentView.addSubview(orderToAddressLabel)
         orderToAddressLabel.setLabel()
         contentView.addSubview(orderDownArrowImage)
         contentView.addSubview(orderToImage)
-        contentView.addSubview(orderTimerView.view)
+        contentView.addSubview(orderTimerView)
         orderTimerView.setView()
         contentView.addSubview(orderTimerImage)
-        contentView.addSubview(orderTimerLabel.label)
+        contentView.addSubview(orderTimerLabel)
         orderTimerLabel.setLabel()
         
-        contentView.addSubview(orderAcceptButton.button)
+        contentView.addSubview(orderAcceptButton)
         orderAcceptButton.setButton()
     }
     
@@ -82,12 +82,12 @@ class OrderListCell: UITableViewCell {
                           orderFromAddress: String?,
                           orderToAddress: String?,
                           orderTime: String?){
-        self.orderIdLabel.label.text = orderId
-        self.orderPriceLabel.label.text = orderPrice
-        self.orderSourceLabel.label.text = orderSource
-        self.orderFromAddressLabel.label.text = orderFromAddress
-        self.orderToAddressLabel.label.text = orderToAddress
-        self.orderTimerLabel.label.text = orderTime
+        self.orderIdLabel.text = orderId
+        self.orderPriceLabel.text = orderPrice
+        self.orderSourceLabel.text = orderSource
+        self.orderFromAddressLabel.text = orderFromAddress
+        self.orderToAddressLabel.text = orderToAddress
+        self.orderTimerLabel.text = orderTime
         
     }
     
@@ -104,48 +104,48 @@ class OrderListCell: UITableViewCell {
     }
     // MARK: Функции для расстановки элементов на экране
     func setupCardView(){
-        cardView.view.frame = CGRect(x: 0,
+        cardView.frame = CGRect(x: 0,
                                      y: 0,
                                      width: contentView.frame.size.width,
                                      height: contentView.frame.size.height)
     }
     
     func setupIdLabel(){
-        orderIdLabel.label.frame = CGRect(x: 16,
+        orderIdLabel.frame = CGRect(x: 16,
                                           y: 16,
-                                          width: orderIdLabel.label.intrinsicContentSize.width,
-                                          height: orderIdLabel.label.intrinsicContentSize.height)
+                                          width: orderIdLabel.intrinsicContentSize.width,
+                                          height: orderIdLabel.intrinsicContentSize.height)
     }
     
     func setupPriceLabel(){
-        orderPriceLabel.label.frame = CGRect(x: orderIdLabel.label.intrinsicContentSize.width + orderIdLabel.textSize * 2,
+        orderPriceLabel.frame = CGRect(x: orderIdLabel.intrinsicContentSize.width + orderIdLabel.textSize * 2,
                                              y: 16,
-                                             width: orderPriceLabel.label.intrinsicContentSize.width,
-                                             height: orderPriceLabel.label.intrinsicContentSize.height)
+                                             width: orderPriceLabel.intrinsicContentSize.width,
+                                             height: orderPriceLabel.intrinsicContentSize.height)
     }
     
     func setupSourceLabel(){
-        orderSourceLabel.label.frame = CGRect(x: 16,
+        orderSourceLabel.frame = CGRect(x: 16,
                                               y: 36,
-                                              width: orderSourceLabel.label.intrinsicContentSize.width,
-                                              height: orderSourceLabel.label.intrinsicContentSize.height)
+                                              width: orderSourceLabel.intrinsicContentSize.width,
+                                              height: orderSourceLabel.intrinsicContentSize.height)
     }
     
     func setupTransitionArrowButton(){
-        orderTransitionArrowButton.button.translatesAutoresizingMaskIntoConstraints = false
-        orderTransitionArrowButton.button.topAnchor.constraint(equalTo:  cardView.view.topAnchor, constant: 26).isActive = true
-        orderTransitionArrowButton.button.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -20).isActive = true
-        orderTransitionArrowButton.button.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        orderTransitionArrowButton.button.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        orderTransitionArrowButton.translatesAutoresizingMaskIntoConstraints = false
+        orderTransitionArrowButton.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 26).isActive = true
+        orderTransitionArrowButton.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -20).isActive = true
+        orderTransitionArrowButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        orderTransitionArrowButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
         
     }
     
     func setupLineImage(){
         orderLineImage.translatesAutoresizingMaskIntoConstraints = false
         orderLineImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        orderLineImage.topAnchor.constraint(equalTo:  cardView.view.topAnchor, constant: 71).isActive = true
-        orderLineImage.leftAnchor.constraint(equalTo:  cardView.view.leftAnchor, constant: 15).isActive = true
-        orderLineImage.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -15).isActive = true
+        orderLineImage.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 71).isActive = true
+        orderLineImage.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 15).isActive = true
+        orderLineImage.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -15).isActive = true
         
     }
     
@@ -171,36 +171,36 @@ class OrderListCell: UITableViewCell {
                                     height: 40)
     }
     func setupOrderFromLabel(){
-        orderFromLabel.label.frame = CGRect(x: 64,
+        orderFromLabel.frame = CGRect(x: 64,
                                             y: 88,
-                                            width: orderFromLabel.label.intrinsicContentSize.width,
-                                            height: orderFromLabel.label.intrinsicContentSize.height)
+                                            width: orderFromLabel.intrinsicContentSize.width,
+                                            height: orderFromLabel.intrinsicContentSize.height)
     }
     
     func setupOrderFromAddressLabel(){
-        orderFromAddressLabel.label.translatesAutoresizingMaskIntoConstraints = false
-        orderFromAddressLabel.label.leftAnchor.constraint(equalTo:  cardView.view.leftAnchor, constant: 64).isActive = true
-        orderFromAddressLabel.label.topAnchor.constraint(equalTo: cardView.view.topAnchor, constant: 108).isActive = true
-        orderFromAddressLabel.label.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -10).isActive = true
+        orderFromAddressLabel.translatesAutoresizingMaskIntoConstraints = false
+        orderFromAddressLabel.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 64).isActive = true
+        orderFromAddressLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 108).isActive = true
+        orderFromAddressLabel.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -10).isActive = true
     }
     
     func setupOrderToLabel(){
-        orderToLabel.label.frame = CGRect(x: 64,
+        orderToLabel.frame = CGRect(x: 64,
                                           y: 184,
-                                          width: orderToLabel.label.intrinsicContentSize.width,
-                                          height: orderToLabel.label.intrinsicContentSize.height)
+                                          width: orderToLabel.intrinsicContentSize.width,
+                                          height: orderToLabel.intrinsicContentSize.height)
     }
     
     func setupOrderToAddressLabel(){
-        orderToAddressLabel.label.translatesAutoresizingMaskIntoConstraints = false
-        orderToAddressLabel.label.leftAnchor.constraint(equalTo:  cardView.view.leftAnchor, constant: 64).isActive = true
-        orderToAddressLabel.label.topAnchor.constraint(equalTo: cardView.view.topAnchor, constant: 204).isActive = true
+        orderToAddressLabel.translatesAutoresizingMaskIntoConstraints = false
+        orderToAddressLabel.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 64).isActive = true
+        orderToAddressLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 204).isActive = true
         
-        orderToAddressLabel.label.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -10).isActive = true
+        orderToAddressLabel.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -10).isActive = true
     }
     
     func setupTimerView(){
-        orderTimerView.view.frame = CGRect(x: 16,
+        orderTimerView.frame = CGRect(x: 16,
                                            y: 257,
                                            width: 110,
                                            height: 48)
@@ -211,15 +211,15 @@ class OrderListCell: UITableViewCell {
         orderTimerImage.heightAnchor.constraint(equalToConstant: 24).isActive = true
         orderTimerImage.widthAnchor.constraint(equalToConstant: 24).isActive = true
   
-        orderTimerImage.topAnchor.constraint(equalTo: cardView.view.topAnchor, constant: 269).isActive = true
-        orderTimerImage.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 24).isActive = true
+        orderTimerImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 269).isActive = true
+        orderTimerImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 24).isActive = true
     }
     
     func setupTimerLabel(){
-        orderTimerLabel.label.frame = CGRect(x: 62,
+        orderTimerLabel.frame = CGRect(x: 62,
                                       y: 262,
-                                      width: orderTimerLabel.label.intrinsicContentSize.width,
-                                      height: orderTimerLabel.label.intrinsicContentSize.width)
+                                      width: orderTimerLabel.intrinsicContentSize.width,
+                                      height: orderTimerLabel.intrinsicContentSize.width)
         
         
     }
@@ -233,13 +233,13 @@ class OrderListCell: UITableViewCell {
     }
     
     func setupAcceptButton(){
-        orderAcceptButton.button.translatesAutoresizingMaskIntoConstraints = false
-        orderAcceptButton.button.topAnchor.constraint(equalTo: cardView.view.topAnchor, constant: 257).isActive = true
-        orderAcceptButton.button.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 134).isActive = true
-        orderAcceptButton.button.rightAnchor.constraint(equalTo: cardView.view.rightAnchor, constant: -10).isActive = true
+        orderAcceptButton.translatesAutoresizingMaskIntoConstraints = false
+        orderAcceptButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 257).isActive = true
+        orderAcceptButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 134).isActive = true
+        orderAcceptButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
         
-        orderAcceptButton.button.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        orderAcceptButton.button.addTarget(self, action: #selector(changeButtonState), for: .touchUpInside)
+        orderAcceptButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        orderAcceptButton.addTarget(self, action: #selector(changeButtonState), for: .touchUpInside)
     }
     
  @objc func changeButtonState(sender: UIButton){
@@ -309,11 +309,11 @@ class OrderListCell: UITableViewCell {
         orderToLabel.setLabel()
         orderToImage.image = UIImage(named: "Place_orange")
         
-        orderTimerView.view.isHidden = true
+        orderTimerView.isHidden = true
         orderTimerImage.isHidden = true
-        orderTimerLabel.label.isHidden = true
+        orderTimerLabel.isHidden = true
         
-        orderAcceptButton.button.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 10).isActive = true
+        orderAcceptButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
         
         orderAcceptButton.setButton()
     }
@@ -321,9 +321,9 @@ class OrderListCell: UITableViewCell {
     func setupNormalState(){
         
         orderAcceptButton.title = "ПРИНЯТЬ"
-        orderAcceptButton.button.isEnabled = false
+        orderAcceptButton.isEnabled = false
         
-        orderAcceptButton.button.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 134).isActive = true
+        orderAcceptButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 134).isActive = true
         
         orderAcceptButton.setButton()
         
@@ -332,9 +332,9 @@ class OrderListCell: UITableViewCell {
         orderToImage.image = UIImage(named: "Place")
  
         
-        orderTimerView.view.isHidden = false
+        orderTimerView.isHidden = false
         orderTimerImage.isHidden = false
-        orderTimerLabel.label.isHidden = false
+        orderTimerLabel.isHidden = false
     }
     
     

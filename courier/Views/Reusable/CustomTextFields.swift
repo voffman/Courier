@@ -18,8 +18,6 @@ class CustomTextFields: UITextField {
     let pHolder: String?
     let style: CustomTextFieldStyles?
     
-    let textField =  UITextField()
-    
     init(pHolder: String?, style: CustomTextFieldStyles){
         self.pHolder = pHolder
         self.style = style
@@ -34,16 +32,16 @@ class CustomTextFields: UITextField {
         
         switch style {
         case .normal:
-            textField.layer.cornerRadius = 4
-            textField.layer.borderWidth = 0.4
-            textField.layer.borderColor = Colors.gray.cgColor
-            textField.placeholder = pHolder
+            self.layer.cornerRadius = 4
+            self.layer.borderWidth = 0.4
+            self.layer.borderColor = Colors.gray.cgColor
+            self.placeholder = pHolder
             
         case .withPhoneNumberFormatter:
-            textField.layer.cornerRadius = 4
-            textField.layer.borderWidth = 0.4
-            textField.layer.borderColor = Colors.gray.cgColor
-            textField.placeholder = "  + 7 ( _ _ _ ) _ _ _ - _ _ - _ _"
+            self.layer.cornerRadius = 4
+            self.layer.borderWidth = 0.4
+            self.layer.borderColor = Colors.gray.cgColor
+            self.placeholder = "  + 7 ( _ _ _ ) _ _ _ - _ _ - _ _"
             // пока без реального форматирования
             
             

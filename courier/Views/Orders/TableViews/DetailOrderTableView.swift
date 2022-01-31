@@ -11,12 +11,35 @@ class DetailOrderTableView: UIViewController {
     
     let tableView = UITableView()
     
+    weak private var detailOrderTableViewPresenter: DetailOrderTableViewPresenterProtocol!
+    
     let sc = CustomSegmentedControl(segments: .three, firstSegmentTitle: "ЗАВЕДЕНИЕ", secondSegmentTitle: "КЛИЕНТ", thirdSegmentTitle: "О ЗАКАЗЕ")
     
+    let shopSubview = ShopSubview()
+    let clientSubview = ClientSubview()
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         sc.changeSegmentedControlLinePosition()
-        tableView.reloadData()
+       // tableView.reloadData()
+        
+        switch sc.segmentedControl.selectedSegmentIndex {
+        case 0:
+            clientSubview.view.isHidden = true
+            shopSubview.view.isHidden = false
+            
+        case 1:
+            shopSubview.view.isHidden = true
+            clientSubview.view.isHidden = false
+            
+        case 2:
+            shopSubview.view.isHidden = true
+            clientSubview.view.isHidden = true
+            
+        default:
+
+            break
+        }
+        
     }
     
     @objc func backButtonAction(){
@@ -25,13 +48,17 @@ class DetailOrderTableView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = Colors.lightGray
         setupTableView()
         view.addSubview(sc.segmentedControlContainerView)
         sc.setContainerView()
-        view.backgroundColor = Colors.lightGray
+
         
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
+        self.view.addSubview(shopSubview.view)
+        self.view.addSubview(clientSubview.view)
+        clientSubview.view.isHidden = true
         
     }
 }
@@ -41,10 +68,6 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        
-        tableView.register(ShopCell.self, forCellReuseIdentifier: ShopCell.identifire)
-        tableView.register(ClientCell.self, forCellReuseIdentifier: ClientCell.identifire)
-        
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         
@@ -77,43 +100,22 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
+        shopSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6, width: self.view.frame.width - 20, height: 249)
+        clientSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6, width: self.view.frame.width - 20, height: 234)
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch sc.segmentedControl.selectedSegmentIndex {
-        case 0:
-            return 1
-            
-        case 1:
-            return 1
-            
-        case 2:
-            return 1
-            
-        default:
-            return 0
-        }
+        
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        switch sc.segmentedControl.selectedSegmentIndex {
-        case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ShopCell.identifire, for: indexPath) as! ShopCell
-            
-            return cell
-        case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ClientCell.identifire, for: indexPath) as! ClientCell
-            return cell
-        case 2:
-            print("Добавить третью ячейку")
-            
-            return UITableViewCell()
-            
-        default:
-            return UITableViewCell()
-        }
-        
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "orderCell", for: indexPath) //as! OrderCell
+
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -121,19 +123,8 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch sc.segmentedControl.selectedSegmentIndex{
-        case 0:
-            return 275 // + 20 компенсировать отступы между ячейками
-            
-        case 1:
-            return 254
-        case 2:
-            return 0
-            
-        default:
-            return 0
-        }
-        
+
+        return 0
     }
     
     /*
@@ -145,5 +136,9 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
      // Pass the selected object to the new view controller.
      }
      */
+    
+}
+
+extension DetailOrderTableView: DetailOrderTableViewProtocol{
     
 }

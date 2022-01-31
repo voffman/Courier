@@ -11,6 +11,8 @@ class OrderListTableView: UIViewController {
     
     let tableView = UITableView()
     
+    weak private var orderListTableViewPresenter: OrderListTableViewPresenterProtocol!
+    
     let sc = CustomSegmentedControl(segments: .two, firstSegmentTitle: "ТЕКУЩИЕ", secondSegmentTitle: "ВЫПОЛНЕННЫЕ")
     
     
@@ -30,7 +32,6 @@ class OrderListTableView: UIViewController {
         
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
-        
         
     }
 }
@@ -98,15 +99,15 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCell.identifire, for: indexPath) as! OrderListCell
 
-            cell.orderTransitionArrowButton.button.tag = indexPath.row
-            cell.orderTransitionArrowButton.button.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
+            cell.orderTransitionArrowButton.tag = indexPath.row
+            cell.orderTransitionArrowButton.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
             
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCompletedOrdersCell.identifire, for: indexPath) as! OrderListCompletedOrdersCell
             
-            cell.orderTransitionArrowButton.button.tag = indexPath.row
-            cell.orderTransitionArrowButton.button.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
+            cell.orderTransitionArrowButton.tag = indexPath.row
+            cell.orderTransitionArrowButton.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
 
             return cell
         default:
@@ -121,7 +122,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         print(rowIndex)
         let detailOrderTableView = DetailOrderTableView()
         detailOrderTableView.modalPresentationStyle = .fullScreen
-      //  dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
         self.present(detailOrderTableView, animated: true)
 
     }
@@ -151,4 +152,6 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-
+extension OrderListTableView: OrderListTableViewProtocol{
+    
+}

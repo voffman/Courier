@@ -15,81 +15,82 @@ class OrdersView: UIViewController {
     let helpLabel = CustomLabels(title: "Чтобы принимать заказы, нажмите кнопку «Начать работу»", textSize: 16, style: .regular, alignment: .center)
     let startWorkButton = CustomButtons(title: "НАЧАТЬ РАБОТУ", style: .primary)
     
+    weak private var ordersViewPresenter: OrdersViewPresenterProtocol!
     
     func setupNonActiveOrdersCardView(){
-        view.addSubview(cardView.view)
+        view.addSubview(cardView)
         cardView.setView()
         
         let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .withSOSButton)
         navigationBar.setupNavigationBar()
         
-        cardView.view.translatesAutoresizingMaskIntoConstraints = false
+        cardView.translatesAutoresizingMaskIntoConstraints = false
         
-        cardView.view.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
      
    // MARK: Поправить
         if #available(iOS 11.0, *) {
-            cardView.view.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 95).isActive = true
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9.25).isActive = true
         } else {
-            cardView.view.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight + 95).isActive = true
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9.25).isActive = true
         }
         
-        cardView.view.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
-        cardView.view.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
-        cardView.view.heightAnchor.constraint(equalToConstant: 265).isActive = true
-        cardView.view.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        cardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
+        cardView.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
+        cardView.heightAnchor.constraint(equalToConstant: 265).isActive = true
+        cardView.widthAnchor.constraint(equalToConstant: 340).isActive = true
 
     }
     
     func setupTitleLabel(){
         
-        cardView.view.addSubview(titleLabel.label)
+        cardView.addSubview(titleLabel)
         titleLabel.setLabel()
         
-        titleLabel.label.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        titleLabel.label.topAnchor.constraint(equalTo:  cardView.view.topAnchor, constant: 39).isActive = true
-        titleLabel.label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 39).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
     }
     
     
     func setupHelpLabel(){
         
-        cardView.view.addSubview(helpLabel.label)
+        cardView.addSubview(helpLabel)
         helpLabel.setLabel()
-        helpLabel.label.translatesAutoresizingMaskIntoConstraints = false
-        helpLabel.label.textAlignment = .center
+        helpLabel.translatesAutoresizingMaskIntoConstraints = false
+        helpLabel.textAlignment = .center
 
-        helpLabel.label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        helpLabel.label.topAnchor.constraint(equalTo:  titleLabel.label.bottomAnchor, constant: 25).isActive = true
+        helpLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        helpLabel.topAnchor.constraint(equalTo:  titleLabel.bottomAnchor, constant: 25).isActive = true
 
-        helpLabel.label.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 20).isActive = true
+        helpLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 20).isActive = true
     }
 
     
     func setupStartWorkButton(){
         
-        cardView.view.addSubview(startWorkButton.button)
+        cardView.addSubview(startWorkButton)
         startWorkButton.setButton()
-        startWorkButton.button.translatesAutoresizingMaskIntoConstraints = false
+        startWorkButton.translatesAutoresizingMaskIntoConstraints = false
         
-        startWorkButton.button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        startWorkButton.button.topAnchor.constraint(equalTo:  helpLabel.label.bottomAnchor, constant: 50).isActive = true
-        startWorkButton.button.leftAnchor.constraint(equalTo:  cardView.view.leftAnchor, constant: 85).isActive = true
-        startWorkButton.button.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -85).isActive = true
-        startWorkButton.button.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        startWorkButton.button.widthAnchor.constraint(equalToConstant: 320).isActive = true
-        startWorkButton.button.addTarget(self, action: #selector(startWorkButtonAction), for: .touchUpInside)
+        startWorkButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        startWorkButton.topAnchor.constraint(equalTo:  helpLabel.bottomAnchor, constant: 50).isActive = true
+        startWorkButton.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 85).isActive = true
+        startWorkButton.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -85).isActive = true
+        startWorkButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        startWorkButton.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        startWorkButton.addTarget(self, action: #selector(startWorkButtonAction), for: .touchUpInside)
     
     }
     
     func setupActiveOrdersView(){
         helpLabel.title = "Ожидайте поступления заказов"
         setupHelpLabel()
-        startWorkButton.button.isHidden = true
+        startWorkButton.isHidden = true
         startWorkButton.setButton()
-        cardView.view.heightAnchor.constraint(equalToConstant: 149).isActive = true
+        cardView.heightAnchor.constraint(equalToConstant: 149).isActive = true
         
     }
     
@@ -130,4 +131,8 @@ class OrdersView: UIViewController {
     }
     */
 
+}
+
+extension OrdersView: OrdersViewProtocol {
+    
 }

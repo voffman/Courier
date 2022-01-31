@@ -23,8 +23,6 @@ class CustomLabels: UILabel {
     var style: CustomLabelStyles?
     var alignment: NSTextAlignment? = .justified
     
-    var label = UILabel()
-    
     init(title: String, textSize: CGFloat, style: CustomLabelStyles){
         self.title = title
         self.textSize = textSize
@@ -48,32 +46,32 @@ class CustomLabels: UILabel {
         
         switch style {
         case .bold:
-            label.text = title
-            label.font = UIFont.boldSystemFont(ofSize: textSize)
-            label.textColor = Colors.black
-            label.numberOfLines = 0
+            self.text = title
+            self.font = UIFont.boldSystemFont(ofSize: textSize)
+            self.textColor = Colors.black
+            self.numberOfLines = 0
             
         case .regular:
-            label.text = title
-            label.font = UIFont.systemFont(ofSize: textSize)
-            label.textColor = Colors.black
-            label.textAlignment = .natural
-            label.numberOfLines = 0
+            self.text = title
+            self.font = UIFont.systemFont(ofSize: textSize)
+            self.textColor = Colors.black
+            self.textAlignment = .natural
+            self.numberOfLines = 0
             
         case .light:
-            label.text = title
-            label.font = UIFont.systemFont(ofSize: textSize)
-            label.textColor = Colors.gray
+            self.text = title
+            self.font = UIFont.systemFont(ofSize: textSize)
+            self.textColor = Colors.gray
             
         case .timerRed:
-            label.text = title
-            label.font = UIFont.systemFont(ofSize: textSize)
-            label.textColor = Colors.red
+            self.text = title
+            self.font = UIFont.systemFont(ofSize: textSize)
+            self.textColor = Colors.red
             
         case .primary:
-            label.text = title
-            label.font = UIFont.systemFont(ofSize: textSize)
-            label.textColor = Colors.orange
+            self.text = title
+            self.font = UIFont.systemFont(ofSize: textSize)
+            self.textColor = Colors.orange
             
         case .none:
             print("None")

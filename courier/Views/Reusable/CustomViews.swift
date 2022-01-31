@@ -1,5 +1,5 @@
 //
-//  CustomCardView.swift
+//  CustomCardself.swift
 //  courier
 //
 //  Created by Владимир Свиридов on 20.01.2022.
@@ -9,19 +9,15 @@ import UIKit.UIView
 
 class CustomViews: UIView {
     
-    enum CustomViewStyles {
+    enum CustomselfStyles {
         case withShadow
-        case timerRed
-        case timerGray
     }
     
-    let style: CustomViewStyles?
-    
-    let view = UIView()
+    let style: CustomselfStyles?
     
     let timerValue: String? = ""
     
-    init(style: CustomViewStyles){
+    init(style: CustomselfStyles){
         self.style = style
         super.init(frame: .zero)
     }
@@ -34,24 +30,12 @@ class CustomViews: UIView {
         
         switch style {
         case .withShadow:
-            view.backgroundColor = Colors.white
-            view.layer.cornerRadius = 8
-            view.layer.shadowOffset = CGSize(width: 0, height: 2)
-            view.layer.shadowRadius = 2 // Условно
-            view.layer.shadowOpacity = 0.21
-        
-        case .timerRed:
-            view.backgroundColor = Colors.lightRed
-            view.layer.cornerRadius = 4
-            view.layer.borderWidth = 1
-            view.layer.borderColor = Colors.scarletRed.cgColor
-            
-        case .timerGray:
-            view.backgroundColor = Colors.white
-            view.layer.cornerRadius = 4
-            view.layer.borderWidth = 1
-            view.layer.borderColor = Colors.lightGray.cgColor
-            
+            self.backgroundColor = Colors.white
+            self.layer.cornerRadius = 8
+            self.layer.shadowOffset = CGSize(width: 0, height: 2)
+            self.layer.shadowRadius = 2 // Условно
+            self.layer.shadowOpacity = 0.21
+
         case .none:
             print("None")
         }

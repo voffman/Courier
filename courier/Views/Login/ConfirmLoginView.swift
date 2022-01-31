@@ -18,114 +18,115 @@ class ConfirmLoginView: UIViewController {
     let confirmTextView = CustomTextFields(pHolder: "", style: .normal)
     let confirmButton = CustomButtons(title: "ПОДТВЕРДИТЬ", style: .primary)
     
+    weak private var confirmLoginViewPresenter: ConfirmLoginViewPresenterProtocol!
     
     func setupCardView(){
-        view.addSubview(cardView.view)
+        view.addSubview(cardView)
         cardView.setView()
         
-        cardView.view.translatesAutoresizingMaskIntoConstraints = false
+        cardView.translatesAutoresizingMaskIntoConstraints = false
         
-        cardView.view.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        cardView.view.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        cardView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        cardView.view.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
-        cardView.view.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
-        cardView.view.heightAnchor.constraint(equalToConstant: 394).isActive = true
-        cardView.view.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        cardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
+        cardView.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
+        cardView.heightAnchor.constraint(equalToConstant: 394).isActive = true
+        cardView.widthAnchor.constraint(equalToConstant: 340).isActive = true
     }
     
     func setupTitleLabel(){
-        cardView.view.addSubview(titleLabel.label)
+        cardView.addSubview(titleLabel)
         titleLabel.setLabel()
-        titleLabel.label.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        titleLabel.label.topAnchor.constraint(equalTo:  cardView.view.topAnchor, constant: 39).isActive = true
-        titleLabel.label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 39).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     
     func setupSMSLabel(){
-        cardView.view.addSubview(smsLabel.label)
+        cardView.addSubview(smsLabel)
         smsLabel.setLabel()
-        smsLabel.label.translatesAutoresizingMaskIntoConstraints = false
+        smsLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        smsLabel.label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        smsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        smsLabel.label.topAnchor.constraint(equalTo:  titleLabel.label.bottomAnchor, constant: 25).isActive = true
-        smsLabel.label.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 20).isActive = true
+        smsLabel.topAnchor.constraint(equalTo:  titleLabel.bottomAnchor, constant: 25).isActive = true
+        smsLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 20).isActive = true
         
     }
     
     func setupSendAgainLabel(){
-        cardView.view.addSubview(sendAgainLabel.label)
+        cardView.addSubview(sendAgainLabel)
         sendAgainLabel.setLabel()
-        sendAgainLabel.label.translatesAutoresizingMaskIntoConstraints = false
+        sendAgainLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        sendAgainLabel.label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        sendAgainLabel.label.topAnchor.constraint(equalTo:  smsLabel.label.bottomAnchor, constant: 45).isActive = true
-        sendAgainLabel.label.text = "Отправить еще раз через 0:50 сек"
+        sendAgainLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        sendAgainLabel.topAnchor.constraint(equalTo:  smsLabel.bottomAnchor, constant: 45).isActive = true
+        sendAgainLabel.text = "Отправить еще раз через 0:50 сек"
     }
     
     
     func setupSendAgainButton(){
-        cardView.view.addSubview(sendAgainButton.button)
+        cardView.addSubview(sendAgainButton)
         sendAgainButton.setButton()
-        sendAgainButton.button.translatesAutoresizingMaskIntoConstraints = false
+        sendAgainButton.translatesAutoresizingMaskIntoConstraints = false
         
-        sendAgainButton.button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        sendAgainButton.button.topAnchor.constraint(equalTo:  smsLabel.label.bottomAnchor, constant: 30).isActive = true
-        sendAgainButton.button.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 20).isActive = true
-        sendAgainButton.button.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -20).isActive = true
-        sendAgainButton.button.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        sendAgainButton.button.widthAnchor.constraint(equalToConstant: 320).isActive = true
-        sendAgainButton.button.setTitle("ОТПРАВИТЬ ЕЩЕ РАЗ", for: .normal)
-        sendAgainButton.button.addTarget(self, action: #selector(sendAgainButtonAction), for: .touchUpInside)
+        sendAgainButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        sendAgainButton.topAnchor.constraint(equalTo:  smsLabel.bottomAnchor, constant: 30).isActive = true
+        sendAgainButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 20).isActive = true
+        sendAgainButton.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -20).isActive = true
+        sendAgainButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        sendAgainButton.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        sendAgainButton.setTitle("ОТПРАВИТЬ ЕЩЕ РАЗ", for: .normal)
+        sendAgainButton.addTarget(self, action: #selector(sendAgainButtonAction), for: .touchUpInside)
         
     }
     
     
     func setupCodeConfirmLabel(){
-        cardView.view.addSubview(codeConfirmLabel.label)
+        cardView.addSubview(codeConfirmLabel)
         codeConfirmLabel.setLabel()
         
-        codeConfirmLabel.label.translatesAutoresizingMaskIntoConstraints = false
+        codeConfirmLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        codeConfirmLabel.label.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 20).isActive = true
-        codeConfirmLabel.label.topAnchor.constraint(equalTo:  smsLabel.label.bottomAnchor, constant: 100).isActive = true
-        codeConfirmLabel.label.text = "Код подтверждения"
+        codeConfirmLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 20).isActive = true
+        codeConfirmLabel.topAnchor.constraint(equalTo:  smsLabel.bottomAnchor, constant: 100).isActive = true
+        codeConfirmLabel.text = "Код подтверждения"
         
     }
     
     func setupConfirmTextField(){
-        cardView.view.addSubview(confirmTextView.textField)
+        cardView.addSubview(confirmTextView)
         confirmTextView.setTextField()
         
-        confirmTextView.textField.translatesAutoresizingMaskIntoConstraints = false
-        confirmTextView.textField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        confirmTextView.textField.topAnchor.constraint(equalTo:  codeConfirmLabel.label.bottomAnchor, constant: 10).isActive = true
-        confirmTextView.textField.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 20).isActive = true
-        confirmTextView.textField.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -20).isActive = true
+        confirmTextView.translatesAutoresizingMaskIntoConstraints = false
+        confirmTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        confirmTextView.topAnchor.constraint(equalTo:  codeConfirmLabel.bottomAnchor, constant: 10).isActive = true
+        confirmTextView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 20).isActive = true
+        confirmTextView.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -20).isActive = true
         
-        confirmTextView.textField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        confirmTextView.textField.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        confirmTextView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        confirmTextView.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
     }
     
     func setupConfirmButton(){
-        cardView.view.addSubview(confirmButton.button)
+        cardView.addSubview(confirmButton)
         confirmButton.setButton()
         
-        confirmButton.button.translatesAutoresizingMaskIntoConstraints = false
-        confirmButton.button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        confirmButton.button.topAnchor.constraint(equalTo:  confirmTextView.textField.bottomAnchor, constant: 10).isActive = true
-        confirmButton.button.leftAnchor.constraint(equalTo: cardView.view.leftAnchor, constant: 20).isActive = true
-        confirmButton.button.rightAnchor.constraint(equalTo:  cardView.view.rightAnchor, constant: -20).isActive = true
-        confirmButton.button.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        confirmButton.button.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        confirmButton.translatesAutoresizingMaskIntoConstraints = false
+        confirmButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        confirmButton.topAnchor.constraint(equalTo:  confirmTextView.bottomAnchor, constant: 10).isActive = true
+        confirmButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 20).isActive = true
+        confirmButton.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -20).isActive = true
+        confirmButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        confirmButton.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
-        confirmButton.button.setTitle("ПОДТВЕРДИТЬ", for: .normal)
+        confirmButton.setTitle("ПОДТВЕРДИТЬ", for: .normal)
         
-        confirmButton.button.addTarget(self, action: #selector(confirmButtonAction), for: .touchUpInside)
+        confirmButton.addTarget(self, action: #selector(confirmButtonAction), for: .touchUpInside)
     }
     
     
@@ -139,7 +140,7 @@ class ConfirmLoginView: UIViewController {
     @objc func sendAgainButtonAction(sender: UIButton!){
         // Заглушка
         setupSendAgainLabel()
-        sendAgainButton.button.isHidden = true
+        sendAgainButton.isHidden = true
         confirmButton.style = .secondary
         confirmButton.setButton()
     }
@@ -176,6 +177,10 @@ class ConfirmLoginView: UIViewController {
      // Pass the selected object to the new view controller.
      }
      */
+    
+}
+
+extension ConfirmLoginView: ConfirmLoginViewProtocol{
     
 }
 
