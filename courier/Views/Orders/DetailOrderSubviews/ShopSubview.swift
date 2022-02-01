@@ -9,6 +9,8 @@ import UIKit
 
 class ShopSubview: UIViewController {
     
+    var targetView = UIView()
+    
     weak private var shopSubviewPresenter: ShopSubviewPresenterProtocol!
     
     let cardView = CustomViews(style: .withShadow)
@@ -82,7 +84,7 @@ class ShopSubview: UIViewController {
         toCallButton.translatesAutoresizingMaskIntoConstraints = false
         toCallButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 191).isActive = true
         toCallButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
-        toCallButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = false
+        toCallButton.rightAnchor.constraint(equalTo: cardView.centerXAnchor, constant: -5).isActive = true
         toCallButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         toCallButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
        // toCallButton.button.addTarget(self, action: #selector(changeButtonState), for: .touchUpInside)
@@ -92,12 +94,12 @@ class ShopSubview: UIViewController {
     func setupRouteButton(){
         routeButton.translatesAutoresizingMaskIntoConstraints = false
         routeButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 191).isActive = true
+        routeButton.leftAnchor.constraint(equalTo: cardView.centerXAnchor, constant: 5).isActive = true
         routeButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = true
         
         routeButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         routeButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
-    
     
     func setupCell(){
         setupCardView()

@@ -9,15 +9,14 @@ import UIKit.UIView
 
 class CustomViews: UIView {
     
-    enum CustomselfStyles {
+    enum CustomViewStyles {
         case withShadow
+        case withCircleCut
     }
     
-    let style: CustomselfStyles?
-    
-    let timerValue: String? = ""
-    
-    init(style: CustomselfStyles){
+    let style: CustomViewStyles?
+
+    init(style: CustomViewStyles){
         self.style = style
         super.init(frame: .zero)
     }
@@ -30,6 +29,13 @@ class CustomViews: UIView {
         
         switch style {
         case .withShadow:
+            self.backgroundColor = Colors.white
+            self.layer.cornerRadius = 8
+            self.layer.shadowOffset = CGSize(width: 0, height: 2)
+            self.layer.shadowRadius = 2 // Условно
+            self.layer.shadowOpacity = 0.21
+        // MARK: Заглушка
+        case .withCircleCut:
             self.backgroundColor = Colors.white
             self.layer.cornerRadius = 8
             self.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -53,3 +59,4 @@ class CustomViews: UIView {
      */
     
 }
+

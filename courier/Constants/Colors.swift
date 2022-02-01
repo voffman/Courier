@@ -18,13 +18,14 @@ struct Colors {
     static let green = UIColor(hexString: "#78b833")
     static let orange = UIColor(hexString: "#fab600")
     static let red = UIColor(hexString: "#e31e24")
-    static let white2 = UIColor(hexString: "#fefefe") // не используется в XD
+    static let white2 = UIColor(hexString: "#fefefe")
     static let darkGray = UIColor(hexString: "#808080")
     static let lightBlueDark = UIColor(hexString: "#0090cc")
     static let lightBlue = UIColor(hexString: "#00a0e3")
-    static let white3 = UIColor(hexString: "#fcfcfc") // не используется в XD
+    static let white3 = UIColor(hexString: "#fcfcfc")
     static let lightRed = UIColor(hexString: "#FFF5F5")
     static let scarletRed = UIColor(hexString: "#FF8083")
+    static let backgroundColor = UIColor(hexString: "#f7f7f7")
     
 }
 

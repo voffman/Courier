@@ -22,13 +22,13 @@ class OrderListTableView: UIViewController {
     }
     
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         view.addSubview(sc.segmentedControlContainerView)
         sc.setContainerView()
-        view.backgroundColor = Colors.lightGray
+        self.view.backgroundColor = Colors.backgroundColor
+        self.tableView.backgroundColor = Colors.backgroundColor
         
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()

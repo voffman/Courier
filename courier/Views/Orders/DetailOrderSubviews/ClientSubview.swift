@@ -20,8 +20,13 @@ class ClientSubview: UIViewController {
     let addressImage = UIImageView(image: UIImage(named: "Place"))
     let addressTitlelabel = CustomLabels(title: "Адрес", textSize: 14, style: .light)
     let addressLabel = CustomLabels(title: "Казыбек Би, Нуркена Абдирова, 7, дом 8, квартира 42", textSize: 14, style: .regular)
-    
     let routeButton = CustomButtons(title: "МАРШРУТ", style: .normal)
+    
+    let commentCardView = CustomViews(style: .withShadow)
+    let commentImage = UIImageView(image: UIImage(named: "Comment"))
+    let commentTitleLabel = CustomLabels(title: "Комментарий клиента", textSize: 14, style: .light, alignment: .center)
+    let commentLabel = CustomLabels(title: "Пожалуйста, пусть курьер позвонит, когда подъедет. Я хочу встретить его и забрать заказ. Это сюрприз для детей.", textSize: 16, style: .regular, alignment: .justified)
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +49,15 @@ class ClientSubview: UIViewController {
         addressLabel.setLabel()
         self.view.addSubview(routeButton)
         routeButton.setButton()
+        self.view.addSubview(commentCardView)
+        commentCardView.setView()
+        self.view.addSubview(commentImage)
+        self.view.addSubview(commentTitleLabel)
+        commentTitleLabel.setLabel()
+        self.view.addSubview(commentLabel)
+        commentLabel.setLabel()
+
+        
     }
     
     func setupCardView(){
@@ -122,6 +136,42 @@ class ClientSubview: UIViewController {
        // routeButton.button.addTarget(self, action: #selector(routeButtonAction), for: .touchUpInside)
     }
     
+    // MARK: Комментарий клиента
+    
+    func setupCommentCardView(){
+        commentCardView.translatesAutoresizingMaskIntoConstraints = false
+        commentCardView.topAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 30).isActive = true
+        commentCardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 0).isActive = true
+        commentCardView.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: 0).isActive = true
+        commentCardView.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        commentCardView.widthAnchor.constraint(equalToConstant: self.view.frame.size.width).isActive = true
+        // поправка на отступы CardView
+      //  commentCardView.makeClearHole(rect: CGRect(x: self.view.frame.size.width/2 - 20, y: -20, width: 40, height: 40))
+    }
+    
+    
+    func setupCommentTitleLabel(){
+        commentTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        commentTitleLabel.topAnchor.constraint(equalTo: commentCardView.topAnchor, constant: 28).isActive = true
+        commentTitleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        //commentTitleLabel.leftAnchor.constraint(equalTo: commentCardView.leftAnchor, constant: 16).isActive = true
+        //commentTitleLabel.rightAnchor.constraint(equalTo: commentCardView.rightAnchor, constant: -16).isActive = true
+    }
+    
+    func setupCommentImage(){
+        commentImage.translatesAutoresizingMaskIntoConstraints = false
+        commentImage.topAnchor.constraint(equalTo: commentCardView.topAnchor, constant: -20).isActive = true
+        commentImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+    }
+    
+    func setupCommentLabel(){
+        commentLabel.translatesAutoresizingMaskIntoConstraints = false
+        commentLabel.topAnchor.constraint(equalTo: commentCardView.topAnchor, constant: 54).isActive = true
+        commentLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        commentLabel.leftAnchor.constraint(equalTo: commentCardView.leftAnchor, constant: 16).isActive = true
+        commentLabel.rightAnchor.constraint(equalTo: commentCardView.rightAnchor, constant: -16).isActive = true
+    }
+    
     
     func setupCell(){
         setupCardView()
@@ -133,7 +183,10 @@ class ClientSubview: UIViewController {
         setupAddressTitleLabel()
         setupAddressLabel()
         setupRouteButton()
-        
+        setupCommentCardView()
+        setupCommentImage()
+        setupCommentTitleLabel()
+        setupCommentLabel()
     }
     
     override func viewDidLayoutSubviews() {
@@ -152,6 +205,17 @@ class ClientSubview: UIViewController {
      */
     
 }
+//MARK: видимо сделать в отдельном файле
+/*
+extension ClientSubview {
+    // тут вью с комментарием пользователя
+    let cardView = CustomViews(style: .withShadow) // .withCircleCut
+    let commentImage = UIImageView(image: UIImage(named: "Comment"))
+    
+    
+}
+*/
+
 extension ClientSubview: ClientSubviewProtocol{
     
     public func configure(clientName: String?,

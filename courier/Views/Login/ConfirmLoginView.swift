@@ -147,7 +147,7 @@ class ConfirmLoginView: UIViewController {
     
     
     func setupView(){
-        view.backgroundColor = Colors.lightGray
+        view.backgroundColor = Colors.backgroundColor
         
         setupCardView()
         setupTitleLabel()

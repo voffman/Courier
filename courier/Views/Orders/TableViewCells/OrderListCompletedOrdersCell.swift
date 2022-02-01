@@ -190,6 +190,7 @@ class OrderListCompletedOrdersCell: UITableViewCell {
         
         orderToAddressLabel.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -10).isActive = true
     }
+    
 
     func setupCell(){
         insertPaddingsBetweenCells()

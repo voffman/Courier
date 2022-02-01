@@ -105,7 +105,7 @@ class OrdersView: UIViewController {
     }
 
     func setupView(){
-        view.backgroundColor = Colors.lightGray // условно
+        view.backgroundColor = Colors.backgroundColor
 
         setupNonActiveOrdersCardView()
         setupTitleLabel()

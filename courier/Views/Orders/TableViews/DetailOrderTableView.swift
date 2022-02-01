@@ -17,23 +17,36 @@ class DetailOrderTableView: UIViewController {
     
     let shopSubview = ShopSubview()
     let clientSubview = ClientSubview()
+    let stateSubview = StateSubview()
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         sc.changeSegmentedControlLinePosition()
        // tableView.reloadData()
-        
+
         switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
             clientSubview.view.isHidden = true
             shopSubview.view.isHidden = false
+            stateSubview.view.isHidden = false
+            stateSubview.view.frame = CGRect(x: 0,
+                                             y: shopSubview.view.frame.height * 1.75,
+                                             width: self.view.frame.width,
+                                             height: self.view.frame.height/2)
+
             
         case 1:
             shopSubview.view.isHidden = true
             clientSubview.view.isHidden = false
+            stateSubview.view.isHidden = false
+            stateSubview.view.frame = CGRect(x: 0,
+                                             y: clientSubview.view.frame.height * 1.75,
+                                             width: self.view.frame.width,
+                                             height: self.view.frame.height/2)
             
         case 2:
             shopSubview.view.isHidden = true
             clientSubview.view.isHidden = true
+            stateSubview.view.isHidden = true
             
         default:
 
@@ -48,16 +61,19 @@ class DetailOrderTableView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Colors.lightGray
+        self.view.backgroundColor = Colors.backgroundColor
+        self.tableView.backgroundColor = Colors.backgroundColor
         setupTableView()
         view.addSubview(sc.segmentedControlContainerView)
         sc.setContainerView()
-
         
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
         self.view.addSubview(shopSubview.view)
+
         self.view.addSubview(clientSubview.view)
+        self.view.addSubview(stateSubview.view)
+        stateSubview.targetView = self.view
         clientSubview.view.isHidden = true
         
     }
@@ -101,8 +117,11 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
-        shopSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6, width: self.view.frame.width - 20, height: 249)
-        clientSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6, width: self.view.frame.width - 20, height: 234)
+        shopSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 255)
+        clientSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 234)
+       // stateSubview.view.translatesAutoresizingMaskIntoConstraints = false
+        stateSubview.view.frame = CGRect(x: 0, y: shopSubview.view.frame.height * 1.75, width: self.view.frame.width, height: self.view.frame.height/2)
+        stateSubview.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 70).isActive = true
         
     }
     

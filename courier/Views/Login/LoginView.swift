@@ -91,7 +91,7 @@ class LoginView: UIViewController {
     }
     
     func setupView(){
-        view.backgroundColor = Colors.lightGray // условно
+        view.backgroundColor = Colors.backgroundColor
         
         setupCardView()
         setupTitleLabel()
