@@ -123,8 +123,14 @@ class StateSubview: UIViewController {
         
         case 4:
             setupArrivedToClient()
-            sender.tag = 0
+
             
+        case 5:
+            let thanksView = ThanksView()
+           // thanksView.modalPresentationStyle = .fullScreen
+            present(thanksView, animated: true, completion: nil)
+            
+            sender.tag = 0
         default:
             sender.tag = 0
         }
@@ -133,7 +139,7 @@ class StateSubview: UIViewController {
     }
     
     //MARK: Состояния ячейки
-    // столько же состояний по сути..
+
     func setupAcceptedOrderState(){
         stateButton.title = "ПРИБЫЛ В ЗАВЕДЕНИЕ"
         stateButton.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 130).isActive = true
@@ -161,7 +167,7 @@ class StateSubview: UIViewController {
         stateButton.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
         stateButton.setButton()
         hideTimer(isHidden: true)
-        stateButton.isEnabled = false
+       // stateButton.isEnabled = false
     }
     
     func setupCell(){

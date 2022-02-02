@@ -12,6 +12,7 @@ class CustomNavigationBars: UINavigationBar {
     enum NavigationBarStyles {
         case withSOSButton
         case withBackButton
+        case withoutBackButton
     }
     
     var navigationBar = UINavigationBar(frame: CGRect())
@@ -75,7 +76,6 @@ class CustomNavigationBars: UINavigationBar {
             label.text = price
             label.textColor = Colors.gray
             label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-            // начать отсюда
             
             let barButtonImage = UIImage(named: "BackArrow")
             barButton.image = barButtonImage
@@ -86,6 +86,19 @@ class CustomNavigationBars: UINavigationBar {
             navigationItem.leftBarButtonItem = barButton
             navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: label)
             navigationItem.title = orderId
+            navigationBar.setItems([navigationItem], animated: false)
+            
+        case .withoutBackButton:
+
+            let orderId: String = "Заказ № 356167"
+            let label = UILabel()
+            label.text = orderId
+            label.textColor = Colors.black
+            label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+
+            navigationBar.backgroundColor = .white
+
+            navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
             navigationBar.setItems([navigationItem], animated: false)
             
         case .none:

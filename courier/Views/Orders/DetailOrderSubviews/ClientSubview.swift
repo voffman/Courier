@@ -143,7 +143,7 @@ class ClientSubview: UIViewController {
         commentCardView.topAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 30).isActive = true
         commentCardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 0).isActive = true
         commentCardView.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: 0).isActive = true
-        commentCardView.heightAnchor.constraint(equalToConstant: 140).isActive = true
+       // commentCardView.heightAnchor.constraint(equalToConstant: 140).isActive = true
         commentCardView.widthAnchor.constraint(equalToConstant: self.view.frame.size.width).isActive = true
         // поправка на отступы CardView
       //  commentCardView.makeClearHole(rect: CGRect(x: self.view.frame.size.width/2 - 20, y: -20, width: 40, height: 40))
@@ -170,6 +170,7 @@ class ClientSubview: UIViewController {
         commentLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         commentLabel.leftAnchor.constraint(equalTo: commentCardView.leftAnchor, constant: 16).isActive = true
         commentLabel.rightAnchor.constraint(equalTo: commentCardView.rightAnchor, constant: -16).isActive = true
+        commentLabel.bottomAnchor.constraint(equalTo: commentCardView.bottomAnchor, constant: -20).isActive = true
     }
     
     

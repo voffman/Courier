@@ -10,6 +10,7 @@ import UIKit
 class DetailOrderTableView: UIViewController {
     
     let tableView = UITableView()
+    let numberRows = 5
     
     weak private var detailOrderTableViewPresenter: DetailOrderTableViewPresenterProtocol!
     
@@ -28,6 +29,7 @@ class DetailOrderTableView: UIViewController {
             clientSubview.view.isHidden = true
             shopSubview.view.isHidden = false
             stateSubview.view.isHidden = false
+            tableView.isHidden = true
             stateSubview.view.frame = CGRect(x: 0,
                                              y: shopSubview.view.frame.height * 1.75,
                                              width: self.view.frame.width,
@@ -38,6 +40,7 @@ class DetailOrderTableView: UIViewController {
             shopSubview.view.isHidden = true
             clientSubview.view.isHidden = false
             stateSubview.view.isHidden = false
+            tableView.isHidden = true
             stateSubview.view.frame = CGRect(x: 0,
                                              y: clientSubview.view.frame.height * 1.75,
                                              width: self.view.frame.width,
@@ -46,7 +49,9 @@ class DetailOrderTableView: UIViewController {
         case 2:
             shopSubview.view.isHidden = true
             clientSubview.view.isHidden = true
-            stateSubview.view.isHidden = true
+            stateSubview.view.isHidden = false
+            tableView.isHidden = false
+            tableView.reloadData()
             
         default:
 
@@ -61,9 +66,9 @@ class DetailOrderTableView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTableView()
         self.view.backgroundColor = Colors.backgroundColor
         self.tableView.backgroundColor = Colors.backgroundColor
-        setupTableView()
         view.addSubview(sc.segmentedControlContainerView)
         sc.setContainerView()
         
@@ -75,6 +80,7 @@ class DetailOrderTableView: UIViewController {
         self.view.addSubview(stateSubview.view)
         stateSubview.targetView = self.view
         clientSubview.view.isHidden = true
+        tableView.isHidden = true
         
     }
 }
@@ -84,9 +90,9 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = .none
+        tableView.register(DetailOrderCell.self, forCellReuseIdentifier: DetailOrderCell.identifire)
+        tableView.separatorStyle = .singleLine
         tableView.allowsSelection = false
-        
         view.addSubview(tableView)
     }
     
@@ -109,13 +115,13 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight + 35).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight + 45).isActive = true
         } else {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight + 35).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight + 45).isActive = true
         }
-        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         
         shopSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 255)
         clientSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 234)
@@ -124,17 +130,37 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         stateSubview.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 70).isActive = true
         
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
         
-        return 0
+        return numberRows /*checkModel.count */ + 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: DetailOrderCell.identifire, for: indexPath) as! DetailOrderCell
+        
+        cell.configure(orderName: "а", orderCount: "б", orderPrice: "в")
+        
+        let totalSumIndex = numberRows + 1
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "orderCell", for: indexPath) //as! OrderCell
+        let changeIndex = numberRows + 2
+        let paymentIndex = numberRows + 3
 
+        if indexPath.row == totalSumIndex{
+            cell.configure(orderName: "Итого", orderCount: "", orderPrice: "4 000" + " тг")
+        }
+        if indexPath.row == changeIndex{
+            cell.configure(orderName: "Сдача с", orderCount: "", orderPrice: "5 000" + " тг")
+        }
+        if indexPath.row == paymentIndex{
+            cell.configure(orderName: "Наличными", orderCount: "", orderPrice: "Неоплачен")
+        }
+        
         return cell
+
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -142,8 +168,8 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        return 0
+        
+        return 29
     }
     
     /*
