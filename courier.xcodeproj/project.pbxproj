@@ -29,6 +29,7 @@
 		502618BD27A7B18F00CEA57C /* CustomTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618BC27A7B18F00CEA57C /* CustomTimer.swift */; };
 		502618E327A7EA2B00CEA57C /* ShopSubviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618E227A7EA2A00CEA57C /* ShopSubviewPresenter.swift */; };
 		502618E527A7EDC500CEA57C /* ClientSubviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618E427A7EDC500CEA57C /* ClientSubviewPresenter.swift */; };
+		503622E927ABC89C00F39838 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503622E827ABC89C00F39838 /* Coordinates.swift */; };
 		5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316027A0F679000777A9 /* CustomAlerts.swift */; };
 		5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */; };
 		5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC7279A734100E4A686 /* OrderListTableView.swift */; };
@@ -66,6 +67,7 @@
 		502618BC27A7B18F00CEA57C /* CustomTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTimer.swift; sourceTree = "<group>"; };
 		502618E227A7EA2A00CEA57C /* ShopSubviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopSubviewPresenter.swift; sourceTree = "<group>"; };
 		502618E427A7EDC500CEA57C /* ClientSubviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSubviewPresenter.swift; sourceTree = "<group>"; };
+		503622E827ABC89C00F39838 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		5043316027A0F679000777A9 /* CustomAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
 		5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		5062EFC7279A734100E4A686 /* OrderListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListTableView.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		5016304827968B4800D0734F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				503622E827ABC89C00F39838 /* Coordinates.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */,
 				501CE7C827AA88B700C8DC05 /* ThanksView.swift in Sources */,
 				502618B027A78E5A00CEA57C /* LoginPresenter.swift in Sources */,
+				503622E927ABC89C00F39838 /* Coordinates.swift in Sources */,
 				5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */,
 				5067AEED27A8F36200010950 /* StateSubview.swift in Sources */,
 				500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */,

@@ -11,7 +11,7 @@ class ShopSubview: UIViewController {
     
     var targetView = UIView()
     
-    weak private var shopSubviewPresenter: ShopSubviewPresenterProtocol!
+    private var presenter: ShopSubviewPresenterProtocol?
     
     let cardView = CustomViews(style: .withShadow)
     let titleLabel = CustomLabels(title: "Направляйтесь      в отправную точку", textSize: 20, style: .bold, alignment: .justified)
@@ -24,6 +24,9 @@ class ShopSubview: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let presenter = ShopSubviewPresenter(view: self)
+        presenter.view = self
+        self.presenter = presenter
         addSubviews()
 
     }
@@ -45,31 +48,49 @@ class ShopSubview: UIViewController {
     }
     
     func setupCardView(){
-        cardView.frame = CGRect(x: 0,
-                                     y: 0,
-                                     width:  self.view.frame.size.width,
-                                     height:  self.view.frame.size.height)
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        
+        cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+     
+   // MARK: Поправить
+        if #available(iOS 11.0, *), UIScreen.main.bounds.size.height > 640{
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 0).isActive = true
+        } else if UIScreen.main.bounds.size.height > 640 {
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 0).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height <= 640{
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 20).isActive = true
+        }
+        
+        cardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 0).isActive = true
+        cardView.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: 0).isActive = true
+        cardView.heightAnchor.constraint(equalToConstant: 265).isActive = true
+        cardView.widthAnchor.constraint(equalToConstant: 340).isActive = true
     }
     
     func setupTitleLabel(){
-       titleLabel.frame = CGRect(x: 16,
-                                          y: 14,
-                                          width: 180,
-                                          height: 50)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 14).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        titleLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        titleLabel.widthAnchor.constraint(equalToConstant: 180).isActive = true
     }
     
     func setupSourceLabel(){
-        sourceLabel.frame = CGRect(x: 16,
-                                              y: 81,
-                                              width: sourceLabel.intrinsicContentSize.width,
-                                              height: sourceLabel.intrinsicContentSize.height)
+        sourceLabel.translatesAutoresizingMaskIntoConstraints = false
+        sourceLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 81).isActive = true
+        sourceLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        sourceLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = true
+
     }
     
     func setupOrderFromImage(){
-        orderFromImage.frame = CGRect(x: 16,
-                                      y: 118,
-                                      width: 40,
-                                      height: 40)
+        orderFromImage.translatesAutoresizingMaskIntoConstraints = false
+        orderFromImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 118).isActive = true
+        orderFromImage.leftAnchor.constraint(equalTo:cardView.leftAnchor, constant: 16).isActive = true
+        orderFromImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        orderFromImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
     func setupAddressLabel(){
@@ -87,7 +108,7 @@ class ShopSubview: UIViewController {
         toCallButton.rightAnchor.constraint(equalTo: cardView.centerXAnchor, constant: -5).isActive = true
         toCallButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         toCallButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-       // toCallButton.button.addTarget(self, action: #selector(changeButtonState), for: .touchUpInside)
+        toCallButton.addTarget(self, action: #selector(toCallButtonAction), for: .touchUpInside)
         
     }
     
@@ -99,7 +120,17 @@ class ShopSubview: UIViewController {
         
         routeButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         routeButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        routeButton.addTarget(self, action: #selector(routeButtonAction), for: .touchUpInside)
     }
+    
+    @objc func routeButtonAction(){
+        presenter?.getCoordinates()
+    }
+    
+    @objc func toCallButtonAction(){
+        presenter?.getPhoneNumber()
+    }
+    
     
     func setupCell(){
         setupCardView()
@@ -129,6 +160,12 @@ class ShopSubview: UIViewController {
 }
 
 extension ShopSubview: ShopSubviewProtocol{
+   func openApp(appURL: URL) {
+       if UIApplication.shared.canOpenURL(appURL) {
+        UIApplication.shared.open(appURL)
+       }
+    }
+    
     public func configure(source: String?, address: String?){
         self.sourceLabel.text = source
         self.addressLabel.text = address

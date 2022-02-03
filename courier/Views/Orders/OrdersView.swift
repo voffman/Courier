@@ -15,7 +15,7 @@ class OrdersView: UIViewController {
     let helpLabel = CustomLabels(title: "Чтобы принимать заказы, нажмите кнопку «Начать работу»", textSize: 16, style: .regular, alignment: .center)
     let startWorkButton = CustomButtons(title: "НАЧАТЬ РАБОТУ", style: .primary)
     
-    weak private var ordersViewPresenter: OrdersViewPresenterProtocol!
+    private var presenter: OrdersViewPresenterProtocol?
     
     func setupNonActiveOrdersCardView(){
         view.addSubview(cardView)
@@ -116,6 +116,9 @@ class OrdersView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let presenter = OrdersPresenter(view:  self)
+        self.presenter = presenter
+        
         setupView()
         // Do any additional setup after loading the view.
     }

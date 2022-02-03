@@ -17,7 +17,8 @@ class OrderListCell: UITableViewCell {
     let orderSourceLabel = CustomLabels(title: "Источник (название заведения)", textSize: 14, style: .regular)
     let orderLineImage = UIImageView(image: UIImage(named: "Line"))
     
-    let orderTransitionArrowButton = CustomButtons(title: "", style: .cellTransition)
+    let orderTransitionArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
+    let orderTransitionArrowButton = CustomButtons(title: "", style: .transparent)
     
     let orderFromImage = UIImageView(image: UIImage(named: "Storefront"))
     let orderDownArrowImage = UIImageView(image: UIImage(named: "Arrow_downward"))
@@ -47,6 +48,7 @@ class OrderListCell: UITableViewCell {
         orderPriceLabel.setLabel()
         contentView.addSubview(orderSourceLabel)
         orderSourceLabel.setLabel()
+        contentView.addSubview(orderTransitionArrowButtonImage)
         contentView.addSubview(orderTransitionArrowButton)
         orderTransitionArrowButton.setButton()
         contentView.addSubview(orderLineImage)
@@ -131,13 +133,20 @@ class OrderListCell: UITableViewCell {
                                               height: orderSourceLabel.intrinsicContentSize.height)
     }
     
+    func setupTransitionArrowButtonImage(){
+        orderTransitionArrowButtonImage.translatesAutoresizingMaskIntoConstraints = false
+        orderTransitionArrowButtonImage.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 26).isActive = true
+        orderTransitionArrowButtonImage.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -20).isActive = true
+        orderTransitionArrowButtonImage.heightAnchor.constraint(equalToConstant: 12).isActive = true
+        orderTransitionArrowButtonImage.widthAnchor.constraint(equalToConstant: 7.4).isActive = true
+        
+    }
     func setupTransitionArrowButton(){
         orderTransitionArrowButton.translatesAutoresizingMaskIntoConstraints = false
-        orderTransitionArrowButton.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 26).isActive = true
-        orderTransitionArrowButton.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -20).isActive = true
-        orderTransitionArrowButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        orderTransitionArrowButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        
+        orderTransitionArrowButton.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 5).isActive = true
+        orderTransitionArrowButton.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -10).isActive = true
+        orderTransitionArrowButton.heightAnchor.constraint(equalToConstant: cardView.frame.height / 5).isActive = true
+        orderTransitionArrowButton.widthAnchor.constraint(equalToConstant: cardView.frame.width - 20).isActive = true
     }
     
     func setupLineImage(){
@@ -346,6 +355,7 @@ class OrderListCell: UITableViewCell {
         setupIdLabel()
         setupPriceLabel()
         setupSourceLabel()
+        setupTransitionArrowButtonImage()
         setupTransitionArrowButton()
         setupLineImage()
         

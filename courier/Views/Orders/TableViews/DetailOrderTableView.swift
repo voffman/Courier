@@ -12,7 +12,7 @@ class DetailOrderTableView: UIViewController {
     let tableView = UITableView()
     let numberRows = 5
     
-    weak private var detailOrderTableViewPresenter: DetailOrderTableViewPresenterProtocol!
+    private var presenter: DetailOrderTableViewPresenterProtocol?
     
     let sc = CustomSegmentedControl(segments: .three, firstSegmentTitle: "ЗАВЕДЕНИЕ", secondSegmentTitle: "КЛИЕНТ", thirdSegmentTitle: "О ЗАКАЗЕ")
     
@@ -66,6 +66,9 @@ class DetailOrderTableView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let presenter = DetailOrderPresenter(view:  self)
+        self.presenter = presenter
+        
         setupTableView()
         self.view.backgroundColor = Colors.backgroundColor
         self.tableView.backgroundColor = Colors.backgroundColor
@@ -125,10 +128,8 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
         shopSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 255)
         clientSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 234)
-       // stateSubview.view.translatesAutoresizingMaskIntoConstraints = false
         stateSubview.view.frame = CGRect(x: 0, y: shopSubview.view.frame.height * 1.75, width: self.view.frame.width, height: self.view.frame.height/2)
-        stateSubview.view.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 70).isActive = true
-        
+     
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

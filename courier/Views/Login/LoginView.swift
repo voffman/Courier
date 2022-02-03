@@ -15,7 +15,7 @@ class LoginView: UIViewController {
     let phoneNumberTextField = CustomTextFields(pHolder: "  + 7 ( _ _ _ ) _ _ _ - _ _ - _ _", style: .withPhoneNumberFormatter)
     let loginButton = CustomButtons(title: "Вход", style: .primary)
     
-    weak private var loginViewPresenter: LoginViewPresenterProtocol!
+    private var presenter: LoginViewPresenterProtocol?
     
     func setupCardView(){
         view.addSubview(cardView)
@@ -101,7 +101,7 @@ class LoginView: UIViewController {
     }
     
     @objc func loginButtonAction(sender: UIButton!){
-        loginViewPresenter?.toLogin()
+        presenter?.toLogin()
         let ordersView = OrdersView()
         ordersView.modalPresentationStyle = .fullScreen
 
@@ -112,6 +112,9 @@ class LoginView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let presenter = LoginPresenter(view:  self)
+        self.presenter = presenter
+        
         setupView()
         
         // Do any additional setup after loading the view.

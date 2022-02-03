@@ -126,11 +126,14 @@ class StateSubview: UIViewController {
 
             
         case 5:
+            stateButton.isEnabled = false
             let thanksView = ThanksView()
-           // thanksView.modalPresentationStyle = .fullScreen
-            present(thanksView, animated: true, completion: nil)
             
+            thanksView.modalPresentationStyle = .fullScreen
+            present(thanksView, animated: true, completion: nil)
+
             sender.tag = 0
+
         default:
             sender.tag = 0
         }

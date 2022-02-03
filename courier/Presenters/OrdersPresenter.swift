@@ -14,13 +14,16 @@ protocol OrdersViewProtocol: AnyObject  {
 
 // То, что выполняю в здесь
 protocol OrdersViewPresenterProtocol: AnyObject {
+    init(view: OrdersViewProtocol)
     func checkOrders()
 }
 
 class OrdersPresenter: OrdersViewPresenterProtocol {
-    
     weak var view: OrdersViewProtocol?
     // Тут можно объявить модель
+    required init(view: OrdersViewProtocol) {
+        self.view = view
+    }
     
     func checkOrders() {
         

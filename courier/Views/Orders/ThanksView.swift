@@ -131,7 +131,6 @@ class ThanksView: UIViewController {
     
     @objc func returnButtonAction(){
         dismiss(animated: true, completion: nil)
-        
     }
 
     func setupView(){

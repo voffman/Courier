@@ -9,7 +9,7 @@ import UIKit
 
 class ClientSubview: UIViewController {
     
-    weak private var clientSubviewPresenter: ClientSubviewPresenterProtocol!
+    private var presenter: ClientSubviewPresenterProtocol?
     
     let cardView = CustomViews(style: .withShadow)
     
@@ -18,7 +18,7 @@ class ClientSubview: UIViewController {
     let phoneLabel = CustomLabels(title: "8 (700) 700 70 70", textSize: 14, style: .regular)
     let lineImage = UIImageView(image: UIImage(named: "Line"))
     let addressImage = UIImageView(image: UIImage(named: "Place"))
-    let addressTitlelabel = CustomLabels(title: "Адрес", textSize: 14, style: .light)
+    let addressTitleLabel = CustomLabels(title: "Адрес", textSize: 14, style: .light)
     let addressLabel = CustomLabels(title: "Казыбек Би, Нуркена Абдирова, 7, дом 8, квартира 42", textSize: 14, style: .regular)
     let routeButton = CustomButtons(title: "МАРШРУТ", style: .normal)
     
@@ -30,6 +30,9 @@ class ClientSubview: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let presenter = ClientSubviewPresenter(view:  self)
+        self.presenter = presenter
+        
         addSubviews()
     }
     
@@ -43,8 +46,8 @@ class ClientSubview: UIViewController {
         phoneLabel.setLabel()
         self.view.addSubview(lineImage)
         self.view.addSubview(addressImage)
-        self.view.addSubview(addressTitlelabel)
-        addressTitlelabel.setLabel()
+        self.view.addSubview(addressTitleLabel)
+        addressTitleLabel.setLabel()
         self.view.addSubview(addressLabel)
         addressLabel.setLabel()
         self.view.addSubview(routeButton)
@@ -61,32 +64,48 @@ class ClientSubview: UIViewController {
     }
     
     func setupCardView(){
-        cardView.frame = CGRect(x: 0,
-                                     y: 0,
-                                width: self.view.frame.size.width,
-                                height: self.view.frame.size.height)
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        
+        cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+     
+   // MARK: Поправить
+        if #available(iOS 11.0, *), UIScreen.main.bounds.size.height > 640{
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 0).isActive = true
+        } else if UIScreen.main.bounds.size.height > 640 {
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 0).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height <= 640{
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 20).isActive = true
+        }
+        
+        cardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 0).isActive = true
+        cardView.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: 0).isActive = true
+        cardView.heightAnchor.constraint(equalToConstant: 234).isActive = true
+        cardView.widthAnchor.constraint(equalToConstant: 340).isActive = true
     }
     
     func setupClientImage(){
-        clientImage.frame = CGRect(x: 16,
-                                      y: 16,
-                                      width: 40,
-                                      height: 40)
+        clientImage.translatesAutoresizingMaskIntoConstraints = false
+        clientImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16).isActive = true
+        clientImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        clientImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        clientImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
         
     }
     
     func setupClientLabel(){
-       clientLabel.frame = CGRect(x: 64,
-                                        y: 16,
-                                        width: clientLabel.intrinsicContentSize.width,
-                                        height: clientLabel.intrinsicContentSize.height)
+        clientLabel.translatesAutoresizingMaskIntoConstraints = false
+        clientLabel.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 64).isActive = true
+        clientLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16).isActive = true
+        clientLabel.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -10).isActive = true
     }
     
     func setupPhoneLabel(){
-        phoneLabel.frame = CGRect(x: 64,
-                                         y: 36,
-                                         width: phoneLabel.intrinsicContentSize.width,
-                                         height: phoneLabel.intrinsicContentSize.height)
+        phoneLabel.translatesAutoresizingMaskIntoConstraints = false
+        phoneLabel.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 64).isActive = true
+        phoneLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 36).isActive = true
+        phoneLabel.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -10).isActive = true
     }
     
     func setupLineImage(){
@@ -100,17 +119,18 @@ class ClientSubview: UIViewController {
     
     
     func setupAddressImage(){
-        addressImage.frame = CGRect(x: 16,
-                                      y: 89,
-                                      width: 40,
-                                      height: 40)
+        addressImage.translatesAutoresizingMaskIntoConstraints = false
+        addressImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 89).isActive = true
+        addressImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        addressImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        addressImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
     func setupAddressTitleLabel(){
-        addressTitlelabel.frame = CGRect(x: 64,
-                                         y: 89,
-                                         width: clientLabel.intrinsicContentSize.width,
-                                         height: clientLabel.intrinsicContentSize.height)
+        addressTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        addressTitleLabel.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 64).isActive = true
+        addressTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 89).isActive = true
+        addressTitleLabel.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -10).isActive = true
     }
     
     func setupAddressLabel(){
@@ -133,7 +153,7 @@ class ClientSubview: UIViewController {
         routeButton.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -16).isActive = true
         routeButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         routeButton.widthAnchor.constraint(equalToConstant: 308).isActive = true
-       // routeButton.button.addTarget(self, action: #selector(routeButtonAction), for: .touchUpInside)
+        routeButton.addTarget(self, action: #selector(routeButtonAction), for: .touchUpInside)
     }
     
     // MARK: Комментарий клиента
@@ -171,6 +191,10 @@ class ClientSubview: UIViewController {
         commentLabel.leftAnchor.constraint(equalTo: commentCardView.leftAnchor, constant: 16).isActive = true
         commentLabel.rightAnchor.constraint(equalTo: commentCardView.rightAnchor, constant: -16).isActive = true
         commentLabel.bottomAnchor.constraint(equalTo: commentCardView.bottomAnchor, constant: -20).isActive = true
+    }
+    
+    @objc func routeButtonAction(){
+        presenter?.getCoordinates()
     }
     
     
@@ -218,6 +242,12 @@ extension ClientSubview {
 */
 
 extension ClientSubview: ClientSubviewProtocol{
+    func openApp(appURL: URL) {
+        if UIApplication.shared.canOpenURL(appURL) {
+         UIApplication.shared.open(appURL)
+        }
+    }
+    
     
     public func configure(clientName: String?,
                           clientPhone: String?,

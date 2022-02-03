@@ -18,7 +18,7 @@ class ConfirmLoginView: UIViewController {
     let confirmTextView = CustomTextFields(pHolder: "", style: .normal)
     let confirmButton = CustomButtons(title: "ПОДТВЕРДИТЬ", style: .primary)
     
-    weak private var confirmLoginViewPresenter: ConfirmLoginViewPresenterProtocol!
+    private var presenter: ConfirmLoginViewPresenterProtocol?
     
     func setupCardView(){
         view.addSubview(cardView)
@@ -163,6 +163,9 @@ class ConfirmLoginView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let presenter = ConfirmLoginPresenter(view:  self)
+        self.presenter = presenter
+        
         setupView()
         // Do any additional setup after loading the view.
     }

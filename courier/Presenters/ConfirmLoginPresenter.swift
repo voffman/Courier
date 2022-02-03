@@ -14,13 +14,16 @@ protocol ConfirmLoginViewProtocol: AnyObject  {
 
 // То, что выполняю в здесь
 protocol ConfirmLoginViewPresenterProtocol: AnyObject {
+    init(view: ConfirmLoginViewProtocol)
     func confirmLogin()
 }
 
 class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
-
     weak var view: ConfirmLoginViewProtocol?
     // Тут можно объявить модель
+    required init(view: ConfirmLoginViewProtocol) {
+        self.view = view
+    }
     
     func confirmLogin() {
         print("Login")

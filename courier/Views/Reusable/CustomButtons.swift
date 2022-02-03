@@ -13,7 +13,7 @@ class CustomButtons: UIButton {
         case primary
         case secondary
         case normal
-        case cellTransition
+        case transparent
         // case phone
     }
     
@@ -57,8 +57,7 @@ class CustomButtons: UIButton {
             self.layer.borderColor = Colors.gray.cgColor
             self.titleLabel?.adjustsFontSizeToFitWidth = true
             
-        case .cellTransition:
-            self.setImage(UIImage(named: "Arrow"), for: .normal)
+        case .transparent:
             self.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
 
         case .none:

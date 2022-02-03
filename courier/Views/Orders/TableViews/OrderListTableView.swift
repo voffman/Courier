@@ -11,9 +11,12 @@ class OrderListTableView: UIViewController {
     
     let tableView = UITableView()
     
-    weak private var orderListTableViewPresenter: OrderListTableViewPresenterProtocol!
+    private var presenter: OrderListTableViewPresenterProtocol?
     
     let sc = CustomSegmentedControl(segments: .two, firstSegmentTitle: "ТЕКУЩИЕ", secondSegmentTitle: "ВЫПОЛНЕННЫЕ")
+    
+    let countView = UIView()
+    let countLabel = CustomLabels(title: "3", textSize: 14, style: .regular, alignment: .center)
     
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -21,9 +24,41 @@ class OrderListTableView: UIViewController {
         tableView.reloadData()
     }
     
+    func setupOrderCount(){
+        self.view.addSubview(countView)
+        countView.backgroundColor = Colors.lightGray
+        countView.layer.cornerRadius = 12 // countView.layer.bounds/2
+       // countView.clipsToBounds = true
+        
+        countView.translatesAutoresizingMaskIntoConstraints = false
+        if UIScreen.main.bounds.size.height > 750 {
+            countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 95).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height < 750{
+            countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 67).isActive = true
+        }
+
+        countView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        countView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        
+        self.view.addSubview(countLabel)
+        countLabel.setLabel()
+        countLabel.translatesAutoresizingMaskIntoConstraints = false
+        countLabel.centerXAnchor.constraint(equalTo: countView.centerXAnchor).isActive = true
+        countLabel.centerYAnchor.constraint(equalTo: countView.centerYAnchor).isActive = true
+        countView.widthAnchor.constraint(equalToConstant: countView.frame.width + 30).isActive = true
+        countLabel.heightAnchor.constraint(equalToConstant: countView.frame.height + 30).isActive = true
+        
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let presenter = OrderListPresenter(view:  self)
+        self.presenter = presenter
+        
         setupTableView()
         view.addSubview(sc.segmentedControlContainerView)
         sc.setContainerView()
@@ -32,7 +67,7 @@ class OrderListTableView: UIViewController {
         
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
-        
+        setupOrderCount()
     }
 }
 
@@ -83,11 +118,13 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
-
+            countView.backgroundColor = Colors.lightGray
             return 5
         case 1:
-
+            //  countLabel.title = "\(3)" // В дальнейшем подставить реальное количество ячеек
+              countView.backgroundColor = Colors.orange
             return 3
+
         default:
             return 0
         }
@@ -101,14 +138,13 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
 
             cell.orderTransitionArrowButton.tag = indexPath.row
             cell.orderTransitionArrowButton.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
+
+            cell.orderAcceptButton.addTarget(self, action: #selector(acceptButtonWasTapped(sender:)), for: .touchUpInside)
             
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCompletedOrdersCell.identifire, for: indexPath) as! OrderListCompletedOrdersCell
             
-            cell.orderTransitionArrowButton.tag = indexPath.row
-            cell.orderTransitionArrowButton.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
-
             return cell
         default:
             return UITableViewCell()
@@ -126,6 +162,15 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         self.present(detailOrderTableView, animated: true)
 
     }
+    
+    @objc func acceptButtonWasTapped(sender:UIButton){
+        if sender.tag == 4{
+        let thanksView = ThanksView()
+        thanksView.modalPresentationStyle = .fullScreen
+        self.present(thanksView, animated: true)
+        }
+    }
+    
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
