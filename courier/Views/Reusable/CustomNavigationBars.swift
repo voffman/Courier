@@ -25,8 +25,11 @@ class CustomNavigationBars: UINavigationBar {
     
     let barHeight: CGFloat = 44
     
-    init (targetView: UIView, navigationBarStyle: NavigationBarStyles){
+    var title: String = ""
+    
+    init (targetView: UIView, title: String, navigationBarStyle: NavigationBarStyles){
         self.targetView = targetView
+        self.title = title
         self.navigationBarStyle = navigationBarStyle
         super.init(frame: .zero)
     }
@@ -55,7 +58,7 @@ class CustomNavigationBars: UINavigationBar {
         switch navigationBarStyle{
             
         case .withSOSButton:
-            let title: String = "Заказы"
+            let title: String = title
             let label = UILabel()
             label.text = title
             label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
@@ -70,7 +73,7 @@ class CustomNavigationBars: UINavigationBar {
             navigationBar.setItems([navigationItem], animated: false)
 
         case .withBackButton:
-            let price: String = "4 000 ₸"
+            let price: String = title // MARK: Вместо этого инициализатор с текстом
             let orderId: String = "№ 356167"
             let label = UILabel()
             label.text = price
@@ -90,7 +93,7 @@ class CustomNavigationBars: UINavigationBar {
             
         case .withoutBackButton:
 
-            let orderId: String = "Заказ № 356167"
+            let orderId: String = title // MARK: Вместо этого инициализатор с текстом
             let label = UILabel()
             label.text = orderId
             label.textColor = Colors.black

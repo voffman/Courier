@@ -21,7 +21,7 @@ class OrdersView: UIViewController {
         view.addSubview(cardView)
         cardView.setView()
         
-        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .withSOSButton)
+        let navigationBar = CustomNavigationBars(targetView: self.view, title: "Заказы",  navigationBarStyle: .withSOSButton)
         navigationBar.setupNavigationBar()
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
@@ -96,12 +96,16 @@ class OrdersView: UIViewController {
     
     @objc func startWorkButtonAction(){
         
-        setupActiveOrdersView()
+        let customTabBar = CustomTabBar()
+    
+    /*    setupActiveOrdersView()
         
         let orderListTableView = OrderListTableView()
         orderListTableView.modalPresentationStyle = .fullScreen
         present(orderListTableView, animated: true)
-        
+        */
+        customTabBar.modalPresentationStyle = .fullScreen
+        present(customTabBar, animated: true, completion: nil)
     }
 
     func setupView(){

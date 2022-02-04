@@ -102,7 +102,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .withBackButton)
+        let navigationBar = CustomNavigationBars(targetView: self.view, title: "4000 ₸", navigationBarStyle: .withBackButton)
         navigationBar.setupNavigationBar()
         navigationBar.barButton.action = #selector(backButtonAction)
         

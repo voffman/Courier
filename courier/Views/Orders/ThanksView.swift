@@ -25,7 +25,7 @@ class ThanksView: UIViewController {
         view.addSubview(cardView)
         cardView.setView()
         
-        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .withoutBackButton)
+        let navigationBar = CustomNavigationBars(targetView: self.view, title: "Заказ № 356167", navigationBarStyle: .withoutBackButton)
         navigationBar.setupNavigationBar()
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
@@ -146,10 +146,11 @@ class ThanksView: UIViewController {
         setupReturnButton()
  
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        
         // Do any additional setup after loading the view.
     }
     

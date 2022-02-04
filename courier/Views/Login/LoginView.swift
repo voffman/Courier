@@ -8,7 +8,7 @@
 import UIKit
 
 class LoginView: UIViewController {
-    
+        
     let cardView = CustomViews(style: .withShadow)
     let titleLabel = CustomLabels(title: "Вход для курьеров", textSize: 24, style: .bold)
     let phoneNumberLabel = CustomLabels(title: "Номер телефона", textSize: 12, style: .light)
@@ -114,7 +114,7 @@ class LoginView: UIViewController {
         super.viewDidLoad()
         let presenter = LoginPresenter(view:  self)
         self.presenter = presenter
-        
+
         setupView()
         
         // Do any additional setup after loading the view.

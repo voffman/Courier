@@ -33,15 +33,25 @@ class OrderListTableView: UIViewController {
         countView.translatesAutoresizingMaskIntoConstraints = false
         if UIScreen.main.bounds.size.height > 750 {
             countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 95).isActive = true
+            countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
         }
         
-        if UIScreen.main.bounds.size.height < 750{
+        if UIScreen.main.bounds.size.height <= 750{
             countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 67).isActive = true
+            countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height <= 640{
+            countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 70).isActive = true
+            countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+            countView.heightAnchor.constraint(equalToConstant: 15).isActive = true
+            countView.widthAnchor.constraint(equalToConstant: 15).isActive = true
+            countView.layer.cornerRadius = 7
+            
         }
 
         countView.heightAnchor.constraint(equalToConstant: 24).isActive = true
         countView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         
         self.view.addSubview(countLabel)
         countLabel.setLabel()
@@ -89,7 +99,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let navigationBar = CustomNavigationBars(targetView: self.view, navigationBarStyle: .withSOSButton)
+        let navigationBar = CustomNavigationBars(targetView: self.view, title: "Заказы", navigationBarStyle: .withSOSButton)
         navigationBar.setupNavigationBar()
         
         sc.segmentedControlContainerView.translatesAutoresizingMaskIntoConstraints = false
