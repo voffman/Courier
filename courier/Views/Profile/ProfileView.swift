@@ -123,7 +123,7 @@ class ProfileView: UIViewController {
         view.addSubview(colorSchemeSwitch)
         
         colorSchemeSwitch.translatesAutoresizingMaskIntoConstraints = false
-        colorSchemeSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 144).isActive = true
+        colorSchemeSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 134).isActive = true
         colorSchemeSwitch.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
     }
     
@@ -167,7 +167,7 @@ class ProfileView: UIViewController {
         view.addSubview(activityStatusSwitch)
         
         activityStatusSwitch.translatesAutoresizingMaskIntoConstraints = false
-        activityStatusSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 214).isActive = true
+        activityStatusSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 205).isActive = true
         activityStatusSwitch.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
         
     }

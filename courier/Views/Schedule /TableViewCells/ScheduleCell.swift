@@ -9,12 +9,13 @@ import UIKit
 
 class ScheduleCell: UITableViewCell {
     
-    static let identifire = "scheduleOrderCell"
+    static let identifire = "scheduleCell"
     
     let cardView = CustomViews(style: .withShadow)
     let dateLabel = CustomLabels(title: "9 мар - 15 мар", textSize: 14, style: .bold)
     let acceptLabel = CustomLabels(title: "Требуется ваше подтверждение", textSize: 14, style: .regular)
     let orderTransitionArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
+    let transitionButton = CustomButtons(title: "", style: .transparent)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -25,6 +26,8 @@ class ScheduleCell: UITableViewCell {
         contentView.addSubview(acceptLabel)
         acceptLabel.setLabel()
         contentView.addSubview(orderTransitionArrowButtonImage)
+        contentView.addSubview(transitionButton)
+        transitionButton.setButton()
     }
     
     required init?(coder: NSCoder) {
@@ -84,6 +87,13 @@ class ScheduleCell: UITableViewCell {
         
     }
     
+    func setupTransitionButton(){
+        transitionButton.frame = CGRect(x: 0,
+                                                  y: 0,
+                                                  width: contentView.frame.size.width,
+                                                  height: contentView.frame.size.height)
+    }
+    
     //MARK: Добавить оранжевую полосу
     
     func setupCell(){
@@ -92,6 +102,7 @@ class ScheduleCell: UITableViewCell {
         setupDateLabel()
         setupAcceptLabel()
         setupTransitionArrowButtonImage()
+        setupTransitionButton()
     }
     
     

@@ -13,6 +13,7 @@ class CustomButtons: UIButton {
         case primary
         case secondary
         case normal
+        case submit
         case transparent
         // case phone
     }
@@ -55,6 +56,14 @@ class CustomButtons: UIButton {
             self.setTitleColor(Colors.black, for: .normal)
             self.layer.borderWidth = 1
             self.layer.borderColor = Colors.gray.cgColor
+            self.titleLabel?.adjustsFontSizeToFitWidth = true
+            
+        case .submit:
+            self.backgroundColor = Colors.lightGreen
+            self.layer.cornerRadius = 4
+            self.setTitle(title, for: .normal)
+            self.setTitleColor(Colors.white, for: .normal)
+            self.titleLabel?.font = UIFont.systemFont(ofSize: 20.0, weight: .bold)
             self.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .transparent:

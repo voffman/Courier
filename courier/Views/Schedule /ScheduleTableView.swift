@@ -59,8 +59,16 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleCell.identifire, for: indexPath) as! ScheduleCell
+        cell.transitionButton.addTarget(self, action: #selector(transitionButtonTapped(sender:)), for: .touchUpInside)
         
         return cell
+    }
+    
+    @objc func transitionButtonTapped(sender: UIButton){
+        let scheduleWeekTableView = ScheduleWeekTableView()
+        scheduleWeekTableView.modalPresentationStyle = .fullScreen
+        self.present(scheduleWeekTableView, animated: true)
+
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
