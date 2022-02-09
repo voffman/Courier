@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F2893DFB2CA845865BD17AB /* Pods_courier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44FF9F942C8704EC956AF11B /* Pods_courier.framework */; };
 		500B62E727990E7F00EDC58A /* CustomLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62E627990E7F00EDC58A /* CustomLabels.swift */; };
 		500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62E8279913B600EDC58A /* CustomTextFields.swift */; };
 		500B62EB279919A800EDC58A /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62EA279919A800EDC58A /* CustomViews.swift */; };
@@ -47,12 +48,14 @@
 		5067AEED27A8F36200010950 /* StateSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5067AEEC27A8F36200010950 /* StateSubview.swift */; };
 		5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5086CE752797CD4500972D6B /* ConfirmLoginView.swift */; };
 		5093F6C3279EA2E300A53157 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5093F6C2279EA2E300A53157 /* Assets.xcassets */; };
+		50A5731A27B3CF0500E3013F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5731927B3CF0500E3013F /* NetworkManager.swift */; };
 		50AD10B02798281000221873 /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AD10AF2798281000221873 /* CustomButtons.swift */; };
 		50FFC1CC27B0CAB500478F1D /* ScheduleDayOffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FFC1CB27B0CAB500478F1D /* ScheduleDayOffCell.swift */; };
 		50FFC1CE27B0EA2100478F1D /* ScheduleSubmitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FFC1CD27B0EA2100478F1D /* ScheduleSubmitCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		44FF9F942C8704EC956AF11B /* Pods_courier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_courier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		500B62E627990E7F00EDC58A /* CustomLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabels.swift; sourceTree = "<group>"; };
 		500B62E8279913B600EDC58A /* CustomTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFields.swift; sourceTree = "<group>"; };
 		500B62EA279919A800EDC58A /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
@@ -95,9 +98,12 @@
 		5067AEEC27A8F36200010950 /* StateSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateSubview.swift; sourceTree = "<group>"; };
 		5086CE752797CD4500972D6B /* ConfirmLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLoginView.swift; sourceTree = "<group>"; };
 		5093F6C2279EA2E300A53157 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		50A5731927B3CF0500E3013F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		50AD10AF2798281000221873 /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
 		50FFC1CB27B0CAB500478F1D /* ScheduleDayOffCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDayOffCell.swift; sourceTree = "<group>"; };
 		50FFC1CD27B0EA2100478F1D /* ScheduleSubmitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSubmitCell.swift; sourceTree = "<group>"; };
+		514F1E533DBD914EA9090D18 /* Pods-courier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-courier.debug.xcconfig"; path = "Target Support Files/Pods-courier/Pods-courier.debug.xcconfig"; sourceTree = "<group>"; };
+		61E5C19813566DC3F4EB7D60 /* Pods-courier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-courier.release.xcconfig"; path = "Target Support Files/Pods-courier/Pods-courier.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F2893DFB2CA845865BD17AB /* Pods_courier.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +123,8 @@
 			children = (
 				501630332796786A00D0734F /* courier */,
 				501630322796786A00D0734F /* Products */,
+				908A2B9C8E068B40C8AA454B /* Pods */,
+				87EEB3AAF5B0F10AC8072765 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,6 +139,7 @@
 		501630332796786A00D0734F /* courier */ = {
 			isa = PBXGroup;
 			children = (
+				50A5731827B3CEC400E3013F /* Managers */,
 				502618B527A79B5D00CEA57C /* Constants */,
 				5016304827968B4800D0734F /* Models */,
 				5016304B27968B7D00D0734F /* Presenters */,
@@ -287,6 +297,14 @@
 			path = Orders;
 			sourceTree = "<group>";
 		};
+		50A5731827B3CEC400E3013F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				50A5731927B3CF0500E3013F /* NetworkManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		50FFC1CA27B0C9AE00478F1D /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +316,23 @@
 			path = TableViewCells;
 			sourceTree = "<group>";
 		};
+		87EEB3AAF5B0F10AC8072765 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				44FF9F942C8704EC956AF11B /* Pods_courier.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		908A2B9C8E068B40C8AA454B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				514F1E533DBD914EA9090D18 /* Pods-courier.debug.xcconfig */,
+				61E5C19813566DC3F4EB7D60 /* Pods-courier.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -305,9 +340,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 501630452796786B00D0734F /* Build configuration list for PBXNativeTarget "courier" */;
 			buildPhases = (
+				BFC81670930C4EDBDFC84231 /* [CP] Check Pods Manifest.lock */,
 				5016302D2796786A00D0734F /* Sources */,
 				5016302E2796786A00D0734F /* Frameworks */,
 				5016302F2796786A00D0734F /* Resources */,
+				573F3FFD131D25E788FCD008 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -363,6 +400,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		573F3FFD131D25E788FCD008 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-courier/Pods-courier-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-courier/Pods-courier-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-courier/Pods-courier-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BFC81670930C4EDBDFC84231 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-courier-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5016302D2796786A00D0734F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -392,6 +471,7 @@
 				5065CCA82799606600B38BAB /* CustomNavigationBars.swift in Sources */,
 				502618BD27A7B18F00CEA57C /* CustomTimer.swift in Sources */,
 				501D409927A26EE200F67C6B /* DetailOrderTableView.swift in Sources */,
+				50A5731A27B3CF0500E3013F /* NetworkManager.swift in Sources */,
 				5031835A27ACFDD7001C9BEB /* ScheduleCell.swift in Sources */,
 				502618B427A7957D00CEA57C /* OrdersPresenter.swift in Sources */,
 				50FFC1CC27B0CAB500478F1D /* ScheduleDayOffCell.swift in Sources */,
@@ -544,6 +624,7 @@
 		};
 		501630462796786B00D0734F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 514F1E533DBD914EA9090D18 /* Pods-courier.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -573,6 +654,7 @@
 		};
 		501630472796786B00D0734F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 61E5C19813566DC3F4EB7D60 /* Pods-courier.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
