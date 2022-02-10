@@ -11,14 +11,43 @@ class ConfirmLoginView: UIViewController {
     
     let cardView = CustomViews(style: .withShadow)
     let titleLabel = CustomLabels(title: "Вход для курьеров", textSize: 24, style: .bold)
-    let smsLabel = CustomLabels(title: "Мы отправили СМС с кодом подтверждения на номер +7 (000) 000-00-00", textSize: 14, style: .regular)
+    let smsLabel = CustomLabels(title: "Мы отправили СМС с кодом подтверждения на номер \(Properties.phoneNumber)", textSize: 14, style: .regular)
     let sendAgainLabel = CustomLabels(title: "Отправить еще раз через 0:50 сек", textSize: 14, style: .light)
     let sendAgainButton = CustomButtons(title: "ОТПРАВИТЬ ЕЩЕ РАЗ", style: .primary)
     let codeConfirmLabel = CustomLabels(title: "Код подтверждения", textSize: 12, style: .light)
-    let confirmTextView = CustomTextFields(pHolder: "", style: .normal)
-    let confirmButton = CustomButtons(title: "ПОДТВЕРДИТЬ", style: .primary)
+    let confirmTextField = CustomTextFields(pHolder: "", style: .normal)
+    let confirmButton = CustomButtons(title: "ПОДТВЕРДИТЬ", style: .secondary)
     
     private var presenter: ConfirmLoginViewPresenterProtocol?
+    
+    var timer = Timer()
+    var count = 5
+    var timerValue = ""
+    
+    func launchTimer(){
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(incrementCountLabel), userInfo: nil, repeats: true)
+        timer.tolerance = 0.5
+        // Задается время по истечению которого таймер будет остановлен
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.timer.invalidate()
+            self.sendAgainButton.isHidden = false
+            self.sendAgainButton.setButton()
+            self.confirmButton.style = .primary
+            self.confirmButton.setButton()
+          //  self.sendAgainLabel.isHidden = true
+            
+        }
+    }
+    
+    @objc func incrementCountLabel(){
+        count -= 1
+      //  let hours = Int(count) / 3600
+        let minutes = Int(count) / 60 % 60
+        let seconds = Int(count) % 60
+        timerValue = String(format:"%01i:%02i", minutes, seconds)
+        sendAgainLabel.title = "Отправить еще раз через \(timerValue) сек"
+        sendAgainLabel.setLabel()
+    }
     
     func setupCardView(){
         view.addSubview(cardView)
@@ -98,17 +127,17 @@ class ConfirmLoginView: UIViewController {
     }
     
     func setupConfirmTextField(){
-        cardView.addSubview(confirmTextView)
-        confirmTextView.setTextField()
+        cardView.addSubview(confirmTextField)
+        confirmTextField.setTextField()
         
-        confirmTextView.translatesAutoresizingMaskIntoConstraints = false
-        confirmTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        confirmTextView.topAnchor.constraint(equalTo:  codeConfirmLabel.bottomAnchor, constant: 10).isActive = true
-        confirmTextView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 20).isActive = true
-        confirmTextView.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -20).isActive = true
+        confirmTextField.translatesAutoresizingMaskIntoConstraints = false
+        confirmTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        confirmTextField.topAnchor.constraint(equalTo:  codeConfirmLabel.bottomAnchor, constant: 10).isActive = true
+        confirmTextField.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 20).isActive = true
+        confirmTextField.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -20).isActive = true
         
-        confirmTextView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        confirmTextView.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        confirmTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        confirmTextField.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
     }
     
@@ -118,7 +147,7 @@ class ConfirmLoginView: UIViewController {
         
         confirmButton.translatesAutoresizingMaskIntoConstraints = false
         confirmButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        confirmButton.topAnchor.constraint(equalTo:  confirmTextView.bottomAnchor, constant: 10).isActive = true
+        confirmButton.topAnchor.constraint(equalTo:  confirmTextField.bottomAnchor, constant: 10).isActive = true
         confirmButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 20).isActive = true
         confirmButton.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -20).isActive = true
         confirmButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
@@ -131,18 +160,20 @@ class ConfirmLoginView: UIViewController {
     
     
     @objc func confirmButtonAction(sender: UIButton!){
-        let confirmLoginView2 = ConfirmLoginView()
-        confirmLoginView2.modalPresentationStyle = .fullScreen
-        dismiss(animated: true, completion: nil)
-        self.present(confirmLoginView2, animated: true)
+        Properties.smsCode = confirmTextField.text
+        presenter?.getAuthKey()
+        print("Кнопка подтвердить")
     }
     
     @objc func sendAgainButtonAction(sender: UIButton!){
-        // Заглушка
-        setupSendAgainLabel()
-        sendAgainButton.isHidden = true
-        confirmButton.style = .secondary
-        confirmButton.setButton()
+        self.sendAgainButton.isHidden = true
+        self.sendAgainButton.setButton()
+        self.confirmButton.style = .secondary
+        self.confirmButton.setButton()
+        
+        presenter?.sendSMSAgain()
+        count = 5
+        launchTimer()
     }
     
     
@@ -152,8 +183,10 @@ class ConfirmLoginView: UIViewController {
         setupCardView()
         setupTitleLabel()
         setupSMSLabel()
+        setupSendAgainLabel()
         // setupLightLabel()
         setupSendAgainButton()
+        sendAgainButton.isHidden = true
         setupCodeConfirmLabel()
         setupConfirmTextField()
         setupConfirmButton()
@@ -167,6 +200,8 @@ class ConfirmLoginView: UIViewController {
         self.presenter = presenter
         
         setupView()
+
+        launchTimer()
         // Do any additional setup after loading the view.
     }
     
@@ -184,6 +219,12 @@ class ConfirmLoginView: UIViewController {
 }
 
 extension ConfirmLoginView: ConfirmLoginViewProtocol{
+    func openOrdersView() {
+        let ordersView = OrdersView()
+        ordersView.modalPresentationStyle = .fullScreen
+        present(ordersView, animated: true, completion: nil)
+    }
+    
     
 }
 

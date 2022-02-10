@@ -78,6 +78,7 @@ class OrderListTableView: UIViewController {
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
         setupOrderCount()
+        presenter.getOrders()
     }
 }
 

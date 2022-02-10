@@ -97,15 +97,14 @@ class OrdersView: UIViewController {
     @objc func startWorkButtonAction(){
         
         let customTabBar = CustomTabBar()
-    
-    /*    setupActiveOrdersView()
-        
-        let orderListTableView = OrderListTableView()
-        orderListTableView.modalPresentationStyle = .fullScreen
-        present(orderListTableView, animated: true)
-        */
-        customTabBar.modalPresentationStyle = .fullScreen
-        present(customTabBar, animated: true, completion: nil)
+
+        setupActiveOrdersView()
+        // MARK: Заглушка
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            customTabBar.modalPresentationStyle = .fullScreen
+            self.present(customTabBar, animated: true, completion: nil)
+        }
+
     }
 
     func setupView(){

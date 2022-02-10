@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// 77012559804
 class LoginView: UIViewController {
         
     let cardView = CustomViews(style: .withShadow)
@@ -101,8 +101,9 @@ class LoginView: UIViewController {
     }
     
     @objc func loginButtonAction(sender: UIButton!){
-        presenter?.toLogin()
-        let ordersView = OrdersView()
+        presenter?.savePhoneNumber()
+        presenter?.sendSMS()
+        let ordersView = ConfirmLoginView()
         ordersView.modalPresentationStyle = .fullScreen
 
         dismiss(animated: true, completion: nil)
@@ -123,5 +124,7 @@ class LoginView: UIViewController {
 }
 
 extension LoginView: LoginViewProtocol{
-    
+    func getPhoneNumber(completion: (String) -> ()) {
+        completion(phoneNumberTextField.text ?? "")
+    }
 }

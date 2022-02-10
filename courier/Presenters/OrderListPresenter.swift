@@ -21,6 +21,8 @@ protocol OrderListTableViewPresenterProtocol: AnyObject {
 class OrderListPresenter: OrderListTableViewPresenterProtocol {
     weak var view: OrderListTableViewProtocol?
     // Тут можно объявить модель
+    let networkManager = NetworkManager()
+    
     required init(view: OrderListTableViewProtocol) {
         self.view = view
     }
@@ -28,6 +30,11 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     
     func getOrders() {
         
+        //networkManager.getRequest(url: URLs.CourierOrders.CourierOrderResponse.order, headers: [.authorization(bearerToken: Properties.bearer!)])
+        /*
+        networkManager.getRequest(url: URLs.CourierOrders.order, headers: [.authorization(bearerToken: Properties.bearer!)], model: CourierOrderResponseElement.self) { post in
+            print(post.id)
+            
+        } */
     }
-
 }
