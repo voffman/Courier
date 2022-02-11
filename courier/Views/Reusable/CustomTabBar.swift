@@ -12,13 +12,14 @@ class CustomTabBar: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         delegate = self
     }
+    
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let item1 = OrderListTableView()
-        let item2 = HistoryTableView()
-        let item3 = ScheduleTableView()
-        let item4 = ProfileView()
+        let item1 = UINavigationController(rootViewController: OrderListTableView())
+        let item2 = UINavigationController(rootViewController: HistoryTableView())
+        let item3 = UINavigationController(rootViewController: ScheduleTableView())
+        let item4 = UINavigationController(rootViewController: ProfileView())
         let icon1 = UITabBarItem(title: "Заказы", image: UIImage(named: "TabBarItem1"), selectedImage: UIImage(named: ""))
         let icon2 = UITabBarItem(title: "История", image: UIImage(named: "TabBarItem2"), selectedImage: UIImage(named: ""))
         let icon3 = UITabBarItem(title: "Расписание", image: UIImage(named: "TabBarItem3"), selectedImage: UIImage(named: ""))

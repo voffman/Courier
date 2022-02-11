@@ -61,14 +61,15 @@ class DetailOrderTableView: UIViewController {
     }
     
     @objc func backButtonAction(){
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let presenter = DetailOrderPresenter(view:  self)
         self.presenter = presenter
-        
+
         setupTableView()
         self.view.backgroundColor = Colors.backgroundColor
         self.tableView.backgroundColor = Colors.backgroundColor

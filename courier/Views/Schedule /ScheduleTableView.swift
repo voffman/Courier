@@ -13,6 +13,7 @@ class ScheduleTableView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = Colors.backgroundColor
         setupTableView()
         // Do any additional setup after loading the view.

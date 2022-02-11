@@ -46,13 +46,13 @@ class StateSubview: UIViewController {
         
         if UIScreen.main.bounds.size.height > 750 {
             if #available(iOS 11.0, *) {
-                orderTimerView.bottomAnchor.constraint(equalTo: targetView.bottomAnchor, constant: -70).isActive = true
+                orderTimerView.bottomAnchor.constraint(equalTo: targetView.bottomAnchor, constant: -90).isActive = true
             }
         }
         
         
         if UIScreen.main.bounds.size.height < 750{
-            orderTimerView.bottomAnchor.constraint(equalTo: targetView.bottomAnchor, constant: -50).isActive = true
+            orderTimerView.bottomAnchor.constraint(equalTo: targetView.bottomAnchor, constant: -60).isActive = true
         }
         
         orderTimerImage.translatesAutoresizingMaskIntoConstraints = false
@@ -89,13 +89,13 @@ class StateSubview: UIViewController {
         
         if UIScreen.main.bounds.size.height > 750 {
             if #available(iOS 11.0, *) {
-                stateButton.bottomAnchor.constraint(equalTo: targetView.bottomAnchor, constant: -70).isActive = true
+                stateButton.bottomAnchor.constraint(equalTo: targetView.bottomAnchor, constant: -90).isActive = true
             }
         }
         
         
         if UIScreen.main.bounds.size.height < 750{
-            stateButton.bottomAnchor.constraint(equalTo: targetView.bottomAnchor, constant: -50).isActive = true
+            stateButton.bottomAnchor.constraint(equalTo: targetView.bottomAnchor, constant: -60).isActive = true
         }
         stateButton.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
         stateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

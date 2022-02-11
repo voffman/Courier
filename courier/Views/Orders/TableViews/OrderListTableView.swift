@@ -10,14 +10,19 @@ import UIKit
 class OrderListTableView: UIViewController {
     
     let tableView = UITableView()
+    let waitViewElement = WaitViewElement()
     
     private var presenter: OrderListTableViewPresenterProtocol?
+    
+  //  let ordersView = OrdersView()
+
     
     let sc = CustomSegmentedControl(segments: .two, firstSegmentTitle: "ТЕКУЩИЕ", secondSegmentTitle: "ВЫПОЛНЕННЫЕ")
     
     let countView = UIView()
     let countLabel = CustomLabels(title: "3", textSize: 14, style: .regular, alignment: .center)
     
+    var data: [CourierOrderResponseElement] = []
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         sc.changeSegmentedControlLinePosition()
@@ -62,13 +67,24 @@ class OrderListTableView: UIViewController {
         countLabel.heightAnchor.constraint(equalToConstant: countView.frame.height + 30).isActive = true
         
     }
-    
+
+    func setupWaitViewElement(){
+        self.view.addSubview(waitViewElement)
+        waitViewElement.setupView()
+        waitViewElement.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 149)
+        if #available(iOS 11.0, *) {
+            waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 44 - 5).isActive = true
+            
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let presenter = OrderListPresenter(view:  self)
         self.presenter = presenter
-        
+        self.navigationController?.isNavigationBarHidden = true
+
         setupTableView()
         view.addSubview(sc.segmentedControlContainerView)
         sc.setContainerView()
@@ -78,7 +94,11 @@ class OrderListTableView: UIViewController {
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
         setupOrderCount()
-        presenter.getOrders()
+        
+      // MARK:  setupWaitViewElement() 
+        
+        
+        
     }
 }
 
@@ -170,7 +190,9 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         let detailOrderTableView = DetailOrderTableView()
         detailOrderTableView.modalPresentationStyle = .fullScreen
         //dismiss(animated: true, completion: nil)
-        self.present(detailOrderTableView, animated: true)
+       // self.present(detailOrderTableView, animated: true)
+        self.navigationController?.pushViewController(detailOrderTableView, animated: true)
+        
 
     }
     
