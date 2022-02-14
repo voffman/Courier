@@ -10,6 +10,9 @@ import Alamofire
 
 final class NetworkManager {
     
+   // func makeRequest<T: Decodable>(url: URLConvertible, method: HTTPMethod, headers: HTTPHeaders, model: T.Type, ifSuccess: ([T])->(), ifError: (ErrorResponseModel)->())
+
+    
     func getRequest<T: Decodable>(url: URLConvertible, headers: HTTPHeaders, model: T.Type ,completion:  @escaping ([T])->()){
         AF.request(url, headers: headers).validate().responseDecodable(of: [T].self) { response in
             switch response.result {

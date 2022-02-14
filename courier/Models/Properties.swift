@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Properties{
+struct Properties{ // в userdefaults
     static var phoneNumber: String = ""
     static var smsCode: String? = "" // Передать значение из поля для ввода пользователем. Опционально при вводе 4 символов сменить стиль кнопки
     static var bearer: String? = ""

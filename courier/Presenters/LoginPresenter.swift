@@ -9,14 +9,12 @@ import Foundation
 
 // То, что выполняю во вью
 protocol LoginViewProtocol: AnyObject  {
-    func getPhoneNumber(completion: (String)->())
 }
 
 // То, что выполняю в здесь
 protocol LoginViewPresenterProtocol: AnyObject {
     init(view: LoginViewProtocol)
-    func savePhoneNumber()
-    func sendSMS()
+    func sendSMS(phoneNumber: String?)
 }
 
 class LoginPresenter: LoginViewPresenterProtocol {
@@ -27,14 +25,16 @@ class LoginPresenter: LoginViewPresenterProtocol {
         self.view = view
     }
     
-    func savePhoneNumber() {
-        view?.getPhoneNumber(completion: { phoneNumber in
-            Properties.phoneNumber = phoneNumber
-        })
-    }
     
-    func sendSMS() {
+    func sendSMS(phoneNumber: String?) {
         // Здесь выпоняется запрос по получению "СМС"
+        // Api.getLogin
+        // две функции для обработки успеха или ошибки
+        guard let phoneNumber = phoneNumber else {
+            return
+        }
+
+        Properties.phoneNumber = phoneNumber
         let nv = NetworkManager()
         nv.postRequest(url: URLs.Auth.getSMS, headers: [], body: ["phone": Properties.phoneNumber]) //77012559804
             print("Номер телефона: ", Properties.phoneNumber)

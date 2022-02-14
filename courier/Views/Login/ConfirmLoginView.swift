@@ -220,11 +220,9 @@ class ConfirmLoginView: UIViewController {
 
 extension ConfirmLoginView: ConfirmLoginViewProtocol{
     func openOrdersView() {
-        let ordersView = OrdersView()
-        ordersView.modalPresentationStyle = .fullScreen
-        present(ordersView, animated: true, completion: nil)
+        let customTabBar = TabBarController()
+        customTabBar.modalPresentationStyle = .fullScreen
+        self.present(customTabBar, animated: true, completion: nil)
     }
-    
-    
 }
 

@@ -97,15 +97,10 @@ class OrdersView: UIViewController {
     
     @objc func startWorkButtonAction(){
         
-        let customTabBar = CustomTabBar()
-       // setupActiveOrdersView()
+        let orderList = OrderListTableView()
+        self.navigationController?.pushViewController(orderList, animated: true)
 
-        presenter?.checkOrders(completion: { posts in
-            if posts.count != 0{
-                customTabBar.modalPresentationStyle = .fullScreen
-                self.present(customTabBar, animated: true, completion: nil)
-            }
-        })
+        // setupActiveOrdersView()
     }
     
     func setupView(){

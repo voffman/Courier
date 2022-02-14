@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3F2893DFB2CA845865BD17AB /* Pods_courier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44FF9F942C8704EC956AF11B /* Pods_courier.framework */; };
+		5006FCE427BA24A90047DD6A /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5006FCE327BA24A90047DD6A /* ApiService.swift */; };
+		5006FCE827BA69BB0047DD6A /* MVPController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5006FCE727BA69BB0047DD6A /* MVPController.swift */; };
+		5006FCED27BA70990047DD6A /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5006FCEC27BA70990047DD6A /* ErrorResponse.swift */; };
 		500B62E727990E7F00EDC58A /* CustomLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62E627990E7F00EDC58A /* CustomLabels.swift */; };
 		500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62E8279913B600EDC58A /* CustomTextFields.swift */; };
 		500B62EB279919A800EDC58A /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62EA279919A800EDC58A /* CustomViews.swift */; };
@@ -39,7 +42,7 @@
 		5031835527ACFD45001C9BEB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031835427ACFD45001C9BEB /* ProfileView.swift */; };
 		5031835827ACFDB1001C9BEB /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031835727ACFDB1001C9BEB /* HistoryCell.swift */; };
 		5031835A27ACFDD7001C9BEB /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031835927ACFDD7001C9BEB /* ScheduleCell.swift */; };
-		5031835C27ACFF78001C9BEB /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031835B27ACFF78001C9BEB /* CustomTabBar.swift */; };
+		5031835C27ACFF78001C9BEB /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031835B27ACFF78001C9BEB /* TabBarController.swift */; };
 		503622E927ABC89C00F39838 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503622E827ABC89C00F39838 /* Coordinates.swift */; };
 		5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316027A0F679000777A9 /* CustomAlerts.swift */; };
 		5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */; };
@@ -61,6 +64,9 @@
 
 /* Begin PBXFileReference section */
 		44FF9F942C8704EC956AF11B /* Pods_courier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_courier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5006FCE327BA24A90047DD6A /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		5006FCE727BA69BB0047DD6A /* MVPController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVPController.swift; sourceTree = "<group>"; };
+		5006FCEC27BA70990047DD6A /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		500B62E627990E7F00EDC58A /* CustomLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabels.swift; sourceTree = "<group>"; };
 		500B62E8279913B600EDC58A /* CustomTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFields.swift; sourceTree = "<group>"; };
 		500B62EA279919A800EDC58A /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
@@ -94,7 +100,7 @@
 		5031835427ACFD45001C9BEB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		5031835727ACFDB1001C9BEB /* HistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
 		5031835927ACFDD7001C9BEB /* ScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
-		5031835B27ACFF78001C9BEB /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		5031835B27ACFF78001C9BEB /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		503622E827ABC89C00F39838 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		5043316027A0F679000777A9 /* CustomAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
 		5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
@@ -128,6 +134,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5006FCE527BA2B2F0047DD6A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				501630512796988000D0734F /* Reusable */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		5006FCE627BA4ED00047DD6A /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				5031835B27ACFF78001C9BEB /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		501630282796786A00D0734F = {
 			isa = PBXGroup;
 			children = (
@@ -152,8 +174,9 @@
 				50A5731827B3CEC400E3013F /* Managers */,
 				502618B527A79B5D00CEA57C /* Constants */,
 				5016304827968B4800D0734F /* Models */,
-				5016304B27968B7D00D0734F /* Presenters */,
 				5016304927968B6000D0734F /* Views */,
+				5016304B27968B7D00D0734F /* Presenters */,
+				5006FCE527BA2B2F0047DD6A /* UI */,
 				5016304C27968B9D00D0734F /* Support files */,
 			);
 			path = courier;
@@ -163,9 +186,10 @@
 			isa = PBXGroup;
 			children = (
 				503622E827ABC89C00F39838 /* Coordinates.swift */,
-				50A5731B27B3D89E00E3013F /* UserResponse.swift */,
 				5030A5B027B4CA2100863939 /* Properties.swift */,
+				50A5731B27B3D89E00E3013F /* UserResponse.swift */,
 				5030A5D627B504A000863939 /* CourierOrderResponse.swift */,
+				5006FCEC27BA70990047DD6A /* ErrorResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -173,7 +197,8 @@
 		5016304927968B6000D0734F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				501630512796988000D0734F /* Reusable */,
+				5006FCE727BA69BB0047DD6A /* MVPController.swift */,
+				5006FCE627BA4ED00047DD6A /* TabBar */,
 				50163050279696F500D0734F /* Login */,
 				5065CCA02799381300B38BAB /* Orders */,
 				5031834D27ACFA94001C9BEB /* History */,
@@ -229,7 +254,6 @@
 				5043316027A0F679000777A9 /* CustomAlerts.swift */,
 				5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */,
 				502618BC27A7B18F00CEA57C /* CustomTimer.swift */,
-				5031835B27ACFF78001C9BEB /* CustomTabBar.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -315,6 +339,7 @@
 		50A5731827B3CEC400E3013F /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				5006FCE327BA24A90047DD6A /* ApiService.swift */,
 				50A5731927B3CF0500E3013F /* NetworkManager.swift */,
 			);
 			path = Managers;
@@ -467,6 +492,7 @@
 				501D409D27A27C2300F67C6B /* ShopSubview.swift in Sources */,
 				50A5731E27B3D9AF00E3013F /* URLs.swift in Sources */,
 				502618B227A793FA00CEA57C /* ConfirmLoginPresenter.swift in Sources */,
+				5006FCED27BA70990047DD6A /* ErrorResponse.swift in Sources */,
 				5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */,
 				5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */,
 				501CE7C827AA88B700C8DC05 /* ThanksView.swift in Sources */,
@@ -496,10 +522,12 @@
 				502618B427A7957D00CEA57C /* OrdersPresenter.swift in Sources */,
 				50FFC1CC27B0CAB500478F1D /* ScheduleDayOffCell.swift in Sources */,
 				5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */,
-				5031835C27ACFF78001C9BEB /* CustomTabBar.swift in Sources */,
+				5031835C27ACFF78001C9BEB /* TabBarController.swift in Sources */,
 				502618E527A7EDC500CEA57C /* ClientSubviewPresenter.swift in Sources */,
+				5006FCE827BA69BB0047DD6A /* MVPController.swift in Sources */,
 				5017ABB327B00A4400C60897 /* ScheduleWeekCell.swift in Sources */,
 				5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */,
+				5006FCE427BA24A90047DD6A /* ApiService.swift in Sources */,
 				5031835527ACFD45001C9BEB /* ProfileView.swift in Sources */,
 				5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */,
 				5016304F27968D2100D0734F /* Colors.swift in Sources */,

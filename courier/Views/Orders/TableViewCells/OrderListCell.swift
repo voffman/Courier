@@ -78,14 +78,14 @@ class OrderListCell: UITableViewCell {
     }
     
     // для использования в tableView
-    public func configure(orderId: String?,
-                          orderPrice: String?,
+    public func configure(orderId: Int,
+                          orderPrice: Int,
                           orderSource: String?,
                           orderFromAddress: String?,
                           orderToAddress: String?,
                           orderTime: String?){
-        self.orderIdLabel.text = orderId
-        self.orderPriceLabel.text = orderPrice
+        self.orderIdLabel.text = "№ \(String(orderId))"
+        self.orderPriceLabel.text = "• \(String(orderPrice)) ₸"
         self.orderSourceLabel.text = orderSource
         self.orderFromAddressLabel.text = orderFromAddress
         self.orderToAddressLabel.text = orderToAddress
@@ -225,11 +225,11 @@ class OrderListCell: UITableViewCell {
     }
     
     func setupTimerLabel(){
-        orderTimerLabel.frame = CGRect(x: 62,
-                                      y: 262,
-                                      width: orderTimerLabel.intrinsicContentSize.width,
-                                      height: orderTimerLabel.intrinsicContentSize.width)
-        
+        orderTimerLabel.translatesAutoresizingMaskIntoConstraints = false
+        orderTimerLabel.centerXAnchor.constraint(equalTo: orderTimerView.centerXAnchor, constant: 10).isActive = true
+        orderTimerLabel.centerYAnchor.constraint(equalTo: orderTimerView.centerYAnchor, constant: 0).isActive = true
+        orderTimerLabel.heightAnchor.constraint(equalToConstant: orderTimerLabel.intrinsicContentSize.width).isActive = true
+        orderTimerLabel.widthAnchor.constraint(equalToConstant: orderTimerLabel.intrinsicContentSize.width).isActive = true
         
     }
     

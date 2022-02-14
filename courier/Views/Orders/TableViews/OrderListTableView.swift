@@ -14,9 +14,6 @@ class OrderListTableView: UIViewController {
     
     private var presenter: OrderListTableViewPresenterProtocol?
     
-  //  let ordersView = OrdersView()
-
-    
     let sc = CustomSegmentedControl(segments: .two, firstSegmentTitle: "ТЕКУЩИЕ", secondSegmentTitle: "ВЫПОЛНЕННЫЕ")
     
     let countView = UIView()
@@ -29,7 +26,7 @@ class OrderListTableView: UIViewController {
         tableView.reloadData()
     }
     
-    func setupOrderCount(){
+    func setupOrderCount(isHidden: Bool){
         self.view.addSubview(countView)
         countView.backgroundColor = Colors.lightGray
         countView.layer.cornerRadius = 12 // countView.layer.bounds/2
@@ -66,6 +63,9 @@ class OrderListTableView: UIViewController {
         countView.widthAnchor.constraint(equalToConstant: countView.frame.width + 30).isActive = true
         countLabel.heightAnchor.constraint(equalToConstant: countView.frame.height + 30).isActive = true
         
+        countView.isHidden = isHidden
+        countLabel.isHidden = isHidden
+        
     }
 
     func setupWaitViewElement(){
@@ -77,28 +77,29 @@ class OrderListTableView: UIViewController {
             
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         let presenter = OrderListPresenter(view:  self)
         self.presenter = presenter
         self.navigationController?.isNavigationBarHidden = true
 
         setupTableView()
+        setupWaitViewElement()
         view.addSubview(sc.segmentedControlContainerView)
         sc.setContainerView()
+        setupOrderCount(isHidden: true)
+        countView.isHidden = true
+        sc.segmentedControlContainerView.isHidden = true
         self.view.backgroundColor = Colors.backgroundColor
         self.tableView.backgroundColor = Colors.backgroundColor
         
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
-        setupOrderCount()
-        
-      // MARK:  setupWaitViewElement() 
-        
-        
-        
+
+        checkOrders()
     }
 }
 
@@ -150,11 +151,12 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
             countView.backgroundColor = Colors.lightGray
-            return 5
+            
+            return data.count
         case 1:
             //  countLabel.title = "\(3)" // В дальнейшем подставить реальное количество ячеек
               countView.backgroundColor = Colors.orange
-            return 3
+            return data.count
 
         default:
             return 0
@@ -163,6 +165,8 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
   
+        let post = data[indexPath.row]
+        
         switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCell.identifire, for: indexPath) as! OrderListCell
@@ -172,9 +176,14 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
 
             cell.orderAcceptButton.addTarget(self, action: #selector(acceptButtonWasTapped(sender:)), for: .touchUpInside)
             
+            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderTime: "00:05")
+            
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCompletedOrdersCell.identifire, for: indexPath) as! OrderListCompletedOrdersCell
+
+            
+            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)")
             
             return cell
         default:
@@ -189,11 +198,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         print(rowIndex)
         let detailOrderTableView = DetailOrderTableView()
         detailOrderTableView.modalPresentationStyle = .fullScreen
-        //dismiss(animated: true, completion: nil)
-       // self.present(detailOrderTableView, animated: true)
         self.navigationController?.pushViewController(detailOrderTableView, animated: true)
-        
-
     }
     
     @objc func acceptButtonWasTapped(sender:UIButton){
@@ -231,5 +236,17 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension OrderListTableView: OrderListTableViewProtocol{
-    
+    func checkOrders(){
+        presenter?.getOrders(completion: { posts in
+            if posts.count != 0{
+                self.waitViewElement.isHidden = true
+                self.waitViewElement.setupView()
+                self.data = posts
+               // print("Постов - ", posts.count)
+                self.sc.segmentedControlContainerView.isHidden = false
+                self.setupOrderCount(isHidden: false)
+                self.tableView.reloadData()
+            }
+        })
+    }
 }

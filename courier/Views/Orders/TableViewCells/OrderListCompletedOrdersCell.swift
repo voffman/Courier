@@ -69,13 +69,14 @@ class OrderListCompletedOrdersCell: UITableViewCell {
     }
     
     // для использования в tableView
-    public func configure(orderId: String?,
-                          orderPrice: String?,
+    public func configure(orderId: Int,
+                          orderPrice: Int,
                           orderSource: String?,
                           orderFromAddress: String?,
                           orderToAddress: String?){
-        self.orderIdLabel.text = orderId
-        self.orderPriceLabel.text = orderPrice
+        
+        self.orderIdLabel.text = "№ \(String(orderId))"
+        self.orderPriceLabel.text = "• \(String(orderPrice)) ₸"
         self.orderSourcelabel.text = orderSource
         self.orderFromAddressLabel.text = orderFromAddress
         self.orderToAddressLabel.text = orderToAddress

@@ -101,8 +101,9 @@ class LoginView: UIViewController {
     }
     
     @objc func loginButtonAction(sender: UIButton!){
-        presenter?.savePhoneNumber()
-        presenter?.sendSMS()
+        presenter?.sendSMS(phoneNumber: phoneNumberTextField.text) // phone v parametr
+        // презентер никогда не запрашивает данные от вью
+        
         let ordersView = ConfirmLoginView()
         ordersView.modalPresentationStyle = .fullScreen
 
@@ -125,7 +126,5 @@ class LoginView: UIViewController {
 }
 
 extension LoginView: LoginViewProtocol{
-    func getPhoneNumber(completion: (String) -> ()) {
-        completion(phoneNumberTextField.text ?? "")
-    }
+    
 }
