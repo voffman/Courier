@@ -17,6 +17,10 @@ class OrdersView: UIViewController {
     
     private var presenter: OrdersViewPresenterProtocol?
     
+    let mvpController = MVPController()
+    
+    
+    
     func setupNonActiveOrdersCardView(){
         view.addSubview(cardView)
         cardView.setView()
@@ -117,8 +121,9 @@ class OrdersView: UIViewController {
         super.viewDidLoad()
         let presenter = OrdersPresenter(view:  self)
         self.presenter = presenter
-        
         setupView()
+        mvpController.targetView = self.view
+       //MARK:  mvpController.showErrorView(isEnabled: true)
         // Do any additional setup after loading the view.
     }
     

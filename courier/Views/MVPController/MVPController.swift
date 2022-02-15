@@ -9,10 +9,30 @@ import UIKit
 
 class MVPController: UIViewController {
     
+    var targetView = UIView()
     
     // состоит из подъвью
-    func showErrorView(){} // errorResponse в параметрах, здесь его распарсить и вывести коды ошибок из джейсона
-    func showLoadingView(){}
+    func showErrorView(isEnabled: Bool){
+        let errorView = ErrorView()
+        errorView.showErrorView(onView: targetView)
+        
+
+    } // errorResponse в параметрах, здесь его распарсить и вывести коды ошибок из джейсона
+    
+    func showLoadingView(isEnabled: Bool){
+        let loadingView = LoadingView()
+        
+        switch isEnabled{
+            
+        case true:
+            loadingView.showSpinner(onView: targetView)
+            
+        case false:
+            loadingView.removeSpinner()
+            
+            break
+        }
+    }
     func showContentView(){}
     
     func showMessage(){

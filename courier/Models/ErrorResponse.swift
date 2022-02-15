@@ -7,12 +7,11 @@
 
 import Foundation
 
-/*enum VendingMachineError: Error {
-    case invalidSelection
-    case insufficientFunds(coinsNeeded: Int)
-    case outOfStock
+struct ErrorResponse: Codable {
+    let name, message: String
+    let code, status: Int
+    let type: String
 }
-*/
 
 // выводить коды ошибки JSON-а как в сваггере   "message": "Пользователя не существует", "code": 0, "status": 404,
 // и передавать в MVP контроллер
