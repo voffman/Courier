@@ -46,6 +46,8 @@
 		503622E927ABC89C00F39838 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503622E827ABC89C00F39838 /* Coordinates.swift */; };
 		5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316027A0F679000777A9 /* CustomAlerts.swift */; };
 		5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */; };
+		50475EE727BCC0FA00AD27E2 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50475EE627BCC0FA00AD27E2 /* AlertView.swift */; };
+		50475EE927BCD7AB00AD27E2 /* MVPControllerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50475EE827BCD7AB00AD27E2 /* MVPControllerPresenter.swift */; };
 		5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC7279A734100E4A686 /* OrderListTableView.swift */; };
 		5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC9279A7CD400E4A686 /* OrderListCell.swift */; };
 		5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065CCA127993A2700B38BAB /* OrdersView.swift */; };
@@ -107,6 +109,8 @@
 		503622E827ABC89C00F39838 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		5043316027A0F679000777A9 /* CustomAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
 		5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		50475EE627BCC0FA00AD27E2 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		50475EE827BCD7AB00AD27E2 /* MVPControllerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVPControllerPresenter.swift; sourceTree = "<group>"; };
 		5062EFC7279A734100E4A686 /* OrderListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListTableView.swift; sourceTree = "<group>"; };
 		5062EFC9279A7CD400E4A686 /* OrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListCell.swift; sourceTree = "<group>"; };
 		5065CCA127993A2700B38BAB /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
@@ -224,6 +228,7 @@
 				502618BA27A7AEB300CEA57C /* DetailOrderPresenter.swift */,
 				502618E227A7EA2A00CEA57C /* ShopSubviewPresenter.swift */,
 				502618E427A7EDC500CEA57C /* ClientSubviewPresenter.swift */,
+				50475EE827BCD7AB00AD27E2 /* MVPControllerPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				50DFF72427BBA3860066BB37 /* ErrorView.swift */,
 				50DFF72627BBA3960066BB37 /* LoadingView.swift */,
 				50DFF72827BBA3A90066BB37 /* ContentView.swift */,
+				50475EE627BCC0FA00AD27E2 /* AlertView.swift */,
 			);
 			path = MVPController;
 			sourceTree = "<group>";
@@ -533,6 +539,8 @@
 				5065CCA82799606600B38BAB /* CustomNavigationBars.swift in Sources */,
 				50C8186A27B6717500AB4C0B /* WaitViewElement.swift in Sources */,
 				502618BD27A7B18F00CEA57C /* CustomTimer.swift in Sources */,
+				50475EE727BCC0FA00AD27E2 /* AlertView.swift in Sources */,
+				50475EE927BCD7AB00AD27E2 /* MVPControllerPresenter.swift in Sources */,
 				501D409927A26EE200F67C6B /* DetailOrderTableView.swift in Sources */,
 				50A5731A27B3CF0500E3013F /* NetworkManager.swift in Sources */,
 				5030A5D727B504A000863939 /* CourierOrderResponse.swift in Sources */,

@@ -7,23 +7,19 @@
 
 import UIKit
 
-class ContentView: UIViewController {
+class ContentView: UIView {
+    
+    var contentView: UIView?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    func showContentView(onView : UIView){
+        let backgroundView = UIView.init(frame: onView.bounds)
+        backgroundView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        onView.addSubview(backgroundView)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func removeContentView(){
+        self.contentView?.removeFromSuperview()
+        self.contentView = nil
     }
-    */
-
+    
 }

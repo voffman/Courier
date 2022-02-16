@@ -62,6 +62,7 @@ class CustomLabels: UILabel {
             self.text = title
             self.font = UIFont.systemFont(ofSize: textSize)
             self.textColor = Colors.gray
+            self.numberOfLines = 0
             
         case .timerRed:
             self.text = title
