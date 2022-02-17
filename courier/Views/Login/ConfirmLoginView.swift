@@ -11,7 +11,7 @@ class ConfirmLoginView: UIViewController {
     
     let cardView = CustomViews(style: .withShadow)
     let titleLabel = CustomLabels(title: "Вход для курьеров", textSize: 24, style: .bold)
-    let smsLabel = CustomLabels(title: "Мы отправили СМС с кодом подтверждения на номер \(Properties.phoneNumber)", textSize: 14, style: .regular)
+    let smsLabel = CustomLabels(title: "Мы отправили СМС с кодом подтверждения на номер \(UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber)!)", textSize: 14, style: .regular)
     let sendAgainLabel = CustomLabels(title: "Отправить еще раз через 0:50 сек", textSize: 14, style: .light)
     let sendAgainButton = CustomButtons(title: "ОТПРАВИТЬ ЕЩЕ РАЗ", style: .primary)
     let codeConfirmLabel = CustomLabels(title: "Код подтверждения", textSize: 12, style: .light)
@@ -160,8 +160,8 @@ class ConfirmLoginView: UIViewController {
     
     
     @objc func confirmButtonAction(sender: UIButton!){
-        Properties.smsCode = confirmTextField.text
-        presenter?.getAuthKey()
+        UserDefaults.standard.set(confirmTextField.text, forKey: UserDefaultsKeys.smsCode)
+        presenter?.confirmSMSCode()
         print("Кнопка подтвердить")
     }
     

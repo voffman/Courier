@@ -34,11 +34,13 @@ class LoginPresenter: LoginViewPresenterProtocol {
             return
         }
 
-        Properties.phoneNumber = phoneNumber
-        let nv = NetworkManager()
-        nv.postRequest(url: URLs.Auth.getSMS, headers: [], body: ["phone": Properties.phoneNumber]) //77012559804
-            print("Номер телефона: ", Properties.phoneNumber)
+        UserDefaults.standard.set(phoneNumber, forKey: UserDefaultsKeys.phoneNumber)
+        let api = ApiService()
+        api.sendSMS()
+        
+       // nv.postRequest(url: URLs.Auth.getSMS, headers: [], body: ["phone": Properties.phoneNumber]) //77012559804
+       //     print("Номер телефона: ", Properties.phoneNumber)
 
+       
     }
 }
- 

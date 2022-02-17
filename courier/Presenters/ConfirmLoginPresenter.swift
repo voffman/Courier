@@ -16,7 +16,7 @@ protocol ConfirmLoginViewProtocol: AnyObject  {
 protocol ConfirmLoginViewPresenterProtocol: AnyObject {
     init(view: ConfirmLoginViewProtocol)
     func sendSMSAgain()
-    func getAuthKey()
+    func confirmSMSCode()
 }
 
 class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
@@ -25,28 +25,18 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
     required init(view: ConfirmLoginViewProtocol) {
         self.view = view
     }
-    let nv = NetworkManager()
+    let api = ApiService()
     
     func sendSMSAgain() {
-        nv.postRequest(url: URLs.Auth.getSMS, headers: [], body: ["phone": Properties.phoneNumber]) //77012559804
-        print("Номер телефона: ", Properties.phoneNumber)
+        api.sendSMS() //77012559804
+
     }
     
-    func getAuthKey() {
-      //  if Properties.smsCode != nil{
-            nv.postRequest(url: URLs.Auth.loginByCode,
-                           headers: [],
-                           body: ["phone": Properties.phoneNumber, "code": Properties.smsCode ?? ""],
-                           model: UserResponse.self) { post in
-                
-                print("Ключ: ", post.authKey ?? "Нет данных")
-                Properties.bearer = post.authKey ?? ""
-                if Properties.bearer != ""{
-                    self.view?.openOrdersView()
-                    
-               // } else{
-                    // alert
-               // }
+    func confirmSMSCode() {
+        api.getAuthKey { bearer in
+            UserDefaults.standard.set(bearer, forKey: UserDefaultsKeys.bearer)
+            if UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) != ""{
+                self.view?.openOrdersView()
             }
         }
     }

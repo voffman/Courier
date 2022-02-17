@@ -9,7 +9,7 @@ import Foundation
 
 // То, что выполняю во вью
 protocol OrderListTableViewProtocol: AnyObject  {
-  //MARK: перенести сюда функцию конфигуреCELL в tableView func configure(...) Не получится, это внутрення функция ячейки
+    
     func checkOrders()
 }
 
@@ -23,7 +23,7 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     weak var view: OrderListTableViewProtocol?
     // Тут можно объявить модель
     let networkManager = NetworkManager()
-    
+    let api = ApiService()
     required init(view: OrderListTableViewProtocol) {
         self.view = view
     }
@@ -31,7 +31,7 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     
     func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
         
-        networkManager.getRequest(url: URLs.CourierOrders.order, headers: [.authorization(bearerToken: Properties.bearer!)], model: CourierOrderResponseElement.self) { posts in
+        api.getOrders { posts in
             completion(posts)
         }
     }

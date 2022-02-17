@@ -35,7 +35,7 @@
 		502618BD27A7B18F00CEA57C /* CustomTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618BC27A7B18F00CEA57C /* CustomTimer.swift */; };
 		502618E327A7EA2B00CEA57C /* ShopSubviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618E227A7EA2A00CEA57C /* ShopSubviewPresenter.swift */; };
 		502618E527A7EDC500CEA57C /* ClientSubviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618E427A7EDC500CEA57C /* ClientSubviewPresenter.swift */; };
-		5030A5B127B4CA2100863939 /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5030A5B027B4CA2100863939 /* Properties.swift */; };
+		5030A5B127B4CA2100863939 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5030A5B027B4CA2100863939 /* UserDefaultsKeys.swift */; };
 		5030A5D727B504A000863939 /* CourierOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5030A5D627B504A000863939 /* CourierOrderResponse.swift */; };
 		5031835127ACFD22001C9BEB /* HistoryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031835027ACFD22001C9BEB /* HistoryTableView.swift */; };
 		5031835327ACFD38001C9BEB /* ScheduleTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031835227ACFD38001C9BEB /* ScheduleTableView.swift */; };
@@ -57,7 +57,6 @@
 		5093F6C3279EA2E300A53157 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5093F6C2279EA2E300A53157 /* Assets.xcassets */; };
 		50A5731A27B3CF0500E3013F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5731927B3CF0500E3013F /* NetworkManager.swift */; };
 		50A5731C27B3D89E00E3013F /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5731B27B3D89E00E3013F /* UserResponse.swift */; };
-		50A5731E27B3D9AF00E3013F /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5731D27B3D9AF00E3013F /* URLs.swift */; };
 		50AD10B02798281000221873 /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AD10AF2798281000221873 /* CustomButtons.swift */; };
 		50C8186A27B6717500AB4C0B /* WaitViewElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8186927B6717500AB4C0B /* WaitViewElement.swift */; };
 		50DFF72527BBA3860066BB37 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFF72427BBA3860066BB37 /* ErrorView.swift */; };
@@ -98,7 +97,7 @@
 		502618BC27A7B18F00CEA57C /* CustomTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTimer.swift; sourceTree = "<group>"; };
 		502618E227A7EA2A00CEA57C /* ShopSubviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopSubviewPresenter.swift; sourceTree = "<group>"; };
 		502618E427A7EDC500CEA57C /* ClientSubviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSubviewPresenter.swift; sourceTree = "<group>"; };
-		5030A5B027B4CA2100863939 /* Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
+		5030A5B027B4CA2100863939 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		5030A5D627B504A000863939 /* CourierOrderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierOrderResponse.swift; sourceTree = "<group>"; };
 		5031835027ACFD22001C9BEB /* HistoryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableView.swift; sourceTree = "<group>"; };
 		5031835227ACFD38001C9BEB /* ScheduleTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableView.swift; sourceTree = "<group>"; };
@@ -120,7 +119,6 @@
 		5093F6C2279EA2E300A53157 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50A5731927B3CF0500E3013F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		50A5731B27B3D89E00E3013F /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
-		50A5731D27B3D9AF00E3013F /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		50AD10AF2798281000221873 /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
 		50C8186927B6717500AB4C0B /* WaitViewElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitViewElement.swift; sourceTree = "<group>"; };
 		50DFF72427BBA3860066BB37 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -196,7 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				503622E827ABC89C00F39838 /* Coordinates.swift */,
-				5030A5B027B4CA2100863939 /* Properties.swift */,
+				5030A5B027B4CA2100863939 /* UserDefaultsKeys.swift */,
 				50A5731B27B3D89E00E3013F /* UserResponse.swift */,
 				5030A5D627B504A000863939 /* CourierOrderResponse.swift */,
 				5006FCEC27BA70990047DD6A /* ErrorResponse.swift */,
@@ -273,7 +271,6 @@
 			isa = PBXGroup;
 			children = (
 				5016304E27968D2100D0734F /* Colors.swift */,
-				50A5731D27B3D9AF00E3013F /* URLs.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -514,7 +511,6 @@
 				50AD10B02798281000221873 /* CustomButtons.swift in Sources */,
 				501D409D27A27C2300F67C6B /* ShopSubview.swift in Sources */,
 				50DFF72927BBA3A90066BB37 /* ContentView.swift in Sources */,
-				50A5731E27B3D9AF00E3013F /* URLs.swift in Sources */,
 				50DFF72527BBA3860066BB37 /* ErrorView.swift in Sources */,
 				502618B227A793FA00CEA57C /* ConfirmLoginPresenter.swift in Sources */,
 				5006FCED27BA70990047DD6A /* ErrorResponse.swift in Sources */,
@@ -531,7 +527,7 @@
 				501D409727A248B900F67C6B /* OrderListCompletedOrdersCell.swift in Sources */,
 				500B62E727990E7F00EDC58A /* CustomLabels.swift in Sources */,
 				502618B927A7AB1800CEA57C /* OrderListPresenter.swift in Sources */,
-				5030A5B127B4CA2100863939 /* Properties.swift in Sources */,
+				5030A5B127B4CA2100863939 /* UserDefaultsKeys.swift in Sources */,
 				501630392796786A00D0734F /* LoginView.swift in Sources */,
 				50FFC1CE27B0EA2100478F1D /* ScheduleSubmitCell.swift in Sources */,
 				502618BB27A7AEB300CEA57C /* DetailOrderPresenter.swift in Sources */,
