@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // функции типа toLogin
 // url зашиты здесь
@@ -19,6 +20,7 @@ private let orderListURL = baseURL + "courier/order"
 
 
 let networkManager = NetworkManager()
+//let mvpc = MVPController()
 
 class ApiService {
     
@@ -27,6 +29,9 @@ class ApiService {
             print(response.data ?? "Нет данных")
         } ifError: { error in
             // Передаю в презентер MVCController-а
+            //mvpc.targetView =
+            //mvpc.showErrorView(isEnabled: true, errorResponseData: error)
+            
             print("Имя: \(error.name)")
             print("Сообщение: \(error.message)")
             print("Код: \(error.code)")

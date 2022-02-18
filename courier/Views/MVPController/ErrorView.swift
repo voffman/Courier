@@ -24,6 +24,23 @@ class ErrorView: UIView {
 
     var errorView : UIView?
     
+    //MARK: выбрать что-то одно
+    func configurData(errorResponseData: ErrorResponse){
+        nameLabel.text = errorResponseData.name
+        messageLabel.text = errorResponseData.message
+        codeLabel.text = "Код ошибки: \(String(errorResponseData.code))"
+        statusLabel.text = "Статус: \(String(errorResponseData.status))"
+        typeLabel.text = "Статус: \(String(describing:errorResponseData.type))"
+    }
+    
+    func configureData(name: String?, message: String?, code: Int, status: Int, type: String?){
+        nameLabel.text = name
+        messageLabel.text = message
+        codeLabel.text = "Код ошибки: \(String(code))"
+        statusLabel.text = "Статус: \(String(status))"
+        typeLabel.text = "Статус: \(String(describing:type))"
+    }
+    
     func showErrorView(onView : UIView){
         let backgroundView = UIView.init(frame: onView.bounds)
         backgroundView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)

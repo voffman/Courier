@@ -26,7 +26,7 @@ class MVPController: UIViewController {
     }
     
     // состоит из подъвью
-    func showErrorView(isEnabled: Bool){
+    func showErrorView(isEnabled: Bool, errorResponseData: ErrorResponse?){
         let errorView = ErrorView()
         errorView.sendButton.addTarget(self, action: #selector(errorButtonAction), for: .touchUpInside)
         
@@ -34,6 +34,12 @@ class MVPController: UIViewController {
             
         case true:
             errorView.showErrorView(onView: targetView)
+         /*   errorView.configureData(name: errorResponseData?.name,
+                                message: errorResponseData?.message,
+                                code: errorResponseData!.code,
+                                status: errorResponseData!.status,
+                                type: errorResponseData?.type) */
+            errorView.configurData(errorResponseData: errorResponseData!)
             
         case false:
             errorView.removeErrorView()

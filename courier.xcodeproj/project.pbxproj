@@ -11,6 +11,7 @@
 		5006FCE427BA24A90047DD6A /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5006FCE327BA24A90047DD6A /* ApiService.swift */; };
 		5006FCE827BA69BB0047DD6A /* MVPController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5006FCE727BA69BB0047DD6A /* MVPController.swift */; };
 		5006FCED27BA70990047DD6A /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5006FCEC27BA70990047DD6A /* ErrorResponse.swift */; };
+		50096DF927BF591300ED9769 /* TabBarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50096DF827BF591300ED9769 /* TabBarPresenter.swift */; };
 		500B62E727990E7F00EDC58A /* CustomLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62E627990E7F00EDC58A /* CustomLabels.swift */; };
 		500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62E8279913B600EDC58A /* CustomTextFields.swift */; };
 		500B62EB279919A800EDC58A /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62EA279919A800EDC58A /* CustomViews.swift */; };
@@ -71,6 +72,7 @@
 		5006FCE327BA24A90047DD6A /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		5006FCE727BA69BB0047DD6A /* MVPController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVPController.swift; sourceTree = "<group>"; };
 		5006FCEC27BA70990047DD6A /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		50096DF827BF591300ED9769 /* TabBarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPresenter.swift; sourceTree = "<group>"; };
 		500B62E627990E7F00EDC58A /* CustomLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabels.swift; sourceTree = "<group>"; };
 		500B62E8279913B600EDC58A /* CustomTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFields.swift; sourceTree = "<group>"; };
 		500B62EA279919A800EDC58A /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				502618E227A7EA2A00CEA57C /* ShopSubviewPresenter.swift */,
 				502618E427A7EDC500CEA57C /* ClientSubviewPresenter.swift */,
 				50475EE827BCD7AB00AD27E2 /* MVPControllerPresenter.swift */,
+				50096DF827BF591300ED9769 /* TabBarPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				503622E927ABC89C00F39838 /* Coordinates.swift in Sources */,
 				5031835327ACFD38001C9BEB /* ScheduleTableView.swift in Sources */,
 				5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */,
+				50096DF927BF591300ED9769 /* TabBarPresenter.swift in Sources */,
 				5067AEED27A8F36200010950 /* StateSubview.swift in Sources */,
 				500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */,
 				501D409727A248B900F67C6B /* OrderListCompletedOrdersCell.swift in Sources */,

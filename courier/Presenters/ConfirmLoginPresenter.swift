@@ -16,7 +16,9 @@ protocol ConfirmLoginViewProtocol: AnyObject  {
 protocol ConfirmLoginViewPresenterProtocol: AnyObject {
     init(view: ConfirmLoginViewProtocol)
     func sendSMSAgain()
-    func confirmSMSCode()
+    func requestAuthKey()
+    func returnPhoneNumber() -> String
+    func setSMSCode(code: String)
 }
 
 class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
@@ -32,12 +34,20 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
 
     }
     
-    func confirmSMSCode() {
+    func requestAuthKey() {
         api.getAuthKey { bearer in
             UserDefaults.standard.set(bearer, forKey: UserDefaultsKeys.bearer)
             if UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) != ""{
                 self.view?.openOrdersView()
             }
         }
+    }
+    
+    func returnPhoneNumber() -> String {
+        return UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber) ?? "Нет данных"
+    }
+    
+    func setSMSCode(code: String){
+        UserDefaults.standard.set(code, forKey: UserDefaultsKeys.smsCode)
     }
 }

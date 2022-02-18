@@ -49,8 +49,7 @@ final class NetworkManager {
             
         case .post:
             
-            AF.request(url, method: .post, parameters: body, headers: headers).validate(statusCode: 200..<300).responseDecodable(of:
-                                                                                                                                    T.self) { response in
+            AF.request(url, method: .post, parameters: body, headers: headers).validate(statusCode: 200..<300).responseDecodable(of: T.self) { response in
                 switch response.result {
                 case .success(let result):
                     ifSuccess([result], result)

@@ -8,13 +8,20 @@
 import UIKit
 
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
+    
+    var presenter: TabBarPresenterProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
+        let presenter = TabBarPresenter(view:  self)
+        self.presenter = presenter
+        reloadMainItem()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         let item1 = UINavigationController(rootViewController: OrdersView())
         let item2 = UINavigationController(rootViewController: HistoryTableView())
         let item3 = UINavigationController(rootViewController: ScheduleTableView())
@@ -37,10 +44,12 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     }
 
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        return true;
+        return true
     }
 
-    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+
+    }
 
     /*
     // MARK: - Navigation
@@ -52,4 +61,9 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     */
 
+}
+
+extension TabBarController: TabBarProtocol{
+    func reloadMainItem() {
+    }
 }

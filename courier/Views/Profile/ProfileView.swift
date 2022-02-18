@@ -169,7 +169,7 @@ class ProfileView: UIViewController {
         activityStatusSwitch.translatesAutoresizingMaskIntoConstraints = false
         activityStatusSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 205).isActive = true
         activityStatusSwitch.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
-        
+        activityStatusSwitch.addTarget(self, action: #selector(switchStateDidChange(_:)), for: .valueChanged)
     }
     
     func setupThirdLineImage(){
@@ -277,11 +277,20 @@ class ProfileView: UIViewController {
         setupExitArrowButtonImage()
     }
 
+    @objc func switchStateDidChange(_ sender:UISwitch){
+        if (sender.isOn == true){
+            print("UISwitch state is now ON")
+        }
+        else{
+            print("UISwitch state is now Off")
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         setupView()
-        
     }
 
 }

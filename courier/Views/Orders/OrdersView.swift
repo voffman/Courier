@@ -103,7 +103,7 @@ class OrdersView: UIViewController {
         
         let orderList = OrderListTableView()
         self.navigationController?.pushViewController(orderList, animated: true)
-
+        presenter?.startUserActivity()
         // setupActiveOrdersView()
     }
     
