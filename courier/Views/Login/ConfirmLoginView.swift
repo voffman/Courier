@@ -166,7 +166,6 @@ class ConfirmLoginView: UIViewController {
         UserDefaults.standard.set(confirmTextField.text, forKey: UserDefaultsKeys.smsCode)
         presenter?.setSMSCode(code: confirmTextField.text ?? "Нет данных")
         presenter?.requestAuthKey()
-        print("Кнопка подтвердить")
     }
     
     @objc func sendAgainButtonAction(sender: UIButton!){
@@ -175,7 +174,7 @@ class ConfirmLoginView: UIViewController {
         self.confirmButton.style = .secondary
         self.confirmButton.setButton()
         
-        presenter?.sendSMSAgain()
+        //presenter?.sendSMSAgain()
         count = 5
         launchTimer()
     }
@@ -197,13 +196,12 @@ class ConfirmLoginView: UIViewController {
         
     }
 
-    
+    let mvpc = MVPController()
     override func viewDidLoad() {
         super.viewDidLoad()
         let presenter = ConfirmLoginPresenter(view:  self)
         self.presenter = presenter
         setupView()
-
 
         launchTimer()
         // Do any additional setup after loading the view.
@@ -223,6 +221,11 @@ class ConfirmLoginView: UIViewController {
 }
 
 extension ConfirmLoginView: ConfirmLoginViewProtocol{
+    
+    func showErrorView(error: ErrorResponse) {
+        mvpc.showErrorView(isEnabled: true, targetVC: self, errorResponseData: error)
+    }
+    
     func openOrdersView() {
         let customTabBar = TabBarController()
         customTabBar.modalPresentationStyle = .fullScreen

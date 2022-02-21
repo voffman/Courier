@@ -7,32 +7,48 @@
 
 import UIKit
 
-class AlertView: UIView {
+class AlertView: UIViewController {
 
     let cardView = CustomViews(style: .withShadow)
 
-    let nameLabel = CustomLabels(title: "Геолокация неактивна", textSize: 20, style: .bold, alignment: .left)
-    let messageLabel = CustomLabels(title: "Чтобы начать, включите геолокацию в настройках", textSize: 16, style: .light, alignment: .justified)
+    let nameLabel = CustomLabels(title: "Предупреждение", textSize: 20, style: .bold, alignment: .left)
+    let messageLabel = CustomLabels(title: "Здесь отображается сообщение", textSize: 16, style: .light, alignment: .justified)
     
     let cancelButton = CustomButtons(title: "Отмена", style: .normal)
-    let sendButton = CustomButtons(title: "Включить", style: .primary)
+    let sendButton = CustomButtons(title: "Подтвердить", style: .primary)
 
     var alertView: UIView?
     
-    func showAlertView(onView : UIView){
-        let backgroundView = UIView.init(frame: onView.bounds)
+    
+    func configureData(name: String?, message: String?, cancelButton: String? = "Отмена", sendButton: String? = "Подтвердить"){
+    
+        nameLabel.title = name
+        messageLabel.title = message
+        
+        self.cancelButton.setTitle(cancelButton, for: .normal)
+        self.sendButton.setTitle(sendButton, for: .normal)
+        
+        nameLabel.setLabel()
+        messageLabel.setLabel()
+        
+        self.cancelButton.setButton()
+        self.sendButton.setButton()
+    }
+
+    func showAlertView(){
+        let backgroundView = UIView.init(frame: self.view.bounds)
         backgroundView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        onView.addSubview(backgroundView)
+        self.view.addSubview(backgroundView)
         backgroundView.addSubview(cardView)
         cardView.setView()
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
         
-        cardView.centerXAnchor.constraint(equalTo: onView.centerXAnchor).isActive = true
-        cardView.centerYAnchor.constraint(equalTo: onView.centerYAnchor).isActive = true
+        cardView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        cardView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
 
-        cardView.leftAnchor.constraint(equalTo:  onView.leftAnchor, constant: 20).isActive = true
-        cardView.rightAnchor.constraint(equalTo:  onView.rightAnchor, constant: -20).isActive = true
+        cardView.leftAnchor.constraint(equalTo:  self.view.leftAnchor, constant: 20).isActive = true
+        cardView.rightAnchor.constraint(equalTo:  self.view.rightAnchor, constant: -20).isActive = true
         cardView.heightAnchor.constraint(equalToConstant: 293).isActive = true
 
         
@@ -43,7 +59,7 @@ class AlertView: UIView {
         
         nameLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
         nameLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 18).isActive = true
-        nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: onView.frame.size.width - 30).isActive = true
+        nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.view.frame.size.width - 30).isActive = true
         
         cardView.addSubview(messageLabel)
         messageLabel.setLabel()
@@ -82,5 +98,7 @@ class AlertView: UIView {
         self.alertView = nil
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }
-

@@ -6,17 +6,18 @@
 //
 
 import Foundation
+import UIKit
 
 // То, что выполняю во вью
 protocol OrderListTableViewProtocol: AnyObject  {
-    
+    func showErrorView(error: ErrorResponse)
     func checkOrders()
 }
 
 // То, что выполняю в здесь
 protocol OrderListTableViewPresenterProtocol: AnyObject {
     init(view: OrderListTableViewProtocol)
-    func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> ())
+    func getOrders(viewController: UIViewController, completion: @escaping ([CourierOrderResponseElement]) -> ())
 }
 
 class OrderListPresenter: OrderListTableViewPresenterProtocol {
@@ -29,10 +30,12 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     }
     
     
-    func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
+    func getOrders(viewController: UIViewController,completion: @escaping ([CourierOrderResponseElement]) -> ()){
         
-        api.getOrders { posts in
+        api.getOrders() { posts in
             completion(posts)
+        } errorResponse: { error in
+            self.view?.showErrorView(error: error)
         }
     }
 }

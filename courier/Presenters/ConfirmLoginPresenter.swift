@@ -10,12 +10,13 @@ import Foundation
 // То, что выполняю во вью
 protocol ConfirmLoginViewProtocol: AnyObject  {
     func openOrdersView()
+    func showErrorView(error: ErrorResponse)
 }
 
 // То, что выполняю в здесь
 protocol ConfirmLoginViewPresenterProtocol: AnyObject {
     init(view: ConfirmLoginViewProtocol)
-    func sendSMSAgain()
+   // func sendSMSAgain()
     func requestAuthKey()
     func returnPhoneNumber() -> String
     func setSMSCode(code: String)
@@ -29,17 +30,19 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
     }
     let api = ApiService()
     
-    func sendSMSAgain() {
-        api.sendSMS() //77012559804
+   /* func sendSMSAgain() {
+        api.sendSMS()//77012559804
 
     }
-    
+    */
     func requestAuthKey() {
-        api.getAuthKey { bearer in
+        api.getAuthKey() { bearer in
             UserDefaults.standard.set(bearer, forKey: UserDefaultsKeys.bearer)
             if UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) != ""{
                 self.view?.openOrdersView()
             }
+        } errorResponse: { error in
+            self.view?.showErrorView(error: error)
         }
     }
     

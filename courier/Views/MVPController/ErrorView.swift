@@ -7,54 +7,52 @@
 
 import UIKit
 
-class ErrorView: UIView {
+class ErrorView: UIViewController {
     
     let cardView = CustomViews(style: .withShadow)
 
-    let nameLabel = CustomLabels(title: "Not Found", textSize: 20, style: .bold, alignment: .center)
-    let messageLabel = CustomLabels(title: "Пользователя не существует", textSize: 16, style: .regular, alignment: .justified)
+    let nameLabel = CustomLabels(title: "Имя ошибки", textSize: 20, style: .bold, alignment: .center)
+    let messageLabel = CustomLabels(title: "Сообщение", textSize: 16, style: .regular, alignment: .justified)
     
     let orderLineImage = UIImageView(image: UIImage(named: "Line"))
     
-    let codeLabel = CustomLabels(title: "Код ошибки: 0", textSize: 14, style: .regular, alignment: .justified)
-    let statusLabel = CustomLabels(title: "Статус: 404", textSize: 14, style: .regular, alignment: .justified)
-    let typeLabel = CustomLabels(title: "Тип: yii\\web\\NotFoundHttpException", textSize: 14, style: .regular, alignment: .justified)
+    let codeLabel = CustomLabels(title: "Код ошибки: ", textSize: 14, style: .regular, alignment: .justified)
+    let statusLabel = CustomLabels(title: "Статус: ", textSize: 14, style: .regular, alignment: .justified)
+    let typeLabel = CustomLabels(title: "Тип: ", textSize: 14, style: .regular, alignment: .justified)
     
     let sendButton = CustomButtons(title: "Попробовать снова", style: .primary)
 
     var errorView : UIView?
     
     //MARK: выбрать что-то одно
-    func configurData(errorResponseData: ErrorResponse){
-        nameLabel.text = errorResponseData.name
-        messageLabel.text = errorResponseData.message
-        codeLabel.text = "Код ошибки: \(String(errorResponseData.code))"
-        statusLabel.text = "Статус: \(String(errorResponseData.status))"
-        typeLabel.text = "Статус: \(String(describing:errorResponseData.type))"
+    func configureData(errorResponseData: ErrorResponse){
+        nameLabel.title = errorResponseData.name
+        messageLabel.title = errorResponseData.message
+        codeLabel.title = "Код ошибки: \(String(errorResponseData.code))"
+        statusLabel.title = "Статус: \(String(errorResponseData.status))"
+        typeLabel.title = "Статус: \(String(describing:errorResponseData.type))"
+        
+        nameLabel.setLabel()
+        messageLabel.setLabel()
+        codeLabel.setLabel()
+        statusLabel.setLabel()
+        typeLabel.setLabel()
     }
-    
-    func configureData(name: String?, message: String?, code: Int, status: Int, type: String?){
-        nameLabel.text = name
-        messageLabel.text = message
-        codeLabel.text = "Код ошибки: \(String(code))"
-        statusLabel.text = "Статус: \(String(status))"
-        typeLabel.text = "Статус: \(String(describing:type))"
-    }
-    
-    func showErrorView(onView : UIView){
-        let backgroundView = UIView.init(frame: onView.bounds)
+
+    func showErrorView(){
+        let backgroundView = UIView.init(frame: self.view.bounds)
         backgroundView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        onView.addSubview(backgroundView)
+        self.view.addSubview(backgroundView)
         backgroundView.addSubview(cardView)
         cardView.setView()
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
         
-        cardView.centerXAnchor.constraint(equalTo: onView.centerXAnchor).isActive = true
-        cardView.centerYAnchor.constraint(equalTo: onView.centerYAnchor).isActive = true
+        cardView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        cardView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
 
-        cardView.leftAnchor.constraint(equalTo:  onView.leftAnchor, constant: 10).isActive = true
-        cardView.rightAnchor.constraint(equalTo:  onView.rightAnchor, constant: -10).isActive = true
+        cardView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
+        cardView.rightAnchor.constraint(equalTo:  self.view.rightAnchor, constant: -10).isActive = true
         cardView.heightAnchor.constraint(equalToConstant: 322).isActive = true
 
         
@@ -64,14 +62,14 @@ class ErrorView: UIView {
         
         nameLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
         nameLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 25).isActive = true
-        nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: onView.frame.size.width - 20).isActive = true
+        nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.view.frame.size.width - 20).isActive = true
         
         cardView.addSubview(messageLabel)
         messageLabel.setLabel()
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
         messageLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 50).isActive = true
-        messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: onView.frame.size.width - 20).isActive = true
+        messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.view.frame.size.width - 20).isActive = true
         messageLabel.bottomAnchor.constraint(equalTo: cardView.topAnchor, constant: 175).isActive = true
         
         cardView.addSubview(orderLineImage)
@@ -92,14 +90,14 @@ class ErrorView: UIView {
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
         statusLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 210).isActive = true
-        statusLabel.widthAnchor.constraint(lessThanOrEqualToConstant: onView.frame.size.width - 20).isActive = true
+        statusLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.view.frame.size.width - 20).isActive = true
         
         cardView.addSubview(typeLabel)
         typeLabel.setLabel()
         typeLabel.translatesAutoresizingMaskIntoConstraints = false
         typeLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
         typeLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 230).isActive = true
-        typeLabel.widthAnchor.constraint(lessThanOrEqualToConstant: onView.frame.size.width - 20).isActive = true
+        typeLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.view.frame.size.width - 20).isActive = true
     
         
         cardView.addSubview(sendButton)
@@ -112,10 +110,14 @@ class ErrorView: UIView {
       
         errorView = backgroundView
     }
-    
+   // Удаляет только View
     func removeErrorView(){
         self.errorView?.removeFromSuperview()
         self.errorView = nil
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
     
 }

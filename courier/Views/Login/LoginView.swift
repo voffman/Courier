@@ -101,30 +101,27 @@ class LoginView: UIViewController {
     }
     
     @objc func loginButtonAction(sender: UIButton!){
+
         presenter?.sendSMS(phoneNumber: phoneNumberTextField.text) // phone v parametr
         // презентер никогда не запрашивает данные от вью
-        
-        let ordersView = ConfirmLoginView()
-        ordersView.modalPresentationStyle = .fullScreen
-
-        dismiss(animated: true, completion: nil)
-        self.present(ordersView, animated: true)
-        //self.navigationController?.pushViewController(ordersView, animated: true)
+        let vc = ConfirmLoginView()
+        vc.modalPresentationStyle = .fullScreen
+       // self.present(vc, animated: true) // MARK: не дает появиться errorView
 
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let presenter = LoginPresenter(view:  self)
         self.presenter = presenter
-
         setupView()
-        
         // Do any additional setup after loading the view.
         
     }
 }
 
 extension LoginView: LoginViewProtocol{
-    
+    func showErrorView(error: ErrorResponse) {
+        mvpController.showErrorView(isEnabled: true, targetVC: self, errorResponseData: error)
+    }
 }

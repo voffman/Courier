@@ -8,38 +8,41 @@
 import UIKit
 
 class MVPController: UIViewController {
-    
-    var targetView = UIView()
+
+    var targetVC = UIViewController()
     
     let presenter: MVPControllerPresenterProtocol? = nil
     
+    // Для привязки различных действий к кнопкам - можно использовать enum
+
+    private let errorView = ErrorView()
+    private let alertView = AlertView()
+    
+    
     @objc func errorButtonAction(){
-        
+        errorView.dismiss(animated: true, completion: nil)
     }
     
     @objc func alertPrimaryButtonAction(){
-        
+        alertView.dismiss(animated: true, completion: nil)
     }
     
     @objc func alertNormalButtonAction(){
-        
+        alertView.dismiss(animated: true, completion: nil)
+        print("Alert 2 экшн")
     }
     
     // состоит из подъвью
-    func showErrorView(isEnabled: Bool, errorResponseData: ErrorResponse?){
-        let errorView = ErrorView()
-        errorView.sendButton.addTarget(self, action: #selector(errorButtonAction), for: .touchUpInside)
+    func showErrorView(isEnabled: Bool, targetVC: UIViewController, errorResponseData: ErrorResponse?){
         
         switch isEnabled{
             
         case true:
-            errorView.showErrorView(onView: targetView)
-         /*   errorView.configureData(name: errorResponseData?.name,
-                                message: errorResponseData?.message,
-                                code: errorResponseData!.code,
-                                status: errorResponseData!.status,
-                                type: errorResponseData?.type) */
-            errorView.configurData(errorResponseData: errorResponseData!)
+            errorView.sendButton.addTarget(self, action: #selector(errorButtonAction), for: .touchUpInside)
+            errorView.configureData(errorResponseData: errorResponseData ?? ErrorResponse(name: "Неизвестная ошибка!", message: "Попробуйте обновить приложение", code: 0, status: 0, type: "Нет данных"))
+            errorView.showErrorView()
+            errorView.modalPresentationStyle = .overFullScreen
+            targetVC.present(errorView, animated: true, completion: nil)
             
         case false:
             errorView.removeErrorView()
@@ -48,7 +51,7 @@ class MVPController: UIViewController {
         }
     } // errorResponse в параметрах, здесь его распарсить и вывести коды ошибок из джейсона
     
-    func showLoadingView(isEnabled: Bool){
+    func showLoadingView(isEnabled: Bool, targetView: UIView){
         let loadingView = LoadingView()
         
         switch isEnabled{
@@ -63,7 +66,7 @@ class MVPController: UIViewController {
         }
     }
     
-    func showContentView(isEnabled: Bool){
+    func showContentView(isEnabled: Bool, targetView: UIView){
         let contentView = ContentView()
 
         switch isEnabled{
@@ -82,14 +85,18 @@ class MVPController: UIViewController {
         print("Message: \(message)")
     }
     
-    func showAlert(isEnabled: Bool){
-        let alertView = AlertView()
-
+    func showAlert(isEnabled: Bool, targetVC: UIViewController, name: String?, message: String?, cancelButton: String? = "Отмена", sendButton: String? = "Подтвердить"){
         switch isEnabled{
             
         case true:
-            alertView.showAlertView(onView: targetView)
+            alertView.sendButton.addTarget(self, action: #selector(alertPrimaryButtonAction), for: .touchUpInside)
+            alertView.cancelButton.addTarget(self, action: #selector(alertNormalButtonAction), for: .touchUpInside)
             
+            alertView.configureData(name: name, message: message, cancelButton: cancelButton, sendButton: sendButton)
+            alertView.showAlertView()
+            alertView.modalPresentationStyle = .overFullScreen
+            targetVC.present(alertView, animated: true, completion: nil)
+
         case false:
             alertView.removeAlertView()
             

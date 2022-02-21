@@ -20,50 +20,53 @@ private let orderListURL = baseURL + "courier/order"
 
 
 let networkManager = NetworkManager()
-//let mvpc = MVPController()
+let mvpController = MVPController()
 
-class ApiService {
+
+class ApiService: UIViewController {
     
-    func sendSMS(){
+    func sendSMS(completion: @escaping (ErrorResponse)->()){
+        
         networkManager.request(url: smsURL, method: .post, body: ["phone": UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber)!]) { response in
             print(response.data ?? "Нет данных")
         } ifError: { error in
-            // Передаю в презентер MVCController-а
-            //mvpc.targetView =
-            //mvpc.showErrorView(isEnabled: true, errorResponseData: error)
-            
-            print("Имя: \(error.name)")
-            print("Сообщение: \(error.message)")
-            print("Код: \(error.code)")
-            print("Статус: \(error.status)")
+            completion(error)
         }
     }
     
-    func getAuthKey(completion: @escaping (String)->()){
+    func getAuthKey(completion: @escaping (String)->(), errorResponse: @escaping (ErrorResponse)->()){
         networkManager.request(url: loginByCodeURL, method: .post, body: ["phone": UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber)!, "code": UserDefaults.standard.string(forKey: UserDefaultsKeys.smsCode) ?? ""], model: UserResponse.self) { posts, post  in
             
             print("Ключ: ", post?.authKey ?? "Нет данных")
             completion(post?.authKey ?? "")
             
         } ifError: { error in
+
+            errorResponse(error)
+            /*
             print("Имя: \(error.name)")
             print("Сообщение: \(error.message)")
             print("Код: \(error.code)")
             print("Статус: \(error.status)")
-            
+            print("Тип ошибки: \(error.type)")
+             */
         }
     }
     
-    func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
+    func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
         
         networkManager.request(url: orderListURL, method: .get, headers: [.authorization(bearerToken: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!)], model: CourierOrderResponseElement.self) { posts, _  in
             completion(posts)
             
         } ifError: { error in
+            errorResponse(error)
+            /*
             print("Имя: \(error.name)")
             print("Сообщение: \(error.message)")
             print("Код: \(error.code)")
             print("Статус: \(error.status)")
+            print("Тип ошибки: \(error.type)")
+             */
         }
     }
 }

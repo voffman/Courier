@@ -6,9 +6,12 @@
 //
 
 import Foundation
+//import UIKit
 
 // То, что выполняю во вью
 protocol LoginViewProtocol: AnyObject  {
+    func showErrorView(error: ErrorResponse)
+    
 }
 
 // То, что выполняю в здесь
@@ -30,17 +33,21 @@ class LoginPresenter: LoginViewPresenterProtocol {
         // Здесь выпоняется запрос по получению "СМС"
         // Api.getLogin
         // две функции для обработки успеха или ошибки
+        
+        var errorResponse: ErrorResponse?
+        
         guard let phoneNumber = phoneNumber else {
             return
         }
 
         UserDefaults.standard.set(phoneNumber, forKey: UserDefaultsKeys.phoneNumber)
         let api = ApiService()
-        api.sendSMS()
-        
-       // nv.postRequest(url: URLs.Auth.getSMS, headers: [], body: ["phone": Properties.phoneNumber]) //77012559804
-       //     print("Номер телефона: ", Properties.phoneNumber)
-
-       
+        api.sendSMS { error in
+            errorResponse = error
+            guard let errorResponse = errorResponse else {
+                return
+            }
+            self.view?.showErrorView(error: errorResponse)
+        }
     }
 }

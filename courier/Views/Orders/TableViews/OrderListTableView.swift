@@ -236,8 +236,13 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension OrderListTableView: OrderListTableViewProtocol{
+    
+    func showErrorView(error: ErrorResponse) {
+        mvpController.showErrorView(isEnabled: true, targetVC: self, errorResponseData: error)
+    }
+    
     func checkOrders(){
-        presenter?.getOrders(completion: { posts in
+        presenter?.getOrders(viewController: self, completion: { posts in
             if posts.count != 0{
                 self.waitViewElement.isHidden = true
                 self.waitViewElement.setupView()
