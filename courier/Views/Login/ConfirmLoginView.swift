@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ConfirmLoginView: UIViewController {
+class ConfirmLoginView: MVPController {
     
     let cardView = CustomViews(style: .withShadow)
     let titleLabel = CustomLabels(title: "Вход для курьеров", textSize: 24, style: .bold)
@@ -163,7 +163,6 @@ class ConfirmLoginView: UIViewController {
     
     
     @objc func confirmButtonAction(sender: UIButton!){
-        UserDefaults.standard.set(confirmTextField.text, forKey: UserDefaultsKeys.smsCode)
         presenter?.setSMSCode(code: confirmTextField.text ?? "Нет данных")
         presenter?.requestAuthKey()
     }
@@ -196,7 +195,6 @@ class ConfirmLoginView: UIViewController {
         
     }
 
-    let mvpc = MVPController()
     override func viewDidLoad() {
         super.viewDidLoad()
         let presenter = ConfirmLoginPresenter(view:  self)
@@ -220,16 +218,16 @@ class ConfirmLoginView: UIViewController {
     
 }
 
+protocol ConfirmLoginViewProtocol: AnyObject, MVPControllerProtocol  {
+    func goToOrdersViewTabBar()
+}
+
 extension ConfirmLoginView: ConfirmLoginViewProtocol{
     
-    func showErrorView(error: ErrorResponse) {
-        mvpc.showErrorView(isEnabled: true, targetVC: self, errorResponseData: error)
-    }
-    
-    func openOrdersView() {
-        let customTabBar = TabBarController()
-        customTabBar.modalPresentationStyle = .fullScreen
-        self.present(customTabBar, animated: true, completion: nil)
+    func goToOrdersViewTabBar() {
+        let tabBarController = TabBarController()
+        tabBarController.modalPresentationStyle = .fullScreen
+        self.present(tabBarController, animated: true, completion: nil)
     }
 }
 

@@ -11,7 +11,7 @@ class LoadingView: UIView {
 
     var viewSpinner : UIView?
     
-    func showSpinner(onView : UIView) {
+    func showSpinner(onView: UIView) {
         let backgroundView = UIView.init(frame: onView.bounds) // backgroundView
         backgroundView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         let ai = UIActivityIndicatorView.init(style: .whiteLarge)

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 // функции типа toLogin
 // url зашиты здесь
@@ -20,22 +19,20 @@ private let orderListURL = baseURL + "courier/order"
 
 
 let networkManager = NetworkManager()
-let mvpController = MVPController()
 
-
-class ApiService: UIViewController {
+class ApiService {
     
-    func sendSMS(completion: @escaping (ErrorResponse)->()){
-        
-        networkManager.request(url: smsURL, method: .post, body: ["phone": UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber)!]) { response in
+    func sendSMS(phoneNumber: String, completion: @escaping (ErrorResponse)->()){
+        networkManager.request(url: smsURL, method: .post, body: ["phone": phoneNumber]) { response in
             print(response.data ?? "Нет данных")
+
         } ifError: { error in
             completion(error)
         }
     }
     
-    func getAuthKey(completion: @escaping (String)->(), errorResponse: @escaping (ErrorResponse)->()){
-        networkManager.request(url: loginByCodeURL, method: .post, body: ["phone": UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber)!, "code": UserDefaults.standard.string(forKey: UserDefaultsKeys.smsCode) ?? ""], model: UserResponse.self) { posts, post  in
+    func getAuthKey(phoneNumber: String, smsCode: String, completion: @escaping (String)->(), errorResponse: @escaping (ErrorResponse)->()){
+        networkManager.request(url: loginByCodeURL, method: .post, body: ["phone": phoneNumber, "code": smsCode], model: UserResponse.self) { posts, post  in
             
             print("Ключ: ", post?.authKey ?? "Нет данных")
             completion(post?.authKey ?? "")
@@ -53,9 +50,9 @@ class ApiService: UIViewController {
         }
     }
     
-    func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+    func getOrders(token: String, completion: @escaping ([CourierOrderResponseElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
         
-        networkManager.request(url: orderListURL, method: .get, headers: [.authorization(bearerToken: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!)], model: CourierOrderResponseElement.self) { posts, _  in
+        networkManager.request(url: orderListURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierOrderResponseElement.self) { posts, _  in
             completion(posts)
             
         } ifError: { error in

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OrderListTableView: UIViewController {
+class OrderListTableView: MVPController {
     
     let tableView = UITableView()
     let waitViewElement = WaitViewElement()
@@ -235,14 +235,14 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+protocol OrderListTableViewProtocol: AnyObject, MVPControllerProtocol  {
+    func checkOrders()
+}
+
 extension OrderListTableView: OrderListTableViewProtocol{
     
-    func showErrorView(error: ErrorResponse) {
-        mvpController.showErrorView(isEnabled: true, targetVC: self, errorResponseData: error)
-    }
-    
     func checkOrders(){
-        presenter?.getOrders(viewController: self, completion: { posts in
+        presenter?.getOrders( completion: { posts in
             if posts.count != 0{
                 self.waitViewElement.isHidden = true
                 self.waitViewElement.setupView()

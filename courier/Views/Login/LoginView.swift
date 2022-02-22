@@ -7,7 +7,9 @@
 
 import UIKit
 // 77012559804
-class LoginView: UIViewController {
+
+
+class LoginView: MVPController {
         
     let cardView = CustomViews(style: .withShadow)
     let titleLabel = CustomLabels(title: "Вход для курьеров", textSize: 24, style: .bold)
@@ -104,24 +106,37 @@ class LoginView: UIViewController {
 
         presenter?.sendSMS(phoneNumber: phoneNumberTextField.text) // phone v parametr
         // презентер никогда не запрашивает данные от вью
-        let vc = ConfirmLoginView()
-        vc.modalPresentationStyle = .fullScreen
-       // self.present(vc, animated: true) // MARK: не дает появиться errorView
-
+        presenter?.goToConfirmLoginView() // iz presentera
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view.
         let presenter = LoginPresenter(view:  self)
         self.presenter = presenter
         setupView()
-        // Do any additional setup after loading the view.
-        
     }
 }
 
+// il prezentera syuda perenoshu
+// То, что выполняю во вью
+protocol LoginViewProtocol: AnyObject, MVPControllerProtocol  {
+// to chto otnosytsa k ekranu logina
+    func goToConfirmLoginView()
+    func popVC()
+}
+
 extension LoginView: LoginViewProtocol{
-    func showErrorView(error: ErrorResponse) {
-        mvpController.showErrorView(isEnabled: true, targetVC: self, errorResponseData: error)
+
+    func goToConfirmLoginView() {
+        let vc = ConfirmLoginView()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true) // MARK: не дает появиться errorView
+    }
+    
+    func popVC() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
+
+

@@ -39,20 +39,20 @@ class ErrorView: UIViewController {
         typeLabel.setLabel()
     }
 
-    func showErrorView(){
-        let backgroundView = UIView.init(frame: self.view.bounds)
+    func showErrorView(onVC: UIViewController){
+        let backgroundView = UIView.init(frame: onVC.view.bounds)
         backgroundView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        self.view.addSubview(backgroundView)
+        onVC.view.addSubview(backgroundView)
         backgroundView.addSubview(cardView)
         cardView.setView()
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
         
-        cardView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        cardView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        cardView.centerXAnchor.constraint(equalTo: onVC.view.centerXAnchor).isActive = true
+        cardView.centerYAnchor.constraint(equalTo: onVC.view.centerYAnchor).isActive = true
 
-        cardView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
-        cardView.rightAnchor.constraint(equalTo:  self.view.rightAnchor, constant: -10).isActive = true
+        cardView.leftAnchor.constraint(equalTo: onVC.view.leftAnchor, constant: 10).isActive = true
+        cardView.rightAnchor.constraint(equalTo:  onVC.view.rightAnchor, constant: -10).isActive = true
         cardView.heightAnchor.constraint(equalToConstant: 322).isActive = true
 
         
@@ -62,14 +62,14 @@ class ErrorView: UIViewController {
         
         nameLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
         nameLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 25).isActive = true
-        nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.view.frame.size.width - 20).isActive = true
+        nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: onVC.view.frame.size.width - 20).isActive = true
         
         cardView.addSubview(messageLabel)
         messageLabel.setLabel()
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
         messageLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 50).isActive = true
-        messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.view.frame.size.width - 20).isActive = true
+        messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: onVC.view.frame.size.width - 20).isActive = true
         messageLabel.bottomAnchor.constraint(equalTo: cardView.topAnchor, constant: 175).isActive = true
         
         cardView.addSubview(orderLineImage)
@@ -119,5 +119,4 @@ class ErrorView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
 }

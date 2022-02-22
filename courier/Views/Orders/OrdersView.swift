@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OrdersView: UIViewController {
+class OrdersView: MVPController {
     
     let cardView = CustomViews(style: .withShadow)
     let titleLabel = CustomLabels(title: "В списке пусто", textSize: 24, style: .bold, alignment: .center)
@@ -97,8 +97,7 @@ class OrdersView: UIViewController {
     
     @objc func startWorkButtonAction(){
         
-        let orderList = OrderListTableView()
-        self.navigationController?.pushViewController(orderList, animated: true)
+
         presenter?.startUserActivity()
         // setupActiveOrdersView()
     }
@@ -134,6 +133,14 @@ class OrdersView: UIViewController {
     
 }
 
+// То, что выполняю во вью
+protocol OrdersViewProtocol: AnyObject, MVPControllerProtocol  {
+    func goToOrderListTableView()
+}
+
 extension OrdersView: OrdersViewProtocol {
-    
+    func goToOrderListTableView() {
+        let orderList = OrderListTableView()
+        self.navigationController?.pushViewController(orderList, animated: true)
+    }
 }

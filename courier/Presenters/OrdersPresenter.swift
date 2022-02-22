@@ -7,11 +7,6 @@
 
 import Foundation
 
-// То, что выполняю во вью
-protocol OrdersViewProtocol: AnyObject  {
-    
-}
-
 // То, что выполняю в здесь
 protocol OrdersViewPresenterProtocol: AnyObject {
     init(view: OrdersViewProtocol)
@@ -29,6 +24,6 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
     
     func startUserActivity() {
         UserDefaults.standard.set("active", forKey: UserDefaultsKeys.courierActivity)
+        view?.goToOrderListTableView()
     }
-    
 }

@@ -7,16 +7,9 @@
 
 import Foundation
 
-// То, что выполняю во вью
-protocol ConfirmLoginViewProtocol: AnyObject  {
-    func openOrdersView()
-    func showErrorView(error: ErrorResponse)
-}
-
 // То, что выполняю в здесь
 protocol ConfirmLoginViewPresenterProtocol: AnyObject {
     init(view: ConfirmLoginViewProtocol)
-   // func sendSMSAgain()
     func requestAuthKey()
     func returnPhoneNumber() -> String
     func setSMSCode(code: String)
@@ -29,20 +22,15 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
         self.view = view
     }
     let api = ApiService()
-    
-   /* func sendSMSAgain() {
-        api.sendSMS()//77012559804
 
-    }
-    */
     func requestAuthKey() {
-        api.getAuthKey() { bearer in
+        api.getAuthKey( phoneNumber: UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber)!, smsCode: UserDefaults.standard.string(forKey: UserDefaultsKeys.smsCode)!){ bearer in
             UserDefaults.standard.set(bearer, forKey: UserDefaultsKeys.bearer)
             if UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) != ""{
-                self.view?.openOrdersView()
+                self.view?.goToOrdersViewTabBar()
             }
         } errorResponse: { error in
-            self.view?.showErrorView(error: error)
+            self.view?.showErrorView(errorResponseData: error)
         }
     }
     

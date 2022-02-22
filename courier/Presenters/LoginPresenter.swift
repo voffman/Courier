@@ -6,22 +6,17 @@
 //
 
 import Foundation
-//import UIKit
 
-// То, что выполняю во вью
-protocol LoginViewProtocol: AnyObject  {
-    func showErrorView(error: ErrorResponse)
-    
-}
 
 // То, что выполняю в здесь
 protocol LoginViewPresenterProtocol: AnyObject {
     init(view: LoginViewProtocol)
     func sendSMS(phoneNumber: String?)
+    func goToConfirmLoginView()
 }
 
 class LoginPresenter: LoginViewPresenterProtocol {
-    
+
     weak var view: LoginViewProtocol?
     // Тут можно объявить модель
     required init(view: LoginViewProtocol) {
@@ -40,14 +35,20 @@ class LoginPresenter: LoginViewPresenterProtocol {
             return
         }
 
+        // view.shoeErrrorView
         UserDefaults.standard.set(phoneNumber, forKey: UserDefaultsKeys.phoneNumber)
         let api = ApiService()
-        api.sendSMS { error in
+        api.sendSMS(phoneNumber: phoneNumber) { error in
             errorResponse = error
-            guard let errorResponse = errorResponse else {
-                return
-            }
-            self.view?.showErrorView(error: errorResponse)
+            guard let errorResponse = errorResponse else { return }
+            //
+            self.view?.popVC()
+            self.view?.showErrorView(errorResponseData: errorResponse)
+
         }
+    }
+    
+    func goToConfirmLoginView() {
+        self.view?.goToConfirmLoginView()
     }
 }
