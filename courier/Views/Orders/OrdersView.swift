@@ -20,9 +20,7 @@ class OrdersView: MVPController {
     func setupNonActiveOrdersCardView(){
         view.addSubview(cardView)
         cardView.setView()
-        
-        let navigationBar = CustomNavigationBars(targetView: self.view, title: "Заказы",  navigationBarStyle: .withSOSButton)
-        navigationBar.setupNavigationBar()
+
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -99,6 +97,7 @@ class OrdersView: MVPController {
         
 
         presenter?.startUserActivity()
+
         // setupActiveOrdersView()
     }
     
@@ -111,12 +110,24 @@ class OrdersView: MVPController {
         setupStartWorkButton()
     }
     
+    func createNavigationBar(){
+        let navigationBarLeftItemLabel = CustomLabels(title: "Заказы", textSize: 20, style: .bold)
+        self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        navigationBarLeftItemLabel.setLabel()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationBarLeftItemLabel)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "SOSButton"), style: .done, target: self, action: nil)
+        navigationItem.rightBarButtonItem?.tintColor = Colors.red
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let presenter = OrdersPresenter(view:  self)
         self.presenter = presenter
+        createNavigationBar()
         setupView()
+
         // Do any additional setup after loading the view.
     }
     

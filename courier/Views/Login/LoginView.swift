@@ -93,6 +93,7 @@ class LoginView: MVPController {
     }
     
     func setupView(){
+
         view.backgroundColor = Colors.backgroundColor
         
         setupCardView()

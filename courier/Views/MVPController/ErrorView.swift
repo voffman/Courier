@@ -110,11 +110,6 @@ class ErrorView: UIViewController {
       
         errorView = backgroundView
     }
-   // Удаляет только View
-    func removeErrorView(){
-        self.errorView?.removeFromSuperview()
-        self.errorView = nil
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -93,11 +93,6 @@ class AlertView: UIViewController {
         alertView = backgroundView
     }
     
-    func removeAlertView(){
-        self.alertView?.removeFromSuperview()
-        self.alertView = nil
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

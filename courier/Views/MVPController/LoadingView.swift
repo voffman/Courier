@@ -9,9 +9,9 @@ import UIKit
 
 class LoadingView: UIView {
 
-    var viewSpinner : UIView?
+    var loadingView : UIView?
     
-    func showSpinner(onView: UIView) {
+    func showLoadingView(onView: UIView, isHidden: Bool) {
         let backgroundView = UIView.init(frame: onView.bounds) // backgroundView
         backgroundView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         let ai = UIActivityIndicatorView.init(style: .whiteLarge)
@@ -23,13 +23,7 @@ class LoadingView: UIView {
             onView.addSubview(backgroundView)
         }
         
-        viewSpinner = backgroundView
-    }
-    
-    func removeSpinner() {
-        DispatchQueue.main.async {
-            self.viewSpinner?.removeFromSuperview()
-            self.viewSpinner = nil
-        }
+        loadingView = backgroundView
+        loadingView?.isHidden = isHidden
     }
 }

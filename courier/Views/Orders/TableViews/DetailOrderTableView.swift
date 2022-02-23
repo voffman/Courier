@@ -100,19 +100,27 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         view.addSubview(tableView)
     }
     
+    func createNavigationBar(){
+        let navigationBarRightItemLabel = CustomLabels(title: "4000 ₸", textSize: 20, style: .light)
+        
+        self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.isNavigationBarHidden = false
+        navigationBarRightItemLabel.setLabel()
+        navigationItem.title = "№ 356167"
+        self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "BackArrow")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: navigationBarRightItemLabel)
+        navigationItem.leftBarButtonItem?.tintColor = Colors.black
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        let navigationBar = CustomNavigationBars(targetView: self.view, title: "4000 ₸", navigationBarStyle: .withBackButton)
-        navigationBar.info = "№ 356167"
-        navigationBar.setupNavigationBar()
-        navigationBar.barButton.action = #selector(backButtonAction)
+        createNavigationBar()
         
         sc.segmentedControlContainerView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight - 5).isActive = true
+            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 5).isActive = true
         } else {
-            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight).isActive = true
+            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor).isActive = true
         }
         sc.segmentedControlContainerView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         sc.segmentedControlContainerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -120,9 +128,9 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight + 45).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 50).isActive = true
         } else {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight + 45).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant:  50).isActive = true
         }
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

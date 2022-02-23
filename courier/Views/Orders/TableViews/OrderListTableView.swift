@@ -73,9 +73,20 @@ class OrderListTableView: MVPController {
         waitViewElement.setupView()
         waitViewElement.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 149)
         if #available(iOS 11.0, *) {
-            waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 44 - 5).isActive = true
+            waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 40).isActive = true
             
         }
+    }
+    
+    func createNavigationBar(){
+        let navigationBarLeftItemLabel = CustomLabels(title: "Заказы", textSize: 20, style: .bold)
+        self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        navigationBarLeftItemLabel.setLabel()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationBarLeftItemLabel)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "SOSButton"), style: .done, target: self, action: nil)
+        navigationItem.rightBarButtonItem?.tintColor = Colors.red
     }
     
     override func viewDidLoad() {
@@ -84,7 +95,6 @@ class OrderListTableView: MVPController {
 
         let presenter = OrderListPresenter(view:  self)
         self.presenter = presenter
-        self.navigationController?.isNavigationBarHidden = true
 
         setupTableView()
         setupWaitViewElement()
@@ -120,15 +130,14 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        let navigationBar = CustomNavigationBars(targetView: self.view, title: "Заказы", navigationBarStyle: .withSOSButton)
-        navigationBar.setupNavigationBar()
+  
+        createNavigationBar()
         
         sc.segmentedControlContainerView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight - 5).isActive = true
+            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top).isActive = true
         } else {
-            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight).isActive = true
+            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor).isActive = true
         }
         sc.segmentedControlContainerView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         sc.segmentedControlContainerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -138,9 +147,9 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight + 35).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 35).isActive = true
         } else {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight + 35).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 35).isActive = true
         }
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -255,3 +264,4 @@ extension OrderListTableView: OrderListTableViewProtocol{
         })
     }
 }
+
