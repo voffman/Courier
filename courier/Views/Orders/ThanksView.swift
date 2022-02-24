@@ -25,9 +25,6 @@ class ThanksView: UIViewController {
         view.addSubview(cardView)
         cardView.setView()
         
-        let navigationBar = CustomNavigationBars(targetView: self.view, title: "Заказ № 356167", navigationBarStyle: .withoutBackButton)
-        navigationBar.setupNavigationBar()
-        
         cardView.translatesAutoresizingMaskIntoConstraints = false
         
         cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -113,14 +110,12 @@ class ThanksView: UIViewController {
         returnButton.translatesAutoresizingMaskIntoConstraints = false
         
         if UIScreen.main.bounds.size.height > 750 {
-            if #available(iOS 11.0, *) {
-                returnButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70).isActive = true
-            }
+            returnButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -95).isActive = true
         }
         
         
         if UIScreen.main.bounds.size.height < 750{
-            returnButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+            returnButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60).isActive = true
         }
         returnButton.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
         returnButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -130,7 +125,7 @@ class ThanksView: UIViewController {
     
     
     @objc func returnButtonAction(){
-        dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 
     func setupView(){
@@ -146,11 +141,20 @@ class ThanksView: UIViewController {
         setupReturnButton()
  
     }
-
+    
+    func createNavigationBar(title: String){
+        let navigationBarLeftItemLabel = CustomLabels(title: title, textSize: 20, style: .bold)
+        self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        navigationBarLeftItemLabel.setLabel()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationBarLeftItemLabel)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        
+        createNavigationBar(title: "Заказ № 356167")
         // Do any additional setup after loading the view.
     }
     

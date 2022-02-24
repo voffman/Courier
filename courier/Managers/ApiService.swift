@@ -17,6 +17,12 @@ private let smsURL = baseURL + "auth/auth"
 private let loginByCodeURL = baseURL + "auth/login-by-code"
 private let orderListURL = baseURL + "courier/order"
 
+// Schedule
+private let scheduleList = baseURL + "courier/schedule?page="
+private let scheduleById = baseURL + "courier/schedule/"
+private let scheduleApplyId = baseURL + "courier/schedule/apply/"
+
+
 
 let networkManager = NetworkManager()
 
@@ -64,6 +70,49 @@ class ApiService {
             print("Статус: \(error.status)")
             print("Тип ошибки: \(error.type)")
              */
+        }
+    }
+    
+    
+    
+    // Schedule
+    func getCourierSchedule(token: String, page: String, completion: @escaping ([ScheduleElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+       
+        networkManager.request(url: scheduleList + page, method: .get, headers: [.authorization(bearerToken: token)], model: ScheduleElement.self) { posts, _  in
+            completion(posts)
+
+        } ifError: { error in
+            errorResponse(error)
+            
+            print("Имя: \(error.name)")
+            print("Сообщение: \(error.message)")
+            print("Код: \(error.code)")
+            print("Статус: \(error.status)")
+            print("Тип ошибки: \(error.type)")
+        }
+    }
+    
+    func getCourierScheduleById(token: String, id: String, completion: @escaping ([ScheduleByIDElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+        networkManager.request(url: scheduleById + id, method: .get, headers: [.authorization(bearerToken: token)], model: ScheduleByIDElement.self) { posts, _ in
+
+            completion(posts)
+        } ifError: { error in
+            errorResponse(error)
+            
+            print("Имя: \(error.name)")
+            print("Сообщение: \(error.message)")
+            print("Код: \(error.code)")
+            print("Статус: \(error.status)")
+            print("Тип ошибки: \(error.type)")
+        }
+
+    }
+
+    func scheduleApplyStatus(token: String, id: String, errorResponse: @escaping (ErrorResponse)->()){
+        networkManager.request(url: scheduleApplyId + id, method: .get, headers: [.authorization(bearerToken: token)]) { response in
+            print(response.data ?? "Нет данных")
+        } ifError: { error in
+            errorResponse(error)
         }
     }
 }

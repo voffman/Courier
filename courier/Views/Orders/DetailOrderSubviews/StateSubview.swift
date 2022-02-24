@@ -23,7 +23,6 @@ class StateSubview: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
-        stateButton.addTarget(self, action: #selector(stateButtonAction), for: .touchUpInside)
         hideTimer(isHidden: true)
     }
     
@@ -103,43 +102,7 @@ class StateSubview: UIViewController {
         stateButton.widthAnchor.constraint(equalToConstant: 308).isActive = true
     }
     
-    @objc func stateButtonAction(sender: UIButton){
-        print("State button action")
-        sender.tag += 1
-        
-        switch sender.tag{
-            
-        case 0:
-            print("Default state")
-        
-        case 1:
-            setupAcceptedOrderState()
-            
-        case 2:
-            setupArrivedToShopState()
-        
-        case 3:
-            setupGotOrder()
-        
-        case 4:
-            setupArrivedToClient()
 
-            
-        case 5:
-            stateButton.isEnabled = false
-            let thanksView = ThanksView()
-            
-            thanksView.modalPresentationStyle = .fullScreen
-            present(thanksView, animated: true, completion: nil)
-
-            sender.tag = 0
-
-        default:
-            sender.tag = 0
-        }
-        
-        //print("знач \(timerIsHidden)")
-    }
     
     //MARK: Состояния ячейки
 

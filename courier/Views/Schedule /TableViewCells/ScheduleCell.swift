@@ -16,6 +16,8 @@ class ScheduleCell: UITableViewCell {
     let acceptLabel = CustomLabels(title: "Требуется ваше подтверждение", textSize: 14, style: .regular)
     let orderTransitionArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     let transitionButton = CustomButtons(title: "", style: .transparent)
+    
+    let dateConverter = DateConverter()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -36,11 +38,27 @@ class ScheduleCell: UITableViewCell {
     
     
     // для использования в tableView
-    public func configure(date: String?,
-                          accept: String?) {
-        self.dateLabel.text = date
-        self.acceptLabel.text = accept
- 
+    public func configure(dateStart: String?, dateEnd: String?,
+                          accept: Bool?) {
+        
+        guard let dateStart = dateStart else {
+            return
+        }
+        guard let dateEnd = dateEnd else {
+            return
+        }
+        self.dateLabel.text = dateConverter.convert(dateString: dateStart, dateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dateEnd, dateFormat: "dd MMM")
+
+        let acceptString: String
+        if accept ?? false {
+            acceptString = "Вы подтвердили"
+            self.acceptLabel.textColor = Colors.lightGreen
+        } else{
+            acceptString = "Требуется ваше подтверждение"
+            self.acceptLabel.textColor = Colors.red
+        }
+        
+        self.acceptLabel.text = acceptString
     }
     
     

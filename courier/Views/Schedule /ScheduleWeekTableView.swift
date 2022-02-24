@@ -7,15 +7,22 @@
 
 import UIKit
 
-class ScheduleWeekTableView: UIViewController {
+class ScheduleWeekTableView: MVPController {
 
     let tableView = UITableView()
+    private var presenter: ScheduleWeekTableViewPresenterProtocol?
+    
+    var data: [ScheduleByIDElement] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let presenter = ScheduleWeekPresenter(view:  self)
+        self.presenter = presenter
+        
         self.view.backgroundColor = Colors.backgroundColor
         setupTableView()
-        // Do any additional setup after loading the view.
+        
+        checkOrders(id: "1") // MARK: тут что-то сделать
     }
     
     @objc func backButtonAction(){
@@ -40,19 +47,21 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
         view.addSubview(tableView)
     }
     
+    func createNavigationBar(title: String){
+        self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.isNavigationBarHidden = false
+        self.title = title
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        let navigationBar = CustomNavigationBars(targetView: self.view, title: "", navigationBarStyle: .withBackButton)
-        navigationBar.info = "2 мар - 8 мар"
-        navigationBar.barButton.action = #selector(backButtonAction)
-        navigationBar.setupNavigationBar()
+        createNavigationBar(title: "24 фев - 1 мар")
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight - 1).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top).isActive = true
         } else {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight - 1).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor).isActive = true
         }
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -61,16 +70,22 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let post = data[indexPath.row]
+        
+        
         if indexPath.row < 5{
             let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleWeekCell.identifire, for: indexPath) as! ScheduleWeekCell
+          //  cell.configure(dayOfWeek: post.dateItem, date: "", time: post.timeStart + post.timeEnd, sourcePoint: post.point?.name)
             return cell
         }
         if indexPath.row >= 5 && indexPath.row < 7{
             let cell2 = tableView.dequeueReusableCell(withIdentifier: ScheduleDayOffCell.identifire, for: indexPath) as! ScheduleDayOffCell
+          //  cell2.configure(dayOfWeek: post.timeStart, date: post.timeEnd, time: post.dateItem, sourcePoint: post.point?.name)
             return cell2
         }
         
@@ -92,4 +107,20 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
         }
         return 90
     }    
+}
+
+protocol ScheduleWeekTableViewProtocol: AnyObject, MVPControllerProtocol  {
+    func checkOrders(id: String)
+}
+
+extension ScheduleWeekTableView: ScheduleWeekTableViewProtocol{
+    func checkOrders(id: String) {
+        presenter?.getScheduleWeek(id: id, completion: { posts in
+            if posts.count != 0{
+                print("Кол-во постов по айди \(posts.count)")
+                self.data = posts
+                self.tableView.reloadData()
+            }
+        })
+    }
 }

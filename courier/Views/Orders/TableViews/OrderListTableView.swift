@@ -214,7 +214,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         if sender.tag == 4{
         let thanksView = ThanksView()
         thanksView.modalPresentationStyle = .fullScreen
-        self.present(thanksView, animated: true)
+        self.navigationController?.pushViewController(thanksView, animated: true)
         }
     }
     

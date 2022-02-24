@@ -11,6 +11,17 @@ class HistoryTableView: UIViewController {
     
     let tableView = UITableView()
 
+    
+    func createNavigationBar(){
+        let navigationBarLeftItemLabel = CustomLabels(title: "История", textSize: 20, style: .bold)
+        self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        navigationBarLeftItemLabel.setLabel()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationBarLeftItemLabel)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
@@ -38,15 +49,13 @@ extension HistoryTableView: UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        let navigationBar = CustomNavigationBars(targetView: self.view, title: "История заказов", navigationBarStyle: .withSOSButton)
-        navigationBar.setupNavigationBar()
+        createNavigationBar()
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + navigationBar.barHeight + 35).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 35).isActive = true
         } else {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: navigationBar.barHeight + 35).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 35).isActive = true
         }
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

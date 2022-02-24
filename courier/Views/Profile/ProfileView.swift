@@ -36,12 +36,7 @@ class ProfileView: UIViewController {
     func setupCardView(){
         view.addSubview(cardView)
         cardView.setView()
-        
-        let navigationBar = CustomNavigationBars(targetView: self.view, title: "Профиль", navigationBarStyle: .withoutBackButton)
-        navigationBar.setupNavigationBar()
-        
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        
         cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
      
    // MARK: Поправить
@@ -286,11 +281,18 @@ class ProfileView: UIViewController {
         }
     }
     
+    func createNavigationBar(){
+        let navigationBarLeftItemLabel = CustomLabels(title: "Расписание", textSize: 20, style: .bold)
+        self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        navigationBarLeftItemLabel.setLabel()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationBarLeftItemLabel)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
+        createNavigationBar()
         setupView()
     }
-
 }

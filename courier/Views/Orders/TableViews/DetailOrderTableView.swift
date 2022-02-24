@@ -63,7 +63,45 @@ class DetailOrderTableView: UIViewController {
     @objc func backButtonAction(){
         self.navigationController?.popViewController(animated: true)
     }
+    @objc func stateButtonAction(sender: UIButton){
+        print("State button action")
+        sender.tag += 1
+        
+        switch sender.tag{
+            
+        case 0:
+            print("Default state")
+        
+        case 1:
+            stateSubview.setupAcceptedOrderState()
+            
+        case 2:
+            stateSubview.setupArrivedToShopState()
+        
+        case 3:
+            stateSubview.setupGotOrder()
+        
+        case 4:
+            stateSubview.setupArrivedToClient()
 
+            
+        case 5:
+            stateSubview.stateButton.isEnabled = false
+            let thanksView = ThanksView()
+            
+            thanksView.modalPresentationStyle = .fullScreen
+            
+            // MARK:
+            self.navigationController?.pushViewController(thanksView, animated: true)
+
+            sender.tag = 0
+
+        default:
+            sender.tag = 0
+        }
+        
+        //print("знач \(timerIsHidden)")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +123,7 @@ class DetailOrderTableView: UIViewController {
         stateSubview.targetView = self.view
         clientSubview.view.isHidden = true
         tableView.isHidden = true
-        
+        stateSubview.stateButton.addTarget(self, action: #selector(stateButtonAction(sender:)), for: .touchUpInside)
     }
 }
 
@@ -118,7 +156,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
         sc.segmentedControlContainerView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 5).isActive = true
+            sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top).isActive = true
         } else {
             sc.segmentedControlContainerView.topAnchor.constraint(equalTo:  view.topAnchor).isActive = true
         }
