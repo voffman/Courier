@@ -11,6 +11,7 @@ import Foundation
 protocol ScheduleTableViewPresenterProtocol: AnyObject {
     init(view: ScheduleTableViewProtocol)
     func getSchedule(page: String, completion: @escaping ([ScheduleElement]) -> ())
+    func didTap (model: ScheduleElement)
 }
 
 class SchedulePresenter: ScheduleTableViewPresenterProtocol{
@@ -31,5 +32,13 @@ class SchedulePresenter: ScheduleTableViewPresenterProtocol{
 
     }
     
-    
+    public func didTap (model: ScheduleElement){
+
+        let id = model.id
+        let dateStart = model.dateStart
+        let dateEnd = model.dateEnd
+        
+        self.view?.goToScheduleWeek(id: id, dateStart: dateStart, dateEnd: dateEnd)
+
+    }
 }

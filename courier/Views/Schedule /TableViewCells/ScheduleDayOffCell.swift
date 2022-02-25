@@ -16,6 +16,17 @@ class ScheduleDayOffCell: UITableViewCell {
     let dateLabel = CustomLabels(title: "• 29 фев", textSize: 14, style: .light)
     let dayOffLabel = CustomLabels(title: "Выходной", textSize: 14, style: .regular)
 
+    let dateConverter = DateConverter()
+    
+    
+    var confirmButtonIsHidden = true
+    
+    let submitButton = CustomButtons(title: "Подтвердить расписание", style: .submit)
+    
+    let tickImage = UIImageView(image: UIImage(named: "Tick"))
+    let submitLabel = CustomLabels(title: "ВЫ ПОДТВЕРДИЛИ", textSize: 14, style: .bold)
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(cardView)
@@ -26,6 +37,9 @@ class ScheduleDayOffCell: UITableViewCell {
         dateLabel.setLabel()
         contentView.addSubview(dayOffLabel)
         dayOffLabel.setLabel()
+        
+        contentView.addSubview(submitButton)
+        submitButton.setButton()
     }
     
     required init?(coder: NSCoder) {
@@ -35,9 +49,18 @@ class ScheduleDayOffCell: UITableViewCell {
     
     // для использования в tableView
     public func configure(dayOfWeek: String?,
-                          date: String?, time: String?, sourcePoint: String?) {
-        self.dayOfWeekLabel.text = dayOfWeek
-        self.dateLabel.text = date
+                          date: String? /*, time: String?, sourcePoint: String? */) {
+        
+        guard let dayOfWeek = dayOfWeek else {
+            return
+        }
+        
+        guard let date = date else {
+            return
+        }
+        
+        self.dayOfWeekLabel.text = dateConverter.convert(dateString: dayOfWeek, dateFormat: "EEEE").capitalized
+        self.dateLabel.text = " • " + dateConverter.convert(dateString: date, dateFormat: "dd MMM")
  
     }
     
@@ -57,7 +80,7 @@ class ScheduleDayOffCell: UITableViewCell {
         cardView.frame = CGRect(x: 0,
                                      y: 0,
                                      width: contentView.frame.size.width,
-                                     height: contentView.frame.size.height)
+                                     height: 90)
     }
     
     
@@ -81,6 +104,36 @@ class ScheduleDayOffCell: UITableViewCell {
     }
     
     //MARK: Добавить оранжевую полосу
+    func setupSubmitButton(){
+        submitButton.translatesAutoresizingMaskIntoConstraints = false
+        submitButton.topAnchor.constraint(equalTo: cardView.bottomAnchor, constant: 10).isActive = true
+        submitButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        submitButton.widthAnchor.constraint(equalToConstant: contentView.frame.size.width).isActive = true
+        submitButton.addTarget(self, action: #selector(submitButtonAction(sender:)), for: .touchUpInside)
+    }
+    
+    func setupSubmitInfo(){
+        contentView.addSubview(tickImage)
+        contentView.addSubview(submitLabel)
+        submitLabel.setLabel()
+        tickImage.translatesAutoresizingMaskIntoConstraints = false
+        submitLabel.translatesAutoresizingMaskIntoConstraints = false
+        tickImage.topAnchor.constraint(equalTo: cardView.bottomAnchor, constant: submitButton.frame.height/2).isActive = true
+        submitLabel.topAnchor.constraint(equalTo: cardView.bottomAnchor, constant: submitButton.frame.height/2).isActive = true
+        tickImage.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        tickImage.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        submitLabel.leftAnchor.constraint(equalTo: tickImage.rightAnchor, constant: 4).isActive = true
+        tickImage.leftAnchor.constraint(equalTo: contentView.leftAnchor,
+                                        constant: contentView.frame.width/2 - tickImage.frame.width/2 - submitLabel.intrinsicContentSize.width/2).isActive = true
+        submitLabel.textColor = Colors.lightGreen
+    }
+    
+    @objc func submitButtonAction(sender: UIButton){
+        print("Hello World")
+        submitButton.isEnabled = false
+        submitButton.isHidden = true
+        setupSubmitInfo()
+    }
     
     func setupCell(){
         insertPaddingsBetweenCells()
@@ -88,14 +141,14 @@ class ScheduleDayOffCell: UITableViewCell {
         setupDayOfWeekLabel()
         setupDateLabel()
         setupDayOffLabel()
-
+        setupSubmitButton()
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setupCell()
-
+        submitButton.isHidden = confirmButtonIsHidden
     }
 
 }

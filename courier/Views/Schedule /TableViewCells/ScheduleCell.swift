@@ -15,7 +15,6 @@ class ScheduleCell: UITableViewCell {
     let dateLabel = CustomLabels(title: "9 мар - 15 мар", textSize: 14, style: .bold)
     let acceptLabel = CustomLabels(title: "Требуется ваше подтверждение", textSize: 14, style: .regular)
     let orderTransitionArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
-    let transitionButton = CustomButtons(title: "", style: .transparent)
     
     let dateConverter = DateConverter()
 
@@ -28,8 +27,7 @@ class ScheduleCell: UITableViewCell {
         contentView.addSubview(acceptLabel)
         acceptLabel.setLabel()
         contentView.addSubview(orderTransitionArrowButtonImage)
-        contentView.addSubview(transitionButton)
-        transitionButton.setButton()
+
     }
     
     required init?(coder: NSCoder) {
@@ -104,14 +102,7 @@ class ScheduleCell: UITableViewCell {
         orderTransitionArrowButtonImage.widthAnchor.constraint(equalToConstant: 7.4).isActive = true
         
     }
-    
-    func setupTransitionButton(){
-        transitionButton.frame = CGRect(x: 0,
-                                                  y: 0,
-                                                  width: contentView.frame.size.width,
-                                                  height: contentView.frame.size.height)
-    }
-    
+
     //MARK: Добавить оранжевую полосу
     
     func setupCell(){
@@ -120,7 +111,7 @@ class ScheduleCell: UITableViewCell {
         setupDateLabel()
         setupAcceptLabel()
         setupTransitionArrowButtonImage()
-        setupTransitionButton()
+
     }
     
     

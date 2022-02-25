@@ -8,11 +8,27 @@
 import UIKit
 
 class ScheduleWeekTableView: MVPController {
-
+    
+    
+    let id: Int, dateStart: String, dateEnd: String
+    
+    init(id: Int, dateStart: String, dateEnd: String){
+        self.id = id
+        self.dateStart = dateStart
+        self.dateEnd = dateEnd
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let tableView = UITableView()
     private var presenter: ScheduleWeekTableViewPresenterProtocol?
     
     var data: [ScheduleByIDElement] = []
+    
+    let dateConverter = DateConverter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +38,7 @@ class ScheduleWeekTableView: MVPController {
         self.view.backgroundColor = Colors.backgroundColor
         setupTableView()
         
-        checkOrders(id: "1") // MARK: тут что-то сделать
+        checkOrders(id: String(id)) // MARK: тут что-то сделать
     }
     
     @objc func backButtonAction(){
@@ -39,7 +55,6 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
         
         tableView.register(ScheduleWeekCell.self, forCellReuseIdentifier: ScheduleWeekCell.identifire)
         tableView.register(ScheduleDayOffCell.self, forCellReuseIdentifier: ScheduleDayOffCell.identifire)
-        tableView.register(ScheduleSubmitCell.self, forCellReuseIdentifier: ScheduleSubmitCell.identifire)
         
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -55,7 +70,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createNavigationBar(title: "24 фев - 1 мар")
+        createNavigationBar(title: dateConverter.convert(dateString: dateStart, dateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dateEnd, dateFormat: "dd MMM"))
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
@@ -74,36 +89,32 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         let post = data[indexPath.row]
-        
-        
-        if indexPath.row < 5{
-            let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleWeekCell.identifire, for: indexPath) as! ScheduleWeekCell
-          //  cell.configure(dayOfWeek: post.dateItem, date: "", time: post.timeStart + post.timeEnd, sourcePoint: post.point?.name)
-            return cell
-        }
-        if indexPath.row >= 5 && indexPath.row < 7{
+
+        if post.timeStart == nil && post.timeEnd == nil{
             let cell2 = tableView.dequeueReusableCell(withIdentifier: ScheduleDayOffCell.identifire, for: indexPath) as! ScheduleDayOffCell
-          //  cell2.configure(dayOfWeek: post.timeStart, date: post.timeEnd, time: post.dateItem, sourcePoint: post.point?.name)
+            cell2.configure(dayOfWeek: post.dateItem, date: post.dateItem)
+           
+            if indexPath.row == 6 {
+                cell2.confirmButtonIsHidden = false
+                return cell2
+           
+            }
             return cell2
         }
         
-        if indexPath.row == 7 {
-            let cell3 = tableView.dequeueReusableCell(withIdentifier: ScheduleSubmitCell.identifire, for: indexPath) as! ScheduleSubmitCell
-            
-            return cell3
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleWeekCell.identifire, for: indexPath) as! ScheduleWeekCell
+            cell.configure(dayOfWeek: post.dateItem, date: post.dateItem, timeStart: post.timeStart, timeEnd: post.timeEnd, sourcePoint: post.point?.name)
+            return cell
         }
 
-        return UITableViewCell()
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 7 {
-            return 68
+        if indexPath.row == 6 {
+            return 168
         }
         return 90
     }    

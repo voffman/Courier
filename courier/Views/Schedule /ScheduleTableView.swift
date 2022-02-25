@@ -49,7 +49,6 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
         tableView.register(ScheduleCell.self, forCellReuseIdentifier: ScheduleCell.identifire)
         
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         
         view.addSubview(tableView)
     }
@@ -79,23 +78,17 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
         let post = data[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleCell.identifire, for: indexPath) as! ScheduleCell
-        
+        cell.selectionStyle = .none
         cell.configure(dateStart: post.dateStart, dateEnd: post.dateEnd, accept: post.isConfirmed)
         
-        cell.transitionButton.addTarget(self, action: #selector(transitionButtonTapped(sender:)), for: .touchUpInside)
-        
+       // cell.transitionButton.addTarget(self, action: #selector(transitionButtonTapped(sender:)), for: .touchUpInside)
+
         return cell
     }
     
-    @objc func transitionButtonTapped(sender: UIButton){
-        let scheduleWeekTableView = ScheduleWeekTableView()
-        scheduleWeekTableView.modalPresentationStyle = .fullScreen
-        self.navigationController?.pushViewController(scheduleWeekTableView, animated: true)
-
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        tableView.deselectRow(at: indexPath, animated: true)
+        presenter?.didTap(model: data[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -105,9 +98,17 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
 
 protocol ScheduleTableViewProtocol: AnyObject, MVPControllerProtocol  {
     func checkOrders()
+    func goToScheduleWeek(id: Int, dateStart: String, dateEnd: String)
 }
 
-extension ScheduleTableView: ScheduleTableViewProtocol{
+extension ScheduleTableView: ScheduleTableViewProtocol {
+    
+    func goToScheduleWeek(id: Int, dateStart: String, dateEnd: String) {
+        let scheduleWeekTableView = ScheduleWeekTableView(id: id, dateStart: dateStart, dateEnd: dateEnd)
+        scheduleWeekTableView.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(scheduleWeekTableView, animated: true)
+    }
+    
     func checkOrders() {
         presenter?.getSchedule(page: "0", completion: { posts in
             if posts.count != 0{
