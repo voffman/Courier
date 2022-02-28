@@ -60,6 +60,30 @@ class DetailOrderTableView: UIViewController {
         
     }
     
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+    
+    func setupScrollView(){
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        contentView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
+        contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor).isActive = true
+        
+        contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+    }
+    
     @objc func backButtonAction(){
         self.navigationController?.popViewController(animated: true)
     }
@@ -99,15 +123,14 @@ class DetailOrderTableView: UIViewController {
         default:
             sender.tag = 0
         }
-        
-        //print("знач \(timerIsHidden)")
+   //print("знач \(timerIsHidden)")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let presenter = DetailOrderPresenter(view:  self)
         self.presenter = presenter
-
+        setupScrollView()
         setupTableView()
         self.view.backgroundColor = Colors.backgroundColor
         self.tableView.backgroundColor = Colors.backgroundColor
@@ -116,9 +139,10 @@ class DetailOrderTableView: UIViewController {
         
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
+        
         self.view.addSubview(shopSubview.view)
-
-        self.view.addSubview(clientSubview.view)
+        self.contentView.addSubview(clientSubview.view)
+        
         self.view.addSubview(stateSubview.view)
         stateSubview.targetView = self.view
         clientSubview.view.isHidden = true
@@ -175,14 +199,14 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         
         shopSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 255)
-        clientSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 234)
+        clientSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/18.25, width: self.view.frame.width - 20, height: self.view.frame.height)
+        
         stateSubview.view.frame = CGRect(x: 0, y: shopSubview.view.frame.height * 1.75, width: self.view.frame.width, height: self.view.frame.height/2)
      
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        
         return numberRows /*checkModel.count */ + 4
     }
     

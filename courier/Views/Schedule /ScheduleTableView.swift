@@ -80,8 +80,6 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleCell.identifire, for: indexPath) as! ScheduleCell
         cell.selectionStyle = .none
         cell.configure(dateStart: post.dateStart, dateEnd: post.dateEnd, accept: post.isConfirmed)
-        
-       // cell.transitionButton.addTarget(self, action: #selector(transitionButtonTapped(sender:)), for: .touchUpInside)
 
         return cell
     }
@@ -98,13 +96,13 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
 
 protocol ScheduleTableViewProtocol: AnyObject, MVPControllerProtocol  {
     func checkOrders()
-    func goToScheduleWeek(id: Int, dateStart: String, dateEnd: String)
+    func goToScheduleWeek(id: Int, dateStart: String, dateEnd: String, isConfirmed: Bool)
 }
 
 extension ScheduleTableView: ScheduleTableViewProtocol {
     
-    func goToScheduleWeek(id: Int, dateStart: String, dateEnd: String) {
-        let scheduleWeekTableView = ScheduleWeekTableView(id: id, dateStart: dateStart, dateEnd: dateEnd)
+    func goToScheduleWeek(id: Int, dateStart: String, dateEnd: String, isConfirmed: Bool) {
+        let scheduleWeekTableView = ScheduleWeekTableView(id: id, dateStart: dateStart, dateEnd: dateEnd, isConfirmed: isConfirmed)
         scheduleWeekTableView.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(scheduleWeekTableView, animated: true)
     }

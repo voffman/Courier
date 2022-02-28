@@ -37,8 +37,9 @@ class SchedulePresenter: ScheduleTableViewPresenterProtocol{
         let id = model.id
         let dateStart = model.dateStart
         let dateEnd = model.dateEnd
+        let isConfirmed = model.isConfirmed
         
-        self.view?.goToScheduleWeek(id: id, dateStart: dateStart, dateEnd: dateEnd)
+        self.view?.goToScheduleWeek(id: id, dateStart: dateStart, dateEnd: dateEnd, isConfirmed: isConfirmed)
 
     }
 }

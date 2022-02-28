@@ -38,5 +38,4 @@ class ScheduleWeekPresenter: ScheduleWeekTableViewPresenterProtocol{
             self.view?.showErrorView(errorResponseData: error)
         }
     }
-    
 }

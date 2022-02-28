@@ -10,12 +10,13 @@ import UIKit
 class ScheduleWeekTableView: MVPController {
     
     
-    let id: Int, dateStart: String, dateEnd: String
+    let id: Int, dateStart: String, dateEnd: String, isConfirmed: Bool
     
-    init(id: Int, dateStart: String, dateEnd: String){
+    init(id: Int, dateStart: String, dateEnd: String, isConfirmed: Bool){
         self.id = id
         self.dateStart = dateStart
         self.dateEnd = dateEnd
+        self.isConfirmed = isConfirmed
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,13 +39,20 @@ class ScheduleWeekTableView: MVPController {
         self.view.backgroundColor = Colors.backgroundColor
         setupTableView()
         
-        checkOrders(id: String(id)) // MARK: тут что-то сделать
+        checkOrders(id: String(id))
+
     }
     
     @objc func backButtonAction(){
         dismiss(animated: true, completion: nil)
     }
+    
+    @objc func submitScheduleAction(){
+        presenter?.applyStatusById(id: String(id))
+    }
 }
+
+
 
 extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     
@@ -97,7 +105,14 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
             cell2.configure(dayOfWeek: post.dateItem, date: post.dateItem)
            
             if indexPath.row == 6 {
-                cell2.confirmButtonIsHidden = false
+                if isConfirmed{
+                    cell2.confirmButtonIsHidden = true
+                }
+                else{
+                    cell2.confirmButtonIsHidden = false
+                }
+
+                cell2.submitButton.addTarget(self, action: #selector(submitScheduleAction), for: .touchUpInside)
                 return cell2
            
             }
@@ -107,6 +122,18 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleWeekCell.identifire, for: indexPath) as! ScheduleWeekCell
             cell.configure(dayOfWeek: post.dateItem, date: post.dateItem, timeStart: post.timeStart, timeEnd: post.timeEnd, sourcePoint: post.point?.name)
+            if indexPath.row == 6 {
+                if isConfirmed{
+                    cell.confirmButtonIsHidden = true
+                }
+                else{
+                    cell.confirmButtonIsHidden = false
+                }
+                
+                cell.submitButton.addTarget(self, action: #selector(submitScheduleAction), for: .touchUpInside)
+                return cell
+           
+            }
             return cell
         }
 

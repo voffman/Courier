@@ -129,7 +129,6 @@ class ScheduleDayOffCell: UITableViewCell {
     }
     
     @objc func submitButtonAction(sender: UIButton){
-        print("Hello World")
         submitButton.isEnabled = false
         submitButton.isHidden = true
         setupSubmitInfo()
