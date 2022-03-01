@@ -15,7 +15,7 @@ class LoginView: MVPController {
     let titleLabel = CustomLabels(title: "Вход для курьеров", textSize: 24, style: .bold)
     let phoneNumberLabel = CustomLabels(title: "Номер телефона", textSize: 12, style: .light)
     let phoneNumberTextField = CustomTextFields(pHolder: "  + 7 ( _ _ _ ) _ _ _ - _ _ - _ _", style: .withPhoneNumberFormatter)
-    let loginButton = CustomButtons(title: "Вход", style: .primary)
+    let loginButton = CustomButtons(title: "ВОЙТИ", style: .primary)
     
     private var presenter: LoginViewPresenterProtocol?
     

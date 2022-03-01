@@ -40,6 +40,7 @@ class CustomButtons: UIButton {
             self.layer.cornerRadius = 4
             self.setTitle(title, for: .normal)
             self.setTitleColor(Colors.black, for: .normal)
+            self.titleLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: .bold)
             self.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .secondary:
@@ -47,6 +48,7 @@ class CustomButtons: UIButton {
             self.layer.cornerRadius = 4
             self.setTitle(title, for: .normal)
             self.setTitleColor(Colors.darkGray, for: .normal)
+            self.titleLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: .bold)
             self.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .normal:
@@ -56,6 +58,7 @@ class CustomButtons: UIButton {
             self.setTitleColor(Colors.black, for: .normal)
             self.layer.borderWidth = 1
             self.layer.borderColor = Colors.gray.cgColor
+            self.titleLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: .bold)
             self.titleLabel?.adjustsFontSizeToFitWidth = true
             
         case .submit:

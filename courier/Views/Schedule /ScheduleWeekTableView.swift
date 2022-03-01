@@ -70,15 +70,35 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
         view.addSubview(tableView)
     }
     
+    func makeBackButton() -> UIButton {
+        let backButtonImage = UIImage(named: "BackArrow")?.withRenderingMode(.alwaysTemplate)
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(backButtonImage, for: .normal)
+        backButton.tintColor = .black
+        backButton.addTarget(self, action: #selector(self.backButtonPressed), for: .touchUpInside)
+        return backButton
+    }
+
+    @objc func backButtonPressed() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
     func createNavigationBar(title: String){
         self.navigationController?.navigationBar.backgroundColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: makeBackButton())
         self.title = title
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        createNavigationBar(title: dateConverter.convert(dateString: dateStart, dateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dateEnd, dateFormat: "dd MMM"))
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createNavigationBar(title: dateConverter.convert(dateString: dateStart, dateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dateEnd, dateFormat: "dd MMM"))
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {

@@ -13,8 +13,9 @@ class ContentView: UIView {
 
     func showContentView(onView: UIView, isHidden: Bool){
         let backgroundView = UIView.init(frame: onView.bounds)
-        backgroundView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        onView.addSubview(backgroundView)
+        backgroundView.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
+        UIApplication.shared.keyWindow!.addSubview(backgroundView)
+       // onView.addSubview(backgroundView)
         contentView = backgroundView
         contentView?.isHidden = isHidden
     }

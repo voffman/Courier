@@ -9,7 +9,7 @@ import UIKit
 
 protocol MVPControllerProtocol {
     func showErrorView(errorResponseData: ErrorResponse?)
-    func showAlert(name: String?, message: String?, cancelButton: String?, sendButton: String?)
+    func showAlert(name: String?, message: String?, cancelButtonSelector: Selector, sendButtonSelector: Selector, cancelButtonTitle: String?, sendButtonTitle: String?)
     func showLoadingView(isHidden: Bool)
     func showContentView(isHidden: Bool)
     func showMessage(message: String)
@@ -17,7 +17,6 @@ protocol MVPControllerProtocol {
 }
 
 class MVPController: UIViewController, MVPControllerProtocol {
-    // Для привязки различных действий к кнопкам - можно использовать enum
     
     private let errorView = ErrorView()
     private let alertView = AlertView()
@@ -25,33 +24,42 @@ class MVPController: UIViewController, MVPControllerProtocol {
     private let contentView = ContentView()
 
     @objc func errorButtonAction(){
+        self.navigationController?.navigationBar.layer.zPosition = +1
+        self.tabBarController?.tabBar.layer.zPosition = +1
         errorView.errorView?.isHidden = true
     }
-    
-    @objc func alertPrimaryButtonAction(){
-        alertView.alertView?.isHidden = true
-    }
-    
-    @objc func alertNormalButtonAction(){
-        alertView.alertView?.isHidden = true
-    }
-    
  
     func showErrorView(errorResponseData: ErrorResponse?){
-        
+        self.navigationController?.navigationBar.layer.zPosition = -1
+        self.tabBarController?.tabBar.layer.zPosition = -1
         errorView.sendButton.addTarget(self, action: #selector(errorButtonAction), for: .touchUpInside)
         errorView.configureData(errorResponseData: errorResponseData ?? ErrorResponse(name: "Неизвестная ошибка!", message: "Попробуйте обновить приложение", code: 0, status: 0, type: "Нет данных"))
         errorView.showErrorView(onVC: self)
     }
     
-    func showAlert(name: String?, message: String?, cancelButton: String? = "Отмена", sendButton: String? = "Подтвердить"){
+    func showAlert(name: String?, message: String?, cancelButtonSelector: Selector, sendButtonSelector: Selector, cancelButtonTitle: String? = "ОТМЕНА", sendButtonTitle: String? = "ПОДТВЕРДИТЬ"){
+        self.navigationController?.navigationBar.layer.zPosition = -1
+        self.tabBarController?.tabBar.layer.zPosition = -1
         
-        alertView.sendButton.addTarget(self, action: #selector(alertPrimaryButtonAction), for: .touchUpInside)
-        alertView.cancelButton.addTarget(self, action: #selector(alertNormalButtonAction), for: .touchUpInside)
+        alertView.cancelButton.title = cancelButtonTitle
+        alertView.sendButton.title = sendButtonTitle
         
-        alertView.configureData(name: name, message: message, cancelButton: cancelButton, sendButton: sendButton)
+        alertView.cancelButton.setButton()
+        alertView.sendButton.setButton()
+        
+        alertView.sendButton.addTarget(self, action: sendButtonSelector, for: .touchUpInside)
+        alertView.cancelButton.addTarget(self, action: cancelButtonSelector, for: .touchUpInside)
+        
+        alertView.configureData(name: name, message: message, cancelButton: cancelButtonTitle, sendButton: sendButtonTitle)
         alertView.showAlertView(onVC: self)
          
+    }
+    
+    func dismissAlertView(){
+        self.alertView.alertView?.isHidden = true
+        
+        self.navigationController?.navigationBar.layer.zPosition = +1
+        self.tabBarController?.tabBar.layer.zPosition = +1
     }
     
     func showLoadingView(isHidden: Bool){

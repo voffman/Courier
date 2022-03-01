@@ -87,6 +87,12 @@ class OrderListTableView: MVPController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationBarLeftItemLabel)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "SOSButton"), style: .done, target: self, action: nil)
         navigationItem.rightBarButtonItem?.tintColor = Colors.red
+        guard let navigationController = self.navigationController else { return }
+        var navigationArray = navigationController.viewControllers 
+        let temp = navigationArray.last
+        navigationArray.removeAll()
+        navigationArray.append(temp!)
+        self.navigationController?.viewControllers = navigationArray
     }
     
     override func viewDidLoad() {

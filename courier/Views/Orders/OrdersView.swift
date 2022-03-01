@@ -82,23 +82,20 @@ class OrdersView: MVPController {
         startWorkButton.addTarget(self, action: #selector(startWorkButtonAction), for: .touchUpInside)
         
     }
-    
- /*   func setupActiveOrdersView(){
-        helpLabel.title = "Ожидайте поступления заказов"
-        setupHelpLabel()
-        startWorkButton.isHidden = true
-        startWorkButton.setButton()
-        cardView.heightAnchor.constraint(equalToConstant: 149).isActive = true
-        
-    }
-*/
-    
-    @objc func startWorkButtonAction(){
-        
 
+    @objc func cancelAlertButtonAction(){
+        print("Отмена")
+        dismissAlertView()
+    }
+    @objc func sendAlertButtonAction(){
+        print("Геолокация включена")
+        dismissAlertView()
         presenter?.startUserActivity()
 
-        // setupActiveOrdersView()
+    }
+    
+    @objc func startWorkButtonAction(){
+        showAlert(name: "Геолокация неактивна", message: "Чтобы начать, включите геолокацию в настройках смартфона", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "ОТМЕНА", sendButtonTitle: "ВКЛЮЧИТЬ")
     }
     
     func setupView(){

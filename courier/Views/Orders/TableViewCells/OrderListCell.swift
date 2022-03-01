@@ -34,7 +34,7 @@ class OrderListCell: UITableViewCell {
     
     let orderTimerLabel = CustomLabels(title: "0:15", textSize: 20, style: .timerRed)
     
-    let orderAcceptButton = CustomButtons(title: "Принять", style: .primary)
+    let orderAcceptButton = CustomButtons(title: "ПРИНЯТЬ", style: .primary)
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

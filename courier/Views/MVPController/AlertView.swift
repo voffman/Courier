@@ -37,7 +37,9 @@ class AlertView: UIViewController {
 
     func showAlertView(onVC: UIViewController){
         let backgroundView = UIView.init(frame: onVC.view.bounds)
-        backgroundView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        backgroundView.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
+      //  UIApplication.shared.keyWindow!.addSubview(backgroundView)
+        
         onVC.view.addSubview(backgroundView)
         backgroundView.addSubview(cardView)
         cardView.setView()

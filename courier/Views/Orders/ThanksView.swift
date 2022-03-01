@@ -125,7 +125,7 @@ class ThanksView: UIViewController {
     
     
     @objc func returnButtonAction(){
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 
     func setupView(){

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailOrderTableView: UIViewController {
+class DetailOrderTableView: MVPController {
     
     let tableView = UITableView()
     let numberRows = 5
@@ -87,29 +87,62 @@ class DetailOrderTableView: UIViewController {
     @objc func backButtonAction(){
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @objc func cancelAlertButtonAction(){
+        print("Отмена")
+        dismissAlertView()
+    }
+    
+    
+    
+    
+    // MARK: Прописать здесь действия с api
+    @objc func sendAlertButtonAction(){
+        // stateSubview.stateButton.tag = api.getStatus
+        switch stateSubview.stateButton.tag {
+            
+        case 0:
+            break
+        case 1:
+            stateSubview.setupArrivedToShopState()
+            stateSubview.stateButton.tag += 1
+          //  navigationController?.popViewController(animated: true)
+        case 2:
+            stateSubview.setupGotOrder()
+            stateSubview.stateButton.tag += 1
+        case 3:
+            stateSubview.setupArrivedToClient()
+            stateSubview.stateButton.tag += 1
+        case 4:
+            stateSubview.stateButton.tag = 0
+            
+        default:
+            stateSubview.stateButton.tag = 0
+        }
+        
+        dismissAlertView()
+    }
+    
     @objc func stateButtonAction(sender: UIButton){
-        print("State button action")
-        sender.tag += 1
+
         
         switch sender.tag{
             
         case 0:
             print("Default state")
+            stateSubview.setupAcceptedOrderState()
+            sender.tag = 1
         
         case 1:
-            stateSubview.setupAcceptedOrderState()
+            showAlert(name: "Находитесь в заведении?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, УЖЕ ЗДЕСЬ")
             
         case 2:
-            stateSubview.setupArrivedToShopState()
+            showAlert(name: "Получили заказ?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕ ПОЛУЧИЛ", sendButtonTitle: "ДА, ПОЛУЧИЛ")
         
         case 3:
-            stateSubview.setupGotOrder()
+            showAlert(name: "Вы прибыли по адресу клиента?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, ПРИБЫЛ")
         
         case 4:
-            stateSubview.setupArrivedToClient()
-
-            
-        case 5:
             stateSubview.stateButton.isEnabled = false
             let thanksView = ThanksView()
             
@@ -119,7 +152,7 @@ class DetailOrderTableView: UIViewController {
             self.navigationController?.pushViewController(thanksView, animated: true)
 
             sender.tag = 0
-
+            
         default:
             sender.tag = 0
         }
@@ -162,21 +195,38 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         view.addSubview(tableView)
     }
     
+    func makeBackButton() -> UIButton {
+        let backButtonImage = UIImage(named: "BackArrow")?.withRenderingMode(.alwaysTemplate)
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(backButtonImage, for: .normal)
+        backButton.tintColor = .black
+        backButton.addTarget(self, action: #selector(self.backButtonPressed), for: .touchUpInside)
+        return backButton
+    }
+
+    @objc func backButtonPressed() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     func createNavigationBar(){
         let navigationBarRightItemLabel = CustomLabels(title: "4000 ₸", textSize: 20, style: .light)
-        
+        self.navigationItem.setHidesBackButton(true, animated: true)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
         navigationBarRightItemLabel.setLabel()
         navigationItem.title = "№ 356167"
-        self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "BackArrow")
+        //self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "BackArrow")
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: navigationBarRightItemLabel)
-        navigationItem.leftBarButtonItem?.tintColor = Colors.black
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: makeBackButton())
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        createNavigationBar()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createNavigationBar()
         
         sc.segmentedControlContainerView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
