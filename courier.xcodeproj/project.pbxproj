@@ -28,6 +28,7 @@
 		501D409927A26EE200F67C6B /* DetailOrderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409827A26EE200F67C6B /* DetailOrderTableView.swift */; };
 		501D409D27A27C2300F67C6B /* ShopSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409C27A27C2300F67C6B /* ShopSubview.swift */; };
 		501D409F27A27C4B00F67C6B /* ClientSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409E27A27C4B00F67C6B /* ClientSubview.swift */; };
+		50217C4927CF1B630066C3F0 /* PhoneNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50217C4827CF1B630066C3F0 /* PhoneNumberFormatter.swift */; };
 		502618B027A78E5A00CEA57C /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618AF27A78E5A00CEA57C /* LoginPresenter.swift */; };
 		502618B227A793FA00CEA57C /* ConfirmLoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618B127A793FA00CEA57C /* ConfirmLoginPresenter.swift */; };
 		502618B427A7957D00CEA57C /* OrdersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618B327A7957D00CEA57C /* OrdersPresenter.swift */; };
@@ -93,6 +94,7 @@
 		501D409827A26EE200F67C6B /* DetailOrderTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrderTableView.swift; sourceTree = "<group>"; };
 		501D409C27A27C2300F67C6B /* ShopSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopSubview.swift; sourceTree = "<group>"; };
 		501D409E27A27C4B00F67C6B /* ClientSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSubview.swift; sourceTree = "<group>"; };
+		50217C4827CF1B630066C3F0 /* PhoneNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberFormatter.swift; sourceTree = "<group>"; };
 		502618AF27A78E5A00CEA57C /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		502618B127A793FA00CEA57C /* ConfirmLoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLoginPresenter.swift; sourceTree = "<group>"; };
 		502618B327A7957D00CEA57C /* OrdersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersPresenter.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				5006FCE327BA24A90047DD6A /* ApiService.swift */,
 				50A5731927B3CF0500E3013F /* NetworkManager.swift */,
 				50FDDEAA27C78CBA000B71AF /* DateConverter.swift */,
+				50217C4827CF1B630066C3F0 /* PhoneNumberFormatter.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 			files = (
 				5017ABB127B00A1800C60897 /* ScheduleWeekTableView.swift in Sources */,
 				50AD10B02798281000221873 /* CustomButtons.swift in Sources */,
+				50217C4927CF1B630066C3F0 /* PhoneNumberFormatter.swift in Sources */,
 				501D409D27A27C2300F67C6B /* ShopSubview.swift in Sources */,
 				50DFF72927BBA3A90066BB37 /* ContentView.swift in Sources */,
 				50DFF72527BBA3860066BB37 /* ErrorView.swift in Sources */,

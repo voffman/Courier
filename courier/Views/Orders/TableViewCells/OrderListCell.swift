@@ -250,24 +250,27 @@ class OrderListCell: UITableViewCell {
         orderAcceptButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         orderAcceptButton.addTarget(self, action: #selector(changeButtonState), for: .touchUpInside)
     }
+
+    let orderListTableView = OrderListTableView() // временно
     
  @objc func changeButtonState(sender: UIButton){
-     sender.tag += 1
      
+     sender.tag += 1
      switch sender.tag{
          
      case 0:
          print("Default state")
-     
+
      case 1:
          setupAcceptedOrderState()
-         
+
      case 2:
          setupArrivedToShopState()
-     
+
      case 3:
          setupGotOrder()
-     
+
+
      case 4:
          setupArrivedToClient()
 

@@ -26,6 +26,18 @@ class OrderListTableView: MVPController {
         tableView.reloadData()
     }
     
+    @objc func cancelAlertButtonAction(){
+        print("Отмена")
+        dismissAlertView()
+    }
+    
+    var senderValue = 1
+    // MARK: Прописать здесь действия с api
+    @objc func sendAlertButtonAction(){
+        dismissAlertView()
+    }
+    
+    
     func setupOrderCount(isHidden: Bool){
         self.view.addSubview(countView)
         countView.backgroundColor = Colors.lightGray
@@ -217,11 +229,32 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func acceptButtonWasTapped(sender:UIButton){
-        if sender.tag == 4{
-        let thanksView = ThanksView()
-        thanksView.modalPresentationStyle = .fullScreen
-        self.navigationController?.pushViewController(thanksView, animated: true)
+        
+        switch sender.tag{
+            
+        case 0:
+            print("Default state")
+        
+        case 1:
+            showAlert(name: "Находитесь в заведении?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, УЖЕ ЗДЕСЬ")
+            
+        case 2:
+            showAlert(name: "Получили заказ?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕ ПОЛУЧИЛ", sendButtonTitle: "ДА, ПОЛУЧИЛ")
+        
+        case 3:
+            showAlert(name: "Вы прибыли по адресу клиента?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, ПРИБЫЛ")
+        
+        case 4:
+            let thanksView = ThanksView()
+            thanksView.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(thanksView, animated: true)
+
+            sender.tag = 0
+            
+        default:
+            sender.tag = 0
         }
+        
     }
     
     

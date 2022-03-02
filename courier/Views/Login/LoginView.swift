@@ -70,8 +70,13 @@ class LoginView: MVPController {
         phoneNumberTextField.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
         phoneNumberTextField.placeholder =  "  + 7 ( _ _ _ ) _ _ _ - _ _ - _ _"
-        
-        
+
+        phoneNumberTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        textField.text = text.applyPatternOnNumbers(pattern: "+# (###) ###-####", replacementCharacter: "#")
     }
     
     func setupLoginButton(){
@@ -105,9 +110,9 @@ class LoginView: MVPController {
     
     @objc func loginButtonAction(sender: UIButton!){
 
-        presenter?.sendSMS(phoneNumber: phoneNumberTextField.text) // phone v parametr
+        presenter?.sendSMS(phoneNumber: phoneNumberTextField.text)
         // презентер никогда не запрашивает данные от вью
-        presenter?.goToConfirmLoginView() // iz presentera
+        presenter?.goToConfirmLoginView()
     }
 
     override func viewDidLoad() {
@@ -119,7 +124,6 @@ class LoginView: MVPController {
     }
 }
 
-// il prezentera syuda perenoshu
 // То, что выполняю во вью
 protocol LoginViewProtocol: AnyObject, MVPControllerProtocol  {
 // to chto otnosytsa k ekranu logina
