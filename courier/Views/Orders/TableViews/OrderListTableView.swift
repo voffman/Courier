@@ -27,13 +27,39 @@ class OrderListTableView: MVPController {
     }
     
     @objc func cancelAlertButtonAction(){
-        print("Отмена")
+        pass = false
+        senderValue -= 1
         dismissAlertView()
     }
     
-    var senderValue = 1
+    var senderValue: Int = 0
+    var pass: Bool = true
+    
     // MARK: Прописать здесь действия с api
     @objc func sendAlertButtonAction(){
+        
+        switch senderValue{
+            
+        case 0:
+            break
+            
+        case 1:
+            break
+            
+        case 2:
+            break
+
+        case 3:
+            break
+
+        case 4:
+            pass = false
+            
+        default:
+            break
+       
+        }
+        pass = true
         dismissAlertView()
     }
     
@@ -229,28 +255,48 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func acceptButtonWasTapped(sender:UIButton){
+        senderValue = sender.tag
         
         switch sender.tag{
             
-        case 0:
-            print("Default state")
-        
-        case 1:
+        case 0: // Отображается стандартное состояние
+            sender.tag = 1
+
+        case 1: // Отображается кнопка прибыл в заведение
+
             showAlert(name: "Находитесь в заведении?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, УЖЕ ЗДЕСЬ")
             
-        case 2:
+            if pass{
+                sender.tag = 2
+            }
+            
+        case 2: // Отображается кнопка получил заказ
+            print("пасс \(pass)")
+          //  if sender.tag == 2 {
+          //      pass = false
+          //  }
             showAlert(name: "Получили заказ?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕ ПОЛУЧИЛ", sendButtonTitle: "ДА, ПОЛУЧИЛ")
-        
-        case 3:
+
+            if pass{
+                sender.tag = 3
+            }
+            
+        case 3: // Отображается кнопка прибыл к клиенту
+            print("пасс \(pass)")
             showAlert(name: "Вы прибыли по адресу клиента?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, ПРИБЫЛ")
-        
-        case 4:
+
+          if pass{
+               sender.tag = 4
+           }
+            
+        case 4: // отображается кнопка доставил заказ
             let thanksView = ThanksView()
             thanksView.modalPresentationStyle = .fullScreen
             self.navigationController?.pushViewController(thanksView, animated: true)
 
             sender.tag = 0
-            
+            pass = false
+  
         default:
             sender.tag = 0
         }

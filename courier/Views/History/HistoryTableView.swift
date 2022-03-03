@@ -11,6 +11,7 @@ class HistoryTableView: UIViewController {
     
     let tableView = UITableView()
 
+    let pickerView  = HistoryPickerView()
     
     func createNavigationBar(){
         let navigationBarLeftItemLabel = CustomLabels(title: "История", textSize: 20, style: .bold)
@@ -26,6 +27,11 @@ class HistoryTableView: UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = Colors.backgroundColor
+        
+        pickerView.createPickerView(onView: self.view)
+        pickerView.translatesAutoresizingMaskIntoConstraints = false
+        pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+
         setupTableView()
         // Do any additional setup after loading the view.
     }
@@ -53,9 +59,9 @@ extension HistoryTableView: UITableViewDelegate, UITableViewDataSource {
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 35).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 50).isActive = true
         } else {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 35).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 50).isActive = true
         }
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

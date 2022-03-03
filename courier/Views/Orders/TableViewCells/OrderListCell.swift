@@ -251,16 +251,15 @@ class OrderListCell: UITableViewCell {
         orderAcceptButton.addTarget(self, action: #selector(changeButtonState), for: .touchUpInside)
     }
 
-    let orderListTableView = OrderListTableView() // временно
-    
- @objc func changeButtonState(sender: UIButton){
-     
-     sender.tag += 1
-     switch sender.tag{
-         
-     case 0:
-         print("Default state")
 
+ @objc func changeButtonState(sender: UIButton){
+     print("cell sender tag \(sender.tag) ")
+     switch sender.tag{
+
+     case 0:
+         print("Начальное состояние")
+         setupNormalState()
+         
      case 1:
          setupAcceptedOrderState()
 
@@ -270,16 +269,9 @@ class OrderListCell: UITableViewCell {
      case 3:
          setupGotOrder()
 
-
      case 4:
-         setupArrivedToClient()
+        setupArrivedToClient()
 
-     
-     case 5:
-         setupNormalState()
-         sender.tag = 0
-         
-         
      default:
          sender.tag = 0
      }
