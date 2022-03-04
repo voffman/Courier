@@ -12,16 +12,19 @@ class ScheduleCell: UITableViewCell {
     static let identifire = "scheduleCell"
     
     let cardView = CustomViews(style: .withShadow)
+    let lineImage = UIImageView(image: UIImage(named: "ScheduleLine"))
     let dateLabel = CustomLabels(title: "9 мар - 15 мар", textSize: 14, style: .bold)
     let acceptLabel = CustomLabels(title: "Требуется ваше подтверждение", textSize: 14, style: .regular)
     let orderTransitionArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     
     let dateConverter = DateConverter()
-
+    var isCurrentDateBetweenDates: Bool = false
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(cardView)
         cardView.setView()
+        contentView.addSubview(lineImage)
         contentView.addSubview(dateLabel)
         dateLabel.setLabel()
         contentView.addSubview(acceptLabel)
@@ -45,7 +48,13 @@ class ScheduleCell: UITableViewCell {
         guard let dateEnd = dateEnd else {
             return
         }
-        self.dateLabel.text = dateConverter.convert(dateString: dateStart, dateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dateEnd, dateFormat: "dd MMM")
+        self.dateLabel.text = dateConverter.convert(dateString: dateStart, convertToDateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dateEnd, convertToDateFormat: "dd MMM")
+        
+        
+       isCurrentDateBetweenDates = dateConverter.compareData(firstDateString: dateStart, secondDateString: dateEnd)
+    //    isCurrentDateBetweenDates = dateConverter.compareData(firstDateString: "2016-05-01", secondDateString: "2016-05-09")
+    //    print("дата ", isCurrentDateBetweenDates)
+        
 
         let acceptString: String
         if accept ?? false {
@@ -80,6 +89,14 @@ class ScheduleCell: UITableViewCell {
                                      height: contentView.frame.size.height)
     }
     
+    func setupLineImage(isHidden: Bool){
+        lineImage.translatesAutoresizingMaskIntoConstraints = false
+        lineImage.centerYAnchor.constraint(equalTo: cardView.centerYAnchor).isActive = true
+        lineImage.leftAnchor.constraint(equalTo: cardView.leftAnchor).isActive = true
+        
+        lineImage.isHidden = isHidden
+    }
+    
     func setupDateLabel(){
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 14).isActive = true
@@ -108,6 +125,7 @@ class ScheduleCell: UITableViewCell {
     func setupCell(){
         insertPaddingsBetweenCells()
         setupCardView()
+        setupLineImage(isHidden: !isCurrentDateBetweenDates)
         setupDateLabel()
         setupAcceptLabel()
         setupTransitionArrowButtonImage()

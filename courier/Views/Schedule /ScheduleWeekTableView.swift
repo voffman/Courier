@@ -94,7 +94,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        createNavigationBar(title: dateConverter.convert(dateString: dateStart, dateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dateEnd, dateFormat: "dd MMM"))
+        createNavigationBar(title: dateConverter.convert(dateString: dateStart, convertToDateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dateEnd, convertToDateFormat: "dd MMM"))
     }
     
     override func viewDidLayoutSubviews() {

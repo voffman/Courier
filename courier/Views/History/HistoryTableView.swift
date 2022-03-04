@@ -30,7 +30,24 @@ class HistoryTableView: UIViewController {
         
         pickerView.createPickerView(onView: self.view)
         pickerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        if #available(iOS 11.0, *) {
+            pickerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top).isActive = true
+        } else {
+            pickerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 0).isActive = true
+        }
         pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        
+        if #available(iOS 11.0, *), UIScreen.main.bounds.size.height > 750{
+            pickerView.heightAnchor.constraint(equalToConstant: 230).isActive = true
+        } else if UIScreen.main.bounds.size.height > 640 {
+            pickerView.heightAnchor.constraint(equalToConstant: 175).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height <= 640{
+            pickerView.heightAnchor.constraint(equalToConstant: 175).isActive = true
+        }
 
         setupTableView()
         // Do any additional setup after loading the view.

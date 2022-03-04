@@ -39,11 +39,14 @@ class ProfileView: UIViewController {
         cardView.translatesAutoresizingMaskIntoConstraints = false
         cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
      
-   // MARK: Поправить
-        if #available(iOS 11.0, *) {
-            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/7.25).isActive = true
-        } else {
-            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/7.25).isActive = true
+        if #available(iOS 11.0, *), UIScreen.main.bounds.size.height > 750{
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/7.75).isActive = true
+        } else if UIScreen.main.bounds.size.height > 640 {
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/7.5).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height <= 640{
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/6.5).isActive = true
         }
         
         cardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true

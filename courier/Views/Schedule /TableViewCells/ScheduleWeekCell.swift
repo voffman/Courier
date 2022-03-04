@@ -12,13 +12,14 @@ class ScheduleWeekCell: UITableViewCell {
     static let identifire = "scheduleWeekCell"
     
     let cardView = CustomViews(style: .withShadow)
-    
+    let lineImage = UIImageView(image: UIImage(named: "ScheduleLine"))
     let dayOfWeekLabel = CustomLabels(title: "Понедельник", textSize: 14, style: .bold)
     let dateLabel = CustomLabels(title: "• 24 фев", textSize: 14, style: .light)
     let timeLabel = CustomLabels(title: "9:00 - 16:00", textSize: 14, style: .regular)
     let sourcePointLabel = CustomLabels(title: "Название отправной точки", textSize: 14, style: .regular)
 
     let dateConverter = DateConverter()
+    var isCurrentDateBetweenDates: Bool = false
     
     var confirmButtonIsHidden = true
     
@@ -31,6 +32,7 @@ class ScheduleWeekCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(cardView)
         cardView.setView()
+        contentView.addSubview(lineImage)
         contentView.addSubview(dayOfWeekLabel)
         dayOfWeekLabel.setLabel()
         contentView.addSubview(dateLabel)
@@ -69,8 +71,13 @@ class ScheduleWeekCell: UITableViewCell {
             return
         }
         
-        self.dayOfWeekLabel.text = dateConverter.convert(dateString: dayOfWeek, dateFormat: "EEEE").capitalized
-        self.dateLabel.text = " • " + dateConverter.convert(dateString: date, dateFormat: "dd MMM")
+        self.dayOfWeekLabel.text = dateConverter.convert(dateString: dayOfWeek, convertToDateFormat: "EEEE").capitalized
+        self.dateLabel.text = " • " + dateConverter.convert(dateString: date, convertToDateFormat: "dd MMM")
+        
+        isCurrentDateBetweenDates = dateConverter.compareData(firstDateString: date, secondDateString: date)
+     //    isCurrentDateBetweenDates = dateConverter.compareData(firstDateString: "2016-05-01", secondDateString: "2016-05-09")
+     //    print("дата ", isCurrentDateBetweenDates)
+        
         self.timeLabel.text = timeStart + " - " + timeEnd
         self.sourcePointLabel.text = sourcePoint
  
@@ -95,6 +102,13 @@ class ScheduleWeekCell: UITableViewCell {
                                      height: 90)
     }
     
+    func setupLineImage(isHidden: Bool){
+        lineImage.translatesAutoresizingMaskIntoConstraints = false
+        lineImage.centerYAnchor.constraint(equalTo: cardView.centerYAnchor).isActive = true
+        lineImage.leftAnchor.constraint(equalTo: cardView.leftAnchor).isActive = true
+        
+        lineImage.isHidden = isHidden
+    }
     
     func setupDayOfWeekLabel(){
         dayOfWeekLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -157,6 +171,7 @@ class ScheduleWeekCell: UITableViewCell {
     func setupCell(){
         insertPaddingsBetweenCells()
         setupCardView()
+        setupLineImage(isHidden: !isCurrentDateBetweenDates)
         setupDayOfWeekLabel()
         setupDateLabel()
         setupTimeLabel()

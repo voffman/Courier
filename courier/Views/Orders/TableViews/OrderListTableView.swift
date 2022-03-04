@@ -28,12 +28,11 @@ class OrderListTableView: MVPController {
     
     @objc func cancelAlertButtonAction(){
         pass = false
-        senderValue -= 1
         dismissAlertView()
     }
     
     var senderValue: Int = 0
-    var pass: Bool = true
+    var pass: Bool = false
     
     // MARK: Прописать здесь действия с api
     @objc func sendAlertButtonAction(){
@@ -41,16 +40,16 @@ class OrderListTableView: MVPController {
         switch senderValue{
             
         case 0:
-            break
+            pass = false
             
         case 1:
-            break
+            pass = true
             
         case 2:
-            break
+            pass = true
 
         case 3:
-            break
+            pass = true
 
         case 4:
             pass = false
@@ -59,7 +58,6 @@ class OrderListTableView: MVPController {
             break
        
         }
-        pass = true
         dismissAlertView()
     }
     
@@ -253,39 +251,52 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         detailOrderTableView.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(detailOrderTableView, animated: true)
     }
-    
-    @objc func acceptButtonWasTapped(sender:UIButton){
+    // MARK: Не обновляется кнопка в cell
+    @objc func acceptButtonWasTapped(sender:UIButton) {
+        var pass = self.pass
         senderValue = sender.tag
         
         switch sender.tag{
             
         case 0: // Отображается стандартное состояние
-            sender.tag = 1
+            pass = true
 
+            if pass{
+                self.pass = false
+                sender.tag = 1
+            }
+            
         case 1: // Отображается кнопка прибыл в заведение
 
+            if !pass{
             showAlert(name: "Находитесь в заведении?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, УЖЕ ЗДЕСЬ")
             
+            print("пасс \(pass)")
+            }
             if pass{
+                self.pass = false
                 sender.tag = 2
             }
-            
-        case 2: // Отображается кнопка получил заказ
-            print("пасс \(pass)")
-          //  if sender.tag == 2 {
-          //      pass = false
-          //  }
-            showAlert(name: "Получили заказ?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕ ПОЛУЧИЛ", sendButtonTitle: "ДА, ПОЛУЧИЛ")
 
+        case 2: // Отображается кнопка получил заказ
+            if !pass{
+            print("пасс \(pass)")
+
+            showAlert(name: "Получили заказ?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕ ПОЛУЧИЛ", sendButtonTitle: "ДА, ПОЛУЧИЛ")
+            }
             if pass{
+                self.pass = false
                 sender.tag = 3
             }
+
             
         case 3: // Отображается кнопка прибыл к клиенту
+            if !pass{
             print("пасс \(pass)")
             showAlert(name: "Вы прибыли по адресу клиента?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, ПРИБЫЛ")
-
+            }
           if pass{
+              self.pass = false
                sender.tag = 4
            }
             
@@ -295,7 +306,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             self.navigationController?.pushViewController(thanksView, animated: true)
 
             sender.tag = 0
-            pass = false
+            self.pass = false
   
         default:
             sender.tag = 0
