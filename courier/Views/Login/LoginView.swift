@@ -111,6 +111,7 @@ class LoginView: MVPController {
     @objc func loginButtonAction(sender: UIButton!){
 
         presenter?.sendSMS(phoneNumber: phoneNumberTextField.text)
+
         // презентер никогда не запрашивает данные от вью
         presenter?.goToConfirmLoginView()
     }

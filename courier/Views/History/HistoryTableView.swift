@@ -11,7 +11,7 @@ class HistoryTableView: UIViewController {
     
     let tableView = UITableView()
 
-    let pickerView  = HistoryPickerView()
+    let pickerController  = PickerController()
     
     func createNavigationBar(){
         let navigationBarLeftItemLabel = CustomLabels(title: "История", textSize: 20, style: .bold)
@@ -28,26 +28,21 @@ class HistoryTableView: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = Colors.backgroundColor
         
-        pickerView.createPickerView(onView: self.view)
-        pickerView.translatesAutoresizingMaskIntoConstraints = false
+        pickerController.createPickerView(onView: self.view)
+        pickerController.pickerViewButton.translatesAutoresizingMaskIntoConstraints = false
+        pickerController.pickerViewButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        pickerController.pickerViewButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/1.5).isActive = true
+        pickerController.pickerViewButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        if #available(iOS 11.0, *) {
-            pickerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top).isActive = true
-        } else {
-            pickerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 0).isActive = true
-        }
-        pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
-        
-        if #available(iOS 11.0, *), UIScreen.main.bounds.size.height > 750{
-            pickerView.heightAnchor.constraint(equalToConstant: 230).isActive = true
+        if UIScreen.main.bounds.size.height > 750{        pickerController.pickerViewButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 97).isActive = true
         } else if UIScreen.main.bounds.size.height > 640 {
-            pickerView.heightAnchor.constraint(equalToConstant: 175).isActive = true
+            pickerController.pickerViewButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 69).isActive = true
         }
         
         if UIScreen.main.bounds.size.height <= 640{
-            pickerView.heightAnchor.constraint(equalToConstant: 175).isActive = true
+            pickerController.pickerViewButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 69).isActive = true
         }
+        
 
         setupTableView()
         // Do any additional setup after loading the view.
@@ -105,6 +100,5 @@ extension HistoryTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 112 
     }
-    
     
 }

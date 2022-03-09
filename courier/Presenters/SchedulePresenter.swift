@@ -34,12 +34,8 @@ class SchedulePresenter: ScheduleTableViewPresenterProtocol{
     
     public func didTap (model: ScheduleElement){
 
-        let id = model.id
-        let dateStart = model.dateStart
-        let dateEnd = model.dateEnd
-        let isConfirmed = model.isConfirmed
         
-        self.view?.goToScheduleWeek(id: id, dateStart: dateStart, dateEnd: dateEnd, isConfirmed: isConfirmed)
+        self.view?.goToScheduleWeek(scheduleElement: model)
 
     }
 }

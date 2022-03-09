@@ -96,13 +96,13 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
 
 protocol ScheduleTableViewProtocol: AnyObject, MVPControllerProtocol  {
     func checkOrders()
-    func goToScheduleWeek(id: Int, dateStart: String, dateEnd: String, isConfirmed: Bool)
+    func goToScheduleWeek(scheduleElement: ScheduleElement)
 }
 
 extension ScheduleTableView: ScheduleTableViewProtocol {
     
-    func goToScheduleWeek(id: Int, dateStart: String, dateEnd: String, isConfirmed: Bool) {
-        let scheduleWeekTableView = ScheduleWeekTableView(id: id, dateStart: dateStart, dateEnd: dateEnd, isConfirmed: isConfirmed)
+    func goToScheduleWeek(scheduleElement: ScheduleElement) {
+        let scheduleWeekTableView = ScheduleWeekTableView(scheduleElement: scheduleElement)
         scheduleWeekTableView.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(scheduleWeekTableView, animated: true)
     }

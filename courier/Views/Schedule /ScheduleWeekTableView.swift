@@ -9,27 +9,25 @@ import UIKit
 
 class ScheduleWeekTableView: MVPController {
     
+    let dataPosts: ScheduleElement
     
-    let id: Int, dateStart: String, dateEnd: String, isConfirmed: Bool
-    
-    init(id: Int, dateStart: String, dateEnd: String, isConfirmed: Bool){
-        self.id = id
-        self.dateStart = dateStart
-        self.dateEnd = dateEnd
-        self.isConfirmed = isConfirmed
+    init(scheduleElement: ScheduleElement){
+        self.dataPosts = scheduleElement
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     let tableView = UITableView()
     private var presenter: ScheduleWeekTableViewPresenterProtocol?
     
     var data: [ScheduleByIDElement] = []
     
     let dateConverter = DateConverter()
+    
+    let scheduleFooterView = ScheduleFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 68))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +36,8 @@ class ScheduleWeekTableView: MVPController {
         
         self.view.backgroundColor = Colors.backgroundColor
         setupTableView()
-        
-        checkOrders(id: String(id))
 
+        checkOrders(id: String(dataPosts.id))
     }
     
     @objc func backButtonAction(){
@@ -48,7 +45,7 @@ class ScheduleWeekTableView: MVPController {
     }
     
     @objc func submitScheduleAction(){
-        presenter?.applyStatusById(id: String(id))
+        presenter?.applyStatusById(id: String(dataPosts.id))
     }
 }
 
@@ -94,7 +91,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        createNavigationBar(title: dateConverter.convert(dateString: dateStart, convertToDateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dateEnd, convertToDateFormat: "dd MMM"))
+        createNavigationBar(title: dateConverter.convert(dateString: dataPosts.dateStart, convertToDateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dataPosts.dateEnd, convertToDateFormat: "dd MMM"))
     }
     
     override func viewDidLayoutSubviews() {
@@ -117,55 +114,39 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let post = data[indexPath.row]
 
         if post.timeStart == nil && post.timeEnd == nil{
             let cell2 = tableView.dequeueReusableCell(withIdentifier: ScheduleDayOffCell.identifire, for: indexPath) as! ScheduleDayOffCell
             cell2.configure(dayOfWeek: post.dateItem, date: post.dateItem)
-           
-            if indexPath.row == 6 {
-                if isConfirmed{
-                    cell2.confirmButtonIsHidden = true
-                }
-                else{
-                    cell2.confirmButtonIsHidden = false
-                }
-
-                cell2.submitButton.addTarget(self, action: #selector(submitScheduleAction), for: .touchUpInside)
-                return cell2
-           
-            }
+            
             return cell2
         }
         
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleWeekCell.identifire, for: indexPath) as! ScheduleWeekCell
             cell.configure(dayOfWeek: post.dateItem, date: post.dateItem, timeStart: post.timeStart, timeEnd: post.timeEnd, sourcePoint: post.point?.name)
-            if indexPath.row == 6 {
-                if isConfirmed{
-                    cell.confirmButtonIsHidden = true
-                }
-                else{
-                    cell.confirmButtonIsHidden = false
-                }
-                
-                cell.submitButton.addTarget(self, action: #selector(submitScheduleAction), for: .touchUpInside)
-                return cell
-           
-            }
+
             return cell
         }
 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 6 {
-            return 168
-        }
         return 90
     }    
 }
+/*
+func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    return footerView
+}
+*/
+ /*
+func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+  return 68
+}
+*/
 
 protocol ScheduleWeekTableViewProtocol: AnyObject, MVPControllerProtocol  {
     func checkOrders(id: String)
@@ -178,6 +159,8 @@ extension ScheduleWeekTableView: ScheduleWeekTableViewProtocol{
                 print("Кол-во постов по айди \(posts.count)")
                 self.data = posts
                 self.tableView.reloadData()
+                self.scheduleFooterView.createFooterView(isHidden: self.dataPosts.isConfirmed)
+                self.tableView.tableFooterView = self.scheduleFooterView // грузить после того как загрузятся ячейки или данные
             }
         })
     }
