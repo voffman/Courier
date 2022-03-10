@@ -7,11 +7,15 @@
 
 import UIKit
 
-class HistoryTableView: UIViewController {
+class HistoryTableView: MVPController {
     
     let tableView = UITableView()
 
-    let pickerController  = PickerController()
+    let pickerController = PickerController()
+    
+    private var presenter: HistoryTableViewPresenterProtocol?
+    
+    var data: [HistoryElement] = []
     
     func createNavigationBar(){
         let navigationBarLeftItemLabel = CustomLabels(title: "История", textSize: 20, style: .bold)
@@ -25,6 +29,10 @@ class HistoryTableView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let presenter = HistoryPresenter(view:  self)
+        self.presenter = presenter
+        
         self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = Colors.backgroundColor
         
@@ -43,9 +51,9 @@ class HistoryTableView: UIViewController {
             pickerController.pickerViewButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 69).isActive = true
         }
         
-
         setupTableView()
-        // Do any additional setup after loading the view.
+        
+        checkPosts(dateStart: "2020-01-01", dateFinish: "2020-12-31")
     }
 
 }
@@ -82,13 +90,15 @@ extension HistoryTableView: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: HistoryCell.identifire, for: indexPath) as! HistoryCell
+        let post = data[indexPath.row]
         
+        let cell = tableView.dequeueReusableCell(withIdentifier: HistoryCell.identifire, for: indexPath) as! HistoryCell
+        cell.configure(orderId: post.id, orderDate: post.dateTimeFinish, orderPrice: post.sumTotal, orderStatus: post.statusName, orderSource: post.companyName)
         
         return cell
     }
@@ -98,7 +108,23 @@ extension HistoryTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 112 
+        return 102 
     }
     
+}
+
+protocol HistoryTableViewProtocol: AnyObject, MVPControllerProtocol  {
+    func checkPosts(dateStart: String, dateFinish: String)
+}
+
+extension HistoryTableView: HistoryTableViewProtocol{
+    func checkPosts(dateStart: String, dateFinish: String) {
+        presenter?.getHistory(dateStart: dateStart, dateFinish: dateFinish, completion: { posts in
+            if !posts.isEmpty{
+                print("Кол-во постов \(posts.count)")
+                self.data = posts
+                self.tableView.reloadData()
+            }
+        })
+    }
 }

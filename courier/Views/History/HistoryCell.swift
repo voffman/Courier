@@ -18,6 +18,7 @@ class HistoryCell: UITableViewCell {
     let orderStatusLabel = CustomLabels(title: "Доставлен", textSize: 14, style: .regular)
     let orderSourceLabel = CustomLabels(title: "Источник (название заведения)", textSize: 14, style: .regular)
     
+    let dateManager = DateManager()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,19 +41,29 @@ class HistoryCell: UITableViewCell {
     }
     
     // для использования в tableView
-    public func configure(orderId: String?,
+    public func configure(orderId: Int,
                           orderDate: String?,
-                          orderPrice: String?,
+                          orderPrice: Int,
                           orderStatus: String?,
                           orderSource: String?) {
         
-        self.orderIdLabel.text = orderId
-        self.orderDateLabel.text = orderDate
-        self.orderPriceLabel.text = orderPrice
+        guard let orderDate = orderDate else {
+            return
+        }
+        
+        self.orderIdLabel.text = "№ \(String(orderId))"
+        // или обрезать строку даты до 10 символов или изменить параметр dateFormat
+        self.orderDateLabel.text = dateManager.convert(dateString: orderDate, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ", convertToDateFormat: "dd MMM")
+        self.orderPriceLabel.text = "\(String(orderPrice)) ₸"
         self.orderStatusLabel.text = orderStatus
         self.orderSourceLabel.text = orderSource
         
-        
+        if self.orderStatusLabel.text == "Выполнен"{
+            self.orderStatusLabel.textColor = Colors.lightGreen
+        }
+        else if self.orderStatusLabel.text == "Отменен"{
+            self.orderStatusLabel.textColor = Colors.red
+        }
     }
     
     override func prepareForReuse() {
@@ -61,9 +72,9 @@ class HistoryCell: UITableViewCell {
     }
     
     func insertPaddingsBetweenCells(){
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10,
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5,
                                                                      left: 10,
-                                                                     bottom: 10,
+                                                                     bottom: 5,
                                                                      right: 10))
     }
     
@@ -80,14 +91,12 @@ class HistoryCell: UITableViewCell {
         orderIdLabel.translatesAutoresizingMaskIntoConstraints = false
         orderIdLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16).isActive = true
         orderIdLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
-        orderIdLabel.rightAnchor.constraint(equalTo: orderDateLabel.leftAnchor, constant: 2).isActive = true
     }
     
     func setupOrderDateLabel(){
         orderDateLabel.translatesAutoresizingMaskIntoConstraints = false
         orderDateLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16).isActive = true
-        orderDateLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 87).isActive = true
-        orderDateLabel.rightAnchor.constraint(equalTo: orderPriceLabel.leftAnchor, constant: 2).isActive = true
+        orderDateLabel.leftAnchor.constraint(equalTo: orderIdLabel.rightAnchor, constant: 5).isActive = true
     }
     
     func setupOrderPriceLabel(){

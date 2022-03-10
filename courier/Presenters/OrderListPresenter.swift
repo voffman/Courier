@@ -11,21 +11,30 @@ import Foundation
 protocol OrderListTableViewPresenterProtocol: AnyObject {
     init(view: OrderListTableViewProtocol)
     func getOrders( completion: @escaping ([CourierOrderResponseElement]) -> ())
+    func getArchiveOrders(completion: @escaping ([CourierOrderResponseElement]) -> ())
 }
 
 class OrderListPresenter: OrderListTableViewPresenterProtocol {
     weak var view: OrderListTableViewProtocol?
     // Тут можно объявить модель
-    let networkManager = NetworkManager()
-    let api = ApiService()
     required init(view: OrderListTableViewProtocol) {
         self.view = view
     }
     
+    let api = ApiService()
     
     func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
         
         api.getOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!){ posts in
+            completion(posts)
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
+        }
+    }
+    
+    func getArchiveOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
+        
+        api.getArchiveOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!){ posts in
             completion(posts)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)

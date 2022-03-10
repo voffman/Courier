@@ -25,7 +25,7 @@ class ScheduleWeekTableView: MVPController {
     
     var data: [ScheduleByIDElement] = []
     
-    let dateConverter = DateConverter()
+    let dateManager = DateManager()
     
     let scheduleFooterView = ScheduleFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 68))
     
@@ -37,7 +37,8 @@ class ScheduleWeekTableView: MVPController {
         self.view.backgroundColor = Colors.backgroundColor
         setupTableView()
 
-        checkOrders(id: String(dataPosts.id))
+        checkPosts(id: String(dataPosts.id))
+        scheduleFooterView.submitButton.addTarget(self, action: #selector(submitScheduleAction), for: .touchUpInside)
     }
     
     @objc func backButtonAction(){
@@ -91,7 +92,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        createNavigationBar(title: dateConverter.convert(dateString: dataPosts.dateStart, convertToDateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dataPosts.dateEnd, convertToDateFormat: "dd MMM"))
+        createNavigationBar(title: dateManager.convert(dateString: dataPosts.dateStart, convertToDateFormat: "dd MMM") + " - " + dateManager.convert(dateString: dataPosts.dateEnd, convertToDateFormat: "dd MMM"))
     }
     
     override func viewDidLayoutSubviews() {
@@ -134,7 +135,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return 80
     }    
 }
 /*
@@ -149,13 +150,13 @@ func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) 
 */
 
 protocol ScheduleWeekTableViewProtocol: AnyObject, MVPControllerProtocol  {
-    func checkOrders(id: String)
+    func checkPosts(id: String)
 }
 
 extension ScheduleWeekTableView: ScheduleWeekTableViewProtocol{
-    func checkOrders(id: String) {
+    func checkPosts(id: String) {
         presenter?.getScheduleWeek(id: id, completion: { posts in
-            if posts.count != 0{
+            if !posts.isEmpty{
                 print("Кол-во постов по айди \(posts.count)")
                 self.data = posts
                 self.tableView.reloadData()

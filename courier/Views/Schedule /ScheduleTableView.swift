@@ -35,7 +35,7 @@ class ScheduleTableView: MVPController {
         self.view.backgroundColor = Colors.backgroundColor
         setupTableView()
         
-        checkOrders()
+        checkPosts()
     }
 
 }
@@ -90,12 +90,12 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 92
+        return 82
     }
 }
 
 protocol ScheduleTableViewProtocol: AnyObject, MVPControllerProtocol  {
-    func checkOrders()
+    func checkPosts()
     func goToScheduleWeek(scheduleElement: ScheduleElement)
 }
 
@@ -107,9 +107,9 @@ extension ScheduleTableView: ScheduleTableViewProtocol {
         self.navigationController?.pushViewController(scheduleWeekTableView, animated: true)
     }
     
-    func checkOrders() {
+    func checkPosts() {
         presenter?.getSchedule(page: "0", completion: { posts in
-            if posts.count != 0{
+            if !posts.isEmpty{
                 print("Кол-во постов \(posts.count)")
                 self.data = posts
                 self.tableView.reloadData()

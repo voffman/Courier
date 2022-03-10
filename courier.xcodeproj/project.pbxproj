@@ -61,6 +61,8 @@
 		50A5731C27B3D89E00E3013F /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5731B27B3D89E00E3013F /* UserResponse.swift */; };
 		50AD10B02798281000221873 /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AD10AF2798281000221873 /* CustomButtons.swift */; };
 		50C8186A27B6717500AB4C0B /* WaitViewElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8186927B6717500AB4C0B /* WaitViewElement.swift */; };
+		50CBB7B627D9C7D00035DA85 /* HistoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBB7B527D9C7D00035DA85 /* HistoryPresenter.swift */; };
+		50CBB7BC27D9F19A0035DA85 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBB7BB27D9F19A0035DA85 /* History.swift */; };
 		50DFF72527BBA3860066BB37 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFF72427BBA3860066BB37 /* ErrorView.swift */; };
 		50DFF72727BBA3960066BB37 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFF72627BBA3960066BB37 /* LoadingView.swift */; };
 		50DFF72927BBA3A90066BB37 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFF72827BBA3A90066BB37 /* ContentView.swift */; };
@@ -68,7 +70,7 @@
 		50FDDEA527C757D4000B71AF /* ScheduleById.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FDDEA427C757D4000B71AF /* ScheduleById.swift */; };
 		50FDDEA727C760FE000B71AF /* SchedulePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FDDEA627C760FE000B71AF /* SchedulePresenter.swift */; };
 		50FDDEA927C7610F000B71AF /* ScheduleWeekPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FDDEA827C7610F000B71AF /* ScheduleWeekPresenter.swift */; };
-		50FDDEAB27C78CBA000B71AF /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FDDEAA27C78CBA000B71AF /* DateConverter.swift */; };
+		50FDDEAB27C78CBA000B71AF /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FDDEAA27C78CBA000B71AF /* DateManager.swift */; };
 		50FFC1CC27B0CAB500478F1D /* ScheduleDayOffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FFC1CB27B0CAB500478F1D /* ScheduleDayOffCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -129,6 +131,8 @@
 		50A5731B27B3D89E00E3013F /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		50AD10AF2798281000221873 /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
 		50C8186927B6717500AB4C0B /* WaitViewElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitViewElement.swift; sourceTree = "<group>"; };
+		50CBB7B527D9C7D00035DA85 /* HistoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPresenter.swift; sourceTree = "<group>"; };
+		50CBB7BB27D9F19A0035DA85 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		50DFF72427BBA3860066BB37 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		50DFF72627BBA3960066BB37 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		50DFF72827BBA3A90066BB37 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -136,7 +140,7 @@
 		50FDDEA427C757D4000B71AF /* ScheduleById.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleById.swift; sourceTree = "<group>"; };
 		50FDDEA627C760FE000B71AF /* SchedulePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulePresenter.swift; sourceTree = "<group>"; };
 		50FDDEA827C7610F000B71AF /* ScheduleWeekPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleWeekPresenter.swift; sourceTree = "<group>"; };
-		50FDDEAA27C78CBA000B71AF /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
+		50FDDEAA27C78CBA000B71AF /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		50FFC1CB27B0CAB500478F1D /* ScheduleDayOffCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDayOffCell.swift; sourceTree = "<group>"; };
 		514F1E533DBD914EA9090D18 /* Pods-courier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-courier.debug.xcconfig"; path = "Target Support Files/Pods-courier/Pods-courier.debug.xcconfig"; sourceTree = "<group>"; };
 		61E5C19813566DC3F4EB7D60 /* Pods-courier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-courier.release.xcconfig"; path = "Target Support Files/Pods-courier/Pods-courier.release.xcconfig"; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 				5006FCEC27BA70990047DD6A /* ErrorResponse.swift */,
 				50FDDEA227C757BD000B71AF /* Schedule.swift */,
 				50FDDEA427C757D4000B71AF /* ScheduleById.swift */,
+				50CBB7BB27D9F19A0035DA85 /* History.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -243,6 +248,7 @@
 				50096DF827BF591300ED9769 /* TabBarPresenter.swift */,
 				50FDDEA627C760FE000B71AF /* SchedulePresenter.swift */,
 				50FDDEA827C7610F000B71AF /* ScheduleWeekPresenter.swift */,
+				50CBB7B527D9C7D00035DA85 /* HistoryPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -366,7 +372,7 @@
 			children = (
 				5006FCE327BA24A90047DD6A /* ApiService.swift */,
 				50A5731927B3CF0500E3013F /* NetworkManager.swift */,
-				50FDDEAA27C78CBA000B71AF /* DateConverter.swift */,
+				50FDDEAA27C78CBA000B71AF /* DateManager.swift */,
 				50217C4827CF1B630066C3F0 /* PhoneNumberFormatter.swift */,
 			);
 			path = Managers;
@@ -536,7 +542,7 @@
 				5006FCED27BA70990047DD6A /* ErrorResponse.swift in Sources */,
 				5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */,
 				5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */,
-				50FDDEAB27C78CBA000B71AF /* DateConverter.swift in Sources */,
+				50FDDEAB27C78CBA000B71AF /* DateManager.swift in Sources */,
 				501CE7C827AA88B700C8DC05 /* ThanksView.swift in Sources */,
 				5031835127ACFD22001C9BEB /* HistoryTableView.swift in Sources */,
 				50FDDEA927C7610F000B71AF /* ScheduleWeekPresenter.swift in Sources */,
@@ -549,6 +555,7 @@
 				5067AEED27A8F36200010950 /* StateSubview.swift in Sources */,
 				500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */,
 				501D409727A248B900F67C6B /* OrderListCompletedOrdersCell.swift in Sources */,
+				50CBB7B627D9C7D00035DA85 /* HistoryPresenter.swift in Sources */,
 				500B62E727990E7F00EDC58A /* CustomLabels.swift in Sources */,
 				502618B927A7AB1800CEA57C /* OrderListPresenter.swift in Sources */,
 				5030A5B127B4CA2100863939 /* UserDefaultsKeys.swift in Sources */,
@@ -578,6 +585,7 @@
 				5006FCE427BA24A90047DD6A /* ApiService.swift in Sources */,
 				5031835527ACFD45001C9BEB /* ProfileView.swift in Sources */,
 				5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */,
+				50CBB7BC27D9F19A0035DA85 /* History.swift in Sources */,
 				5016304F27968D2100D0734F /* Colors.swift in Sources */,
 				5031835827ACFDB1001C9BEB /* HistoryCell.swift in Sources */,
 				500B62EB279919A800EDC58A /* CustomViews.swift in Sources */,

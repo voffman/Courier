@@ -1,5 +1,5 @@
 //
-//  DateConverter.swift
+//  DateManager.swift
 //  courier
 //
 //  Created by Владимир Свиридов on 24.02.2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DateConverter{
+class DateManager{
     
     func convert(dateString: String, stringDateFormat: String? = "yyyy-MM-dd", convertToDateFormat: String) -> String {
 
@@ -24,7 +24,7 @@ class DateConverter{
         return formatter.string(from: convertedDate)
     }
     
-    func compareData(firstDateString: String, secondDateString: String, stringDateFormat: String? = "yyyy-MM-dd") -> Bool {
+    func compareDate(firstDateString: String, secondDateString: String, stringDateFormat: String? = "yyyy-MM-dd") -> Bool {
         
         let formatter = DateFormatter()
         formatter.dateFormat = stringDateFormat
@@ -47,4 +47,27 @@ class DateConverter{
             return false
         }
     }
+    
+    // MARK: Дописать функцию для сравнения является ли текущая дата больше secondData, если так, то расписание истекло
+    
+    func compareCurrentDateWithDate(dateString: String, stringDateFormat: String? = "yyyy-MM-dd") -> Bool {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = stringDateFormat
+        let userDate = formatter.date(from: dateString)
+
+        guard let convertedDate = userDate else {
+            return false
+        }
+        
+        let currentDate = Date()
+
+        if currentDate > convertedDate {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
 }

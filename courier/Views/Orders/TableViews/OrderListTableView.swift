@@ -17,9 +17,10 @@ class OrderListTableView: MVPController {
     let sc = CustomSegmentedControl(segments: .two, firstSegmentTitle: "ТЕКУЩИЕ", secondSegmentTitle: "ВЫПОЛНЕННЫЕ")
     
     let countView = UIView()
-    let countLabel = CustomLabels(title: "3", textSize: 14, style: .regular, alignment: .center)
+    let countLabel = CustomLabels(title: "?", textSize: 14, style: .regular, alignment: .center)
     
     var data: [CourierOrderResponseElement] = []
+    var dataArchive: [CourierOrderResponseElement] = []
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         sc.changeSegmentedControlLinePosition()
@@ -152,6 +153,7 @@ class OrderListTableView: MVPController {
         sc.setupContainerConstraints()
 
         checkOrders()
+        checkArchiveOrders()
     }
 }
 
@@ -207,7 +209,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         case 1:
             //  countLabel.title = "\(3)" // В дальнейшем подставить реальное количество ячеек
               countView.backgroundColor = Colors.orange
-            return data.count
+            return dataArchive.count
 
         default:
             return 0
@@ -216,10 +218,11 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
   
-        let post = data[indexPath.row]
+
         
         switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
+            let post = data[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCell.identifire, for: indexPath) as! OrderListCell
 
             cell.orderTransitionArrowButton.tag = indexPath.row
@@ -231,10 +234,11 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             
             return cell
         case 1:
+            let archivePost = dataArchive[indexPath.row]
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCompletedOrdersCell.identifire, for: indexPath) as! OrderListCompletedOrdersCell
 
-            
-            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)")
+            cell.configure(orderId: archivePost.id, orderPrice: archivePost.sumTotal, orderSource: archivePost.companyName, orderFromAddress: archivePost.addressFrom.address, orderToAddress: "\(archivePost.addressTo.street) \(archivePost.addressTo.house)")
             
             return cell
         default:
@@ -323,10 +327,10 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch sc.segmentedControl.selectedSegmentIndex{
         case 0:
-            return 341 // + 20 компенсировать отступы между ячейками
+            return 331 // + 10 компенсировать отступы между ячейками
 
         case 1:
-            return 277
+            return 267
             
         default:
             return 0
@@ -342,13 +346,14 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
 
 protocol OrderListTableViewProtocol: AnyObject, MVPControllerProtocol  {
     func checkOrders()
+    func checkArchiveOrders()
 }
 
 extension OrderListTableView: OrderListTableViewProtocol{
     
     func checkOrders(){
         presenter?.getOrders( completion: { posts in
-            if posts.count != 0{
+            if !posts.isEmpty{
                 self.waitViewElement.isHidden = true
                 self.waitViewElement.setupView()
                 self.data = posts
@@ -358,6 +363,24 @@ extension OrderListTableView: OrderListTableViewProtocol{
                 self.tableView.reloadData()
             }
         })
+    }
+    
+    func checkArchiveOrders(){
+        presenter?.getArchiveOrders( completion: { posts in
+            if !posts.isEmpty{
+                self.dataArchive = posts
+                print("Архивных постов - ", posts.count)
+                self.countLabel.title = String(posts.count)
+                self.countLabel.setLabel()
+                //self.tableView.reloadData() (при смене segmentedControl элемента)
+            }
+            else{
+                self.countLabel.title = String(posts.count)
+                self.countLabel.setLabel()
+                print("Архивных постов нет - ", posts.count)
+            }
+        })
+        
     }
 }
 

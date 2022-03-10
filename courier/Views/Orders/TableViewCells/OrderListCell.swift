@@ -99,9 +99,9 @@ class OrderListCell: UITableViewCell {
     }
     
     func insertPaddingsBetweenCells(){
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10,
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5,
                                                                      left: 10,
-                                                                     bottom: 10,
+                                                                     bottom: 5,
                                                                      right: 10))
     }
     // MARK: Функции для расстановки элементов на экране

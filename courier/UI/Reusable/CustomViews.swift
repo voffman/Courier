@@ -32,14 +32,14 @@ class CustomViews: UIView {
             self.backgroundColor = Colors.white
             self.layer.cornerRadius = 8
             self.layer.shadowOffset = CGSize(width: 0, height: 2)
-            self.layer.shadowRadius = 2 // Условно
+            self.layer.shadowRadius = 4 // Условно
             self.layer.shadowOpacity = 0.21
         // MARK: Заглушка
         case .withCircleCut:
             self.backgroundColor = Colors.white
             self.layer.cornerRadius = 8
             self.layer.shadowOffset = CGSize(width: 0, height: 2)
-            self.layer.shadowRadius = 2 // Условно
+            self.layer.shadowRadius = 4 // Условно
             self.layer.shadowOpacity = 0.21
 
         case .none:

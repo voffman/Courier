@@ -13,11 +13,12 @@ class ScheduleCell: UITableViewCell {
     
     let cardView = CustomViews(style: .withShadow)
     let lineImage = UIImageView(image: UIImage(named: "ScheduleLine"))
-    let dateLabel = CustomLabels(title: "9 мар - 15 мар", textSize: 14, style: .bold)
+    let dateLabel = CustomLabels(title: "30 февр. - 31 февр.", textSize: 14, style: .bold)
     let acceptLabel = CustomLabels(title: "Требуется ваше подтверждение", textSize: 14, style: .regular)
     let orderTransitionArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     
-    let dateConverter = DateConverter()
+    let dateManager = DateManager()
+    var isDateEnd: Bool = false
     var isCurrentDateBetweenDates: Bool = false
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -30,7 +31,7 @@ class ScheduleCell: UITableViewCell {
         contentView.addSubview(acceptLabel)
         acceptLabel.setLabel()
         contentView.addSubview(orderTransitionArrowButtonImage)
-
+        
     }
     
     required init?(coder: NSCoder) {
@@ -48,14 +49,16 @@ class ScheduleCell: UITableViewCell {
         guard let dateEnd = dateEnd else {
             return
         }
-        self.dateLabel.text = dateConverter.convert(dateString: dateStart, convertToDateFormat: "dd MMM") + " - " + dateConverter.convert(dateString: dateEnd, convertToDateFormat: "dd MMM")
+        
+        self.dateLabel.text = dateManager.convert(dateString: dateStart, convertToDateFormat: "dd MMM") + " - " + dateManager.convert(dateString: dateEnd, convertToDateFormat: "dd MMM")
         
         
-       isCurrentDateBetweenDates = dateConverter.compareData(firstDateString: dateStart, secondDateString: dateEnd)
-    //    isCurrentDateBetweenDates = dateConverter.compareData(firstDateString: "2016-05-01", secondDateString: "2016-05-09")
-    //    print("дата ", isCurrentDateBetweenDates)
+        isDateEnd = dateManager.compareCurrentDateWithDate(dateString: dateEnd)
+        isCurrentDateBetweenDates = dateManager.compareDate(firstDateString: dateStart, secondDateString: dateEnd)
+        //    isCurrentDateBetweenDates = dateManager.compareDate(firstDateString: "2016-05-01", secondDateString: "2016-05-09")
+        //    print("дата ", isCurrentDateBetweenDates)
         
-
+        
         let acceptString: String
         if accept ?? false {
             acceptString = "Вы подтвердили"
@@ -75,18 +78,18 @@ class ScheduleCell: UITableViewCell {
     }
     
     func insertPaddingsBetweenCells(){
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10,
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5,
                                                                      left: 10,
-                                                                     bottom: 10,
+                                                                     bottom: 5,
                                                                      right: 10))
     }
     
     
     func setupCardView(){
         cardView.frame = CGRect(x: 0,
-                                     y: 0,
-                                     width: contentView.frame.size.width,
-                                     height: contentView.frame.size.height)
+                                y: 0,
+                                width: contentView.frame.size.width,
+                                height: contentView.frame.size.height)
     }
     
     func setupLineImage(isHidden: Bool){
@@ -119,8 +122,15 @@ class ScheduleCell: UITableViewCell {
         orderTransitionArrowButtonImage.widthAnchor.constraint(equalToConstant: 7.4).isActive = true
         
     }
-
-    //MARK: Добавить оранжевую полосу
+    
+    func setupDateEndState(isDateEnd: Bool){
+        if isDateEnd{
+            acceptLabel.title = "Истекло"
+            acceptLabel.style = .light
+            acceptLabel.setLabel()
+            
+        }
+    }
     
     func setupCell(){
         insertPaddingsBetweenCells()
@@ -129,14 +139,14 @@ class ScheduleCell: UITableViewCell {
         setupDateLabel()
         setupAcceptLabel()
         setupTransitionArrowButtonImage()
-
+        setupDateEndState(isDateEnd: isDateEnd)
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setupCell()
-
+        
     }
     
 }

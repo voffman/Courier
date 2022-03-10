@@ -17,10 +17,11 @@ protocol ScheduleTableViewPresenterProtocol: AnyObject {
 class SchedulePresenter: ScheduleTableViewPresenterProtocol{
     weak var view: ScheduleTableViewProtocol?
     
-    let api = ApiService()
     required init(view: ScheduleTableViewProtocol) {
         self.view = view
     }
+    
+    let api = ApiService()
     
     func getSchedule(page: String, completion: @escaping ([ScheduleElement]) -> ()) {
         api.getCourierSchedule(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!, page: page) { posts in

@@ -16,7 +16,7 @@ class ScheduleDayOffCell: UITableViewCell {
     let dateLabel = CustomLabels(title: "• 29 фев", textSize: 14, style: .light)
     let dayOffLabel = CustomLabels(title: "Выходной", textSize: 14, style: .regular)
 
-    let dateConverter = DateConverter()
+    let dateManager = DateManager()
     var isCurrentDateBetweenDates: Bool = false
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -49,11 +49,11 @@ class ScheduleDayOffCell: UITableViewCell {
             return
         }
         
-        self.dayOfWeekLabel.text = dateConverter.convert(dateString: dayOfWeek, convertToDateFormat: "EEEE").capitalized
-        self.dateLabel.text = " • " + dateConverter.convert(dateString: date, convertToDateFormat: "dd MMM")
+        self.dayOfWeekLabel.text = dateManager.convert(dateString: dayOfWeek, convertToDateFormat: "EEEE").capitalized
+        self.dateLabel.text = " • " + dateManager.convert(dateString: date, convertToDateFormat: "dd MMM")
         
-        isCurrentDateBetweenDates = dateConverter.compareData(firstDateString: date, secondDateString: date)
-     //    isCurrentDateBetweenDates = dateConverter.compareData(firstDateString: "2016-05-01", secondDateString: "2016-05-09")
+        isCurrentDateBetweenDates = dateManager.compareDate(firstDateString: date, secondDateString: date)
+     //    isCurrentDateBetweenDates = dateManager.compareDate(firstDateString: "2016-05-01", secondDateString: "2016-05-09")
      //    print("дата ", isCurrentDateBetweenDates)
  
     }
@@ -64,9 +64,9 @@ class ScheduleDayOffCell: UITableViewCell {
     }
     
     func insertPaddingsBetweenCells(){
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10,
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5,
                                                                      left: 10,
-                                                                     bottom: 10,
+                                                                     bottom: 5,
                                                                      right: 10))
     }
     

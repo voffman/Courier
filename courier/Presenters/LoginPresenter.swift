@@ -23,6 +23,7 @@ class LoginPresenter: LoginViewPresenterProtocol {
         self.view = view
     }
     
+    let api = ApiService()
     
     func sendSMS(phoneNumber: String?) {
         // Здесь выпоняется запрос по получению "СМС"
@@ -37,7 +38,6 @@ class LoginPresenter: LoginViewPresenterProtocol {
 
         // view.shoeErrrorView
         UserDefaults.standard.set(phoneNumber, forKey: UserDefaultsKeys.phoneNumber)
-        let api = ApiService()
         api.sendSMS(phoneNumber: phoneNumber) { error in
             errorResponse = error
             guard let errorResponse = errorResponse else { return }

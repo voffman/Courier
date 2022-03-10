@@ -18,10 +18,11 @@ class ScheduleWeekPresenter: ScheduleWeekTableViewPresenterProtocol{
 
     weak var view: ScheduleWeekTableViewProtocol?
     
-    let api = ApiService()
     required init(view: ScheduleWeekTableViewProtocol) {
         self.view = view
     }
+    
+    let api = ApiService()
     
     func getScheduleWeek(id: String, completion: @escaping ([ScheduleByIDElement]) -> ()) {
         api.getCourierScheduleById(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!, id: id) { posts in

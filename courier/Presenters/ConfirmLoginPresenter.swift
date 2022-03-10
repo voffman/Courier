@@ -21,6 +21,7 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
     required init(view: ConfirmLoginViewProtocol) {
         self.view = view
     }
+    
     let api = ApiService()
 
     func requestAuthKey() {
