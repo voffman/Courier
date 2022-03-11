@@ -22,8 +22,15 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
         self.view = view
     }
     
+    let api = ApiService()
+    
     func startUserActivity() {
         UserDefaults.standard.set("active", forKey: UserDefaultsKeys.courierActivity)
-        view?.goToOrderListTableView()
+        api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!) { posts in
+           // self.view?.goToOrderListTableView()
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
+        }
+        self.view?.goToOrderListTableView()
     }
 }

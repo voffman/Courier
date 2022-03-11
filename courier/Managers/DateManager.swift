@@ -48,8 +48,6 @@ class DateManager{
         }
     }
     
-    // MARK: Дописать функцию для сравнения является ли текущая дата больше secondData, если так, то расписание истекло
-    
     func compareCurrentDateWithDate(dateString: String, stringDateFormat: String? = "yyyy-MM-dd") -> Bool {
         
         let formatter = DateFormatter()
@@ -68,6 +66,13 @@ class DateManager{
         else {
             return false
         }
+    }
+    
+    func getStringDateFor(days: Int, stringDateFormat: String? = "yyyy-MM-dd") -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = stringDateFormat
+        let date = Calendar.current.date(byAdding: .day, value: days, to: Date())
+        return formatter.string(from: date ?? Date())
     }
     
 }

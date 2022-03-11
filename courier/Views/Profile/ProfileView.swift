@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileView: UIViewController {
+class ProfileView: MVPController {
     
     let cardView = CustomViews(style: .withShadow)
     let profileImage = UIImageView(image: UIImage(named: "Profile"))
@@ -24,14 +24,18 @@ class ProfileView: UIViewController {
     let activityStatusLabel = CustomLabels(title: "Активен", textSize: 14, style: .regular)
     let activityStatusSwitch = UISwitch()
     let thirdLineImage = UIImageView(image: UIImage(named: "Line"))
-    let navigationTitleLabel = CustomLabels(title: "Навигация", textSize: 14, style: .bold)
-    let navigationImage = UIImageView(image: UIImage(named: "Navigation"))
-    let navigationLabel = CustomLabels(title: "2ГИС", textSize: 14, style: .light)
-    let navigationArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
+    let navigationSettingTitleLabel = CustomLabels(title: "Навигация", textSize: 14, style: .bold)
+    let navigationSettingImage = UIImageView(image: UIImage(named: "Navigation"))
+    let navigationSettingLabel = CustomLabels(title: "2ГИС", textSize: 14, style: .light)
+    let navigationSettingArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
+    let navigationSettingButton = CustomButtons(title: "", style: .transparent)
     let fourthLineImage = UIImageView(image: UIImage(named: "Line"))
     let exitImage = UIImageView(image: UIImage(named: "ExitArrow"))
     let exitTitleLabel = CustomLabels(title: "Выйти из аккаунта", textSize: 16, style: .regular)
     let exitArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
+    let exitButton = CustomButtons(title: "", style: .transparent)
+    
+    private var presenter: ProfileViewPresenterProtocol?
     
     func setupCardView(){
         view.addSubview(cardView)
@@ -179,40 +183,53 @@ class ProfileView: UIViewController {
     }
     
     func setupNavigationTitleLabel(){
-        view.addSubview(navigationTitleLabel)
-        navigationTitleLabel.setLabel()
+        view.addSubview(navigationSettingTitleLabel)
+        navigationSettingTitleLabel.setLabel()
         
-        navigationTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        navigationTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 270).isActive = true
-        navigationTitleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
+        navigationSettingTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        navigationSettingTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 270).isActive = true
+        navigationSettingTitleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
         
     }
     
     func setupNavigationImage(){
-        view.addSubview(navigationImage)
+        view.addSubview(navigationSettingImage)
         
-        navigationImage.translatesAutoresizingMaskIntoConstraints = false
-        navigationImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 280).isActive = true
-        navigationImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 18).isActive = true
+        navigationSettingImage.translatesAutoresizingMaskIntoConstraints = false
+        navigationSettingImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 280).isActive = true
+        navigationSettingImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 18).isActive = true
 
     }
     
     func setupNavigationLabel(){
-        view.addSubview(navigationLabel)
-        navigationLabel.setLabel()
+        view.addSubview(navigationSettingLabel)
+        navigationSettingLabel.setLabel()
         
-        navigationLabel.translatesAutoresizingMaskIntoConstraints = false
-        navigationLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 292).isActive = true
-        navigationLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
+        navigationSettingLabel.translatesAutoresizingMaskIntoConstraints = false
+        navigationSettingLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 292).isActive = true
+        navigationSettingLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
 
     }
     
     func setupNavigationArrowButtonImage(){
-        view.addSubview(navigationArrowButtonImage)
+        view.addSubview(navigationSettingArrowButtonImage)
         
-        navigationArrowButtonImage.translatesAutoresizingMaskIntoConstraints = false
-        navigationArrowButtonImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 285).isActive = true
-        navigationArrowButtonImage.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
+        navigationSettingArrowButtonImage.translatesAutoresizingMaskIntoConstraints = false
+        navigationSettingArrowButtonImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 285).isActive = true
+        navigationSettingArrowButtonImage.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
+    }
+    
+    func setupNavigationSettingButton(){
+        view.addSubview(navigationSettingButton)
+        navigationSettingButton.setButton()
+        
+        navigationSettingButton.translatesAutoresizingMaskIntoConstraints = false
+        navigationSettingButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 256).isActive = true
+        navigationSettingButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 5).isActive = true
+        navigationSettingButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -5).isActive = true
+        navigationSettingButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -61).isActive = true
+        navigationSettingButton.addTarget(self, action: #selector(navigationSettingButtonAction(sender:)), for: .touchUpInside)
+        
     }
     
     func setupFourthLineImage(){
@@ -248,6 +265,29 @@ class ProfileView: UIViewController {
         exitArrowButtonImage.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
     }
     
+    func setupExitButton(){
+        view.addSubview(exitButton)
+        exitButton.setButton()
+        
+        exitButton.translatesAutoresizingMaskIntoConstraints = false
+        exitButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 326).isActive = true
+        exitButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 5).isActive = true
+        exitButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -5).isActive = true
+        exitButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10).isActive = true
+        exitButton.addTarget(self, action: #selector(exitButtonAction(sender:)), for: .touchUpInside)
+        
+    }
+    
+    @objc func navigationSettingButtonAction(sender: UIButton){
+        print("navigationSettingButtonAction")
+    }
+    
+    @objc func exitButtonAction(sender: UIButton){
+        presenter?.sessionStop(completion: { _ in })
+        presenter?.removeBearer()
+        presenter?.goToLoginView()
+    }
+    
     func setupView(){
         self.view.backgroundColor = Colors.backgroundColor
         setupCardView()
@@ -269,10 +309,12 @@ class ProfileView: UIViewController {
         setupNavigationImage()
         setupNavigationLabel()
         setupNavigationArrowButtonImage()
+        setupNavigationSettingButton()
         setupFourthLineImage()
         setupExitImage()
         setupExitTitleLabel()
         setupExitArrowButtonImage()
+        setupExitButton()
     }
 
     @objc func switchStateDidChange(_ sender:UISwitch){
@@ -295,7 +337,23 @@ class ProfileView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let presenter = ProfilePresenter(view: self)
+        self.presenter = presenter
         createNavigationBar()
         setupView()
+    }
+}
+
+// То, что выполняю во вью
+protocol ProfileViewProtocol: AnyObject, MVPControllerProtocol {
+    func goToLoginView()
+}
+
+extension ProfileView: ProfileViewProtocol{
+
+    func goToLoginView() {
+        let vc = LoginView()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
 }

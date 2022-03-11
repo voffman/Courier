@@ -31,7 +31,10 @@ private let scheduleListURL = baseURL + "courier/schedule?page="
 private let scheduleByIdURL = baseURL + "courier/schedule/"
 private let scheduleApplyIdURL = baseURL + "courier/schedule/apply/"
 
-
+// Slot
+private let courierSlotURL = baseURL + "courier/slot"
+private let courierSlotStartURL = baseURL + "courier/slot/start"
+private let courierSlotStopURL = baseURL + "courier/slot/stop"
 
 let networkManager = NetworkManager()
 
@@ -158,6 +161,56 @@ class ApiService {
             print(response.data ?? "Нет данных")
         } ifError: { error in
             errorResponse(error)
+        }
+    }
+    
+    // MARK: Courier Slot
+    
+    func courierSlotActivity(token: String, completion: @escaping ([CourierSlotResponse]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+       
+        networkManager.request(url: courierSlotURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierSlotResponse.self) { posts, _  in
+            completion(posts)
+
+        } ifError: { error in
+            errorResponse(error)
+            
+            print("Имя: \(error.name)")
+            print("Сообщение: \(error.message)")
+            print("Код: \(error.code)")
+            print("Статус: \(error.status)")
+            print("Тип ошибки: \(error.type)")
+        }
+    }
+    
+    func courierSlotActivityStart(token: String, completion: @escaping ([CourierSlotResponse]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+       
+        networkManager.request(url: courierSlotStartURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierSlotResponse.self) { posts, _  in
+            completion(posts)
+
+        } ifError: { error in
+            errorResponse(error)
+            
+            print("Имя: \(error.name)")
+            print("Сообщение: \(error.message)")
+            print("Код: \(error.code)")
+            print("Статус: \(error.status)")
+            print("Тип ошибки: \(error.type)")
+        }
+    }
+    
+    func courierSlotActivityStop(token: String, completion: @escaping ([CourierSlotResponse]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+       
+        networkManager.request(url: courierSlotURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierSlotResponse.self) { posts, _  in
+            completion(posts)
+
+        } ifError: { error in
+            errorResponse(error)
+            
+            print("Имя: \(error.name)")
+            print("Сообщение: \(error.message)")
+            print("Код: \(error.code)")
+            print("Статус: \(error.status)")
+            print("Тип ошибки: \(error.type)")
         }
     }
 }

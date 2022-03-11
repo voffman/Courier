@@ -33,10 +33,9 @@ class PickerController: UIViewController, UIPickerViewDelegate, UIPickerViewData
        pickerViewButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
        pickerViewButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
        pickerViewButton.contentHorizontalAlignment = .center
-       pickerViewButton.addTarget(self, action: #selector(popUpPicker(sender:)), for: .touchUpInside)
+
     }
     
-
     func createPickerView(onView: UIView){
         setupButton()
         
@@ -44,6 +43,7 @@ class PickerController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         pickerView.delegate = self
         
         onView.addSubview(self.view)
+
     }
     
     override func viewDidLoad() {
@@ -52,51 +52,6 @@ class PickerController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         self.view.addSubview(pickerViewButton)
     }
     
-
-    @objc func popUpPicker(sender: UIButton) {
-        
-        let vc = UIViewController()
-        vc.preferredContentSize = CGSize(width: screenWidth - 20, height: screenHeight/4)
-
-        
-        
-        if #available(iOS 11.0, *), UIScreen.main.bounds.size.height > 750{
-            pickerView.frame = CGRect(x: 0, y: -40, width: screenWidth - 20, height:screenHeight/4)
-         } else if UIScreen.main.bounds.size.height > 640 {
-             pickerView.frame = CGRect(x: 0, y: -40, width: screenWidth - 20, height:screenHeight/3)
-         }
-         
-         if UIScreen.main.bounds.size.height <= 640{
-             pickerView.frame = CGRect(x: 0, y: -40, width: screenWidth - 20, height:screenHeight/3)
-         }
-
-
-        
-        pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
-        //pickerView.selectRow(selectedRowTextColor, inComponent: 1, animated: false)
-        
-        vc.view.addSubview(pickerView)
-        pickerView.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
-        pickerView.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
-        
-        let alert = UIAlertController(title: "Выберите период", message: "", preferredStyle: .actionSheet)
-        
-        alert.popoverPresentationController?.sourceView = pickerViewButton
-        alert.popoverPresentationController?.sourceRect = pickerViewButton.bounds
-        
-        alert.setValue(vc, forKey: "contentViewController")
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { (UIAlertAction) in
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Выбрать", style: .default, handler: { (UIAlertAction) in
-            self.selectedRow = self.pickerView.selectedRow(inComponent: 0)
-            let selected = Array(self.pickerValues)[self.selectedRow]
-            self.pickerViewButton.setTitle(selected, for: .normal)
-
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
     
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
