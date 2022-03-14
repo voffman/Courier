@@ -11,7 +11,8 @@ import Foundation
 protocol ClientSubviewProtocol: AnyObject  {
     func configure(clientName: String?,
                    clientPhone: String?,
-                   address: String?)
+                   address: String?,
+                   comment: String?)
     func openApp(appURL: URL)
 }
 

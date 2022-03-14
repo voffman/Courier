@@ -108,10 +108,22 @@ class OrderListTableView: MVPController {
     func setupWaitViewElement(){
         self.view.addSubview(waitViewElement)
         waitViewElement.setupView()
-        waitViewElement.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 149)
-        if #available(iOS 11.0, *) {
-            waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 40).isActive = true
-            
+        waitViewElement.frame = CGRect(x: 10, y: 0, width: self.view.frame.width - 20, height: 149)
+        
+        waitViewElement.translatesAutoresizingMaskIntoConstraints = false
+        waitViewElement.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
+        waitViewElement.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
+        
+        if UIScreen.main.bounds.size.height > 750 {
+            waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height > 640 {
+            waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height <= 640 {
+            waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/8).isActive = true
         }
     }
     
@@ -136,7 +148,7 @@ class OrderListTableView: MVPController {
         super.viewDidLoad()
         
 
-        let presenter = OrderListPresenter(view:  self)
+        let presenter = OrderListPresenter(view: self)
         self.presenter = presenter
 
         setupTableView()
@@ -250,10 +262,8 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     
     @objc func orderTransitionArrowButtonWasTapped(sender:UIButton){
         let rowIndex:Int = sender.tag
-        print(rowIndex)
-        let detailOrderTableView = DetailOrderTableView()
-        detailOrderTableView.modalPresentationStyle = .fullScreen
-        self.navigationController?.pushViewController(detailOrderTableView, animated: true)
+        print("row index ", rowIndex)
+        presenter?.didTap(model: data[rowIndex])
     }
     // MARK: Не обновляется кнопка в cell
     @objc func acceptButtonWasTapped(sender:UIButton) {
@@ -347,6 +357,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
 protocol OrderListTableViewProtocol: AnyObject, MVPControllerProtocol  {
     func checkOrders()
     func checkArchiveOrders()
+    func goToDetailOrderTableView(courierOrderResponseElement: CourierOrderResponseElement)
 }
 
 extension OrderListTableView: OrderListTableViewProtocol{
@@ -382,5 +393,12 @@ extension OrderListTableView: OrderListTableViewProtocol{
         })
         
     }
+    
+    func goToDetailOrderTableView(courierOrderResponseElement: CourierOrderResponseElement) {
+        let detailOrderTableView = DetailOrderTableView(courierOrderResponseElement: courierOrderResponseElement)
+        detailOrderTableView.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(detailOrderTableView, animated: true)
+    }
+    
 }
 

@@ -45,28 +45,28 @@ class DetailOrderCell: UITableViewCell {
         super.prepareForReuse()
         
     }
-    
+    // MARK: Поправить
     func setupNameLabel(){
         orderNameLabel.translatesAutoresizingMaskIntoConstraints = false
         orderNameLabel.leftAnchor.constraint(equalTo:  contentView.leftAnchor, constant: 16).isActive = true
         orderNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        
-        //orderNameLabel.rightAnchor.constraint(equalTo:  contentView.rightAnchor, constant: -10).isActive = true
+        orderNameLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 1.65).isActive = true
+        orderNameLabel.rightAnchor.constraint(greaterThanOrEqualTo: orderCountLabel.leftAnchor, constant: -10).isActive = true
     }
     
     func setupCountLabel(){
         orderCountLabel.translatesAutoresizingMaskIntoConstraints = false
-       // orderCountLabel.leftAnchor.constraint(equalTo:  contentView.leftAnchor, constant: 64).isActive = true
+        orderPriceLabel.numberOfLines = 1
         orderCountLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
-        orderCountLabel.rightAnchor.constraint(equalTo:  orderPriceLabel.leftAnchor, constant: -16).isActive = true
     }
     
     func setupPriceLabel(){
         orderPriceLabel.translatesAutoresizingMaskIntoConstraints = false
-        //orderPriceLabel.leftAnchor.constraint(equalTo:  contentView.leftAnchor, constant: 64).isActive = true
+        orderPriceLabel.numberOfLines = 1
+        orderPriceLabel.leftAnchor.constraint(lessThanOrEqualTo: orderCountLabel.rightAnchor, constant: 16).isActive = true
         orderPriceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        
+      //  orderPriceLabel.widthAnchor.constraint(equalToConstant: self.indentationWidth).isActive = true
         orderPriceLabel.rightAnchor.constraint(equalTo:  contentView.rightAnchor, constant: -16).isActive = true
     }
     

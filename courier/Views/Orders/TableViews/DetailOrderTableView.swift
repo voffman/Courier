@@ -9,8 +9,19 @@ import UIKit
 
 class DetailOrderTableView: MVPController {
     
+    let dataPosts: CourierOrderResponseElement
+    
+    init(courierOrderResponseElement: CourierOrderResponseElement){
+        self.dataPosts = courierOrderResponseElement
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let tableView = UITableView()
-    let numberRows = 5
+    //let numberRows = 5
     
     private var presenter: DetailOrderTableViewPresenterProtocol?
     
@@ -34,7 +45,7 @@ class DetailOrderTableView: MVPController {
                                              y: shopSubview.view.frame.height * 1.75,
                                              width: self.view.frame.width,
                                              height: self.view.frame.height/2)
-
+            shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address)
             
         case 1:
             shopSubview.view.isHidden = true
@@ -45,6 +56,12 @@ class DetailOrderTableView: MVPController {
                                              y: clientSubview.view.frame.height * 1.75,
                                              width: self.view.frame.width,
                                              height: self.view.frame.height/2)
+            clientSubview.configure(clientName: dataPosts.customerName, clientPhone: dataPosts.phone, address:
+                                        "\(dataPosts.addressTo.street) " +
+                                        "\(dataPosts.addressTo.house) " +
+                                    "\(dataPosts.addressTo.flat ?? "") " +
+                                    "\(dataPosts.addressTo.addressMore ?? "") ",
+                                    comment: dataPosts.comments)
             
         case 2:
             shopSubview.view.isHidden = true
@@ -181,6 +198,8 @@ class DetailOrderTableView: MVPController {
         clientSubview.view.isHidden = true
         tableView.isHidden = true
         stateSubview.stateButton.addTarget(self, action: #selector(stateButtonAction(sender:)), for: .touchUpInside)
+        
+        shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address)
     }
 }
 
@@ -192,6 +211,10 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         tableView.register(DetailOrderCell.self, forCellReuseIdentifier: DetailOrderCell.identifire)
         tableView.separatorStyle = .singleLine
         tableView.allowsSelection = false
+        
+        tableView.estimatedRowHeight = 29
+        tableView.rowHeight = UITableView.automaticDimension
+        
         view.addSubview(tableView)
     }
     
@@ -209,12 +232,12 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func createNavigationBar(){
-        let navigationBarRightItemLabel = CustomLabels(title: "4000 ₸", textSize: 20, style: .light)
+        let navigationBarRightItemLabel = CustomLabels(title: String(dataPosts.sumTotal) + " ₸", textSize: 20, style: .light)
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
         navigationBarRightItemLabel.setLabel()
-        navigationItem.title = "№ 356167"
+        navigationItem.title = "№ " + String(dataPosts.id)
         //self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "BackArrow")
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: navigationBarRightItemLabel)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: makeBackButton())
@@ -257,20 +280,21 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return numberRows /*checkModel.count */ + 4
+        return dataPosts.orderItems.count /*checkModel.count */// + 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
+        let post = dataPosts.orderItems[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailOrderCell.identifire, for: indexPath) as! DetailOrderCell
         
-        cell.configure(orderName: "а", orderCount: "б", orderPrice: "в")
+        cell.configure(orderName: post.name /*+ " \(post.orderItemDescription ?? "")" */, orderCount: String(post.quantity) + " шт", orderPrice: String(post.price) + " ₸")
         
-        let totalSumIndex = numberRows + 1
+        let totalSumIndex = dataPosts.orderItems.count + 1
 
-        let changeIndex = numberRows + 2
-        let paymentIndex = numberRows + 3
+        let changeIndex = dataPosts.orderItems.count + 2
+        let paymentIndex = dataPosts.orderItems.count + 3
 
         if indexPath.row == totalSumIndex{
             cell.configure(orderName: "Итого", orderCount: "", orderPrice: "4 000" + " тг")
@@ -292,7 +316,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 29
+        return UITableView.automaticDimension
     }
     
     /*

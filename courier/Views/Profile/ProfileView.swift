@@ -32,7 +32,7 @@ class ProfileView: MVPController {
     let fourthLineImage = UIImageView(image: UIImage(named: "Line"))
     let exitImage = UIImageView(image: UIImage(named: "ExitArrow"))
     let exitTitleLabel = CustomLabels(title: "Выйти из аккаунта", textSize: 16, style: .regular)
-    let exitArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
+//    let exitArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     let exitButton = CustomButtons(title: "", style: .transparent)
     
     private var presenter: ProfileViewPresenterProtocol?
@@ -42,14 +42,16 @@ class ProfileView: MVPController {
         cardView.setView()
         cardView.translatesAutoresizingMaskIntoConstraints = false
         cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-     
-        if #available(iOS 11.0, *), UIScreen.main.bounds.size.height > 750{
-            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/7.75).isActive = true
-        } else if UIScreen.main.bounds.size.height > 640 {
+        
+        if UIScreen.main.bounds.size.height > 750 {
             cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/7.5).isActive = true
         }
         
-        if UIScreen.main.bounds.size.height <= 640{
+        if UIScreen.main.bounds.size.height > 640 {
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/7.5).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height <= 640 {
             cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/6.5).isActive = true
         }
         
@@ -211,13 +213,13 @@ class ProfileView: MVPController {
 
     }
     
-    func setupNavigationArrowButtonImage(){
-        view.addSubview(navigationSettingArrowButtonImage)
-        
-        navigationSettingArrowButtonImage.translatesAutoresizingMaskIntoConstraints = false
-        navigationSettingArrowButtonImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 285).isActive = true
-        navigationSettingArrowButtonImage.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
-    }
+//    func setupNavigationArrowButtonImage(){
+//        view.addSubview(navigationSettingArrowButtonImage)
+//
+//        navigationSettingArrowButtonImage.translatesAutoresizingMaskIntoConstraints = false
+//        navigationSettingArrowButtonImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 285).isActive = true
+//        navigationSettingArrowButtonImage.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
+//    }
     
     func setupNavigationSettingButton(){
         view.addSubview(navigationSettingButton)
@@ -228,8 +230,10 @@ class ProfileView: MVPController {
         navigationSettingButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 5).isActive = true
         navigationSettingButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -5).isActive = true
         navigationSettingButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -61).isActive = true
-        navigationSettingButton.addTarget(self, action: #selector(navigationSettingButtonAction(sender:)), for: .touchUpInside)
+        navigationSettingButton.setImage(UIImage(named: "Arrow"), for: .normal)
+        navigationSettingButton.imageEdgeInsets = UIEdgeInsets(top: 3, left: 0, bottom: 0, right: -UIScreen.main.bounds.width + 63)
         
+        navigationSettingButton.addTarget(self, action: #selector(navigationSettingButtonAction(sender:)), for: .touchUpInside)
     }
     
     func setupFourthLineImage(){
@@ -257,13 +261,13 @@ class ProfileView: MVPController {
         exitTitleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
     }
     
-    func setupExitArrowButtonImage(){
-        view.addSubview(exitArrowButtonImage)
-        
-        exitArrowButtonImage.translatesAutoresizingMaskIntoConstraints = false
-        exitArrowButtonImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 348).isActive = true
-        exitArrowButtonImage.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
-    }
+//    func setupExitArrowButtonImage(){
+//        view.addSubview(exitArrowButtonImage)
+//
+//        exitArrowButtonImage.translatesAutoresizingMaskIntoConstraints = false
+//        exitArrowButtonImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 348).isActive = true
+//        exitArrowButtonImage.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
+//    }
     
     func setupExitButton(){
         view.addSubview(exitButton)
@@ -274,8 +278,10 @@ class ProfileView: MVPController {
         exitButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 5).isActive = true
         exitButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -5).isActive = true
         exitButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10).isActive = true
-        exitButton.addTarget(self, action: #selector(exitButtonAction(sender:)), for: .touchUpInside)
+        exitButton.setImage(UIImage(named: "Arrow"), for: .normal)
+        exitButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: -UIScreen.main.bounds.width + 63)
         
+        exitButton.addTarget(self, action: #selector(exitButtonAction(sender:)), for: .touchUpInside)
     }
     
     @objc func navigationSettingButtonAction(sender: UIButton){
@@ -308,12 +314,12 @@ class ProfileView: MVPController {
         setupNavigationTitleLabel()
         setupNavigationImage()
         setupNavigationLabel()
-        setupNavigationArrowButtonImage()
+      //  setupNavigationArrowButtonImage()
         setupNavigationSettingButton()
         setupFourthLineImage()
         setupExitImage()
         setupExitTitleLabel()
-        setupExitArrowButtonImage()
+      //  setupExitArrowButtonImage() // вместо этого используется exitButton.imageEdgeInsets
         setupExitButton()
     }
 

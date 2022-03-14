@@ -21,16 +21,20 @@ class OrdersView: MVPController {
         view.addSubview(cardView)
         cardView.setView()
 
-        
         cardView.translatesAutoresizingMaskIntoConstraints = false
         
         cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        // MARK: Поправить
-        if #available(iOS 11.0, *) {
-            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9.25).isActive = true
-        } else {
-            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9.25).isActive = true
+        if UIScreen.main.bounds.size.height > 750 {
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/2).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height > 640 {
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height <= 640 {
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/8).isActive = true
         }
         
         cardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true

@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - Получение списка активных заказов курьера
+
 struct CourierOrderResponseElement: Codable {
     let id: Int
     let externalID: String
@@ -19,13 +20,15 @@ struct CourierOrderResponseElement: Codable {
     let createdAt, updatedAt, setCourierDateTime: String
     let orderItems: [OrderItem]
     let sumItems, deliveryPrice: Int
-    let deliveryTime, dateTimeFinish, dateTimeStatusFinish: String
+    let deliveryTime: String?
+    let dateTimeFinish, dateTimeStatusFinish: String
     let correctionalPrice, sumTotal, paymentTypeID: Int
     let addressFrom: AddressFrom
     let addressTo: AddressTo
-    let comments, customerAmount: String?
+    let comments: String?
     let transitions: Transitions
     let redistributed: Bool
+    let customerAmount: String?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -33,7 +36,7 @@ struct CourierOrderResponseElement: Codable {
         case companyID = "companyId"
         case companyName, phone, customerName, status, statusName, statusAction, point, createdAt, updatedAt, setCourierDateTime, orderItems, sumItems, deliveryPrice, deliveryTime, dateTimeFinish, dateTimeStatusFinish, correctionalPrice, sumTotal
         case paymentTypeID = "paymentTypeId"
-        case addressFrom, addressTo, comments, customerAmount, transitions, redistributed
+        case addressFrom, addressTo, comments, transitions, redistributed, customerAmount
     }
 }
 
@@ -45,12 +48,20 @@ struct AddressFrom: Codable {
 // MARK: - AddressTo
 struct AddressTo: Codable {
     let street, house, lat, long: String
+    let flat, addressMore: String?
 }
 
 // MARK: - OrderItem
 struct OrderItem: Codable {
     let name: String
+    let orderItemDescription: String?
     let quantity, price: Int
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case orderItemDescription = "description"
+        case quantity, price
+    }
 }
 
 // MARK: - Point
@@ -68,8 +79,8 @@ struct Point: Codable {
 // MARK: - Transitions
 struct Transitions: Codable {
     let status: Int
-    let title: String
-    let alertTitle, alertDescription, alertPositive, alertNegative: String?
+    let title, alertTitle, alertDescription, alertPositive: String
+    let alertNegative: String
 }
 
 typealias CourierOrderResponse = [CourierOrderResponseElement]

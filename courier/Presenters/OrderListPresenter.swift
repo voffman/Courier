@@ -12,6 +12,7 @@ protocol OrderListTableViewPresenterProtocol: AnyObject {
     init(view: OrderListTableViewProtocol)
     func getOrders( completion: @escaping ([CourierOrderResponseElement]) -> ())
     func getArchiveOrders(completion: @escaping ([CourierOrderResponseElement]) -> ())
+    func didTap (model: CourierOrderResponseElement)
 }
 
 class OrderListPresenter: OrderListTableViewPresenterProtocol {
@@ -39,5 +40,13 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
+    }
+    
+    
+    public func didTap (model: CourierOrderResponseElement){
+
+        
+        self.view?.goToDetailOrderTableView(courierOrderResponseElement: model)
+
     }
 }

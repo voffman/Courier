@@ -251,10 +251,10 @@ extension ClientSubview: ClientSubviewProtocol{
     
     public func configure(clientName: String?,
                           clientPhone: String?,
-                          address: String?){
+                          address: String?, comment: String?){
         self.clientLabel.text = clientName
         self.phoneLabel.text = clientPhone
         self.addressLabel.text = address
-        
+        self.commentLabel.text = comment
     }
 }
