@@ -24,6 +24,7 @@ class StateSubview: UIViewController {
         super.viewDidLoad()
         addSubviews()
         hideTimer(isHidden: true)
+       // self.view.backgroundColor = .blue
     }
     
     func addSubviews(){

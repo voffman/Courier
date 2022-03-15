@@ -45,7 +45,6 @@
 		5031835827ACFDB1001C9BEB /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031835727ACFDB1001C9BEB /* HistoryCell.swift */; };
 		5031835A27ACFDD7001C9BEB /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031835927ACFDD7001C9BEB /* ScheduleCell.swift */; };
 		5031835C27ACFF78001C9BEB /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031835B27ACFF78001C9BEB /* TabBarController.swift */; };
-		503622E927ABC89C00F39838 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503622E827ABC89C00F39838 /* Coordinates.swift */; };
 		5041FE6D27DB4ED800A28CB0 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5041FE6C27DB4ED800A28CB0 /* ProfilePresenter.swift */; };
 		5041FE6F27DB5ADA00A28CB0 /* CourierSlotResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5041FE6E27DB5ADA00A28CB0 /* CourierSlotResponse.swift */; };
 		5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316027A0F679000777A9 /* CustomAlerts.swift */; };
@@ -117,7 +116,6 @@
 		5031835727ACFDB1001C9BEB /* HistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
 		5031835927ACFDD7001C9BEB /* ScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		5031835B27ACFF78001C9BEB /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		503622E827ABC89C00F39838 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		5041FE6C27DB4ED800A28CB0 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		5041FE6E27DB5ADA00A28CB0 /* CourierSlotResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierSlotResponse.swift; sourceTree = "<group>"; };
 		5043316027A0F679000777A9 /* CustomAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
@@ -213,7 +211,6 @@
 		5016304827968B4800D0734F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				503622E827ABC89C00F39838 /* Coordinates.swift */,
 				5030A5B027B4CA2100863939 /* UserDefaultsKeys.swift */,
 				50A5731B27B3D89E00E3013F /* UserResponse.swift */,
 				5030A5D627B504A000863939 /* CourierOrderResponse.swift */,
@@ -554,7 +551,6 @@
 				50FDDEA927C7610F000B71AF /* ScheduleWeekPresenter.swift in Sources */,
 				502618B027A78E5A00CEA57C /* LoginPresenter.swift in Sources */,
 				50FDDEA327C757BD000B71AF /* Schedule.swift in Sources */,
-				503622E927ABC89C00F39838 /* Coordinates.swift in Sources */,
 				5031835327ACFD38001C9BEB /* ScheduleTableView.swift in Sources */,
 				5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */,
 				50096DF927BF591300ED9769 /* TabBarPresenter.swift in Sources */,

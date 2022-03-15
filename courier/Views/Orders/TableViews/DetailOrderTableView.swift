@@ -9,7 +9,7 @@ import UIKit
 
 class DetailOrderTableView: MVPController {
     
-    let dataPosts: CourierOrderResponseElement
+    var dataPosts: CourierOrderResponseElement
     
     init(courierOrderResponseElement: CourierOrderResponseElement){
         self.dataPosts = courierOrderResponseElement
@@ -21,7 +21,6 @@ class DetailOrderTableView: MVPController {
     }
     
     let tableView = UITableView()
-    //let numberRows = 5
     
     private var presenter: DetailOrderTableViewPresenterProtocol?
     
@@ -45,7 +44,7 @@ class DetailOrderTableView: MVPController {
                                              y: shopSubview.view.frame.height * 1.75,
                                              width: self.view.frame.width,
                                              height: self.view.frame.height/2)
-            shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address)
+            shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address, phoneNumber: dataPosts.addressFrom.phone, latitude: dataPosts.addressFrom.lat, longitude: dataPosts.addressFrom.long)
             
         case 1:
             shopSubview.view.isHidden = true
@@ -56,12 +55,15 @@ class DetailOrderTableView: MVPController {
                                              y: clientSubview.view.frame.height * 1.75,
                                              width: self.view.frame.width,
                                              height: self.view.frame.height/2)
+            
             clientSubview.configure(clientName: dataPosts.customerName, clientPhone: dataPosts.phone, address:
-                                        "\(dataPosts.addressTo.street) " +
-                                        "\(dataPosts.addressTo.house) " +
-                                    "\(dataPosts.addressTo.flat ?? "") " +
-                                    "\(dataPosts.addressTo.addressMore ?? "") ",
-                                    comment: dataPosts.comments)
+                                                                        "\(dataPosts.addressTo.street) " +
+                                                                        "\(dataPosts.addressTo.house) " +
+                                                                        "\(dataPosts.addressTo.flat ?? "") " +
+                                                                        "\(dataPosts.addressTo.addressMore ?? "") ",
+                                                                        comment: dataPosts.comments,
+                                                                        latitude: dataPosts.addressTo.lat,
+                                                                        longitude: dataPosts.addressTo.long)
             
         case 2:
             shopSubview.view.isHidden = true
@@ -165,7 +167,6 @@ class DetailOrderTableView: MVPController {
             
             thanksView.modalPresentationStyle = .fullScreen
             
-            // MARK:
             self.navigationController?.pushViewController(thanksView, animated: true)
 
             sender.tag = 0
@@ -199,7 +200,7 @@ class DetailOrderTableView: MVPController {
         tableView.isHidden = true
         stateSubview.stateButton.addTarget(self, action: #selector(stateButtonAction(sender:)), for: .touchUpInside)
         
-        shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address)
+        shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address, phoneNumber: dataPosts.addressFrom.phone, latitude: dataPosts.addressFrom.lat, longitude: dataPosts.addressFrom.long)
     }
 }
 
@@ -209,13 +210,21 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(DetailOrderCell.self, forCellReuseIdentifier: DetailOrderCell.identifire)
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .singleLine // MARK: правый отступ
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         tableView.allowsSelection = false
         
-        tableView.estimatedRowHeight = 29
+        tableView.estimatedRowHeight = 35
         tableView.rowHeight = UITableView.automaticDimension
-        
+        appendTotalCells()
         view.addSubview(tableView)
+
+    }
+    
+    func appendTotalCells(){
+        dataPosts.orderItems.append(OrderItem(name: "", orderItemDescription: "", quantity: 1, price: 1))
+        dataPosts.orderItems.append(OrderItem(name: "", orderItemDescription: "", quantity: 1, price: 1))
+        dataPosts.orderItems.append(OrderItem(name: "", orderItemDescription: "", quantity: 1, price: 1))
     }
     
     func makeBackButton() -> UIButton {
@@ -268,7 +277,12 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
             tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant:  50).isActive = true
         }
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        if UIScreen.main.bounds.size.height > 750{
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -140).isActive = true
+        } else {
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -110).isActive = true
+        }
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         
         shopSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 255)
@@ -280,32 +294,57 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return dataPosts.orderItems.count /*checkModel.count */// + 4
+        return dataPosts.orderItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
+            
+        
         let post = dataPosts.orderItems[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailOrderCell.identifire, for: indexPath) as! DetailOrderCell
         
-        cell.configure(orderName: post.name /*+ " \(post.orderItemDescription ?? "")" */, orderCount: String(post.quantity) + " шт", orderPrice: String(post.price) + " ₸")
+        cell.configure(orderName: post.name + " \(post.orderItemDescription ?? "")", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price) + " ₸")
         
-        let totalSumIndex = dataPosts.orderItems.count + 1
-
-        let changeIndex = dataPosts.orderItems.count + 2
-        let paymentIndex = dataPosts.orderItems.count + 3
-
+        let totalSumIndex = dataPosts.orderItems.count - 3
+        let changeIndex = dataPosts.orderItems.count - 2
+        let paymentIndex = dataPosts.orderItems.count - 1
+        
+        if indexPath.row > dataPosts.orderItems.count - 4 {
         if indexPath.row == totalSumIndex{
-            cell.configure(orderName: "Итого", orderCount: "", orderPrice: "4 000" + " тг")
+            cell.configure(orderName: "Итого", orderCount: "", orderPrice: String(dataPosts.sumTotal) + " ₸")
+          //  cell.orderPriceLabel.style = .bold
+          //  cell.orderPriceLabel.setLabel()
         }
         if indexPath.row == changeIndex{
-            cell.configure(orderName: "Сдача с", orderCount: "", orderPrice: "5 000" + " тг")
+            cell.configure(orderName: "Сдача с", orderCount: "", orderPrice: "\(dataPosts.customerAmount ?? "-") ₸")
+          //  cell.orderPriceLabel.style = .regular
+          //  cell.orderPriceLabel.setLabel()
         }
         if indexPath.row == paymentIndex{
-            cell.configure(orderName: "Наличными", orderCount: "", orderPrice: "Неоплачен")
+            var paymentType = ""
+            var payment = "Неоплачен"
+            
+            switch dataPosts.paymentTypeID{
+                
+            case 1:
+                paymentType = "Наличными"
+            //    cell.orderPriceLabel.style = .timerRed
+            //    cell.orderPriceLabel.setLabel()
+            case 2:
+                paymentType = "POS терминал"
+             //   cell.orderPriceLabel.style = .timerRed
+             //   cell.orderPriceLabel.setLabel()
+            case 3:
+                paymentType = "Оплаченный заказ"
+                payment = ""
+            default:
+                paymentType = "Нет данных"
+            }
+            
+            cell.configure(orderName: paymentType, orderCount: "", orderPrice: payment)
         }
-        
+        }
         return cell
 
     }
@@ -314,7 +353,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return UITableView.automaticDimension
     }

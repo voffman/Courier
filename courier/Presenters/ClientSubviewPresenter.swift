@@ -7,20 +7,13 @@
 
 import Foundation
 
-// То, что выполняю во вью
-protocol ClientSubviewProtocol: AnyObject  {
-    func configure(clientName: String?,
-                   clientPhone: String?,
-                   address: String?,
-                   comment: String?)
-    func openApp(appURL: URL)
-}
 
 // То, что выполняю в здесь
 protocol ClientSubviewPresenterProtocol: AnyObject {
     init(view: ClientSubviewProtocol)
     func getSelectedClientData()
-    func getCoordinates()
+    func getCoordinates(latitude: String, longitude: String)
+    func getPhoneNumber(phoneNumber: String)
 }
 
 class ClientSubviewPresenter: ClientSubviewPresenterProtocol {
@@ -34,15 +27,20 @@ class ClientSubviewPresenter: ClientSubviewPresenterProtocol {
         
     }
     
-    func getCoordinates(){
+    func getCoordinates(latitude: String, longitude: String){
         // получить координаты пользователя и заведения
-        
-        let to = Coordinates(latitude: 37.334886, longitude: -122.008988)
-        let urlString = "http://maps.apple.com/maps?daddr=\(to.latitude),\(to.longitude)"
+        let urlString = "http://maps.apple.com/maps?daddr=\(latitude),\(longitude)"
         
         let url = URL(string: urlString)
         view?.openApp(appURL: url!)
          
+    }
+    
+    func getPhoneNumber(phoneNumber: String) {
+        let urlString = "tel://" + phoneNumber
+        let url = URL(string: urlString)
+        
+        view?.openApp(appURL: url!)
     }
     
 }

@@ -18,7 +18,7 @@ struct CourierOrderResponseElement: Codable {
     let statusName, statusAction: String
     let point: Point
     let createdAt, updatedAt, setCourierDateTime: String
-    let orderItems: [OrderItem]
+    var orderItems: [OrderItem]
     let sumItems, deliveryPrice: Int
     let deliveryTime: String?
     let dateTimeFinish, dateTimeStatusFinish: String

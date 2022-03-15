@@ -14,7 +14,7 @@ class DetailOrderCell: UITableViewCell {
     
     let orderNameLabel = CustomLabels(title: "Пицца «Капореджими»", textSize: 14, style: .regular)
     let orderCountLabel = CustomLabels(title: "1 шт", textSize: 14, style: .light)
-    var orderPriceLabel = CustomLabels(title: "4 000 ₸", textSize: 14, style: .regular)
+    var orderPriceLabel = CustomLabels(title: "4 000 ₸", textSize: 14, style: .light)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,25 +49,28 @@ class DetailOrderCell: UITableViewCell {
     func setupNameLabel(){
         orderNameLabel.translatesAutoresizingMaskIntoConstraints = false
         orderNameLabel.leftAnchor.constraint(equalTo:  contentView.leftAnchor, constant: 16).isActive = true
-        orderNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        orderNameLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 1.65).isActive = true
-        orderNameLabel.rightAnchor.constraint(greaterThanOrEqualTo: orderCountLabel.leftAnchor, constant: -10).isActive = true
+        orderNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
+        orderNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
+        orderNameLabel.rightAnchor.constraint(lessThanOrEqualTo: orderCountLabel.leftAnchor, constant: -16).isActive = true
     }
     
     func setupCountLabel(){
         orderCountLabel.translatesAutoresizingMaskIntoConstraints = false
-        orderPriceLabel.numberOfLines = 1
-        orderCountLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        
+        orderCountLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
+        orderCountLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
+        orderCountLabel.widthAnchor.constraint(equalToConstant: 35).isActive = true
+       
+        orderCountLabel.rightAnchor.constraint(equalTo:  contentView.rightAnchor, constant: -76).isActive = true
     }
     
     func setupPriceLabel(){
         orderPriceLabel.translatesAutoresizingMaskIntoConstraints = false
-        orderPriceLabel.numberOfLines = 1
-        orderPriceLabel.leftAnchor.constraint(lessThanOrEqualTo: orderCountLabel.rightAnchor, constant: 16).isActive = true
-        orderPriceLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-      //  orderPriceLabel.widthAnchor.constraint(equalToConstant: self.indentationWidth).isActive = true
+       // orderPriceLabel.leftAnchor.constraint(greaterThanOrEqualTo: orderCountLabel.rightAnchor, constant: 16).isActive = true
+        orderPriceLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
+        orderPriceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
+        orderPriceLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
         orderPriceLabel.rightAnchor.constraint(equalTo:  contentView.rightAnchor, constant: -16).isActive = true
+        orderPriceLabel.textAlignment = .right
     }
     
     func setupCell(){

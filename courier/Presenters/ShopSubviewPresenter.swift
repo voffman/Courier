@@ -8,19 +8,13 @@
 import Foundation
 
 
-// То, что выполняю во вью
-protocol ShopSubviewProtocol: AnyObject  {
-    func configure(source: String?, address: String?)
-    func openApp(appURL: URL)
-
-}
 
 // То, что выполняю в здесь
 protocol ShopSubviewPresenterProtocol: AnyObject {
     init(view: ShopSubviewProtocol)
     func getSelectedShopData()
-    func getCoordinates()
-    func getPhoneNumber()
+    func getCoordinates(latitude: String, longitude: String)
+    func getPhoneNumber(phoneNumber: String)
 }
 
 class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
@@ -34,22 +28,19 @@ class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
         
     }
     
-    func getCoordinates(){
-        // получить координаты пользователя и заведения
-        let to = Coordinates(latitude: 49.820024, longitude: 73.103696)
-        let urlString = "http://maps.apple.com/maps?daddr=\(to.latitude),\(to.longitude)"
+    func getCoordinates(latitude: String, longitude: String){
+        
+        let urlString = "http://maps.apple.com/maps?daddr=\(latitude),\(longitude)"
         
         let url = URL(string: urlString)
         view?.openApp(appURL: url!)
          
     }
     
-    func getPhoneNumber() {
-        let phoneNumber = "+1(222)333-44-55"
-        
+    func getPhoneNumber(phoneNumber: String) {
         let urlString = "tel://" + phoneNumber
-        
         let url = URL(string: urlString)
+        
         view?.openApp(appURL: url!)
     }
 }

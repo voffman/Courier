@@ -21,11 +21,14 @@ class ClientSubview: UIViewController {
     let addressTitleLabel = CustomLabels(title: "Адрес", textSize: 14, style: .light)
     let addressLabel = CustomLabels(title: "Казыбек Би, Нуркена Абдирова, 7, дом 8, квартира 42", textSize: 14, style: .regular)
     let routeButton = CustomButtons(title: "МАРШРУТ", style: .normal)
-    
+    let toCallButton = CustomButtons(title: "ПОЗВОНИТЬ", style: .normal)
     let commentCardView = CustomViews(style: .withShadow)
     let commentImage = UIImageView(image: UIImage(named: "Comment"))
     let commentTitleLabel = CustomLabels(title: "Комментарий клиента", textSize: 14, style: .light, alignment: .center)
     let commentLabel = CustomLabels(title: "Пожалуйста, пусть курьер позвонит, когда подъедет. Я хочу встретить его и забрать заказ. Это сюрприз для детей.", textSize: 16, style: .regular, alignment: .justified)
+    
+    var latitude: String = "0"
+    var longitude: String = "0"
     
     
     override func viewDidLoad() {
@@ -106,6 +109,7 @@ class ClientSubview: UIViewController {
         phoneLabel.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 64).isActive = true
         phoneLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 36).isActive = true
         phoneLabel.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -10).isActive = true
+        phoneLabel.text? = phoneLabel.text?.applyPatternOnNumbers(pattern: "+# (###) ### ####", replacementCharacter: "#") ?? ""
     }
     
     func setupLineImage(){
@@ -143,6 +147,17 @@ class ClientSubview: UIViewController {
         
     }
     
+    
+    func setupToCallButton(){
+        toCallButton.translatesAutoresizingMaskIntoConstraints = false
+        toCallButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 191).isActive = true
+        toCallButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        toCallButton.rightAnchor.constraint(equalTo: cardView.centerXAnchor, constant: -5).isActive = true
+        toCallButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        toCallButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        toCallButton.addTarget(self, action: #selector(toCallButtonAction), for: .touchUpInside)
+        
+    }
     
     
     func setupRouteButton(){
@@ -193,10 +208,14 @@ class ClientSubview: UIViewController {
         commentLabel.bottomAnchor.constraint(equalTo: commentCardView.bottomAnchor, constant: -20).isActive = true
     }
     
-    @objc func routeButtonAction(){
-        presenter?.getCoordinates()
+    @objc func toCallButtonAction(){
+        presenter?.getPhoneNumber(phoneNumber: phoneLabel.text ?? "")
+
     }
     
+    @objc func routeButtonAction(){
+        presenter?.getCoordinates(latitude: latitude, longitude: longitude)
+    }
     
     func setupCell(){
         setupCardView()
@@ -207,6 +226,7 @@ class ClientSubview: UIViewController {
         setupAddressImage()
         setupAddressTitleLabel()
         setupAddressLabel()
+      //  setupToCallButton() MARK: Заглушка
         setupRouteButton()
         setupCommentCardView()
         setupCommentImage()
@@ -241,6 +261,17 @@ extension ClientSubview {
 }
 */
 
+// То, что выполняю во вью
+protocol ClientSubviewProtocol: AnyObject  {
+    func configure(clientName: String?,
+                   clientPhone: String?,
+                   address: String?,
+                   comment: String?,
+                   latitude: String?,
+                   longitude: String?)
+    func openApp(appURL: URL)
+}
+
 extension ClientSubview: ClientSubviewProtocol{
     func openApp(appURL: URL) {
         if UIApplication.shared.canOpenURL(appURL) {
@@ -251,10 +282,12 @@ extension ClientSubview: ClientSubviewProtocol{
     
     public func configure(clientName: String?,
                           clientPhone: String?,
-                          address: String?, comment: String?){
+                          address: String?, comment: String?, latitude: String?, longitude: String?){
         self.clientLabel.text = clientName
         self.phoneLabel.text = clientPhone
         self.addressLabel.text = address
         self.commentLabel.text = comment
+        self.latitude = latitude ?? "0"
+        self.longitude = longitude ?? "0"
     }
 }

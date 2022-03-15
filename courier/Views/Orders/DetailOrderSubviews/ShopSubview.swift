@@ -21,6 +21,9 @@ class ShopSubview: UIViewController {
     let toCallButton = CustomButtons(title: "ПОЗВОНИТЬ", style: .normal)
     let routeButton = CustomButtons(title: "МАРШРУТ", style: .normal)
     
+    let phoneNumber: String = ""
+    var latitude: String = "0"
+    var longitude: String = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,11 +127,11 @@ class ShopSubview: UIViewController {
     }
     
     @objc func routeButtonAction(){
-        presenter?.getCoordinates()
+        presenter?.getCoordinates(latitude: latitude, longitude: longitude)
     }
     
     @objc func toCallButtonAction(){
-        presenter?.getPhoneNumber()
+        presenter?.getPhoneNumber(phoneNumber: phoneNumber)
     }
     
     
@@ -159,6 +162,17 @@ class ShopSubview: UIViewController {
     */
 }
 
+// То, что выполняю во вью
+protocol ShopSubviewProtocol: AnyObject  {
+    func configure(source: String?,
+                   address: String?,
+                   phoneNumber: String?,
+                   latitude: String?,
+                   longitude: String?)
+    func openApp(appURL: URL)
+
+}
+
 extension ShopSubview: ShopSubviewProtocol{
    func openApp(appURL: URL) {
        if UIApplication.shared.canOpenURL(appURL) {
@@ -166,8 +180,10 @@ extension ShopSubview: ShopSubviewProtocol{
        }
     }
     
-    public func configure(source: String?, address: String?){
+    public func configure(source: String?, address: String?, phoneNumber: String?, latitude: String?, longitude: String?){
         self.sourceLabel.text = source
         self.addressLabel.text = address
+        self.latitude = latitude ?? "0"
+        self.longitude = longitude ?? "0"
     }
 }
