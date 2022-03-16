@@ -85,7 +85,7 @@ class OrderListCell: UITableViewCell {
                           orderToAddress: String?,
                           orderTime: String?){
         self.orderIdLabel.text = "№ \(String(orderId))"
-        self.orderPriceLabel.text = "• \(String(orderPrice)) ₸"
+        self.orderPriceLabel.text = "• \(String(orderPrice.formattedWithSeparator)) ₸"
         self.orderSourceLabel.text = orderSource
         self.orderFromAddressLabel.text = orderFromAddress
         self.orderToAddressLabel.text = orderToAddress

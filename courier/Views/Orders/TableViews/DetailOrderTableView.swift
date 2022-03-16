@@ -1,5 +1,5 @@
 //
-//  AboutOrderTableView.swift
+//  DetailOrderTableView.swift
 //  courier
 //
 //  Created by Владимир Свиридов on 27.01.2022.
@@ -21,6 +21,7 @@ class DetailOrderTableView: MVPController {
     }
     
     let tableView = UITableView()
+    let footerTableView = DetailOrderTableViewFooter(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 20, height: 105))
     
     private var presenter: DetailOrderTableViewPresenterProtocol?
     
@@ -216,15 +217,10 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
         tableView.estimatedRowHeight = 35
         tableView.rowHeight = UITableView.automaticDimension
-        appendTotalCells()
         view.addSubview(tableView)
-
-    }
-    
-    func appendTotalCells(){
-        dataPosts.orderItems.append(OrderItem(name: "", orderItemDescription: "", quantity: 1, price: 1))
-        dataPosts.orderItems.append(OrderItem(name: "", orderItemDescription: "", quantity: 1, price: 1))
-        dataPosts.orderItems.append(OrderItem(name: "", orderItemDescription: "", quantity: 1, price: 1))
+        footerTableView.addElements()
+        footerTableView.createFooterView()
+        tableView.tableFooterView = footerTableView
     }
     
     func makeBackButton() -> UIButton {
@@ -241,7 +237,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func createNavigationBar(){
-        let navigationBarRightItemLabel = CustomLabels(title: String(dataPosts.sumTotal) + " ₸", textSize: 20, style: .light)
+        let navigationBarRightItemLabel = CustomLabels(title: String(dataPosts.sumTotal.formattedWithSeparator) + " ₸", textSize: 20, style: .light)
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
@@ -301,50 +297,11 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
             
         
         let post = dataPosts.orderItems[indexPath.row]
-        
+        footerTableView.addData(sum: dataPosts.sumTotal, customerAmount: dataPosts.customerAmount ?? "-", paymentType: dataPosts.paymentTypeID)
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailOrderCell.identifire, for: indexPath) as! DetailOrderCell
         
-        cell.configure(orderName: post.name + " \(post.orderItemDescription ?? "")", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price) + " ₸")
+        cell.configure(orderName: post.name + " \(post.orderItemDescription ?? "")", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price.formattedWithSeparator) + " ₸")
         
-        let totalSumIndex = dataPosts.orderItems.count - 3
-        let changeIndex = dataPosts.orderItems.count - 2
-        let paymentIndex = dataPosts.orderItems.count - 1
-        
-        if indexPath.row > dataPosts.orderItems.count - 4 {
-        if indexPath.row == totalSumIndex{
-            cell.configure(orderName: "Итого", orderCount: "", orderPrice: String(dataPosts.sumTotal) + " ₸")
-          //  cell.orderPriceLabel.style = .bold
-          //  cell.orderPriceLabel.setLabel()
-        }
-        if indexPath.row == changeIndex{
-            cell.configure(orderName: "Сдача с", orderCount: "", orderPrice: "\(dataPosts.customerAmount ?? "-") ₸")
-          //  cell.orderPriceLabel.style = .regular
-          //  cell.orderPriceLabel.setLabel()
-        }
-        if indexPath.row == paymentIndex{
-            var paymentType = ""
-            var payment = "Неоплачен"
-            
-            switch dataPosts.paymentTypeID{
-                
-            case 1:
-                paymentType = "Наличными"
-            //    cell.orderPriceLabel.style = .timerRed
-            //    cell.orderPriceLabel.setLabel()
-            case 2:
-                paymentType = "POS терминал"
-             //   cell.orderPriceLabel.style = .timerRed
-             //   cell.orderPriceLabel.setLabel()
-            case 3:
-                paymentType = "Оплаченный заказ"
-                payment = ""
-            default:
-                paymentType = "Нет данных"
-            }
-            
-            cell.configure(orderName: paymentType, orderCount: "", orderPrice: payment)
-        }
-        }
         return cell
 
     }

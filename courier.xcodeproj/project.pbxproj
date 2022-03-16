@@ -64,6 +64,8 @@
 		50C8186A27B6717500AB4C0B /* WaitViewElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8186927B6717500AB4C0B /* WaitViewElement.swift */; };
 		50CBB7B627D9C7D00035DA85 /* HistoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBB7B527D9C7D00035DA85 /* HistoryPresenter.swift */; };
 		50CBB7BC27D9F19A0035DA85 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBB7BB27D9F19A0035DA85 /* History.swift */; };
+		50DDAD8227E18F0F00EF83BC /* DetailOrderTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DDAD8127E18F0F00EF83BC /* DetailOrderTableViewFooter.swift */; };
+		50DDAD8427E1D55E00EF83BC /* DecimalNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DDAD8327E1D55E00EF83BC /* DecimalNumberFormatter.swift */; };
 		50DFF72527BBA3860066BB37 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFF72427BBA3860066BB37 /* ErrorView.swift */; };
 		50DFF72727BBA3960066BB37 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFF72627BBA3960066BB37 /* LoadingView.swift */; };
 		50DFF72927BBA3A90066BB37 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFF72827BBA3A90066BB37 /* ContentView.swift */; };
@@ -135,6 +137,8 @@
 		50C8186927B6717500AB4C0B /* WaitViewElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitViewElement.swift; sourceTree = "<group>"; };
 		50CBB7B527D9C7D00035DA85 /* HistoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPresenter.swift; sourceTree = "<group>"; };
 		50CBB7BB27D9F19A0035DA85 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		50DDAD8127E18F0F00EF83BC /* DetailOrderTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrderTableViewFooter.swift; sourceTree = "<group>"; };
+		50DDAD8327E1D55E00EF83BC /* DecimalNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalNumberFormatter.swift; sourceTree = "<group>"; };
 		50DFF72427BBA3860066BB37 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		50DFF72627BBA3960066BB37 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		50DFF72827BBA3A90066BB37 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -343,6 +347,7 @@
 			children = (
 				5062EFC7279A734100E4A686 /* OrderListTableView.swift */,
 				501D409827A26EE200F67C6B /* DetailOrderTableView.swift */,
+				50DDAD8127E18F0F00EF83BC /* DetailOrderTableViewFooter.swift */,
 			);
 			path = TableViews;
 			sourceTree = "<group>";
@@ -377,6 +382,7 @@
 				50A5731927B3CF0500E3013F /* NetworkManager.swift */,
 				50FDDEAA27C78CBA000B71AF /* DateManager.swift */,
 				50217C4827CF1B630066C3F0 /* PhoneNumberFormatter.swift */,
+				50DDAD8327E1D55E00EF83BC /* DecimalNumberFormatter.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -543,6 +549,7 @@
 				50FDDEA527C757D4000B71AF /* ScheduleById.swift in Sources */,
 				502618B227A793FA00CEA57C /* ConfirmLoginPresenter.swift in Sources */,
 				5006FCED27BA70990047DD6A /* ErrorResponse.swift in Sources */,
+				50DDAD8427E1D55E00EF83BC /* DecimalNumberFormatter.swift in Sources */,
 				5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */,
 				5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */,
 				50FDDEAB27C78CBA000B71AF /* DateManager.swift in Sources */,
@@ -590,6 +597,7 @@
 				50CBB7BC27D9F19A0035DA85 /* History.swift in Sources */,
 				5016304F27968D2100D0734F /* Colors.swift in Sources */,
 				5031835827ACFDB1001C9BEB /* HistoryCell.swift in Sources */,
+				50DDAD8227E18F0F00EF83BC /* DetailOrderTableViewFooter.swift in Sources */,
 				500B62EB279919A800EDC58A /* CustomViews.swift in Sources */,
 				501630352796786A00D0734F /* AppDelegate.swift in Sources */,
 				5041FE6D27DB4ED800A28CB0 /* ProfilePresenter.swift in Sources */,
