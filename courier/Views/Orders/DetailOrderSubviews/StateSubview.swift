@@ -10,8 +10,6 @@ import UIKit
 class StateSubview: UIViewController {
     
     var targetView = UIView()
-    
-    //var timerIsHidden: Bool = false
 
     let stateButton = CustomButtons(title: "ПРИНЯТЬ", style: .primary)
     
@@ -24,7 +22,7 @@ class StateSubview: UIViewController {
         super.viewDidLoad()
         addSubviews()
         hideTimer(isHidden: true)
-       // self.view.backgroundColor = .blue
+        self.view.backgroundColor = .blue
     }
     
     func addSubviews(){

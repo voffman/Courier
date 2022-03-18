@@ -134,6 +134,12 @@ class ShopSubview: UIViewController {
         presenter?.getPhoneNumber(phoneNumber: phoneNumber)
     }
     
+    func setupOnlyCallButtonState(){
+        routeButton.isHidden = true
+        toCallButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = true
+        titleLabel.text = "Заберите заказ"
+    }
+    
     
     func setupCell(){
         setupCardView()
@@ -143,7 +149,7 @@ class ShopSubview: UIViewController {
         setupAddressLabel()
         setupToCallButton()
         setupRouteButton()
-
+//        setupOnlyCallButtonState()
     }
     
     override func viewDidLayoutSubviews() {

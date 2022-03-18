@@ -45,13 +45,13 @@ class DetailOrderCell: UITableViewCell {
         super.prepareForReuse()
         
     }
-    // MARK: Поправить
+    
     func setupNameLabel(){
         orderNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        orderNameLabel.leftAnchor.constraint(equalTo:  contentView.leftAnchor, constant: 16).isActive = true
+        orderNameLabel.leftAnchor.constraint(equalTo:  contentView.leftAnchor, constant: 6).isActive = true
         orderNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
         orderNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
-        orderNameLabel.rightAnchor.constraint(lessThanOrEqualTo: orderCountLabel.leftAnchor, constant: -16).isActive = true
+        orderNameLabel.rightAnchor.constraint(lessThanOrEqualTo: orderCountLabel.leftAnchor, constant: -6).isActive = true
     }
     
     func setupCountLabel(){
@@ -69,7 +69,7 @@ class DetailOrderCell: UITableViewCell {
         orderPriceLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
         orderPriceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
         orderPriceLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        orderPriceLabel.rightAnchor.constraint(equalTo:  contentView.rightAnchor, constant: -16).isActive = true
+        orderPriceLabel.rightAnchor.constraint(equalTo:  contentView.rightAnchor, constant: -6).isActive = true
         orderPriceLabel.textAlignment = .right
     }
     

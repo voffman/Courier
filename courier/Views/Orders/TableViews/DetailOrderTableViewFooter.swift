@@ -63,16 +63,7 @@ class DetailOrderTableViewFooter: UIView {
     
     func createFooterView(){
         self.backgroundColor = .white
-      //  let contentView = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height))
-      //  self.addSubview(contentView)
-      //  contentView.backgroundColor = .red
-      //  contentView.translatesAutoresizingMaskIntoConstraints = false
         
-       // self.translatesAutoresizingMaskIntoConstraints = false
-       // submitButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
-       // self.heightAnchor.constraint(equalToConstant: 105).isActive = true
-      //  self.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 20).isActive = true
-
         firstLineImage.translatesAutoresizingMaskIntoConstraints = false
         secondLineImage.translatesAutoresizingMaskIntoConstraints = false
         sumTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -83,29 +74,33 @@ class DetailOrderTableViewFooter: UIView {
         paymentLabel.translatesAutoresizingMaskIntoConstraints = false
         
         firstLineImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 35).isActive = true
-        firstLineImage.widthAnchor.constraint(equalToConstant: self.frame.size.width - 32).isActive = true
+        firstLineImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true
+        firstLineImage.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -6).isActive = true
         firstLineImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
 
         sumTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 9).isActive = true
-        sumTitleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16).isActive = true
+        sumTitleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true
         sumLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 9).isActive = true
-        sumLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
+        sumLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -6).isActive = true
         
         secondLineImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 70).isActive = true
-        secondLineImage.widthAnchor.constraint(equalToConstant: self.frame.size.width - 32).isActive = true
+        secondLineImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true
+        secondLineImage.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -6).isActive = true
         secondLineImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
         customerAmountTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 45).isActive = true
-        customerAmountTitleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16).isActive = true
+        customerAmountTitleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true
         customerAmountLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 45).isActive = true
-        customerAmountLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
+        customerAmountLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -6).isActive = true
         
         paymentTypeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 78).isActive = true
-        paymentTypeLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16).isActive = true
+        paymentTypeLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true
         paymentLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 78).isActive = true
-        paymentLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
+        paymentLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -6).isActive = true
         
     }
     
     
 }
+
+

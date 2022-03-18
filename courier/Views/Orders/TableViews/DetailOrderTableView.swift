@@ -31,31 +31,26 @@ class DetailOrderTableView: MVPController {
     let clientSubview = ClientSubview()
     let stateSubview = StateSubview()
     
+    let shadowViewForTableView = CustomViews(style: .withShadow)
+    
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         sc.changeSegmentedControlLinePosition()
-       // tableView.reloadData()
 
         switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
+            scrollView.isScrollEnabled = false
             clientSubview.view.isHidden = true
             shopSubview.view.isHidden = false
-            stateSubview.view.isHidden = false
             tableView.isHidden = true
-            stateSubview.view.frame = CGRect(x: 0,
-                                             y: shopSubview.view.frame.height * 1.75,
-                                             width: self.view.frame.width,
-                                             height: self.view.frame.height/2)
+
             shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address, phoneNumber: dataPosts.addressFrom.phone, latitude: dataPosts.addressFrom.lat, longitude: dataPosts.addressFrom.long)
+            shadowViewForTableView.isHidden = true
             
         case 1:
+            scrollView.isScrollEnabled = true
             shopSubview.view.isHidden = true
             clientSubview.view.isHidden = false
-            stateSubview.view.isHidden = false
             tableView.isHidden = true
-            stateSubview.view.frame = CGRect(x: 0,
-                                             y: clientSubview.view.frame.height * 1.75,
-                                             width: self.view.frame.width,
-                                             height: self.view.frame.height/2)
             
             clientSubview.configure(clientName: dataPosts.customerName, clientPhone: dataPosts.phone, address:
                                                                         "\(dataPosts.addressTo.street) " +
@@ -65,13 +60,15 @@ class DetailOrderTableView: MVPController {
                                                                         comment: dataPosts.comments,
                                                                         latitude: dataPosts.addressTo.lat,
                                                                         longitude: dataPosts.addressTo.long)
+            shadowViewForTableView.isHidden = true
             
         case 2:
+            scrollView.isScrollEnabled = true
             shopSubview.view.isHidden = true
             clientSubview.view.isHidden = true
-            stateSubview.view.isHidden = false
             tableView.isHidden = false
             tableView.reloadData()
+            shadowViewForTableView.isHidden = false
             
         default:
 
@@ -175,7 +172,6 @@ class DetailOrderTableView: MVPController {
         default:
             sender.tag = 0
         }
-   //print("знач \(timerIsHidden)")
     }
     
     override func viewDidLoad() {
@@ -184,8 +180,9 @@ class DetailOrderTableView: MVPController {
         self.presenter = presenter
         setupScrollView()
         setupTableView()
+        scrollView.isScrollEnabled = false
         self.view.backgroundColor = Colors.backgroundColor
-        self.tableView.backgroundColor = Colors.backgroundColor
+        
         view.addSubview(sc.segmentedControlContainerView)
         sc.setContainerView()
         
@@ -207,20 +204,34 @@ class DetailOrderTableView: MVPController {
 
 extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     
+    
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(DetailOrderCell.self, forCellReuseIdentifier: DetailOrderCell.identifire)
-        tableView.separatorStyle = .singleLine // MARK: правый отступ
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
         tableView.allowsSelection = false
         
         tableView.estimatedRowHeight = 35
         tableView.rowHeight = UITableView.automaticDimension
-        view.addSubview(tableView)
+        tableView.backgroundColor = Colors.backgroundColor.withAlphaComponent(0.00)
+        self.contentView.addSubview(tableView)
         footerTableView.addElements()
         footerTableView.createFooterView()
         tableView.tableFooterView = footerTableView
+        
+        shadowViewForTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.addSubview(shadowViewForTableView)
+        shadowViewForTableView.setView()
+        
+        shadowViewForTableView.widthAnchor.constraint(equalToConstant: view.frame.width - 20).isActive = true
+        shadowViewForTableView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        shadowViewForTableView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 0).isActive = true
+        shadowViewForTableView.bottomAnchor.constraint(equalTo: footerTableView.bottomAnchor, constant: 0).isActive = true
+        self.contentView.bringSubviewToFront(tableView)
+        shadowViewForTableView.isHidden = true
+        tableView.showsVerticalScrollIndicator = false
     }
     
     func makeBackButton() -> UIButton {
@@ -243,7 +254,6 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         self.navigationController?.isNavigationBarHidden = false
         navigationBarRightItemLabel.setLabel()
         navigationItem.title = "№ " + String(dataPosts.id)
-        //self.navigationController?.navigationBar.backIndicatorImage = UIImage(named: "BackArrow")
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: navigationBarRightItemLabel)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: makeBackButton())
     }
@@ -267,24 +277,25 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         sc.segmentedControlContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 50).isActive = true
-        } else {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant:  50).isActive = true
-        }
-        tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
+
+        tableView.topAnchor.constraint(equalTo:  contentView.topAnchor, constant: sc.segmentedControlContainerView.frame.height + 15).isActive = true
+        
+        tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
         
         if UIScreen.main.bounds.size.height > 750{
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -140).isActive = true
+            tableView.bottomAnchor.constraint(equalTo: stateSubview.view.topAnchor, constant: 0).isActive = true
         } else {
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -110).isActive = true
+            tableView.bottomAnchor.constraint(equalTo: stateSubview.view.topAnchor, constant: 0).isActive = true
         }
-        tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20).isActive = true
         
         shopSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 255)
         clientSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/18.25, width: self.view.frame.width - 20, height: self.view.frame.height)
         
-        stateSubview.view.frame = CGRect(x: 0, y: shopSubview.view.frame.height * 1.75, width: self.view.frame.width, height: self.view.frame.height/2)
+        stateSubview.view.translatesAutoresizingMaskIntoConstraints = false
+        stateSubview.view.heightAnchor.constraint(equalTo: stateSubview.stateButton.heightAnchor).isActive = true
+        stateSubview.view.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        stateSubview.view.bottomAnchor.constraint(equalTo: stateSubview.stateButton.bottomAnchor, constant: 0).isActive = true
      
     }
 
@@ -315,6 +326,13 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//            if let lastVisibleIndexPath = tableView.indexPathsForVisibleRows?.last {
+//                    if indexPath == lastVisibleIndexPath {
+//                }
+//            }
+//        }
+    
     /*
      // MARK: - Navigation
      
@@ -330,3 +348,5 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
 extension DetailOrderTableView: DetailOrderTableViewProtocol{
     
 }
+
+
