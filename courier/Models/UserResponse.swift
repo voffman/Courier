@@ -23,3 +23,17 @@ struct UserResponse: Codable {
         case courierTypeID = "courierTypeId"
     }
 }
+
+// MARK: ответ
+
+//struct UserResponse: Codable {
+//    let id: Int
+//    let fio, phone, lastLogin, authKey: String
+//    let inventory: String
+//    let courierTypeID: Int
+//
+//    enum CodingKeys: String, CodingKey {
+//        case id, fio, phone, lastLogin, authKey, inventory
+//        case courierTypeID = "courierTypeId"
+//    }
+//}

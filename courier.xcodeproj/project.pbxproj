@@ -50,6 +50,7 @@
 		5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316027A0F679000777A9 /* CustomAlerts.swift */; };
 		5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */; };
 		50475EE727BCC0FA00AD27E2 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50475EE627BCC0FA00AD27E2 /* AlertView.swift */; };
+		5053619727EC24B900559006 /* EmployeeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5053619627EC24B900559006 /* EmployeeResponse.swift */; };
 		5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC7279A734100E4A686 /* OrderListTableView.swift */; };
 		5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC9279A7CD400E4A686 /* OrderListCell.swift */; };
 		5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065CCA127993A2700B38BAB /* OrdersView.swift */; };
@@ -123,6 +124,7 @@
 		5043316027A0F679000777A9 /* CustomAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
 		5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		50475EE627BCC0FA00AD27E2 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		5053619627EC24B900559006 /* EmployeeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeResponse.swift; sourceTree = "<group>"; };
 		5062EFC7279A734100E4A686 /* OrderListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListTableView.swift; sourceTree = "<group>"; };
 		5062EFC9279A7CD400E4A686 /* OrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListCell.swift; sourceTree = "<group>"; };
 		5065CCA127993A2700B38BAB /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				50FDDEA427C757D4000B71AF /* ScheduleById.swift */,
 				50CBB7BB27D9F19A0035DA85 /* History.swift */,
 				5041FE6E27DB5ADA00A28CB0 /* CourierSlotResponse.swift */,
+				5053619627EC24B900559006 /* EmployeeResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -592,6 +595,7 @@
 				5017ABB327B00A4400C60897 /* ScheduleWeekCell.swift in Sources */,
 				5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */,
 				5006FCE427BA24A90047DD6A /* ApiService.swift in Sources */,
+				5053619727EC24B900559006 /* EmployeeResponse.swift in Sources */,
 				5031835527ACFD45001C9BEB /* ProfileView.swift in Sources */,
 				5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */,
 				50CBB7BC27D9F19A0035DA85 /* History.swift in Sources */,

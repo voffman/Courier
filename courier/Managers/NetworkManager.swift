@@ -78,9 +78,28 @@ final class NetworkManager {
         switch method {
             
         case .get:
-            AF.request(url, headers: headers).responseJSON { response in
-                print(response)
-                ifSuccess(response)
+            AF.request(url, parameters: body, encoding:  URLEncoding.httpBody, headers: headers).validate(statusCode: 200..<300).responseJSON { response in
+                switch response.result {
+                case .success:
+                    print("response.result \(response.result)")
+                    print("response.data \(String(describing: response.data))")
+                    print("response.request \(String(describing: response.request))")
+                    print("response.error \(String(describing: response.error))")
+                    ifSuccess(response)
+                    
+                case .failure(let error):
+                    print(error)
+                    AF.request(url, headers: headers).responseDecodable(of: ErrorResponse.self) { response in
+                        
+                        switch response.result {
+                        case .success(let errorValue):
+                            ifError(errorValue)
+                            
+                        case .failure(let error):
+                            print(String(describing: error))
+                        }
+                    }
+                }
             }
             
         case .post:

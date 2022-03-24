@@ -20,17 +20,17 @@ class ErrorView: UIViewController {
     let statusLabel = CustomLabels(title: "Статус: ", textSize: 14, style: .regular, alignment: .justified)
     let typeLabel = CustomLabels(title: "Тип: ", textSize: 14, style: .regular, alignment: .justified)
     
-    let sendButton = CustomButtons(title: "ПОПРОБОВАТЬ СНОВА", style: .primary)
+    let sendButton = CustomButtons(title: "ОК", style: .primary)
 
     var errorView : UIView?
     
     //MARK: выбрать что-то одно
     func configureData(errorResponseData: ErrorResponse){
-        nameLabel.title = errorResponseData.name
-        messageLabel.title = errorResponseData.message
-        codeLabel.title = "Код ошибки: \(String(errorResponseData.code))"
-        statusLabel.title = "Статус: \(String(errorResponseData.status))"
-        typeLabel.title = "Статус: \(String(describing:errorResponseData.type))"
+        nameLabel.title = "\(errorResponseData.name ?? "Ошибка")"
+        messageLabel.title = " \(errorResponseData.message ?? "Неизвестная ошибка")"
+        codeLabel.title = "Код ошибки: \(String(errorResponseData.code ?? 0))"
+        statusLabel.title = "Статус: \(String(errorResponseData.status ?? 0))"
+        typeLabel.title = "Тип ошибки: \(String(describing:errorResponseData.type))"
         
         nameLabel.setLabel()
         messageLabel.setLabel()

@@ -36,6 +36,9 @@ private let courierSlotURL = baseURL + "courier/slot"
 private let courierSlotStartURL = baseURL + "courier/slot/start"
 private let courierSlotStopURL = baseURL + "courier/slot/stop"
 
+// Profile
+private let employeeURL = baseURL + "user"
+
 let networkManager = NetworkManager()
 
 class ApiService {
@@ -60,11 +63,11 @@ class ApiService {
 
             errorResponse(error)
             /*
-            print("Имя: \(error.name)")
-            print("Сообщение: \(error.message)")
-            print("Код: \(error.code)")
-            print("Статус: \(error.status)")
-            print("Тип ошибки: \(error.type)")
+             print("Имя: \(error.name ?? "Нет данных")")
+             print("Сообщение: \(error.message ?? "Нет данных")")
+             print("Код: \(error.code ?? 0) ")
+             print("Статус: \(error.status ?? 0)")
+             print("Тип ошибки: \(error.type ?? "Нет данных")")
              */
         }
     }
@@ -78,11 +81,11 @@ class ApiService {
         } ifError: { error in
             errorResponse(error)
             /*
-            print("Имя: \(error.name)")
-            print("Сообщение: \(error.message)")
-            print("Код: \(error.code)")
-            print("Статус: \(error.status)")
-            print("Тип ошибки: \(error.type)")
+             print("Имя: \(error.name ?? "Нет данных")")
+             print("Сообщение: \(error.message ?? "Нет данных")")
+             print("Код: \(error.code ?? 0) ")
+             print("Статус: \(error.status ?? 0)")
+             print("Тип ошибки: \(error.type ?? "Нет данных")")
              */
         }
     }
@@ -95,11 +98,11 @@ class ApiService {
         } ifError: { error in
             errorResponse(error)
             /*
-            print("Имя: \(error.name)")
-            print("Сообщение: \(error.message)")
-            print("Код: \(error.code)")
-            print("Статус: \(error.status)")
-            print("Тип ошибки: \(error.type)")
+             print("Имя: \(error.name ?? "Нет данных")")
+             print("Сообщение: \(error.message ?? "Нет данных")")
+             print("Код: \(error.code ?? 0) ")
+             print("Статус: \(error.status ?? 0)")
+             print("Тип ошибки: \(error.type ?? "Нет данных")")
              */
         }
     }
@@ -113,11 +116,11 @@ class ApiService {
         } ifError: { error in
             errorResponse(error)
             /*
-            print("Имя: \(error.name)")
-            print("Сообщение: \(error.message)")
-            print("Код: \(error.code)")
-            print("Статус: \(error.status)")
-            print("Тип ошибки: \(error.type)")
+             print("Имя: \(error.name ?? "Нет данных")")
+             print("Сообщение: \(error.message ?? "Нет данных")")
+             print("Код: \(error.code ?? 0) ")
+             print("Статус: \(error.status ?? 0)")
+             print("Тип ошибки: \(error.type ?? "Нет данных")")
              */
         }
     }
@@ -132,11 +135,11 @@ class ApiService {
         } ifError: { error in
             errorResponse(error)
             
-            print("Имя: \(error.name)")
-            print("Сообщение: \(error.message)")
-            print("Код: \(error.code)")
-            print("Статус: \(error.status)")
-            print("Тип ошибки: \(error.type)")
+            print("Имя: \(error.name ?? "Нет данных")")
+            print("Сообщение: \(error.message ?? "Нет данных")")
+            print("Код: \(error.code ?? 0) ")
+            print("Статус: \(error.status ?? 0)")
+            print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
     
@@ -147,11 +150,11 @@ class ApiService {
         } ifError: { error in
             errorResponse(error)
             
-            print("Имя: \(error.name)")
-            print("Сообщение: \(error.message)")
-            print("Код: \(error.code)")
-            print("Статус: \(error.status)")
-            print("Тип ошибки: \(error.type)")
+            print("Имя: \(error.name ?? "Нет данных")")
+            print("Сообщение: \(error.message ?? "Нет данных")")
+            print("Код: \(error.code ?? 0) ")
+            print("Статус: \(error.status ?? 0)")
+            print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
 
     }
@@ -174,43 +177,65 @@ class ApiService {
         } ifError: { error in
             errorResponse(error)
             
-            print("Имя: \(error.name)")
-            print("Сообщение: \(error.message)")
-            print("Код: \(error.code)")
-            print("Статус: \(error.status)")
-            print("Тип ошибки: \(error.type)")
+            print("Имя: \(error.name ?? "Нет данных")")
+            print("Сообщение: \(error.message ?? "Нет данных")")
+            print("Код: \(error.code ?? 0) ")
+            print("Статус: \(error.status ?? 0)")
+            print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
     
-    func courierSlotActivityStart(token: String, completion: @escaping ([CourierSlotResponse]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+    func courierSlotActivityStart(token: String, errorResponse: @escaping (ErrorResponse)->()){
        
-        networkManager.request(url: courierSlotStartURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierSlotResponse.self) { posts, _  in
-            completion(posts)
+        networkManager.request(url: courierSlotStartURL, method: .get, headers: [.authorization(bearerToken: token)]) { response in
+            print(response.data ?? "Нет данных")
 
         } ifError: { error in
             errorResponse(error)
             
-            print("Имя: \(error.name)")
-            print("Сообщение: \(error.message)")
-            print("Код: \(error.code)")
-            print("Статус: \(error.status)")
-            print("Тип ошибки: \(error.type)")
+            print("Имя: \(error.name ?? "Нет данных")")
+            print("Сообщение: \(error.message ?? "Нет данных")")
+            print("Код: \(error.code ?? 0) ")
+            print("Статус: \(error.status ?? 0)")
+            print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
     
-    func courierSlotActivityStop(token: String, completion: @escaping ([CourierSlotResponse]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+    func courierSlotActivityStop(token: String, errorResponse: @escaping (ErrorResponse)->()){
        
-        networkManager.request(url: courierSlotURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierSlotResponse.self) { posts, _  in
-            completion(posts)
+        networkManager.request(url: courierSlotStopURL, method: .get, headers: [.authorization(bearerToken: token)]) { response in
+        print(response.data ?? "Нет данных")
 
-        } ifError: { error in
+    }
+
+        ifError: { error in
             errorResponse(error)
             
-            print("Имя: \(error.name)")
-            print("Сообщение: \(error.message)")
-            print("Код: \(error.code)")
-            print("Статус: \(error.status)")
-            print("Тип ошибки: \(error.type)")
+            print("Имя: \(error.name ?? "Нет данных")")
+            print("Сообщение: \(error.message ?? "Нет данных")")
+            print("Код: \(error.code ?? 0) ")
+            print("Статус: \(error.status ?? 0)")
+            print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
+    
+    // MARK: Profile
+    func getEmployeeData(token: String, completion: @escaping ([EmployeeResponse])->(), errorResponse: @escaping (ErrorResponse)->()){
+        networkManager.request(url: employeeURL, method: .get, headers: [.authorization(bearerToken: token)], model: EmployeeResponse.self) { posts, post  in
+            completion(posts)
+            
+        } ifError: { error in
+
+            errorResponse(error)
+            
+            print("Имя: \(error.name ?? "Нет данных")")
+            print("Сообщение: \(error.message ?? "Нет данных")")
+            print("Код: \(error.code ?? 0) ")
+            print("Статус: \(error.status ?? 0)")
+            print("Тип ошибки: \(error.type ?? "Нет данных")")
+             
+        }
+    }
+    
+    
 }

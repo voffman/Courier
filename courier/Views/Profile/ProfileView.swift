@@ -289,9 +289,21 @@ class ProfileView: MVPController {
     }
     
     @objc func exitButtonAction(sender: UIButton){
-        presenter?.sessionStop(completion: { _ in })
-        presenter?.removeBearer()
-        presenter?.goToLoginView()
+        presenter?.sessionStop()
+       // presenter?.removeBearer()
+       // presenter?.goToLoginView()
+    }
+    
+    func configurateData(){
+
+        presenter?.getEmployeeData(completion: { posts in
+            for post in posts{
+                self.courierNameLabel.text = post.fio
+                self.inventoryLabel.text = "Инвентарь: \(post.inventory ?? "")"
+            }
+        })
+        self.courierNameLabel.setLabel()
+        self.inventoryLabel.setLabel()
     }
     
     func setupView(){
@@ -321,6 +333,7 @@ class ProfileView: MVPController {
         setupExitTitleLabel()
       //  setupExitArrowButtonImage() // вместо этого используется exitButton.imageEdgeInsets
         setupExitButton()
+
     }
 
     @objc func switchStateDidChange(_ sender:UISwitch){
@@ -347,6 +360,7 @@ class ProfileView: MVPController {
         self.presenter = presenter
         createNavigationBar()
         setupView()
+        configurateData()
     }
 }
 

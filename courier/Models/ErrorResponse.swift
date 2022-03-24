@@ -8,9 +8,9 @@
 import Foundation
 
 struct ErrorResponse: Codable {
-    let name, message: String
-    let code, status: Int
-    let type: String
+    let name, message: String?
+    let code, status: Int?
+    let type: String?
 }
 
 // выводить коды ошибки JSON-а как в сваггере   "message": "Пользователя не существует", "code": 0, "status": 404,
