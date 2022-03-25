@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - CourierSlotResponse - ответ
 struct CourierSlotResponse: Codable {
-    let date, sessionStart, sessionEnd: String
+    let sessionStart, sessionEnd: String
     let status: Bool
     let point: Pointttt
 }
@@ -18,8 +18,7 @@ struct CourierSlotResponse: Codable {
 // MARK: - Point
 struct Pointttt: Codable {
     let id: Int
-    let name, pointDescription: String
-    let lat, long: Double
+    let name, pointDescription, lat, long: String
 
     enum CodingKeys: String, CodingKey {
         case id, name

@@ -15,7 +15,6 @@ protocol TabBarProtocol: AnyObject  {
 // То, что выполняю в здесь
 protocol TabBarPresenterProtocol: AnyObject {
     init(view: TabBarProtocol)
-    func checkActivity() -> Bool
 }
 
 class TabBarPresenter: TabBarPresenterProtocol{
@@ -25,17 +24,4 @@ class TabBarPresenter: TabBarPresenterProtocol{
     required init(view: TabBarProtocol) {
         self.view = view
     }
-    
-    func checkActivity() -> Bool {
-        if UserDefaults.standard.string(forKey: UserDefaultsKeys.courierActivity) == "active"{
-            return true
-            self.view?.reloadMainItem()
-        }
-        else{
-            return false
-        }
-    }
-    
-    
-    
 }

@@ -290,17 +290,15 @@ class ProfileView: MVPController {
     
     @objc func exitButtonAction(sender: UIButton){
         presenter?.sessionStop()
-       // presenter?.removeBearer()
-       // presenter?.goToLoginView()
+        
     }
     
-    func configurateData(){
+    func configureData(){
 
-        presenter?.getEmployeeData(completion: { posts in
-            for post in posts{
-                self.courierNameLabel.text = post.fio
-                self.inventoryLabel.text = "Инвентарь: \(post.inventory ?? "")"
-            }
+        presenter?.getEmployeeData(completion: { post in
+            
+        self.courierNameLabel.text = post.fio
+        self.inventoryLabel.text = "Инвентарь: \(post.inventory ?? "")"
         })
         self.courierNameLabel.setLabel()
         self.inventoryLabel.setLabel()
@@ -360,7 +358,7 @@ class ProfileView: MVPController {
         self.presenter = presenter
         createNavigationBar()
         setupView()
-        configurateData()
+        configureData()
     }
 }
 

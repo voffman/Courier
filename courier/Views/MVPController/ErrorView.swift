@@ -30,7 +30,7 @@ class ErrorView: UIViewController {
         messageLabel.title = " \(errorResponseData.message ?? "Неизвестная ошибка")"
         codeLabel.title = "Код ошибки: \(String(errorResponseData.code ?? 0))"
         statusLabel.title = "Статус: \(String(errorResponseData.status ?? 0))"
-        typeLabel.title = "Тип ошибки: \(String(describing:errorResponseData.type))"
+        typeLabel.title = "Тип ошибки: \(String(describing:errorResponseData.type ?? "Неизвестно"))"
         
         nameLabel.setLabel()
         messageLabel.setLabel()

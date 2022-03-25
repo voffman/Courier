@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 // функции типа toLogin
 // url зашиты здесь
@@ -62,13 +63,13 @@ class ApiService {
         } ifError: { error in
 
             errorResponse(error)
-            /*
+            
              print("Имя: \(error.name ?? "Нет данных")")
              print("Сообщение: \(error.message ?? "Нет данных")")
              print("Код: \(error.code ?? 0) ")
              print("Статус: \(error.status ?? 0)")
              print("Тип ошибки: \(error.type ?? "Нет данных")")
-             */
+             
         }
     }
     
@@ -80,13 +81,13 @@ class ApiService {
             
         } ifError: { error in
             errorResponse(error)
-            /*
+            
              print("Имя: \(error.name ?? "Нет данных")")
              print("Сообщение: \(error.message ?? "Нет данных")")
              print("Код: \(error.code ?? 0) ")
              print("Статус: \(error.status ?? 0)")
              print("Тип ошибки: \(error.type ?? "Нет данных")")
-             */
+            
         }
     }
     
@@ -97,13 +98,12 @@ class ApiService {
             
         } ifError: { error in
             errorResponse(error)
-            /*
+            
              print("Имя: \(error.name ?? "Нет данных")")
              print("Сообщение: \(error.message ?? "Нет данных")")
              print("Код: \(error.code ?? 0) ")
              print("Статус: \(error.status ?? 0)")
              print("Тип ошибки: \(error.type ?? "Нет данных")")
-             */
         }
     }
     // MARK: History
@@ -115,13 +115,12 @@ class ApiService {
             
         } ifError: { error in
             errorResponse(error)
-            /*
+            
              print("Имя: \(error.name ?? "Нет данных")")
              print("Сообщение: \(error.message ?? "Нет данных")")
              print("Код: \(error.code ?? 0) ")
              print("Статус: \(error.status ?? 0)")
              print("Тип ошибки: \(error.type ?? "Нет данных")")
-             */
         }
     }
     
@@ -169,14 +168,15 @@ class ApiService {
     
     // MARK: Courier Slot
     
-    func courierSlotActivity(token: String, completion: @escaping ([CourierSlotResponse]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+    func courierSlotActivity(token: String, completion: @escaping (CourierSlotResponse) -> (), errorResponse: @escaping (ErrorResponse)->()){
        
-        networkManager.request(url: courierSlotURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierSlotResponse.self) { posts, _  in
-            completion(posts)
+        networkManager.request(url: courierSlotURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierSlotResponse.self, isSingleInstance: true) { _, post  in
+            completion(post ?? CourierSlotResponse(sessionStart: "", sessionEnd: "", status: false, point: Pointttt(id: 0, name: "", pointDescription: "", lat: "", long: "")))
 
         } ifError: { error in
-            errorResponse(error)
             
+            errorResponse(error)
+
             print("Имя: \(error.name ?? "Нет данных")")
             print("Сообщение: \(error.message ?? "Нет данных")")
             print("Код: \(error.code ?? 0) ")
@@ -185,11 +185,11 @@ class ApiService {
         }
     }
     
-    func courierSlotActivityStart(token: String, errorResponse: @escaping (ErrorResponse)->()){
+    func courierSlotActivityStart(token: String, completion: @escaping (AFDataResponse<Data?>)->(), errorResponse: @escaping (ErrorResponse)->()){
        
         networkManager.request(url: courierSlotStartURL, method: .get, headers: [.authorization(bearerToken: token)]) { response in
-            print(response.data ?? "Нет данных")
-
+            completion(response)
+            
         } ifError: { error in
             errorResponse(error)
             
@@ -201,14 +201,12 @@ class ApiService {
         }
     }
     
-    func courierSlotActivityStop(token: String, errorResponse: @escaping (ErrorResponse)->()){
+    func courierSlotActivityStop(token: String, completion: @escaping (AFDataResponse<Data?>)->(), errorResponse: @escaping (ErrorResponse)->()){
        
         networkManager.request(url: courierSlotStopURL, method: .get, headers: [.authorization(bearerToken: token)]) { response in
-        print(response.data ?? "Нет данных")
-
-    }
-
-        ifError: { error in
+            completion(response)
+            
+        } ifError: { error in
             errorResponse(error)
             
             print("Имя: \(error.name ?? "Нет данных")")
@@ -220,9 +218,9 @@ class ApiService {
     }
     
     // MARK: Profile
-    func getEmployeeData(token: String, completion: @escaping ([EmployeeResponse])->(), errorResponse: @escaping (ErrorResponse)->()){
-        networkManager.request(url: employeeURL, method: .get, headers: [.authorization(bearerToken: token)], model: EmployeeResponse.self) { posts, post  in
-            completion(posts)
+    func getEmployeeData(token: String, completion: @escaping (EmployeeResponse)->(), errorResponse: @escaping (ErrorResponse)->()){
+        networkManager.request(url: employeeURL, method: .get, headers: [.authorization(bearerToken: token)], model: EmployeeResponse.self, isSingleInstance: true) { posts, post  in
+            completion(post!)
             
         } ifError: { error in
 

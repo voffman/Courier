@@ -95,7 +95,6 @@ class OrdersView: MVPController {
         print("Геолокация включена")
         dismissAlertView()
         presenter?.startUserActivity()
-
     }
     
     @objc func startWorkButtonAction(){
@@ -128,7 +127,7 @@ class OrdersView: MVPController {
         self.presenter = presenter
         createNavigationBar()
         setupView()
-
+        presenter.checkUserActivity()
         // Do any additional setup after loading the view.
     }
     

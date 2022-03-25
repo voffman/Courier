@@ -9,6 +9,7 @@ import UIKit
 
 protocol MVPControllerProtocol {
     func showErrorView(errorResponseData: ErrorResponse?)
+    func showErrorView(errorResponseData: ErrorResponse?, action: Selector)
     func showAlert(name: String?, message: String?, cancelButtonSelector: Selector, sendButtonSelector: Selector, cancelButtonTitle: String?, sendButtonTitle: String?)
     func showLoadingView(isHidden: Bool)
     func showContentView(isHidden: Bool)
@@ -33,6 +34,14 @@ class MVPController: UIViewController, MVPControllerProtocol {
         self.navigationController?.navigationBar.layer.zPosition = -1
         self.tabBarController?.tabBar.layer.zPosition = -1
         errorView.sendButton.addTarget(self, action: #selector(errorButtonAction), for: .touchUpInside)
+        errorView.configureData(errorResponseData: errorResponseData ?? ErrorResponse(name: "Неизвестная ошибка!", message: "Попробуйте обновить приложение", code: 0, status: 0, type: "Нет данных"))
+        errorView.showErrorView(onVC: self)
+    }
+    
+    func showErrorView(errorResponseData: ErrorResponse?, action: Selector){
+        self.navigationController?.navigationBar.layer.zPosition = -1
+        self.tabBarController?.tabBar.layer.zPosition = -1
+        errorView.sendButton.addTarget(self, action: action, for: .touchUpInside)
         errorView.configureData(errorResponseData: errorResponseData ?? ErrorResponse(name: "Неизвестная ошибка!", message: "Попробуйте обновить приложение", code: 0, status: 0, type: "Нет данных"))
         errorView.showErrorView(onVC: self)
     }
