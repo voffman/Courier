@@ -110,56 +110,49 @@ class DetailOrderTableView: MVPController {
         dismissAlertView()
     }
     
-    
-    
-    
     // MARK: Прописать здесь действия с api
+    // Так как отвязано от сендэр тэг то кейсы не нужны
+    // теперь надо обновлять tableView reload data
     @objc func sendAlertButtonAction(){
-        // stateSubview.stateButton.tag = api.getStatus
-        switch stateSubview.stateButton.tag {
-            
-        case 0:
-            break
-        case 1:
-            stateSubview.setupArrivedToShopState()
-            stateSubview.stateButton.tag += 1
-          //  navigationController?.popViewController(animated: true)
-        case 2:
-            stateSubview.setupGotOrder()
-            stateSubview.stateButton.tag += 1
-        case 3:
-            stateSubview.setupArrivedToClient()
-            stateSubview.stateButton.tag += 1
-        case 4:
-            stateSubview.stateButton.tag = 0
-            
-        default:
-            stateSubview.stateButton.tag = 0
-        }
-        
+        print("статус меняется...")
+        presenter?.changeStatus(orderId: String(dataPosts.id), status: String(dataPosts.transitions.status), completion: { post in
+            print("статус изменен ", post.statusName)
+            print("статус изменен на ", post.status)
+        })
         dismissAlertView()
-    }
-    
-    @objc func stateButtonAction(sender: UIButton){
+        
+        if dataPosts.transitions.status == 100 {
+            let thanksView = ThanksView()
+            
+            thanksView.modalPresentationStyle = .fullScreen
+            
+            self.navigationController?.pushViewController(thanksView, animated: true)
+        }
+        else {
+            self.navigationController?.popViewController(animated: true)
+        }
 
+    }
+
+    @objc func stateButtonAction(sender: UIButton){
+        print("статус: ",dataPosts.status)
         
-        switch sender.tag{
+        switch dataPosts.status{
             
-        case 0:
+        case 0...15:
             print("Default state")
-            stateSubview.setupAcceptedOrderState()
-            sender.tag = 1
-        
-        case 1:
-            showAlert(name: "Находитесь в заведении?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, УЖЕ ЗДЕСЬ")
+           // stateSubview.setupAcceptedOrderState() // статус 15 принят, значит тут алерт
+            showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
             
-        case 2:
-            showAlert(name: "Получили заказ?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕ ПОЛУЧИЛ", sendButtonTitle: "ДА, ПОЛУЧИЛ")
+        case 20...50:
+            stateSubview.setupAcceptedOrderState()
+            showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
+
+        case 75:
+            stateSubview.setupArrivedToClient()
+            showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
         
-        case 3:
-            showAlert(name: "Вы прибыли по адресу клиента?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, ПРИБЫЛ")
-        
-        case 4:
+        case 100:
             stateSubview.stateButton.isEnabled = false
             let thanksView = ThanksView()
             
@@ -199,6 +192,8 @@ class DetailOrderTableView: MVPController {
         stateSubview.stateButton.addTarget(self, action: #selector(stateButtonAction(sender:)), for: .touchUpInside)
         
         shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address, phoneNumber: dataPosts.addressFrom.phone, latitude: dataPosts.addressFrom.lat, longitude: dataPosts.addressFrom.long)
+        
+        stateSubview.configure(buttonTitle: dataPosts.statusName)
     }
 }
 
@@ -258,6 +253,27 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: makeBackButton())
     }
     
+    
+    func configureStateSubview(){
+        switch dataPosts.status{
+            // 13 - примите заказ
+//        case 10...15:
+//            stateSubview.setupArrivedToClient()
+            
+        case 20...50:
+            stateSubview.setupAcceptedOrderState()
+            
+        case 75:
+            stateSubview.setupArrivedToClient()
+
+        case 100:
+            break
+
+        default:
+            break
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createNavigationBar()
@@ -296,7 +312,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         stateSubview.view.heightAnchor.constraint(equalTo: stateSubview.stateButton.heightAnchor).isActive = true
         stateSubview.view.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
         stateSubview.view.bottomAnchor.constraint(equalTo: stateSubview.stateButton.bottomAnchor, constant: 0).isActive = true
-     
+        configureStateSubview()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -345,7 +361,15 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+
+// То, что выполняю во вью
+protocol DetailOrderTableViewProtocol: AnyObject, MVPControllerProtocol  {
+
+}
+
 extension DetailOrderTableView: DetailOrderTableViewProtocol{
+
+    
     
 }
 

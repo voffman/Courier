@@ -25,7 +25,7 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
     let api = ApiService()
 
     func requestAuthKey() {
-        api.getAuthKey( phoneNumber: UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber)!, smsCode: UserDefaults.standard.string(forKey: UserDefaultsKeys.smsCode)!){ bearer in
+        api.getAuthKey( phoneNumber: UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber) ?? "", smsCode: UserDefaults.standard.string(forKey: UserDefaultsKeys.smsCode) ?? ""){ bearer in
             UserDefaults.standard.set(bearer, forKey: UserDefaultsKeys.bearer)
             if UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) != ""{
                 self.view?.goToOrdersViewTabBar()

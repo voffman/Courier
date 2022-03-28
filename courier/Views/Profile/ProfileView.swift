@@ -11,8 +11,8 @@ class ProfileView: MVPController {
     
     let cardView = CustomViews(style: .withShadow)
     let profileImage = UIImageView(image: UIImage(named: "Profile"))
-    let courierNameLabel = CustomLabels(title: "Валерий Пономарев", textSize: 16, style: .bold, alignment: .center)
-    let inventoryLabel = CustomLabels(title: "Инвентарь: #023", textSize: 14, style: .regular, alignment: .center)
+    let courierNameLabel = CustomLabels(title: "Пользователь", textSize: 16, style: .bold, alignment: .center)
+    let inventoryLabel = CustomLabels(title: "Инвентарь: #", textSize: 14, style: .regular, alignment: .center)
     let firstLineImage = UIImageView(image: UIImage(named: "Line"))
     let colorSchemeTitleLabel = CustomLabels(title: "Цветовая тема", textSize: 14, style: .bold)
     let colorSchemeImage = UIImageView(image: UIImage(named: "Palette"))

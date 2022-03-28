@@ -7,15 +7,10 @@
 
 import Foundation
 
-// То, что выполняю во вью
-protocol DetailOrderTableViewProtocol: AnyObject  {
-    
-}
-
 // То, что выполняю в здесь
 protocol DetailOrderTableViewPresenterProtocol: AnyObject {
     init(view: DetailOrderTableViewProtocol)
-    func getSelectedOrderData()
+    func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ())
 }
 
 class DetailOrderPresenter: DetailOrderTableViewPresenterProtocol {
@@ -25,8 +20,13 @@ class DetailOrderPresenter: DetailOrderTableViewPresenterProtocol {
         self.view = view
     }
     
-    func getSelectedOrderData() {
-        
+    let api = ApiService()
+    
+    func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ()) {
+        api.changeOrderStatus(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", orderId: orderId, status: status) { post in
+            completion(post)
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
+        }
     }
-
 }

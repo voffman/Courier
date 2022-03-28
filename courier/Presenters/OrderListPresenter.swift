@@ -12,6 +12,7 @@ protocol OrderListTableViewPresenterProtocol: AnyObject {
     init(view: OrderListTableViewProtocol)
     func getOrders( completion: @escaping ([CourierOrderResponseElement]) -> ())
     func getArchiveOrders(completion: @escaping ([CourierOrderResponseElement]) -> ())
+    func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ())
     func didTap (model: CourierOrderResponseElement)
 }
 
@@ -26,7 +27,7 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     
     func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
         
-        api.getOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!){ posts in
+        api.getOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? ""){ posts in
             completion(posts)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
@@ -35,13 +36,21 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     
     func getArchiveOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
         
-        api.getArchiveOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!){ posts in
+        api.getArchiveOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? ""){ posts in
             completion(posts)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
     }
     
+    func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ()) {
+        api.changeOrderStatus(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", orderId: orderId, status: status) { post in
+            completion(post)
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
+        }
+
+    }
     
     public func didTap (model: CourierOrderResponseElement){
 

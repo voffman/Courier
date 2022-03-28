@@ -24,7 +24,7 @@ class SchedulePresenter: ScheduleTableViewPresenterProtocol{
     let api = ApiService()
     
     func getSchedule(page: String, completion: @escaping ([ScheduleElement]) -> ()) {
-        api.getCourierSchedule(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!, page: page) { posts in
+        api.getCourierSchedule(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", page: page) { posts in
             completion(posts)
             
         } errorResponse: { error in

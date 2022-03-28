@@ -25,7 +25,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ()) {
         
-        api.getEmployeeData(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!) { posts in
+        api.getEmployeeData(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { posts in
             completion(posts)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
@@ -42,7 +42,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     }
     
     func sessionStop() {
-        api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!) { response in
+        api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
             self.view?.goToLoginView()
             self.removeBearer()
             

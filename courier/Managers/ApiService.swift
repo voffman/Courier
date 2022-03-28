@@ -22,7 +22,8 @@ private let loginByCodeURL = baseURL + "auth/login-by-code"
 // Order
 private let orderListURL = baseURL + "courier/order"
 private let orderArchiveURL = baseURL + "courier/order/archive-today"
-
+private let orderListStatusURLPart1 = baseURL + "courier/order/"
+private let orderListStatusURLPart2 = "/change-status/"
 // History
 private let historyURLPart1 = baseURL + "courier/order/archive?dateStart="
 private let historyURLPart2 = baseURL + "&dateFinish="
@@ -106,6 +107,25 @@ class ApiService {
              print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
+    
+    func changeOrderStatus(token: String, orderId: String, status: String,  completion: @escaping (OrderStatusResponse)->(), errorResponse: @escaping (ErrorResponse)->()){
+        networkManager.request(url: orderListStatusURLPart1 + orderId + orderListStatusURLPart2 + status, method: .get, headers: [.authorization(bearerToken: token)], model: OrderStatusResponse.self, isSingleInstance: true) { posts, post  in
+            completion(post!)
+            
+        } ifError: { error in
+
+            errorResponse(error)
+            
+            print("Имя: \(error.name ?? "Нет данных")")
+            print("Сообщение: \(error.message ?? "Нет данных")")
+            print("Код: \(error.code ?? 0) ")
+            print("Статус: \(error.status ?? 0)")
+            print("Тип ошибки: \(error.type ?? "Нет данных")")
+             
+        }
+    }
+    
+    
     // MARK: History
     
     func getCourierHistory(token: String, dateStart: String, dateFinish: String, completion: @escaping ([HistoryElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){

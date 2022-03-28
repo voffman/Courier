@@ -56,6 +56,7 @@
 		5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065CCA127993A2700B38BAB /* OrdersView.swift */; };
 		5067AEED27A8F36200010950 /* StateSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5067AEEC27A8F36200010950 /* StateSubview.swift */; };
 		5070D35427D85AE0008AEC0F /* PickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5070D35327D85AE0008AEC0F /* PickerController.swift */; };
+		50759FBD27F18B3F0002F7E3 /* OrderStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50759FBC27F18B3F0002F7E3 /* OrderStatusResponse.swift */; };
 		5085083727D8B4D800D0E15A /* ScheduleFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085083627D8B4D800D0E15A /* ScheduleFooterView.swift */; };
 		5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5086CE752797CD4500972D6B /* ConfirmLoginView.swift */; };
 		5093F6C3279EA2E300A53157 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5093F6C2279EA2E300A53157 /* Assets.xcassets */; };
@@ -130,6 +131,7 @@
 		5065CCA127993A2700B38BAB /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		5067AEEC27A8F36200010950 /* StateSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateSubview.swift; sourceTree = "<group>"; };
 		5070D35327D85AE0008AEC0F /* PickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
+		50759FBC27F18B3F0002F7E3 /* OrderStatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStatusResponse.swift; sourceTree = "<group>"; };
 		5085083627D8B4D800D0E15A /* ScheduleFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFooterView.swift; sourceTree = "<group>"; };
 		5086CE752797CD4500972D6B /* ConfirmLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLoginView.swift; sourceTree = "<group>"; };
 		5093F6C2279EA2E300A53157 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				50CBB7BB27D9F19A0035DA85 /* History.swift */,
 				5041FE6E27DB5ADA00A28CB0 /* CourierSlotResponse.swift */,
 				5053619627EC24B900559006 /* EmployeeResponse.swift */,
+				50759FBC27F18B3F0002F7E3 /* OrderStatusResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -592,6 +595,7 @@
 				502618E527A7EDC500CEA57C /* ClientSubviewPresenter.swift in Sources */,
 				5085083727D8B4D800D0E15A /* ScheduleFooterView.swift in Sources */,
 				5006FCE827BA69BB0047DD6A /* MVPController.swift in Sources */,
+				50759FBD27F18B3F0002F7E3 /* OrderStatusResponse.swift in Sources */,
 				5017ABB327B00A4400C60897 /* ScheduleWeekCell.swift in Sources */,
 				5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */,
 				5006FCE427BA24A90047DD6A /* ApiService.swift in Sources */,

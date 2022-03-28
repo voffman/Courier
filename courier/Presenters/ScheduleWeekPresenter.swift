@@ -25,7 +25,7 @@ class ScheduleWeekPresenter: ScheduleWeekTableViewPresenterProtocol{
     let api = ApiService()
     
     func getScheduleWeek(id: String, completion: @escaping ([ScheduleByIDElement]) -> ()) {
-        api.getCourierScheduleById(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!, id: id) { posts in
+        api.getCourierScheduleById(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", id: id) { posts in
             completion(posts)
             
         } errorResponse: { error in
@@ -35,7 +35,7 @@ class ScheduleWeekPresenter: ScheduleWeekTableViewPresenterProtocol{
     }
     
     func applyStatusById(id: String) {
-        api.scheduleApplyStatus(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!, id: id) { error in
+        api.scheduleApplyStatus(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", id: id) { error in
             self.view?.showErrorView(errorResponseData: error)
         }
     }

@@ -26,7 +26,7 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
     
     func startUserActivity() {
         
-        api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!) { response in
+        api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
             self.view?.goToOrderListTableView()
             
         } errorResponse: { error in
@@ -35,7 +35,7 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
     }
     
     func checkUserActivity() {
-        api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!) { post in
+        api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
             if post.status {
                 self.view?.goToOrderListTableView()
             }

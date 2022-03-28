@@ -38,27 +38,13 @@ class OrderListTableView: MVPController {
     // MARK: Прописать здесь действия с api
     @objc func sendAlertButtonAction(){
         
-        switch senderValue{
-            
-        case 0:
-            pass = false
-            
-        case 1:
-            pass = true
-            
-        case 2:
-            pass = true
-
-        case 3:
-            pass = true
-
-        case 4:
-            pass = false
-            
-        default:
-            break
-       
-        }
+        print("статус меняется...")
+        presenter?.changeStatus(orderId: "50", status: "50", completion: { post in
+            print("статус изменен ", post.statusName)
+        })
+        
+        tableView.reloadData()
+        
         dismissAlertView()
     }
     
@@ -167,6 +153,14 @@ class OrderListTableView: MVPController {
         checkOrders()
         checkArchiveOrders()
     }
+    // при переходе с Detail
+    // MARK: сделать отображение значка при соответствующем статусе
+    override func viewWillAppear(_ animated: Bool) {
+        checkOrders()
+        checkArchiveOrders()
+        print("дата перезагружена")
+    }
+    
 }
 
 extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
@@ -242,7 +236,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
 
             cell.orderAcceptButton.addTarget(self, action: #selector(acceptButtonWasTapped(sender:)), for: .touchUpInside)
             
-            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderTime: "00:05")
+            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderTime: "00:05", orderAcceptButtonTitle: post.statusName, orderStatusCode: post.status)
             
             return cell
         case 1:
@@ -266,9 +260,10 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         presenter?.didTap(model: data[rowIndex])
     }
     // MARK: Не обновляется кнопка в cell
-    @objc func acceptButtonWasTapped(sender:UIButton) {
+    @objc func acceptButtonWasTapped(sender: UIButton) {
         var pass = self.pass
         senderValue = sender.tag
+        // post.status[indexPath.row]
         
         switch sender.tag{
             

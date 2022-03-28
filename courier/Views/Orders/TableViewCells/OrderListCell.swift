@@ -11,6 +11,9 @@ class OrderListCell: UITableViewCell {
     
     static let identifire = "orderListCell"
     
+    var statusCode: Int = 0
+    var status: String? = "Неизвестно"
+    
     let cardView = CustomViews(style: .withShadow)
     let orderIdLabel = CustomLabels(title: "№ 356167", textSize: 14, style: .bold)
     let orderPriceLabel = CustomLabels(title: "• 10 000 ₸", textSize: 14, style: .light)
@@ -34,7 +37,7 @@ class OrderListCell: UITableViewCell {
     
     let orderTimerLabel = CustomLabels(title: "0:15", textSize: 20, style: .timerRed)
     
-    let orderAcceptButton = CustomButtons(title: "ПРИНЯТЬ", style: .primary)
+    let orderAcceptButton = CustomButtons(title: "НЕТ ДАННЫХ", style: .primary)
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -83,14 +86,17 @@ class OrderListCell: UITableViewCell {
                           orderSource: String?,
                           orderFromAddress: String?,
                           orderToAddress: String?,
-                          orderTime: String?){
+                          orderTime: String?,
+                          orderAcceptButtonTitle: String?, orderStatusCode: Int){
         self.orderIdLabel.text = "№ \(String(orderId))"
         self.orderPriceLabel.text = "• \(String(orderPrice.formattedWithSeparator)) ₸"
         self.orderSourceLabel.text = orderSource
         self.orderFromAddressLabel.text = orderFromAddress
         self.orderToAddressLabel.text = orderToAddress
         self.orderTimerLabel.text = orderTime
-        
+        self.orderAcceptButton.title = orderAcceptButtonTitle?.uppercased()
+        self.orderAcceptButton.setButton()
+        self.statusCode = orderStatusCode
     }
     
     override func prepareForReuse() {
@@ -254,26 +260,57 @@ class OrderListCell: UITableViewCell {
         orderAcceptButton.addTarget(self, action: #selector(changeButtonState), for: .touchUpInside)
     }
 
+    // MARK: сконфигурировать правильно
+    func configureStatusState(){
+        switch statusCode{
+            // 13 - примите заказ
+        case 10...15:
+            setupNormalState()
+            
+        case 20:
+            setupAcceptedOrderState()
+            
+        case 25:
+            setupArrivedToShopState()
 
+        case 50:
+            setupGotOrder()
+
+        case 75:
+            setupArrivedToClient()
+
+        case 100:
+            break
+
+        default:
+            break
+        }
+    }
+    
+// MARK: оставить что-то одно?
+    // Mможно отсюда вызвать алерт да и в презентер?
  @objc func changeButtonState(sender: UIButton){
      print("cell sender tag \(sender.tag) ")
-     switch sender.tag{
-
-     case 0:
-         print("Начальное состояние")
+     switch statusCode{
+         // 15 автоматом подгрузится
+     case 0...15:
          setupNormalState()
-         
-     case 1:
-         setupAcceptedOrderState()
 
-     case 2:
+     case 20:
+
+         setupAcceptedOrderState()
+         
+     case 25:
          setupArrivedToShopState()
 
-     case 3:
+     case 50:
          setupGotOrder()
 
-     case 4:
-        setupArrivedToClient()
+     case 75:
+         setupArrivedToClient()
+
+     case 100:
+         break
 
      default:
          sender.tag = 0
@@ -283,13 +320,13 @@ class OrderListCell: UITableViewCell {
     
     // MARK: Функции для изменения состояний ячейки, во время работы курьера
     func setupAcceptedOrderState(){
-        orderAcceptButton.title = "ПРИБЫЛ В ЗАВЕДЕНИЕ"
+
         orderAcceptButton.setButton()
     }
     
     func setupArrivedToShopState(){
         
-        orderAcceptButton.title = "ПОЛУЧИЛ ЗАКАЗ"
+
         orderAcceptButton.setButton()
         orderFromLabel.style = .primary
         orderFromLabel.setLabel()
@@ -299,7 +336,7 @@ class OrderListCell: UITableViewCell {
     }
     
     func setupGotOrder(){
-        orderAcceptButton.title = "ПРИБЫЛ К КЛИЕНТУ"
+
         orderAcceptButton.setButton()
         orderFromLabel.style = .light
         orderFromLabel.setLabel()
@@ -309,7 +346,6 @@ class OrderListCell: UITableViewCell {
     }
     
     func setupArrivedToClient(){
-        orderAcceptButton.title = "ДОСТАВИЛ ЗАКАЗ"
         orderAcceptButton.setButton()
         orderDownArrowImage.image = UIImage(named: "Arrow_downward")
         orderToLabel.style = .primary
@@ -327,7 +363,6 @@ class OrderListCell: UITableViewCell {
     
     func setupNormalState(){
         
-        orderAcceptButton.title = "ПРИНЯТЬ"
         orderAcceptButton.isEnabled = false
         
         orderAcceptButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 134).isActive = true
@@ -369,11 +404,10 @@ class OrderListCell: UITableViewCell {
         setupAcceptButton()
     }
     
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         setupCell()
-
+        configureStatusState()
     }
 }
 

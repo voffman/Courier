@@ -11,7 +11,7 @@ class StateSubview: UIViewController {
     
     var targetView = UIView()
 
-    let stateButton = CustomButtons(title: "ПРИНЯТЬ", style: .primary)
+    let stateButton = CustomButtons(title: "Неизвестно", style: .primary)
     
     let orderTimerView = CustomTimer(style: .timerGray)
     let orderTimerImage = UIImageView(image: UIImage(named: "TimerGray"))
@@ -105,7 +105,7 @@ class StateSubview: UIViewController {
     //MARK: Состояния ячейки
 
     func setupAcceptedOrderState(){
-        stateButton.title = "ПРИБЫЛ В ЗАВЕДЕНИЕ"
+      //  stateButton.title = "ПРИБЫЛ В ЗАВЕДЕНИЕ"
         stateButton.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 130).isActive = true
         //stateButton.leftAnchor.constraint(equalTo:  orderTimerView.rightAnchor, constant: -10).isActive = true
         stateButton.setButton()
@@ -113,21 +113,8 @@ class StateSubview: UIViewController {
 
     }
     
-    func setupArrivedToShopState(){
-        stateButton.title = "ПОЛУЧИЛ ЗАКАЗ"
-        stateButton.setButton()
-        
-    }
-    
-    func setupGotOrder(){
-        stateButton.title = "ПРИБЫЛ К КЛИЕНТУ"
-        stateButton.setButton()
-
-        
-    }
-    
     func setupArrivedToClient(){
-        stateButton.title = "ДОСТАВИЛ ЗАКАЗ"
+     //   stateButton.title = "ДОСТАВИЛ ЗАКАЗ"
         stateButton.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
         stateButton.setButton()
         hideTimer(isHidden: true)
@@ -138,6 +125,11 @@ class StateSubview: UIViewController {
         setupStateButton()
         setupTimer()
 
+    }
+    
+    func configure(buttonTitle: String) {
+        self.stateButton.title = buttonTitle.uppercased()
+        stateButton.setButton()
     }
     
     override func viewDidLayoutSubviews() {

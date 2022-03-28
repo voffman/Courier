@@ -15,7 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         window = UIWindow()
-        window?.rootViewController = LoginView()
+        
+        let bearer = UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)
+        
+        if bearer != nil, bearer != "" {
+            window?.rootViewController = TabBarController()
+        }
+        else {
+            window?.rootViewController = LoginView()
+        }
+
         window?.makeKeyAndVisible()
     
         return true

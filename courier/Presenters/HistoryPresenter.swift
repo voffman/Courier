@@ -25,7 +25,7 @@ class HistoryPresenter: HistoryTableViewPresenterProtocol {
     let api = ApiService()
     
     func getHistory(dateStart: String, dateFinish: String, completion: @escaping ([HistoryElement]) -> ()) {
-        api.getCourierHistory(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer)!, dateStart: dateStart, dateFinish: dateFinish) { posts in
+        api.getCourierHistory(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", dateStart: dateStart, dateFinish: dateFinish) { posts in
             completion(posts)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
