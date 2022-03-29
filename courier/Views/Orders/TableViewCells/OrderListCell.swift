@@ -291,31 +291,7 @@ class OrderListCell: UITableViewCell {
     // Mможно отсюда вызвать алерт да и в презентер?
  @objc func changeButtonState(sender: UIButton){
      print("cell sender tag \(sender.tag) ")
-     switch statusCode{
-         // 15 автоматом подгрузится
-     case 0...15:
-         setupNormalState()
-
-     case 20:
-
-         setupAcceptedOrderState()
-         
-     case 25:
-         setupArrivedToShopState()
-
-     case 50:
-         setupGotOrder()
-
-     case 75:
-         setupArrivedToClient()
-
-     case 100:
-         break
-
-     default:
-         sender.tag = 0
-     }
-        
+     configureStatusState()
     }
     
     // MARK: Функции для изменения состояний ячейки, во время работы курьера
@@ -407,7 +383,6 @@ class OrderListCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         setupCell()
-        configureStatusState()
     }
 }
 

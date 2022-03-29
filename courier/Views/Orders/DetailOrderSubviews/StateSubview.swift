@@ -18,6 +18,8 @@ class StateSubview: UIViewController {
     
     let orderTimerLabel = CustomLabels(title: "15:45", textSize: 20, style: .light)
     
+    var status: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -127,14 +129,45 @@ class StateSubview: UIViewController {
 
     }
     
-    func configure(buttonTitle: String) {
+    func checkStateSubviewStatus(status: Int){
+        switch status{
+            
+        case 0...13:
+            print("Default state")
+           // stateSubview.setupAcceptedOrderState() // статус 15 принят, значит тут алерт
+            
+        case 15...50:
+            setupAcceptedOrderState()
+
+        case 75:
+           setupArrivedToClient()
+        
+        case 100:
+            stateButton.isEnabled = false
+            let thanksView = ThanksView()
+            
+            thanksView.modalPresentationStyle = .fullScreen
+            
+            self.navigationController?.pushViewController(thanksView, animated: true)
+
+           // sender.tag = 0
+            
+        default:
+            break
+           // sender.tag = 0
+        }
+    }
+    
+    func configure(buttonTitle: String, status: Int) {
         self.stateButton.title = buttonTitle.uppercased()
+        self.status = status
         stateButton.setButton()
     }
     
     override func viewDidLayoutSubviews() {
          super.viewDidLayoutSubviews()
          setupCell()
+        checkStateSubviewStatus(status: status)
      }
 
     /*

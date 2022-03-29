@@ -22,6 +22,10 @@ class OrderListTableView: MVPController {
     var data: [CourierOrderResponseElement] = []
     var dataArchive: [CourierOrderResponseElement] = []
     
+    // для передачи значений для смены статуса заказа
+    var orderID: Int = 0
+    var orderStatus: Int = 0
+    
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         sc.changeSegmentedControlLinePosition()
         tableView.reloadData()
@@ -37,15 +41,21 @@ class OrderListTableView: MVPController {
     
     // MARK: Прописать здесь действия с api
     @objc func sendAlertButtonAction(){
-        
-        print("статус меняется...")
-        presenter?.changeStatus(orderId: "50", status: "50", completion: { post in
-            print("статус изменен ", post.statusName)
+
+        print("статус меняется...") // MARK: Передать значение
+
+        presenter?.changeStatus(orderId: String(orderID), status: String(orderStatus), completion: { post in
+            print("статус изменен на: ", post.statusName)
+            self.checkOrders()
         })
-        
-        tableView.reloadData()
-        
+            
         dismissAlertView()
+            
+        if orderStatus == 100 {
+            let thanksView = ThanksView()
+            thanksView.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(thanksView, animated: true)
+        }
     }
     
     
@@ -133,7 +143,6 @@ class OrderListTableView: MVPController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         let presenter = OrderListPresenter(view: self)
         self.presenter = presenter
 
@@ -153,8 +162,7 @@ class OrderListTableView: MVPController {
         checkOrders()
         checkArchiveOrders()
     }
-    // при переходе с Detail
-    // MARK: сделать отображение значка при соответствующем статусе
+    
     override func viewWillAppear(_ animated: Bool) {
         checkOrders()
         checkArchiveOrders()
@@ -213,7 +221,6 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             
             return data.count
         case 1:
-            //  countLabel.title = "\(3)" // В дальнейшем подставить реальное количество ячеек
               countView.backgroundColor = Colors.orange
             return dataArchive.count
 
@@ -224,8 +231,6 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
   
-
-        
         switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
             let post = data[indexPath.row]
@@ -233,12 +238,14 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
 
             cell.orderTransitionArrowButton.tag = indexPath.row
             cell.orderTransitionArrowButton.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
-
+            
+            cell.orderAcceptButton.tag = indexPath.row
             cell.orderAcceptButton.addTarget(self, action: #selector(acceptButtonWasTapped(sender:)), for: .touchUpInside)
             
             cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderTime: "00:05", orderAcceptButtonTitle: post.statusName, orderStatusCode: post.status)
-            
+
             return cell
+            
         case 1:
             let archivePost = dataArchive[indexPath.row]
             
@@ -247,6 +254,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             cell.configure(orderId: archivePost.id, orderPrice: archivePost.sumTotal, orderSource: archivePost.companyName, orderFromAddress: archivePost.addressFrom.address, orderToAddress: "\(archivePost.addressTo.street) \(archivePost.addressTo.house)")
             
             return cell
+            
         default:
             return UITableViewCell()
         }
@@ -259,71 +267,17 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         print("row index ", rowIndex)
         presenter?.didTap(model: data[rowIndex])
     }
+    
     // MARK: Не обновляется кнопка в cell
     @objc func acceptButtonWasTapped(sender: UIButton) {
-        var pass = self.pass
-        senderValue = sender.tag
-        // post.status[indexPath.row]
+        let rowIndex:Int = sender.tag
         
-        switch sender.tag{
-            
-        case 0: // Отображается стандартное состояние
-            pass = true
-
-            if pass{
-                self.pass = false
-                sender.tag = 1
-            }
-            
-        case 1: // Отображается кнопка прибыл в заведение
-
-            if !pass{
-            showAlert(name: "Находитесь в заведении?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, УЖЕ ЗДЕСЬ")
-            
-            print("пасс \(pass)")
-            }
-            if pass{
-                self.pass = false
-                sender.tag = 2
-            }
-
-        case 2: // Отображается кнопка получил заказ
-            if !pass{
-            print("пасс \(pass)")
-
-            showAlert(name: "Получили заказ?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕ ПОЛУЧИЛ", sendButtonTitle: "ДА, ПОЛУЧИЛ")
-            }
-            if pass{
-                self.pass = false
-                sender.tag = 3
-            }
-
-            
-        case 3: // Отображается кнопка прибыл к клиенту
-            if !pass{
-            print("пасс \(pass)")
-            showAlert(name: "Вы прибыли по адресу клиента?", message: "За преждевременную смену статуса предусмотрен штраф.", cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: "НЕТ, ЕЩЕ В ПУТИ", sendButtonTitle: "ДА, ПРИБЫЛ")
-            }
-          if pass{
-              self.pass = false
-               sender.tag = 4
-           }
-            
-        case 4: // отображается кнопка доставил заказ
-            let thanksView = ThanksView()
-            thanksView.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(thanksView, animated: true)
-
-            sender.tag = 0
-            self.pass = false
-  
-        default:
-            sender.tag = 0
-        }
-        
+        presenter?.didStatusTap(model: data[rowIndex])
+        self.orderID = data[rowIndex].id
+        self.orderStatus = data[rowIndex].transitions.status
+        print("статус id: ", self.orderStatus)
+        print("заказ id: ", self.orderID)
     }
-    
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -343,16 +297,13 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         
     }
     
- //   func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
- //       return true
- //   }
-    
 }
 
 protocol OrderListTableViewProtocol: AnyObject, MVPControllerProtocol  {
     func checkOrders()
     func checkArchiveOrders()
     func goToDetailOrderTableView(courierOrderResponseElement: CourierOrderResponseElement)
+    func showStatusAlert(courierOrderResponseElement: CourierOrderResponseElement)
 }
 
 extension OrderListTableView: OrderListTableViewProtocol{
@@ -393,6 +344,15 @@ extension OrderListTableView: OrderListTableViewProtocol{
         let detailOrderTableView = DetailOrderTableView(courierOrderResponseElement: courierOrderResponseElement)
         detailOrderTableView.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(detailOrderTableView, animated: true)
+    }
+    
+    func showStatusAlert(courierOrderResponseElement: CourierOrderResponseElement) {
+        showAlert(name: courierOrderResponseElement.transitions.alertTitle,
+                  message: courierOrderResponseElement.transitions.alertDescription,
+                  cancelButtonSelector: #selector(cancelAlertButtonAction),
+                  sendButtonSelector: #selector(sendAlertButtonAction),
+                  cancelButtonTitle: courierOrderResponseElement.transitions.alertNegative,
+                  sendButtonTitle: courierOrderResponseElement.transitions.alertPositive)
     }
     
 }

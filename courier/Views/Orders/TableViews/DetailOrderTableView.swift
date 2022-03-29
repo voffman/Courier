@@ -110,9 +110,6 @@ class DetailOrderTableView: MVPController {
         dismissAlertView()
     }
     
-    // MARK: Прописать здесь действия с api
-    // Так как отвязано от сендэр тэг то кейсы не нужны
-    // теперь надо обновлять tableView reload data
     @objc func sendAlertButtonAction(){
         print("статус меняется...")
         presenter?.changeStatus(orderId: String(dataPosts.id), status: String(dataPosts.transitions.status), completion: { post in
@@ -136,15 +133,14 @@ class DetailOrderTableView: MVPController {
 
     @objc func stateButtonAction(sender: UIButton){
         print("статус: ",dataPosts.status)
-        
         switch dataPosts.status{
             
-        case 0...15:
+        case 0...13:
             print("Default state")
            // stateSubview.setupAcceptedOrderState() // статус 15 принят, значит тут алерт
             showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
             
-        case 20...50:
+        case 15...50:
             stateSubview.setupAcceptedOrderState()
             showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
 
@@ -159,12 +155,11 @@ class DetailOrderTableView: MVPController {
             thanksView.modalPresentationStyle = .fullScreen
             
             self.navigationController?.pushViewController(thanksView, animated: true)
-
-            sender.tag = 0
             
         default:
-            sender.tag = 0
+            break
         }
+
     }
     
     override func viewDidLoad() {
@@ -192,8 +187,9 @@ class DetailOrderTableView: MVPController {
         stateSubview.stateButton.addTarget(self, action: #selector(stateButtonAction(sender:)), for: .touchUpInside)
         
         shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address, phoneNumber: dataPosts.addressFrom.phone, latitude: dataPosts.addressFrom.lat, longitude: dataPosts.addressFrom.long)
-        
-        stateSubview.configure(buttonTitle: dataPosts.statusName)
+       // checkStateSubviewStatus()
+        stateSubview.configure(buttonTitle: dataPosts.statusName, status: dataPosts.status)
+  
     }
 }
 
@@ -253,27 +249,6 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: makeBackButton())
     }
     
-    
-    func configureStateSubview(){
-        switch dataPosts.status{
-            // 13 - примите заказ
-//        case 10...15:
-//            stateSubview.setupArrivedToClient()
-            
-        case 20...50:
-            stateSubview.setupAcceptedOrderState()
-            
-        case 75:
-            stateSubview.setupArrivedToClient()
-
-        case 100:
-            break
-
-        default:
-            break
-        }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createNavigationBar()
@@ -312,7 +287,6 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         stateSubview.view.heightAnchor.constraint(equalTo: stateSubview.stateButton.heightAnchor).isActive = true
         stateSubview.view.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
         stateSubview.view.bottomAnchor.constraint(equalTo: stateSubview.stateButton.bottomAnchor, constant: 0).isActive = true
-        configureStateSubview()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -327,7 +301,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         footerTableView.addData(sum: dataPosts.sumTotal, customerAmount: dataPosts.customerAmount ?? "-", paymentType: dataPosts.paymentTypeID)
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailOrderCell.identifire, for: indexPath) as! DetailOrderCell
         
-        cell.configure(orderName: post.name + " \(post.orderItemDescription ?? "")", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price.formattedWithSeparator) + " ₸")
+        cell.configure(orderName: post.name + " \(post.orderItemDescription)", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price.formattedWithSeparator) + " ₸")
         
         return cell
 
@@ -341,13 +315,6 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
         return UITableView.automaticDimension
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//            if let lastVisibleIndexPath = tableView.indexPathsForVisibleRows?.last {
-//                    if indexPath == lastVisibleIndexPath {
-//                }
-//            }
-//        }
     
     /*
      // MARK: - Navigation

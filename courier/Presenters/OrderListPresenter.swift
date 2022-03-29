@@ -14,6 +14,7 @@ protocol OrderListTableViewPresenterProtocol: AnyObject {
     func getArchiveOrders(completion: @escaping ([CourierOrderResponseElement]) -> ())
     func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ())
     func didTap (model: CourierOrderResponseElement)
+    func didStatusTap (model: CourierOrderResponseElement)
 }
 
 class OrderListPresenter: OrderListTableViewPresenterProtocol {
@@ -54,8 +55,15 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     
     public func didTap (model: CourierOrderResponseElement){
 
-        
         self.view?.goToDetailOrderTableView(courierOrderResponseElement: model)
 
     }
+    
+    public func didStatusTap (model: CourierOrderResponseElement){
+
+        // не вызывается напрямую так как экшны кпопки
+        self.view?.showStatusAlert(courierOrderResponseElement: model)
+
+    }
+    
 }

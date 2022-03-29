@@ -7,36 +7,30 @@
 
 import Foundation
 
-// MARK: - Получение списка активных заказов курьера
-
+// MARK: - CourierOrderResponseElement
 struct CourierOrderResponseElement: Codable {
-    let id: Int
-    let externalID: String
-    let companyID: Int
+    let id, companyID: Int
     let companyName, phone, customerName: String
     let status: Int
     let statusName, statusAction: String
     let point: Point
     let createdAt, updatedAt, setCourierDateTime: String
-    var orderItems: [OrderItem]
+    let orderItems: [OrderItem]
     let sumItems, deliveryPrice: Int
-    let deliveryTime: String?
     let dateTimeFinish, dateTimeStatusFinish: String
     let correctionalPrice, sumTotal, paymentTypeID: Int
     let addressFrom: AddressFrom
     let addressTo: AddressTo
-    let comments: String?
     let transitions: Transitions
     let redistributed: Bool
-    let customerAmount: String?
+    let comments, deliveryTime, customerAmount: String?
 
     enum CodingKeys: String, CodingKey {
         case id
-        case externalID = "externalId"
         case companyID = "companyId"
-        case companyName, phone, customerName, status, statusName, statusAction, point, createdAt, updatedAt, setCourierDateTime, orderItems, sumItems, deliveryPrice, deliveryTime, dateTimeFinish, dateTimeStatusFinish, correctionalPrice, sumTotal
+        case companyName, phone, customerName, status, statusName, statusAction, point, createdAt, updatedAt, setCourierDateTime, orderItems, sumItems, deliveryPrice, dateTimeFinish, dateTimeStatusFinish, correctionalPrice, sumTotal
         case paymentTypeID = "paymentTypeId"
-        case addressFrom, addressTo, comments, transitions, redistributed, customerAmount
+        case addressFrom, addressTo, transitions, redistributed, comments, deliveryTime, customerAmount
     }
 }
 
@@ -47,8 +41,9 @@ struct AddressFrom: Codable {
 
 // MARK: - AddressTo
 struct AddressTo: Codable {
-    let street, house, lat, long: String
+    let street, house: String
     let flat, addressMore: String?
+    let lat, long: String
 }
 
 // MARK: - OrderItem
