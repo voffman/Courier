@@ -140,7 +140,8 @@ class StateSubview: UIViewController {
             setupAcceptedOrderState()
 
         case 75:
-           setupArrivedToClient()
+            setupAcceptedOrderState()
+          // setupArrivedToClient()
         
         case 100:
             stateButton.isEnabled = false

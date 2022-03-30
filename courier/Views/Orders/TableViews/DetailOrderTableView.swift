@@ -138,14 +138,16 @@ class DetailOrderTableView: MVPController {
         case 0...13:
             print("Default state")
            // stateSubview.setupAcceptedOrderState() // статус 15 принят, значит тут алерт
+           // stateSubview.setupAcceptedOrderState()
             showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
             
         case 15...50:
-            stateSubview.setupAcceptedOrderState()
+           // stateSubview.setupAcceptedOrderState()
             showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
 
         case 75:
-            stateSubview.setupArrivedToClient()
+         //   stateSubview.setupArrivedToClient()
+         //   stateSubview.setupAcceptedOrderState()
             showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
         
         case 100:
@@ -187,7 +189,6 @@ class DetailOrderTableView: MVPController {
         stateSubview.stateButton.addTarget(self, action: #selector(stateButtonAction(sender:)), for: .touchUpInside)
         
         shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address, phoneNumber: dataPosts.addressFrom.phone, latitude: dataPosts.addressFrom.lat, longitude: dataPosts.addressFrom.long)
-       // checkStateSubviewStatus()
         stateSubview.configure(buttonTitle: dataPosts.statusName, status: dataPosts.status)
   
     }
@@ -273,15 +274,27 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
         tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
         
-        if UIScreen.main.bounds.size.height > 750{
-            tableView.bottomAnchor.constraint(equalTo: stateSubview.view.topAnchor, constant: 0).isActive = true
-        } else {
-            tableView.bottomAnchor.constraint(equalTo: stateSubview.view.topAnchor, constant: 0).isActive = true
-        }
+        tableView.bottomAnchor.constraint(equalTo: stateSubview.view.topAnchor, constant: 0).isActive = true
+
         tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20).isActive = true
         
-        shopSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/6.25, width: self.view.frame.width - 20, height: 255)
-        clientSubview.view.frame = CGRect(x: 10, y: self.view.frame.height/18.25, width: self.view.frame.width - 20, height: self.view.frame.height)
+        
+        shopSubview.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        shopSubview.view.topAnchor.constraint(equalTo:  contentView.topAnchor, constant: sc.segmentedControlContainerView.frame.height + 15).isActive = true
+        
+        shopSubview.view.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10).isActive = true
+        shopSubview.view.bottomAnchor.constraint(equalTo: stateSubview.view.topAnchor, constant: 0).isActive = true
+        shopSubview.view.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
+        
+        
+        clientSubview.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        clientSubview.view.topAnchor.constraint(equalTo:  contentView.topAnchor, constant: sc.segmentedControlContainerView.frame.height + 15).isActive = true
+        
+        clientSubview.view.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10).isActive = true
+        clientSubview.view.bottomAnchor.constraint(equalTo: stateSubview.view.topAnchor, constant: 0).isActive = true
+        clientSubview.view.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
         
         stateSubview.view.translatesAutoresizingMaskIntoConstraints = false
         stateSubview.view.heightAnchor.constraint(equalTo: stateSubview.stateButton.heightAnchor).isActive = true
@@ -301,7 +314,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         footerTableView.addData(sum: dataPosts.sumTotal, customerAmount: dataPosts.customerAmount ?? "-", paymentType: dataPosts.paymentTypeID)
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailOrderCell.identifire, for: indexPath) as! DetailOrderCell
         
-        cell.configure(orderName: post.name + " \(post.orderItemDescription)", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price.formattedWithSeparator) + " ₸")
+        cell.configure(orderName: post.name + " \(post.orderItemDescription ?? "")", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price.formattedWithSeparator) + " ₸")
         
         return cell
 

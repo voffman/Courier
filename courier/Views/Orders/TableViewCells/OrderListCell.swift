@@ -20,7 +20,6 @@ class OrderListCell: UITableViewCell {
     let orderSourceLabel = CustomLabels(title: "Источник (название заведения)", textSize: 14, style: .regular)
     let orderLineImage = UIImageView(image: UIImage(named: "Line"))
     
-//    let orderTransitionArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     let orderTransitionArrowButton = CustomButtons(title: "", style: .transparent)
     
     let orderFromImage = UIImageView(image: UIImage(named: "Storefront"))
@@ -37,7 +36,8 @@ class OrderListCell: UITableViewCell {
     
     let orderTimerLabel = CustomLabels(title: "0:15", textSize: 20, style: .timerRed)
     
-    let orderAcceptButton = CustomButtons(title: "НЕТ ДАННЫХ", style: .primary)
+    let orderStateButton = CustomButtons(title: "НЕТ ДАННЫХ", style: .primary)
+    
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -72,8 +72,8 @@ class OrderListCell: UITableViewCell {
         contentView.addSubview(orderTimerLabel)
         orderTimerLabel.setLabel()
         
-        contentView.addSubview(orderAcceptButton)
-        orderAcceptButton.setButton()
+        contentView.addSubview(orderStateButton)
+        orderStateButton.setButton()
     }
     
     required init?(coder: NSCoder) {
@@ -94,14 +94,15 @@ class OrderListCell: UITableViewCell {
         self.orderFromAddressLabel.text = orderFromAddress
         self.orderToAddressLabel.text = orderToAddress
         self.orderTimerLabel.text = orderTime
-        self.orderAcceptButton.title = orderAcceptButtonTitle?.uppercased()
-        self.orderAcceptButton.setButton()
+        self.orderStateButton.title = orderAcceptButtonTitle?.uppercased()
+        self.orderStateButton.setButton()
         self.statusCode = orderStatusCode
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+        setupNormalState()
+        layoutIfNeeded()
     }
     
     func insertPaddingsBetweenCells(){
@@ -139,13 +140,6 @@ class OrderListCell: UITableViewCell {
                                               height: orderSourceLabel.intrinsicContentSize.height)
     }
     
-//    func setupTransitionArrowButtonImage(){
-//        orderTransitionArrowButtonImage.translatesAutoresizingMaskIntoConstraints = false
-//        orderTransitionArrowButtonImage.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 26).isActive = true
-//        orderTransitionArrowButtonImage.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -20).isActive = true
-//        orderTransitionArrowButtonImage.heightAnchor.constraint(equalToConstant: 12).isActive = true
-//        orderTransitionArrowButtonImage.widthAnchor.constraint(equalToConstant: 7.4).isActive = true
-//    }
     
     func setupTransitionArrowButton(){
         orderTransitionArrowButton.translatesAutoresizingMaskIntoConstraints = false
@@ -250,27 +244,24 @@ class OrderListCell: UITableViewCell {
         
     }
     
-    func setupAcceptButton(){
-        orderAcceptButton.translatesAutoresizingMaskIntoConstraints = false
-        orderAcceptButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 257).isActive = true
-        orderAcceptButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 134).isActive = true
-        orderAcceptButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
+    func setupStateButton(){
+        orderStateButton.translatesAutoresizingMaskIntoConstraints = false
+        orderStateButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 257).isActive = true
+        orderStateButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 134).isActive = true
+        orderStateButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
         
-        orderAcceptButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        orderAcceptButton.addTarget(self, action: #selector(changeButtonState), for: .touchUpInside)
+        orderStateButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+       // orderStateButton.addTarget(self, action: #selector(changeButtonState), for: .touchUpInside)
     }
 
-    // MARK: сконфигурировать правильно
     func configureStatusState(){
+ 
         switch statusCode{
-            // 13 - примите заказ
+            
         case 10...15:
             setupNormalState()
             
         case 20:
-            setupAcceptedOrderState()
-            
-        case 25:
             setupArrivedToShopState()
 
         case 50:
@@ -283,27 +274,20 @@ class OrderListCell: UITableViewCell {
             break
 
         default:
-            break
+            setupNormalState()
         }
     }
     
-// MARK: оставить что-то одно?
-    // Mможно отсюда вызвать алерт да и в презентер?
- @objc func changeButtonState(sender: UIButton){
-     print("cell sender tag \(sender.tag) ")
-     configureStatusState()
-    }
+// @objc func changeButtonState(sender: UIButton){
+//     print("cell sender tag \(sender.tag) ")
+//
+//    }
     
     // MARK: Функции для изменения состояний ячейки, во время работы курьера
-    func setupAcceptedOrderState(){
-
-        orderAcceptButton.setButton()
-    }
     
     func setupArrivedToShopState(){
         
-
-        orderAcceptButton.setButton()
+        orderStateButton.setButton()
         orderFromLabel.style = .primary
         orderFromLabel.setLabel()
         
@@ -313,7 +297,7 @@ class OrderListCell: UITableViewCell {
     
     func setupGotOrder(){
 
-        orderAcceptButton.setButton()
+        orderStateButton.setButton()
         orderFromLabel.style = .light
         orderFromLabel.setLabel()
         orderFromImage.image = UIImage(named: "Storefront")
@@ -322,33 +306,36 @@ class OrderListCell: UITableViewCell {
     }
     
     func setupArrivedToClient(){
-        orderAcceptButton.setButton()
+        
         orderDownArrowImage.image = UIImage(named: "Arrow_downward")
         orderToLabel.style = .primary
         orderToLabel.setLabel()
         orderToImage.image = UIImage(named: "Place_orange")
         
-        orderTimerView.isHidden = true
-        orderTimerImage.isHidden = true
-        orderTimerLabel.isHidden = true
-        
-        orderAcceptButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
-        
-        orderAcceptButton.setButton()
+//        orderTimerView.isHidden = true
+//        orderTimerImage.isHidden = true
+//        orderTimerLabel.isHidden = true
+//
+//        orderAcceptButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
+//
+//        orderAcceptButton.setButton()
     }
     
     func setupNormalState(){
         
-        orderAcceptButton.isEnabled = false
-        
-        orderAcceptButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 134).isActive = true
-        
-        orderAcceptButton.setButton()
-        
+     //   orderAcceptButton.isEnabled = false
+        orderStateButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = false
         orderToLabel.style = .light
         orderToLabel.setLabel()
         orderToImage.image = UIImage(named: "Place")
- 
+
+        orderFromImage.image = UIImage(named: "Storefront")
+        orderDownArrowImage.image = UIImage(named: "Arrow_downward")
+        orderToImage.image = UIImage(named: "Place")
+
+
+        orderStateButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 134).isActive = true
+        orderStateButton.setButton()
         
         orderTimerView.isHidden = false
         orderTimerImage.isHidden = false
@@ -364,7 +351,6 @@ class OrderListCell: UITableViewCell {
         setupIdLabel()
         setupPriceLabel()
         setupSourceLabel()
-//        setupTransitionArrowButtonImage()
         setupTransitionArrowButton()
         setupLineImage()
         
@@ -377,12 +363,13 @@ class OrderListCell: UITableViewCell {
         setupOrderToAddressLabel()
         
         setupTimer()
-        setupAcceptButton()
+        setupStateButton()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setupCell()
+        configureStatusState()
     }
 }
 

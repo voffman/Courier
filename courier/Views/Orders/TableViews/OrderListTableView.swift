@@ -39,16 +39,15 @@ class OrderListTableView: MVPController {
     var senderValue: Int = 0
     var pass: Bool = false
     
-    // MARK: Прописать здесь действия с api
     @objc func sendAlertButtonAction(){
 
-        print("статус меняется...") // MARK: Передать значение
+        print("статус меняется...")
 
         presenter?.changeStatus(orderId: String(orderID), status: String(orderStatus), completion: { post in
             print("статус изменен на: ", post.statusName)
+            
             self.checkOrders()
         })
-            
         dismissAlertView()
             
         if orderStatus == 100 {
@@ -165,7 +164,6 @@ class OrderListTableView: MVPController {
     
     override func viewWillAppear(_ animated: Bool) {
         checkOrders()
-        checkArchiveOrders()
         print("дата перезагружена")
     }
     
@@ -205,9 +203,9 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 35).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 40).isActive = true
         } else {
-            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 35).isActive = true
+            tableView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 40).isActive = true
         }
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -239,11 +237,14 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             cell.orderTransitionArrowButton.tag = indexPath.row
             cell.orderTransitionArrowButton.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
             
-            cell.orderAcceptButton.tag = indexPath.row
-            cell.orderAcceptButton.addTarget(self, action: #selector(acceptButtonWasTapped(sender:)), for: .touchUpInside)
-            
-            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderTime: "00:05", orderAcceptButtonTitle: post.statusName, orderStatusCode: post.status)
+            cell.orderStateButton.tag = indexPath.row
 
+            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderTime: "00:05", orderAcceptButtonTitle: post.statusName, orderStatusCode: post.status)
+            
+            cell.contentView.isUserInteractionEnabled = true
+            
+            cell.configureStatusState() // В ячейке OrderListCell
+            cell.orderStateButton.addTarget(self, action: #selector(stateButtonWasTapped(sender:)), for: .touchUpInside)
             return cell
             
         case 1:
@@ -269,7 +270,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     // MARK: Не обновляется кнопка в cell
-    @objc func acceptButtonWasTapped(sender: UIButton) {
+    @objc func stateButtonWasTapped(sender: UIButton) {
         let rowIndex:Int = sender.tag
         
         presenter?.didStatusTap(model: data[rowIndex])

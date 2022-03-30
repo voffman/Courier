@@ -25,16 +25,22 @@ class OrdersView: MVPController {
         
         cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        if UIScreen.main.bounds.size.height > 750 {
-            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/2).isActive = true
-        }
-        
-        if UIScreen.main.bounds.size.height > 640 {
-            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9).isActive = true
-        }
-        
-        if UIScreen.main.bounds.size.height <= 640 {
-            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/8).isActive = true
+        if #available(iOS 11, *) {
+            cardView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 7).isActive = true
+            
+        } else {
+            
+            if UIScreen.main.bounds.size.height > 750 {
+                cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/2).isActive = true
+            }
+            
+            if UIScreen.main.bounds.size.height > 640 {
+                cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9).isActive = true
+            }
+            
+            if UIScreen.main.bounds.size.height <= 640 {
+                cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/8).isActive = true
+            }
         }
         
         cardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
