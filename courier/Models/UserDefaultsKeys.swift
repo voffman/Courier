@@ -11,4 +11,5 @@ struct UserDefaultsKeys{
     static let phoneNumber: String = "phoneNumber"
     static let smsCode: String = "smsCode"
     static let bearer: String = "bearer"
+    static let isDarkMode: String = "isDarkMode"
 }

@@ -9,6 +9,17 @@ import UIKit
 
 class ThanksView: UIViewController {
     
+    let dataPost: OrderStatusResponse
+    
+    init(statusResponse: OrderStatusResponse){
+        self.dataPost = statusResponse
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let cardView = CustomViews(style: .withShadow)
     let smileImage = UIImageView(image: UIImage(named: "Satisfied"))
     
@@ -35,6 +46,13 @@ class ThanksView: UIViewController {
         } else {
             cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9.25).isActive = true
         }
+        
+        
+//        if #available(iOS 11.0, *) {
+//            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 40).isActive = true
+//        } else {
+//            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 40).isActive = true
+//        }
         
         cardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
         cardView.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
@@ -125,7 +143,11 @@ class ThanksView: UIViewController {
     
     
     @objc func returnButtonAction(){
+        print("Нажатие на кнопку ThankView")
         self.navigationController?.popToRootViewController(animated: true)
+//        let vc = OrderListTableView()
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
     }
 
     func setupView(){
@@ -151,10 +173,30 @@ class ThanksView: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationBarLeftItemLabel)
     }
     
+    func configureData(){
+        let dateManager = DateManager()
+        
+     let dateTimeFinishString = dateManager.convert(dateString: dataPost.dateTimeFinish, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ", convertToDateFormat: "HH:mm")
+        
+     let isLate = dateManager.compareCurrentDateWithDate(dateString: dateTimeFinishString, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
+        
+        if isLate {
+            resultLabel.text = "Вы опоздали"
+            smileImage.image = UIImage(named: "Dissatisfied")
+        }
+        else {
+            resultLabel.text = "Заказ доставлен вовремя."
+            smileImage.image = UIImage(named: "Satisfied")
+        }
+        
+        self.timeLabel.text = dateTimeFinishString
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         createNavigationBar(title: "Заказ № 356167")
+        configureData()
         // Do any additional setup after loading the view.
     }
     

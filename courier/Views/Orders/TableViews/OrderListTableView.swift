@@ -44,17 +44,19 @@ class OrderListTableView: MVPController {
         print("статус меняется...")
 
         presenter?.changeStatus(orderId: String(orderID), status: String(orderStatus), completion: { post in
+            // Видимо из-за ошибки ответа не выполняется здесь код
             print("статус изменен на: ", post.statusName)
+            
+            if self.orderStatus == 100 {
+                let thanksView = ThanksView(statusResponse: post)
+                thanksView.modalPresentationStyle = .fullScreen
+                self.navigationController?.pushViewController(thanksView, animated: true)
+            }
             
             self.checkOrders()
         })
         dismissAlertView()
             
-        if orderStatus == 100 {
-            let thanksView = ThanksView()
-            thanksView.modalPresentationStyle = .fullScreen
-            self.navigationController?.pushViewController(thanksView, animated: true)
-        }
     }
     
     
@@ -109,6 +111,11 @@ class OrderListTableView: MVPController {
         waitViewElement.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
         waitViewElement.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
         
+        if #available(iOS 11, *) {
+            waitViewElement.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 7).isActive = true
+            
+        } else {
+        
         if UIScreen.main.bounds.size.height > 750 {
             waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9).isActive = true
         }
@@ -117,8 +124,9 @@ class OrderListTableView: MVPController {
             waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9).isActive = true
         }
         
-        if UIScreen.main.bounds.size.height <= 640 {
-            waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/8).isActive = true
+            if UIScreen.main.bounds.size.height <= 640 {
+                waitViewElement.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/8).isActive = true
+            }
         }
     }
     
@@ -239,7 +247,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             
             cell.orderStateButton.tag = indexPath.row
 
-            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderTime: "00:05", orderAcceptButtonTitle: post.statusName, orderStatusCode: post.status)
+            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderTime: post.dateTimeStatusFinish, orderAcceptButtonTitle: post.statusName, orderStatusCode: post.status)
             
             cell.contentView.isUserInteractionEnabled = true
             

@@ -38,7 +38,7 @@ class OrderListCell: UITableViewCell {
     
     let orderStateButton = CustomButtons(title: "НЕТ ДАННЫХ", style: .primary)
     
-    
+    let dateManager = DateManager()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -93,10 +93,18 @@ class OrderListCell: UITableViewCell {
         self.orderSourceLabel.text = orderSource
         self.orderFromAddressLabel.text = orderFromAddress
         self.orderToAddressLabel.text = orderToAddress
-        self.orderTimerLabel.text = orderTime
+//        self.orderTimerLabel.text = orderTime
         self.orderStateButton.title = orderAcceptButtonTitle?.uppercased()
         self.orderStateButton.setButton()
         self.statusCode = orderStatusCode
+        
+        guard let orderTime = orderTime else {
+            return
+        }
+        
+        let orderTimeConverted = dateManager.convert(dateString: orderTime, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ", convertToDateFormat: "dd:HH:mm")
+        self.orderTimerLabel.text = "\(orderTimeConverted)  "
+
     }
     
     override func prepareForReuse() {
@@ -229,7 +237,7 @@ class OrderListCell: UITableViewCell {
     
     func setupTimerLabel(){
         orderTimerLabel.translatesAutoresizingMaskIntoConstraints = false
-        orderTimerLabel.centerXAnchor.constraint(equalTo: orderTimerView.centerXAnchor, constant: 10).isActive = true
+        orderTimerLabel.centerXAnchor.constraint(equalTo: orderTimerView.centerXAnchor, constant: 16).isActive = true
         orderTimerLabel.centerYAnchor.constraint(equalTo: orderTimerView.centerYAnchor, constant: 0).isActive = true
         orderTimerLabel.heightAnchor.constraint(equalToConstant: orderTimerLabel.intrinsicContentSize.width).isActive = true
         orderTimerLabel.widthAnchor.constraint(equalToConstant: orderTimerLabel.intrinsicContentSize.width).isActive = true

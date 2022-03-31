@@ -145,11 +145,11 @@ class StateSubview: UIViewController {
         
         case 100:
             stateButton.isEnabled = false
-            let thanksView = ThanksView()
-            
-            thanksView.modalPresentationStyle = .fullScreen
-            
-            self.navigationController?.pushViewController(thanksView, animated: true)
+//            let thanksView = ThanksView()
+//            
+//            thanksView.modalPresentationStyle = .fullScreen
+//            
+//            self.navigationController?.pushViewController(thanksView, animated: true)
 
            // sender.tag = 0
             

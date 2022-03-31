@@ -19,7 +19,7 @@ class CustomLabels: UILabel {
     }
     
     var title: String?
-    let textSize: CGFloat
+    var textSize: CGFloat
     var style: CustomLabelStyles?
     var alignment: NSTextAlignment? = .justified
     

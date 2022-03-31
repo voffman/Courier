@@ -115,19 +115,22 @@ class DetailOrderTableView: MVPController {
         presenter?.changeStatus(orderId: String(dataPosts.id), status: String(dataPosts.transitions.status), completion: { post in
             print("статус изменен ", post.statusName)
             print("статус изменен на ", post.status)
+            
+            if self.dataPosts.transitions.status == 100 {
+                let thanksView = ThanksView(statusResponse: post)
+                
+                thanksView.modalPresentationStyle = .fullScreen
+                
+                self.navigationController?.pushViewController(thanksView, animated: true)
+            }
+            else {
+                self.navigationController?.popViewController(animated: true)
+            }
+            
         })
         dismissAlertView()
         
-        if dataPosts.transitions.status == 100 {
-            let thanksView = ThanksView()
-            
-            thanksView.modalPresentationStyle = .fullScreen
-            
-            self.navigationController?.pushViewController(thanksView, animated: true)
-        }
-        else {
-            self.navigationController?.popViewController(animated: true)
-        }
+
 
     }
 
@@ -151,12 +154,13 @@ class DetailOrderTableView: MVPController {
             showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
         
         case 100:
-            stateSubview.stateButton.isEnabled = false
-            let thanksView = ThanksView()
-            
-            thanksView.modalPresentationStyle = .fullScreen
-            
-            self.navigationController?.pushViewController(thanksView, animated: true)
+            break
+//            stateSubview.stateButton.isEnabled = false
+//            let thanksView = ThanksView()
+//
+//            thanksView.modalPresentationStyle = .fullScreen
+//
+//            self.navigationController?.pushViewController(thanksView, animated: true)
             
         default:
             break

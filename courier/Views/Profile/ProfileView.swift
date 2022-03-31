@@ -21,7 +21,7 @@ class ProfileView: MVPController {
     let secondLineImage = UIImageView(image: UIImage(named: "Line"))
     let activityStatusTitleLabel = CustomLabels(title: "Статус активности", textSize: 14, style: .bold)
     let activityStatusImage = UIImageView(image: UIImage(named: "Switch"))
-    let activityStatusLabel = CustomLabels(title: "Активен", textSize: 14, style: .regular)
+    let activityStatusLabel = CustomLabels(title: "Неизвестно", textSize: 14, style: .regular)
     let activityStatusSwitch = UISwitch()
     let thirdLineImage = UIImageView(image: UIImage(named: "Line"))
     let navigationSettingTitleLabel = CustomLabels(title: "Навигация", textSize: 14, style: .bold)
@@ -125,10 +125,11 @@ class ProfileView: MVPController {
     
     func setupColorSchemeSwitch(){
         view.addSubview(colorSchemeSwitch)
-        
+        colorSchemeSwitch.isOn = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isDarkMode)
         colorSchemeSwitch.translatesAutoresizingMaskIntoConstraints = false
         colorSchemeSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 134).isActive = true
         colorSchemeSwitch.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
+        colorSchemeSwitch.addTarget(self, action: #selector(themeSwitchStateDidChange(_:)), for: .valueChanged)
     }
     
     func setupSecondLineImage(){
@@ -173,7 +174,7 @@ class ProfileView: MVPController {
         activityStatusSwitch.translatesAutoresizingMaskIntoConstraints = false
         activityStatusSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 205).isActive = true
         activityStatusSwitch.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
-        activityStatusSwitch.addTarget(self, action: #selector(switchStateDidChange(_:)), for: .valueChanged)
+        activityStatusSwitch.addTarget(self, action: #selector(activitySwitchStateDidChange(_:)), for: .valueChanged)
     }
     
     func setupThirdLineImage(){
@@ -289,8 +290,8 @@ class ProfileView: MVPController {
     }
     
     @objc func exitButtonAction(sender: UIButton){
-        presenter?.sessionStop()
-        
+        presenter?.removeBearer()
+        goToLoginView()
     }
     
     func configureData(){
@@ -333,13 +334,56 @@ class ProfileView: MVPController {
         setupExitButton()
 
     }
-
-    @objc func switchStateDidChange(_ sender:UISwitch){
+    
+    
+    func checkActivity(){
+        presenter?.checkUserActivity(completion: { post in
+            self.activityStatusSwitch.isOn = post.status
+            
+            if post.status {
+                self.activityStatusLabel.text = "Активен"
+                self.activityStatusLabel.textColor = Colors.lightGreen
+            }
+            else {
+                self.activityStatusLabel.text = "Неактивен"
+                self.activityStatusLabel.textColor = Colors.red
+            }
+            
+        })
+    }
+    
+    func checkThemeMode() {
+      let isDarkMode = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isDarkMode)
+        if isDarkMode {
+            colorSchemeLabel.text = "Темная"
+        }
+        else {
+            colorSchemeLabel.text = "Светлая"
+        }
+    }
+    
+    @objc func themeSwitchStateDidChange(_ sender: UISwitch) {
         if (sender.isOn == true){
-            print("UISwitch state is now ON")
+            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.isDarkMode)
+            colorSchemeLabel.text = "Темная"
         }
         else{
-            print("UISwitch state is now Off")
+            UserDefaults.standard.set(false, forKey: UserDefaultsKeys.isDarkMode)
+            colorSchemeLabel.text = "Светлая"
+        }
+    }
+
+    @objc func activitySwitchStateDidChange(_ sender: UISwitch){
+        if (sender.isOn == true){
+            presenter?.sessionStart()
+            activityStatusLabel.text = "Активен"
+            activityStatusLabel.textColor = Colors.lightGreen
+            
+        }
+        else{
+            presenter?.sessionStop()
+            activityStatusLabel.text = "Неактивен"
+            activityStatusLabel.textColor = Colors.red
         }
     }
     
@@ -359,6 +403,8 @@ class ProfileView: MVPController {
         createNavigationBar()
         setupView()
         configureData()
+        checkActivity()
+        checkThemeMode()
     }
 }
 

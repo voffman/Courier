@@ -9,8 +9,12 @@ import Foundation
 
 protocol ProfileViewPresenterProtocol: AnyObject {
     init(view: ProfileViewProtocol)
+    func removeBearer()
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ())
+    func sessionStart()
     func sessionStop()
+   // func sessionStopAndGoToLoginView()
+    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ())
 }
 
 class ProfilePresenter: ProfileViewPresenterProtocol {
@@ -41,13 +45,39 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
 //         }
     }
     
-    func sessionStop() {
-        api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
-            self.view?.goToLoginView()
-            self.removeBearer()
-            
+    func sessionStart() {
+        api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
+            print("Сессия запущена")
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
     }
+    
+    
+    func sessionStop() {
+        api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
+            print("Сессия остановлена")
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
+        }
+    }
+    
+    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ()) {
+        api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
+            completion(post)
+
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
+        }
+    }
+    
+//    func sessionStopAndGoToLoginView() {
+//        api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
+//            self.view?.goToLoginView()
+//            self.removeBearer()
+//
+//        } errorResponse: { error in
+//            self.view?.showErrorView(errorResponseData: error)
+//        }
+//    }
 }
