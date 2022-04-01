@@ -49,7 +49,7 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
         tableView.register(ScheduleCell.self, forCellReuseIdentifier: ScheduleCell.identifire)
         
         tableView.separatorStyle = .none
-        
+        tableView.backgroundColor = Colors.backgroundColor
         view.addSubview(tableView)
     }
     

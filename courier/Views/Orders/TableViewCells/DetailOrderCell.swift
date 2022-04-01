@@ -83,6 +83,7 @@ class DetailOrderCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         setupCell()
+        contentView.backgroundColor = Colors.white
     }
     
 }

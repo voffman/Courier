@@ -7,30 +7,27 @@
 
 import UIKit.UIColor
 
-// Для смены цветовой палитры использовать глобальную переменную
-// для темной темы создать например структуру и где происходит выбор цвета создать тернарный оператор с этой переменной
-
 struct Colors {
 
     static let isDarkMode = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isDarkMode)
 
-    static let lightGreen = UIColor(hexString: (isDarkMode ? "#16d91c" : "#16d91c"))
-    static let lightGray = UIColor(hexString: (isDarkMode ? "#e6e6e6" : "#e6e6e6"))
-    static let gray = UIColor(hexString: (isDarkMode ? "#a6a6a6" : "#a6a6a6"))
-    static let black = UIColor(hexString: (isDarkMode ? "#000000" : "#000000"))
-    static let yellow = UIColor(hexString: (isDarkMode ? "#ffdb4d" : "#ffdb4d"))
-    static let white = UIColor(hexString: (isDarkMode ? "#b4c6d2" : "#ffffff"))
-    static let green = UIColor(hexString: (isDarkMode ? "#78b833" : "#78b833"))
-    static let orange = UIColor(hexString: (isDarkMode ? "#fab600" : "#fab600"))
-    static let red = UIColor(hexString: (isDarkMode ? "#e31e24" : "#e31e24"))
-    static let white2 = UIColor(hexString: (isDarkMode ? "#fefefe" : "#fefefe"))
-    static let darkGray = UIColor(hexString: (isDarkMode ? "#808080" : "#808080"))
-    static let lightBlueDark = UIColor(hexString: (isDarkMode ? "#0090cc" : "#0090cc"))
-    static let lightBlue = UIColor(hexString: (isDarkMode ? "#00a0e3" : "#00a0e3"))
-    static let white3 = UIColor(hexString: (isDarkMode ? "#fcfcfc" : "#fcfcfc" ))
-    static let lightRed = UIColor(hexString: (isDarkMode ? "#FFF5F5" : "#FFF5F5"))
-    static let scarletRed = UIColor(hexString: (isDarkMode ? "#FF8083" : "#FF8083"))
-    static let backgroundColor = UIColor(hexString: (isDarkMode ? "#f7f7f7" : "#f7f7f7"))
+    static let lightGreen = UIColor(hexString: (isDarkMode ? "#16d91c" : "#16d91c")) // -
+    static let lightGray = UIColor(hexString: (isDarkMode ? "#1A1A1A" : "#e6e6e6")) // grey1
+    static let gray = UIColor(hexString: (isDarkMode ? "#737373" : "#a6a6a6")) // grey2
+    static let black = UIColor(hexString: (isDarkMode ? "#FFFFFF" : "#000000")) // onSurface
+    static let yellow = UIColor(hexString: (isDarkMode ? "#FFA500" : "#FF8C00")) // warning? изн #ffdb4d
+    static let white = UIColor(hexString: (isDarkMode ? "#000000" : "#FFFFFF")) //OnPrimary
+    static let green = UIColor(hexString: (isDarkMode ? "#16D91C" : "#78b833")) // Success
+    static let orange = UIColor(hexString: (isDarkMode ? "#fab600" : "#fab600")) // Primary? изн #fab600 схема #FFCB08
+    static let red = UIColor(hexString: (isDarkMode ? "#e31e24" : "#e31e24")) // red
+    static let white2 = UIColor(hexString: (isDarkMode ? "#fefefe" : "#fefefe")) //
+    static let darkGray = UIColor(hexString: (isDarkMode ? "#8C8C8C" : "#808080")) // grey3
+    static let lightBlueDark = UIColor(hexString: (isDarkMode ? "#0090cc" : "#0090cc")) //
+    static let lightBlue = UIColor(hexString: (isDarkMode ? "#00a0e3" : "#00a0e3")) //
+    static let white3 = UIColor(hexString: (isDarkMode ? "#fcfcfc" : "#fcfcfc" )) //
+    static let lightRed = UIColor(hexString: (isDarkMode ? "#582024" : "#FFF5F5")) // additional? изн #FFF5F5 схема #fff3cd
+    static let scarletRed = UIColor(hexString: (isDarkMode ? "#E31E24" : "#FF8083")) // danger
+    static let backgroundColor = UIColor(hexString: (isDarkMode ? "#0D0D0D" : "#F7F7F7")) // background
     
     }
 

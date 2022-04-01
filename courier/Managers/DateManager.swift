@@ -75,4 +75,18 @@ class DateManager{
         return formatter.string(from: date ?? Date())
     }
     
+    func converteDateToSeconds(dateString: String, stringDateFormat: String? = "yyyy-MM-dd") -> Int{
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = stringDateFormat
+
+        let date = formatter.date(from: dateString)
+        let epoch = date?.timeIntervalSinceNow
+        print("прошло времени: ", epoch ?? "") // Double
+    
+        let seconds = Int(epoch ?? 0)
+        
+        return seconds
+    }
+    
 }

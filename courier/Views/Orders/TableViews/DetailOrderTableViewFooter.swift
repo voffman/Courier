@@ -62,7 +62,7 @@ class DetailOrderTableViewFooter: UIView {
     }
     
     func createFooterView(){
-        self.backgroundColor = .white
+        self.backgroundColor = Colors.white
         
         firstLineImage.translatesAutoresizingMaskIntoConstraints = false
         secondLineImage.translatesAutoresizingMaskIntoConstraints = false

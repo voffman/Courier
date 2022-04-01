@@ -129,7 +129,7 @@ extension HistoryTableView: UITableViewDelegate, UITableViewDataSource {
         
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        
+        tableView.backgroundColor = Colors.backgroundColor
         view.addSubview(tableView)
     }
     

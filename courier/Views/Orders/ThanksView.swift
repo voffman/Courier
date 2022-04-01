@@ -145,9 +145,9 @@ class ThanksView: UIViewController {
     @objc func returnButtonAction(){
         print("Нажатие на кнопку ThankView")
         self.navigationController?.popToRootViewController(animated: true)
-//        let vc = OrderListTableView()
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
+        let vc = OrderListTableView()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
 
     func setupView(){

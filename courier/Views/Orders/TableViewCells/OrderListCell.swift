@@ -31,10 +31,10 @@ class OrderListCell: UITableViewCell {
     let orderToAddressLabel = CustomLabels(title: "Казыбек Би, Нуркена Абдирова, 7, дом 8, квартира 42", textSize: 14, style: .regular)
     let orderToLabel = CustomLabels(title: "Куда", textSize: 14, style: .light)
     
-    let orderTimerView = CustomTimer(style: .timerRed)
-    let orderTimerImage = UIImageView(image: UIImage(named: "Timer"))
+    let orderTimerView = CustomTimer(style: .timerGray)
+    let orderTimerImage = UIImageView(image: UIImage(named: "TimerGray"))
     
-    let orderTimerLabel = CustomLabels(title: "0:15", textSize: 20, style: .timerRed)
+    let orderTimerLabel = CustomLabels(title: "--:--", textSize: 20, style: .light)
     
     let orderStateButton = CustomButtons(title: "НЕТ ДАННЫХ", style: .primary)
     
@@ -86,24 +86,22 @@ class OrderListCell: UITableViewCell {
                           orderSource: String?,
                           orderFromAddress: String?,
                           orderToAddress: String?,
-                          orderTime: String?,
                           orderAcceptButtonTitle: String?, orderStatusCode: Int){
         self.orderIdLabel.text = "№ \(String(orderId))"
         self.orderPriceLabel.text = "• \(String(orderPrice.formattedWithSeparator)) ₸"
         self.orderSourceLabel.text = orderSource
         self.orderFromAddressLabel.text = orderFromAddress
         self.orderToAddressLabel.text = orderToAddress
-//        self.orderTimerLabel.text = orderTime
         self.orderStateButton.title = orderAcceptButtonTitle?.uppercased()
         self.orderStateButton.setButton()
         self.statusCode = orderStatusCode
         
-        guard let orderTime = orderTime else {
-            return
-        }
-        
-        let orderTimeConverted = dateManager.convert(dateString: orderTime, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ", convertToDateFormat: "dd:HH:mm")
-        self.orderTimerLabel.text = "\(orderTimeConverted)  "
+//        guard let orderTime = orderTime else {
+//            return
+//        }
+//
+//        let orderTimeConverted = dateManager.convert(dateString: orderTime, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ", convertToDateFormat: "dd:HH:mm")
+//        self.orderTimerLabel.text = "\(orderTimeConverted)  "
 
     }
     
@@ -237,10 +235,10 @@ class OrderListCell: UITableViewCell {
     
     func setupTimerLabel(){
         orderTimerLabel.translatesAutoresizingMaskIntoConstraints = false
-        orderTimerLabel.centerXAnchor.constraint(equalTo: orderTimerView.centerXAnchor, constant: 16).isActive = true
+        orderTimerLabel.centerXAnchor.constraint(equalTo: orderTimerView.centerXAnchor, constant: 6).isActive = true // 16
         orderTimerLabel.centerYAnchor.constraint(equalTo: orderTimerView.centerYAnchor, constant: 0).isActive = true
         orderTimerLabel.heightAnchor.constraint(equalToConstant: orderTimerLabel.intrinsicContentSize.width).isActive = true
-        orderTimerLabel.widthAnchor.constraint(equalToConstant: orderTimerLabel.intrinsicContentSize.width).isActive = true
+        orderTimerLabel.widthAnchor.constraint(equalToConstant: 130).isActive = true
         
     }
     
@@ -250,6 +248,14 @@ class OrderListCell: UITableViewCell {
         setupTimerImage()
         setupTimerLabel()
         
+    }
+    
+    func changeTimerToRed(){
+        orderTimerView.style = .timerRed
+        orderTimerView.setView()
+        orderTimerImage.image = UIImage(named: "Timer")
+        orderTimerLabel.style = .timerRed
+        orderTimerLabel.setLabel()
     }
     
     func setupStateButton(){

@@ -14,7 +14,7 @@ class CustomTimer: UIView {
         case timerGray
     }
     
-    let style: CustomTimerStyles?
+    var style: CustomTimerStyles?
     
     let timerValue: String? = ""
     

@@ -16,14 +16,18 @@ class StateSubview: UIViewController {
     let orderTimerView = CustomTimer(style: .timerGray)
     let orderTimerImage = UIImageView(image: UIImage(named: "TimerGray"))
     
-    let orderTimerLabel = CustomLabels(title: "15:45", textSize: 20, style: .light)
+    let orderTimerLabel = CustomLabels(title: "--:--", textSize: 20, style: .light)
     
     var status: Int = 0
+    
+    let dateManager = DateManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         hideTimer(isHidden: true)
+        launchTimer()
+
     }
     
     func addSubviews(){
@@ -63,11 +67,19 @@ class StateSubview: UIViewController {
     
         orderTimerLabel.translatesAutoresizingMaskIntoConstraints = false
         orderTimerLabel.heightAnchor.constraint(equalToConstant: orderTimerLabel.intrinsicContentSize.height).isActive = true
-        orderTimerLabel.widthAnchor.constraint(equalToConstant: orderTimerLabel.intrinsicContentSize.width).isActive = true
+        orderTimerLabel.widthAnchor.constraint(equalToConstant: 125).isActive = true
   
         orderTimerLabel.topAnchor.constraint(equalTo: orderTimerView.topAnchor, constant: 12).isActive = true
         orderTimerLabel.leftAnchor.constraint(equalTo: orderTimerView.leftAnchor, constant: 46).isActive = true
         
+    }
+    
+    func changeTimerToRed(){
+        orderTimerView.style = .timerRed
+        orderTimerView.setView()
+        orderTimerImage.image = UIImage(named: "Timer")
+        orderTimerLabel.style = .timerRed
+        orderTimerLabel.setLabel()
     }
     
     func hideTimer(isHidden: Bool){
@@ -159,17 +171,51 @@ class StateSubview: UIViewController {
         }
     }
     
-    func configure(buttonTitle: String, status: Int) {
+    
+    var timer = Timer()
+    var count = 50
+    var timerValue = ""
+    
+    func launchTimer(){
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(incrementCountLabel), userInfo: nil, repeats: true)
+        timer.tolerance = 0.5
+        // Задается время по истечению которого таймер будет остановлен
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(count)) {
+            self.timer.invalidate()
+        }
+    }
+    
+    @objc func incrementCountLabel(){
+        count -= 1
+        let hours = Int(count) / 3600
+        let minutes = Int(count) / 60 % 60
+        let seconds = Int(count) % 60
+        timerValue = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
+        orderTimerLabel.title = "\(timerValue)"
+        orderTimerLabel.setLabel()
+        
+        if count < 60 {
+            changeTimerToRed()
+        }
+    }
+    
+    
+    func configure(buttonTitle: String, status: Int, timerValue: String) {
         self.stateButton.title = buttonTitle.uppercased()
         self.status = status
+        self.timerValue = timerValue
+        print("таймервэлью: ", timerValue)
+        count = dateManager.converteDateToSeconds(dateString: timerValue, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
+       // self.orderTimerLabel.text = self.timerValue
+
         stateButton.setButton()
     }
     
     override func viewDidLayoutSubviews() {
-         super.viewDidLayoutSubviews()
-         setupCell()
+        super.viewDidLayoutSubviews()
+        setupCell()
         checkStateSubviewStatus(status: status)
-     }
+    }
 
     /*
     // Only override draw() if you perform custom drawing.

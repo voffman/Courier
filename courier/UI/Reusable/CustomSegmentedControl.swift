@@ -49,7 +49,7 @@ class CustomSegmentedControl: UISegmentedControl {
 
      lazy var segmentedControlContainerView: UIView = {
         let containerView = UIView()
-        containerView.backgroundColor = .white
+         containerView.backgroundColor = Colors.white
         containerView.translatesAutoresizingMaskIntoConstraints = false
         return containerView
     }()

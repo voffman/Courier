@@ -193,7 +193,7 @@ class DetailOrderTableView: MVPController {
         stateSubview.stateButton.addTarget(self, action: #selector(stateButtonAction(sender:)), for: .touchUpInside)
         
         shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address, phoneNumber: dataPosts.addressFrom.phone, latitude: dataPosts.addressFrom.lat, longitude: dataPosts.addressFrom.long)
-        stateSubview.configure(buttonTitle: dataPosts.statusName, status: dataPosts.status)
+        stateSubview.configure(buttonTitle: dataPosts.statusName, status: dataPosts.status, timerValue: dataPosts.dateTimeStatusFinish)
   
     }
 }

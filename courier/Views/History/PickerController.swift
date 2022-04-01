@@ -49,6 +49,7 @@ class PickerController: UIViewController, UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         setupButton()
+        pickerViewButton.backgroundColor = Colors.white
         self.view.addSubview(pickerViewButton)
     }
     

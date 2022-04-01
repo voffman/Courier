@@ -26,6 +26,10 @@ class OrderListTableView: MVPController {
     var orderID: Int = 0
     var orderStatus: Int = 0
     
+    var cellRowToTimerMapping: [Int: Timer] = [:]
+    
+    let dateManager = DateManager()
+    
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         sc.changeSegmentedControlLinePosition()
         tableView.reloadData()
@@ -44,7 +48,7 @@ class OrderListTableView: MVPController {
         print("статус меняется...")
 
         presenter?.changeStatus(orderId: String(orderID), status: String(orderStatus), completion: { post in
-            // Видимо из-за ошибки ответа не выполняется здесь код
+            // Из-за ошибки ответа может не выполняться здесь код
             print("статус изменен на: ", post.statusName)
             
             if self.orderStatus == 100 {
@@ -188,7 +192,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        
+        tableView.backgroundColor = Colors.backgroundColor
         view.addSubview(tableView)
     }
     
@@ -235,6 +239,37 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    private func setupTimer(for cell: OrderListCell, indexPath: IndexPath) {
+        let row = indexPath.row
+        if cellRowToTimerMapping[row] == nil {
+            var dateTimeStatusFinishSeconds: Int = 0
+            let post = data[indexPath.row]
+            print("таймерр: \(post.dateTimeStatusFinish)")
+            
+          dateTimeStatusFinishSeconds = dateManager.converteDateToSeconds(dateString: post.dateTimeStatusFinish, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
+            
+            var numberOfSecondsPassed = Int(dateTimeStatusFinishSeconds)
+            let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { capturedTimer in
+                                
+                numberOfSecondsPassed -= 1
+                
+                let hours = Int(numberOfSecondsPassed) / 3600
+                let minutes = Int(numberOfSecondsPassed) / 60 % 60
+                let seconds = Int(numberOfSecondsPassed) % 60
+                
+                
+                if numberOfSecondsPassed < 60 {
+                    cell.changeTimerToRed()
+                }
+                
+                cell.orderTimerLabel.text = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
+
+            }
+            cellRowToTimerMapping[row] = timer
+            RunLoop.current.add(timer, forMode: .common)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
   
         switch sc.segmentedControl.selectedSegmentIndex {
@@ -246,13 +281,14 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             cell.orderTransitionArrowButton.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
             
             cell.orderStateButton.tag = indexPath.row
-
-            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderTime: post.dateTimeStatusFinish, orderAcceptButtonTitle: post.statusName, orderStatusCode: post.status)
+            
+            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderAcceptButtonTitle: post.statusName, orderStatusCode: post.status)
             
             cell.contentView.isUserInteractionEnabled = true
             
             cell.configureStatusState() // В ячейке OrderListCell
             cell.orderStateButton.addTarget(self, action: #selector(stateButtonWasTapped(sender:)), for: .touchUpInside)
+            setupTimer(for: cell, indexPath: indexPath)
             return cell
             
         case 1:
@@ -326,6 +362,8 @@ extension OrderListTableView: OrderListTableViewProtocol{
                // print("Постов - ", posts.count)
                 self.sc.segmentedControlContainerView.isHidden = false
                 self.setupOrderCount(isHidden: false)
+                self.countLabel.title = String(posts.count)
+                self.countLabel.setLabel()
                 self.tableView.reloadData()
             }
         })
