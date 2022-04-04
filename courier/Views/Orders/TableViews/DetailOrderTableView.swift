@@ -234,7 +234,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         let backButtonImage = UIImage(named: "BackArrow")?.withRenderingMode(.alwaysTemplate)
         let backButton = UIButton(type: .custom)
         backButton.setImage(backButtonImage, for: .normal)
-        backButton.tintColor = .black
+        backButton.tintColor = Colors.black
         backButton.addTarget(self, action: #selector(self.backButtonPressed), for: .touchUpInside)
         return backButton
     }
@@ -252,6 +252,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         navigationItem.title = "№ " + String(dataPosts.id)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: navigationBarRightItemLabel)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: makeBackButton())
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Colors.black]
     }
     
     override func viewWillAppear(_ animated: Bool) {

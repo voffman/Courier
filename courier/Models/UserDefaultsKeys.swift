@@ -12,4 +12,5 @@ struct UserDefaultsKeys{
     static let smsCode: String = "smsCode"
     static let bearer: String = "bearer"
     static let isDarkMode: String = "isDarkMode"
+    static let defaultNavigator: String = "2ГИС"
 }

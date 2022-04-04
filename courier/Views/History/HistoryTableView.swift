@@ -158,6 +158,7 @@ extension HistoryTableView: UITableViewDelegate, UITableViewDataSource {
         let post = data[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: HistoryCell.identifire, for: indexPath) as! HistoryCell
+        cell.backgroundColor = Colors.backgroundColor
         cell.configure(orderId: post.id, orderDate: post.dateTimeFinish, orderPrice: post.sumTotal, orderStatus: post.statusName, orderSource: post.companyName)
         
         return cell

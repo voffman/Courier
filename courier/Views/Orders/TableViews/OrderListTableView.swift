@@ -72,21 +72,21 @@ class OrderListTableView: MVPController {
         
         countView.translatesAutoresizingMaskIntoConstraints = false
         if UIScreen.main.bounds.size.height > 750 {
-            countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 95).isActive = true
-            countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
+            countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 98).isActive = true
+            countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         }
         
-        if UIScreen.main.bounds.size.height <= 750{
-            countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 67).isActive = true
-            countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
+        if UIScreen.main.bounds.size.height <= 750, UIScreen.main.bounds.size.height > 640 {
+            countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 71.5).isActive = true
+            countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -7).isActive = true
         }
         
         if UIScreen.main.bounds.size.height <= 640{
-            countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 70).isActive = true
-            countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-            countView.heightAnchor.constraint(equalToConstant: 15).isActive = true
-            countView.widthAnchor.constraint(equalToConstant: 15).isActive = true
-            countView.layer.cornerRadius = 7
+            countView.topAnchor.constraint(equalTo: view.topAnchor, constant: 74.5).isActive = true
+            countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -1).isActive = true
+            countView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+            countView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+            countView.layer.cornerRadius = 10
             
         }
 
@@ -228,10 +228,13 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
             countView.backgroundColor = Colors.lightGray
-            
+            self.countLabel.title = String(data.count)
+            self.countLabel.setLabel()
             return data.count
         case 1:
               countView.backgroundColor = Colors.orange
+            self.countLabel.title = String(dataArchive.count)
+            self.countLabel.setLabel()
             return dataArchive.count
 
         default:
@@ -276,7 +279,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         case 0:
             let post = data[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCell.identifire, for: indexPath) as! OrderListCell
-
+            cell.backgroundColor = Colors.backgroundColor
             cell.orderTransitionArrowButton.tag = indexPath.row
             cell.orderTransitionArrowButton.addTarget(self, action: #selector(orderTransitionArrowButtonWasTapped(sender:)), for: .touchUpInside)
             
@@ -295,7 +298,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             let archivePost = dataArchive[indexPath.row]
             
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCompletedOrdersCell.identifire, for: indexPath) as! OrderListCompletedOrdersCell
-
+            cell.backgroundColor = Colors.backgroundColor
             cell.configure(orderId: archivePost.id, orderPrice: archivePost.sumTotal, orderSource: archivePost.companyName, orderFromAddress: archivePost.addressFrom.address, orderToAddress: "\(archivePost.addressTo.street) \(archivePost.addressTo.house)")
             
             return cell
@@ -313,7 +316,6 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         presenter?.didTap(model: data[rowIndex])
     }
     
-    // MARK: Не обновляется кнопка в cell
     @objc func stateButtonWasTapped(sender: UIButton) {
         let rowIndex:Int = sender.tag
         

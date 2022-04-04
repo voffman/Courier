@@ -36,7 +36,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         item2.tabBarItem = icon2
         item3.tabBarItem = icon3
         item4.tabBarItem = icon4
-        
+        self.tabBar.unselectedItemTintColor = Colors.gray
         self.tabBar.tintColor = Colors.orange
         self.tabBar.backgroundColor = Colors.white
         let controllers = [item1,item2,item3,item4]

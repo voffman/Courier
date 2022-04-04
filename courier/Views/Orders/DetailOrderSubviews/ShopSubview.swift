@@ -180,10 +180,12 @@ protocol ShopSubviewProtocol: AnyObject  {
 }
 
 extension ShopSubview: ShopSubviewProtocol{
-   func openApp(appURL: URL) {
-       if UIApplication.shared.canOpenURL(appURL) {
-        UIApplication.shared.open(appURL)
-       }
+    func openApp(appURL: URL) {
+        if UIApplication.shared.canOpenURL(appURL) {
+            UIApplication.shared.open(appURL)
+        } else {
+            presenter?.openDownloadLink()
+        }
     }
     
     public func configure(source: String?, address: String?, phoneNumber: String?, latitude: String?, longitude: String?){

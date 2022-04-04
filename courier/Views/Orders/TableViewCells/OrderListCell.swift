@@ -314,14 +314,14 @@ class OrderListCell: UITableViewCell {
         orderStateButton.setButton()
         orderFromLabel.style = .light
         orderFromLabel.setLabel()
-        orderFromImage.image = UIImage(named: "Storefront")
+        orderFromImage.image = UIImage(named: "StorefrontCompleted")
         orderDownArrowImage.image = UIImage(named: "Arrow_downward_Orange")
         
     }
     
     func setupArrivedToClient(){
-        
-        orderDownArrowImage.image = UIImage(named: "Arrow_downward")
+        orderFromImage.image = UIImage(named: "StorefrontCompleted")
+        orderDownArrowImage.image = UIImage(named: "Arrow_downward_Completed")
         orderToLabel.style = .primary
         orderToLabel.setLabel()
         orderToImage.image = UIImage(named: "Place_orange")
@@ -346,7 +346,10 @@ class OrderListCell: UITableViewCell {
         orderFromImage.image = UIImage(named: "Storefront")
         orderDownArrowImage.image = UIImage(named: "Arrow_downward")
         orderToImage.image = UIImage(named: "Place")
-
+        orderFromLabel.style = .light
+        orderFromLabel.setLabel()
+        orderToLabel.style = .light
+        orderToLabel.setLabel()
 
         orderStateButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 134).isActive = true
         orderStateButton.setButton()

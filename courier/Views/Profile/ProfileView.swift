@@ -26,7 +26,7 @@ class ProfileView: MVPController {
     let thirdLineImage = UIImageView(image: UIImage(named: "Line"))
     let navigationSettingTitleLabel = CustomLabels(title: "Навигация", textSize: 14, style: .bold)
     let navigationSettingImage = UIImageView(image: UIImage(named: "Navigation"))
-    let navigationSettingLabel = CustomLabels(title: "2ГИС", textSize: 14, style: .light)
+    let navigationSettingLabel = CustomLabels(title: "Нет данных", textSize: 14, style: .light)
     let navigationSettingArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     let navigationSettingButton = CustomButtons(title: "", style: .transparent)
     let fourthLineImage = UIImageView(image: UIImage(named: "Line"))
@@ -206,6 +206,7 @@ class ProfileView: MVPController {
     
     func setupNavigationLabel(){
         view.addSubview(navigationSettingLabel)
+        navigationSettingLabel.title = presenter?.getDefaultNavigatorValue()
         navigationSettingLabel.setLabel()
         
         navigationSettingLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -286,7 +287,7 @@ class ProfileView: MVPController {
     }
     
     @objc func navigationSettingButtonAction(sender: UIButton){
-        print("navigationSettingButtonAction")
+        goToChooseNavigatorView()
     }
     
     @objc func exitButtonAction(sender: UIButton){
@@ -396,6 +397,12 @@ class ProfileView: MVPController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationBarLeftItemLabel)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationSettingLabel.title = presenter?.getDefaultNavigatorValue()
+        navigationSettingLabel.setLabel()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let presenter = ProfilePresenter(view: self)
@@ -411,6 +418,7 @@ class ProfileView: MVPController {
 // То, что выполняю во вью
 protocol ProfileViewProtocol: AnyObject, MVPControllerProtocol {
     func goToLoginView()
+    func goToChooseNavigatorView()
 }
 
 extension ProfileView: ProfileViewProtocol{
@@ -419,5 +427,10 @@ extension ProfileView: ProfileViewProtocol{
         let vc = LoginView()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
+    }
+    
+    func goToChooseNavigatorView() {
+        let chooseNavigatorView = ChooseNavigatorView()
+        self.navigationController?.pushViewController(chooseNavigatorView, animated: true)
     }
 }

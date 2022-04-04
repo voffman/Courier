@@ -10,7 +10,7 @@ import Foundation
 // MARK: - HistoryElement
 struct HistoryElement: Codable {
     let id: Int
-    let externalID: String
+    let externalID: String?
     let companyID: Int
     let companyName, phone, customerName: String
     let status: Int

@@ -63,6 +63,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
         tableView.register(ScheduleDayOffCell.self, forCellReuseIdentifier: ScheduleDayOffCell.identifire)
         
         tableView.separatorStyle = .none
+        tableView.backgroundColor = Colors.backgroundColor
         tableView.allowsSelection = false
         
         view.addSubview(tableView)
@@ -72,7 +73,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
         let backButtonImage = UIImage(named: "BackArrow")?.withRenderingMode(.alwaysTemplate)
         let backButton = UIButton(type: .custom)
         backButton.setImage(backButtonImage, for: .normal)
-        backButton.tintColor = .black
+        backButton.tintColor = Colors.black
         backButton.addTarget(self, action: #selector(self.backButtonPressed), for: .touchUpInside)
         return backButton
     }
@@ -88,6 +89,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
         self.navigationItem.setHidesBackButton(true, animated: true)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: makeBackButton())
         self.title = title
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Colors.black]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,13 +122,14 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
 
         if post.timeStart == nil && post.timeEnd == nil{
             let cell2 = tableView.dequeueReusableCell(withIdentifier: ScheduleDayOffCell.identifire, for: indexPath) as! ScheduleDayOffCell
+            cell2.backgroundColor = Colors.backgroundColor
             cell2.configure(dayOfWeek: post.dateItem, date: post.dateItem)
-            
             return cell2
         }
         
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleWeekCell.identifire, for: indexPath) as! ScheduleWeekCell
+            cell.backgroundColor = Colors.backgroundColor
             cell.configure(dayOfWeek: post.dateItem, date: post.dateItem, timeStart: post.timeStart, timeEnd: post.timeEnd, sourcePoint: post.point?.name)
 
             return cell
@@ -138,16 +141,6 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
         return 80
     }    
 }
-/*
-func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    return footerView
-}
-*/
- /*
-func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-  return 68
-}
-*/
 
 protocol ScheduleWeekTableViewProtocol: AnyObject, MVPControllerProtocol  {
     func checkPosts(id: String)

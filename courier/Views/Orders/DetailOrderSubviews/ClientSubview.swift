@@ -334,7 +334,9 @@ protocol ClientSubviewProtocol: AnyObject  {
 extension ClientSubview: ClientSubviewProtocol{
     func openApp(appURL: URL) {
         if UIApplication.shared.canOpenURL(appURL) {
-         UIApplication.shared.open(appURL)
+            UIApplication.shared.open(appURL)
+        } else {
+            presenter?.openDownloadLink()
         }
     }
     

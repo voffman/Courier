@@ -79,6 +79,7 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleCell.identifire, for: indexPath) as! ScheduleCell
         cell.selectionStyle = .none
+        cell.backgroundColor = Colors.backgroundColor
         cell.configure(dateStart: post.dateStart, dateEnd: post.dateEnd, accept: post.isConfirmed)
 
         return cell

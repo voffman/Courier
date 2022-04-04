@@ -15,6 +15,7 @@ protocol ProfileViewPresenterProtocol: AnyObject {
     func sessionStop()
    // func sessionStopAndGoToLoginView()
     func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ())
+    func getDefaultNavigatorValue()->String
 }
 
 class ProfilePresenter: ProfileViewPresenterProtocol {
@@ -69,6 +70,11 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
+    }
+    
+    func getDefaultNavigatorValue() -> String {
+        print("навигатор: \(UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "")")
+        return UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? ""
     }
     
 //    func sessionStopAndGoToLoginView() {
