@@ -39,20 +39,12 @@ class ThanksView: UIViewController {
         cardView.translatesAutoresizingMaskIntoConstraints = false
         
         cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-     
-   // MARK: Поправить
+        
         if #available(iOS 11.0, *) {
-            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9.25).isActive = true
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 97).isActive = true
         } else {
-            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/9.25).isActive = true
+            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 97).isActive = true
         }
-        
-        
-//        if #available(iOS 11.0, *) {
-//            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: view.safeAreaInsets.top + 40).isActive = true
-//        } else {
-//            cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 40).isActive = true
-//        }
         
         cardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
         cardView.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
@@ -145,7 +137,7 @@ class ThanksView: UIViewController {
     @objc func returnButtonAction(){
         print("Нажатие на кнопку ThankView")
         self.navigationController?.popToRootViewController(animated: true)
-        let vc = OrderListTableView()
+        let vc = TabBarController()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -178,9 +170,9 @@ class ThanksView: UIViewController {
         
      let dateTimeFinishString = dateManager.convert(dateString: dataPost.dateTimeFinish, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ", convertToDateFormat: "HH:mm")
         
-     let isLate = dateManager.compareCurrentDateWithDate(dateString: dateTimeFinishString, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
+     let isOnTime = dateManager.compareCurrentDateWithDate(dateString: dateTimeFinishString, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
         
-        if isLate {
+        if !isOnTime {
             resultLabel.text = "Вы опоздали"
             smileImage.image = UIImage(named: "Dissatisfied")
         }

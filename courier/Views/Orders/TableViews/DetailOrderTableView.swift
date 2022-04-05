@@ -38,7 +38,7 @@ class DetailOrderTableView: MVPController {
 
         switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
-            scrollView.isScrollEnabled = false
+          //  scrollView.isScrollEnabled = false
             clientSubview.view.isHidden = true
             shopSubview.view.isHidden = false
             tableView.isHidden = true
@@ -129,9 +129,6 @@ class DetailOrderTableView: MVPController {
             
         })
         dismissAlertView()
-        
-
-
     }
 
     @objc func stateButtonAction(sender: UIButton){
@@ -140,28 +137,20 @@ class DetailOrderTableView: MVPController {
             
         case 0...13:
             print("Default state")
-           // stateSubview.setupAcceptedOrderState() // статус 15 принят, значит тут алерт
-           // stateSubview.setupAcceptedOrderState()
+
             showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
             
         case 15...50:
-           // stateSubview.setupAcceptedOrderState()
+
             showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
 
         case 75:
-         //   stateSubview.setupArrivedToClient()
-         //   stateSubview.setupAcceptedOrderState()
+
             showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
         
         case 100:
             break
-//            stateSubview.stateButton.isEnabled = false
-//            let thanksView = ThanksView()
-//
-//            thanksView.modalPresentationStyle = .fullScreen
-//
-//            self.navigationController?.pushViewController(thanksView, animated: true)
-            
+
         default:
             break
         }
@@ -174,7 +163,7 @@ class DetailOrderTableView: MVPController {
         self.presenter = presenter
         setupScrollView()
         setupTableView()
-        scrollView.isScrollEnabled = false
+        //scrollView.isScrollEnabled = false
         self.view.backgroundColor = Colors.backgroundColor
         
         view.addSubview(sc.segmentedControlContainerView)
@@ -183,7 +172,7 @@ class DetailOrderTableView: MVPController {
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
         
-        self.view.addSubview(shopSubview.view)
+        self.contentView.addSubview(shopSubview.view)
         self.contentView.addSubview(clientSubview.view)
         
         self.view.addSubview(stateSubview.view)
@@ -193,6 +182,14 @@ class DetailOrderTableView: MVPController {
         stateSubview.stateButton.addTarget(self, action: #selector(stateButtonAction(sender:)), for: .touchUpInside)
         
         shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address, phoneNumber: dataPosts.addressFrom.phone, latitude: dataPosts.addressFrom.lat, longitude: dataPosts.addressFrom.long)
+        clientSubview.configure(clientName: dataPosts.customerName, clientPhone: dataPosts.phone, address:
+                                                                    "\(dataPosts.addressTo.street) " +
+                                                                    "\(dataPosts.addressTo.house) " +
+                                                                    "\(dataPosts.addressTo.flat ?? "") " +
+                                                                    "\(dataPosts.addressTo.addressMore ?? "") ",
+                                                                    comment: dataPosts.comments,
+                                                                    latitude: dataPosts.addressTo.lat,
+                                                                    longitude: dataPosts.addressTo.long)
         stateSubview.configure(buttonTitle: dataPosts.statusName, status: dataPosts.status, timerValue: dataPosts.dateTimeStatusFinish)
   
     }
@@ -258,6 +255,42 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createNavigationBar()
+        
+        switch dataPosts.status{
+            
+        case 0...15:
+            break
+
+            
+        case 20:
+            // заведение - надпись ЗАБЕРИТЕ ЗАКАЗ, только кнопка ПОЗВОНИТЬ
+            // клиент - ничего не меняется
+            shopSubview.setupNewStateOne()
+            break
+
+        case 50:
+            // заведение - НЕТ НАДПИСИ заберите заказ/ только кнопка ПОЗВОНИТЬ
+            // клиент - надпись ДОСТАВЬТЕ ЗАКАЗ КУРЬЕРУ, две кнопки
+            
+            shopSubview.setupNewStateTwo()
+            clientSubview.setupNewStateOne()
+            break
+            
+        case 75:
+            // заведение - ничего не меняется с момента состояния 50
+            // клиент - одна кнопка ПОЗВОНИТЬ (на 0-20 маршрут), надпись такая как на состоянии 50
+            
+            shopSubview.setupNewStateTwo()
+            clientSubview.setupNewStateTwo()
+            break
+        
+        case 100:
+            break
+
+            
+        default:
+            break
+        }
     }
     
     override func viewDidLayoutSubviews() {

@@ -70,7 +70,7 @@ class StateSubview: UIViewController {
         orderTimerLabel.widthAnchor.constraint(equalToConstant: 125).isActive = true
   
         orderTimerLabel.topAnchor.constraint(equalTo: orderTimerView.topAnchor, constant: 12).isActive = true
-        orderTimerLabel.leftAnchor.constraint(equalTo: orderTimerView.leftAnchor, constant: 46).isActive = true
+        orderTimerLabel.leftAnchor.constraint(equalTo: orderTimerView.leftAnchor, constant: 36).isActive = true
         
     }
     
@@ -162,18 +162,15 @@ class StateSubview: UIViewController {
 //            thanksView.modalPresentationStyle = .fullScreen
 //            
 //            self.navigationController?.pushViewController(thanksView, animated: true)
-
-           // sender.tag = 0
             
         default:
             break
-           // sender.tag = 0
         }
     }
     
     
     var timer = Timer()
-    var count = 50
+    var count = 86400 // 24 часа
     var timerValue = ""
     
     func launchTimer(){
@@ -215,6 +212,7 @@ class StateSubview: UIViewController {
         super.viewDidLayoutSubviews()
         setupCell()
         checkStateSubviewStatus(status: status)
+        
     }
 
     /*

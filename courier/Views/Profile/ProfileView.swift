@@ -9,6 +9,8 @@ import UIKit
 
 class ProfileView: MVPController {
     
+    let colors = Colors()
+    
     let cardView = CustomViews(style: .withShadow)
     let profileImage = UIImageView(image: UIImage(named: "Profile"))
     let courierNameLabel = CustomLabels(title: "Пользователь", textSize: 16, style: .bold, alignment: .center)
@@ -367,10 +369,14 @@ class ProfileView: MVPController {
         if (sender.isOn == true){
             UserDefaults.standard.set(true, forKey: UserDefaultsKeys.isDarkMode)
             colorSchemeLabel.text = "Темная"
+            colors.changeColorsToDark()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "themeChanged"), object: nil)
         }
         else{
             UserDefaults.standard.set(false, forKey: UserDefaultsKeys.isDarkMode)
             colorSchemeLabel.text = "Светлая"
+            colors.changeColorsToLight()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "themeChanged"), object: nil)
         }
     }
 
@@ -379,12 +385,13 @@ class ProfileView: MVPController {
             presenter?.sessionStart()
             activityStatusLabel.text = "Активен"
             activityStatusLabel.textColor = Colors.lightGreen
-            
+
         }
         else{
             presenter?.sessionStop()
             activityStatusLabel.text = "Неактивен"
             activityStatusLabel.textColor = Colors.red
+
         }
     }
     

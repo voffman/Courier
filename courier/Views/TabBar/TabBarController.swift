@@ -8,6 +8,10 @@
 import UIKit
 
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
+   
+   @objc func updateView() {
+        viewWillAppear(true)
+    }
     
     var presenter: TabBarPresenterProtocol?
     
@@ -16,7 +20,8 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         delegate = self
         let presenter = TabBarPresenter(view:  self)
         self.presenter = presenter
-        reloadMainItem()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateView), name: NSNotification.Name(rawValue: "themeChanged"), object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +68,6 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
 }
 
-extension TabBarController: TabBarProtocol{
-    func reloadMainItem() {
-    }
+extension TabBarController: TabBarProtocol {
+
 }

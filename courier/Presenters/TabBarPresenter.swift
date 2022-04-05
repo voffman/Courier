@@ -9,7 +9,7 @@ import Foundation
 
 // То, что выполняю во вью
 protocol TabBarProtocol: AnyObject  {
-    func reloadMainItem()
+    
 }
 
 // То, что выполняю в здесь

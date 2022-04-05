@@ -10,7 +10,6 @@ import Foundation
 // То, что выполняю в здесь
 protocol ShopSubviewPresenterProtocol: AnyObject {
     init(view: ShopSubviewProtocol)
-    func getSelectedShopData()
     func getCoordinates(latitude: String, longitude: String)
     func openDownloadLink()
     func getPhoneNumber(phoneNumber: String)
@@ -23,9 +22,6 @@ class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
         self.view = view
     }
 
-    func getSelectedShopData() {
-        
-    }
     
     func getCoordinates(latitude: String, longitude: String){
         let defaultNavigator = UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator)
@@ -42,8 +38,8 @@ class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
         }
         
         //
-        let url = URL(string: urlString)
-        view?.openApp(appURL: url!)
+        guard let url = URL(string: urlString) else { return }
+        view?.openApp(appURL: url)
          
     }
     
@@ -60,14 +56,14 @@ class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
         }
         
         //
-        let url = URL(string: urlString)
-        view?.openApp(appURL: url!)
+        guard let url = URL(string: urlString) else { return }
+        view?.openApp(appURL: url)
     }
     
     func getPhoneNumber(phoneNumber: String) {
         let urlString = "tel://" + phoneNumber
-        let url = URL(string: urlString)
+        guard let url = URL(string: urlString) else { return }
         
-        view?.openApp(appURL: url!)
+        view?.openApp(appURL: url)
     }
 }

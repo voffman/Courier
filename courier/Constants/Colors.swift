@@ -11,25 +11,65 @@ struct Colors {
 
     static let isDarkMode = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isDarkMode)
 
-    static let lightGreen = UIColor(hexString: (isDarkMode ? "#16d91c" : "#16d91c")) // -
-    static let lightGray = UIColor(hexString: (isDarkMode ? "#1A1A1A" : "#e6e6e6")) // grey1
-    static let gray = UIColor(hexString: (isDarkMode ? "#737373" : "#a6a6a6")) // grey2
-    static let black = UIColor(hexString: (isDarkMode ? "#FFFFFF" : "#000000")) // onSurface
-    static let yellow = UIColor(hexString: (isDarkMode ? "#FFA500" : "#FF8C00")) // warning? изн #ffdb4d
-    static let white = UIColor(hexString: (isDarkMode ? "#000000" : "#FFFFFF")) //OnPrimary
-    static let green = UIColor(hexString: (isDarkMode ? "#16D91C" : "#78b833")) // Success
-    static let orange = UIColor(hexString: (isDarkMode ? "#fab600" : "#fab600")) // Primary? изн #fab600 схема #FFCB08
-    static let red = UIColor(hexString: (isDarkMode ? "#e31e24" : "#e31e24")) // red
-    static let white2 = UIColor(hexString: (isDarkMode ? "#fefefe" : "#fefefe")) //
-    static let darkGray = UIColor(hexString: (isDarkMode ? "#8C8C8C" : "#808080")) // grey3
-    static let lightBlueDark = UIColor(hexString: (isDarkMode ? "#0090cc" : "#0090cc")) //
-    static let lightBlue = UIColor(hexString: (isDarkMode ? "#00a0e3" : "#00a0e3")) //
-    static let white3 = UIColor(hexString: (isDarkMode ? "#fcfcfc" : "#fcfcfc" )) //
-    static let lightRed = UIColor(hexString: (isDarkMode ? "#582024" : "#FFF5F5")) // additional? изн #FFF5F5 схема #fff3cd
-    static let scarletRed = UIColor(hexString: (isDarkMode ? "#E31E24" : "#FF8083")) // danger
-    static let backgroundColor = UIColor(hexString: (isDarkMode ? "#0D0D0D" : "#F7F7F7")) // background
+    static var lightGreen = UIColor(hexString: (isDarkMode ? "#16d91c" : "#16d91c")) // -
+    static var lightGray = UIColor(hexString: (isDarkMode ? "#1A1A1A" : "#e6e6e6")) // grey1
+    static var gray = UIColor(hexString: (isDarkMode ? "#737373" : "#a6a6a6")) // grey2
+    static var black = UIColor(hexString: (isDarkMode ? "#FFFFFF" : "#000000")) // onSurface
+    static var yellow = UIColor(hexString: (isDarkMode ? "#FFA500" : "#FF8C00")) // warning? изн #ffdb4d
+    static var white = UIColor(hexString: (isDarkMode ? "#000000" : "#FFFFFF")) //OnPrimary
+    static var green = UIColor(hexString: (isDarkMode ? "#16D91C" : "#78b833")) // Success
+    static var orange = UIColor(hexString: (isDarkMode ? "#fab600" : "#fab600")) // Primary? изн #fab600 схема #FFCB08
+    static var red = UIColor(hexString: (isDarkMode ? "#e31e24" : "#e31e24")) // red
+    static var white2 = UIColor(hexString: (isDarkMode ? "#fefefe" : "#fefefe")) //
+    static var darkGray = UIColor(hexString: (isDarkMode ? "#8C8C8C" : "#808080")) // grey3
+    static var lightBlueDark = UIColor(hexString: (isDarkMode ? "#0090cc" : "#0090cc")) //
+    static var lightBlue = UIColor(hexString: (isDarkMode ? "#00a0e3" : "#00a0e3")) //
+    static var white3 = UIColor(hexString: (isDarkMode ? "#fcfcfc" : "#fcfcfc" )) //
+    static var lightRed = UIColor(hexString: (isDarkMode ? "#582024" : "#FFF5F5")) // additional? изн #FFF5F5 схема #fff3cd
+    static var scarletRed = UIColor(hexString: (isDarkMode ? "#E31E24" : "#FF8083")) // danger
+    static var backgroundColor = UIColor(hexString: (isDarkMode ? "#0D0D0D" : "#F7F7F7")) // background
     
+    
+    func changeColorsToDark(){
+        Colors.lightGreen = UIColor(hexString: "#16d91c")
+        Colors.lightGray = UIColor(hexString: "#1A1A1A")
+        Colors.gray = UIColor(hexString: "#737373")
+        Colors.black = UIColor(hexString: "#FFFFFF")
+        Colors.yellow = UIColor(hexString: "#FFA500")
+        Colors.white = UIColor(hexString: "#000000")
+        Colors.green = UIColor(hexString: "#16D91C")
+        Colors.orange = UIColor(hexString: "#fab600")
+        Colors.red = UIColor(hexString: "#e31e24")
+        Colors.white2 = UIColor(hexString: "#fefefe")
+        Colors.darkGray = UIColor(hexString: "#8C8C8C")
+        Colors.lightBlueDark = UIColor(hexString: "#0090cc")
+        Colors.lightBlue = UIColor(hexString: "#00a0e3")
+        Colors.white3 = UIColor(hexString: "#fcfcfc")
+        Colors.lightRed = UIColor(hexString: "#582024")
+        Colors.scarletRed = UIColor(hexString: "#E31E24")
+        Colors.backgroundColor = UIColor(hexString: "#0D0D0D")
     }
+    
+    func changeColorsToLight(){
+        Colors.lightGreen = UIColor(hexString: "#16d91c")
+        Colors.lightGray = UIColor(hexString: "#e6e6e6")
+        Colors.gray = UIColor(hexString: "#a6a6a6")
+        Colors.black = UIColor(hexString: "#000000")
+        Colors.yellow = UIColor(hexString: "#FF8C00")
+        Colors.white = UIColor(hexString: "#FFFFFF")
+        Colors.green = UIColor(hexString: "#78b833")
+        Colors.orange = UIColor(hexString: "#fab600")
+        Colors.red = UIColor(hexString: "#e31e24")
+        Colors.white2 = UIColor(hexString: "#fefefe")
+        Colors.darkGray = UIColor(hexString: "#808080")
+        Colors.lightBlueDark = UIColor(hexString: "#0090cc")
+        Colors.lightBlue = UIColor(hexString: "#00a0e3")
+        Colors.white3 = UIColor(hexString: "#fcfcfc")
+        Colors.lightRed = UIColor(hexString: "#FFF5F5")
+        Colors.scarletRed = UIColor(hexString: "#FF8083")
+        Colors.backgroundColor = UIColor(hexString: "#F7F7F7")
+    }
+}
 
 extension UIColor {
     convenience init(hexString: String) {

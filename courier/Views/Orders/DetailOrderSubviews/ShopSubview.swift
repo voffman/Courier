@@ -134,12 +134,36 @@ class ShopSubview: UIViewController {
         presenter?.getPhoneNumber(phoneNumber: phoneNumber)
     }
     
-    func setupOnlyCallButtonState(){
+    func setupNewStateOne(){
         routeButton.isHidden = true
+        toCallButton.rightAnchor.constraint(equalTo: cardView.centerXAnchor, constant: -5).isActive = false
         toCallButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = true
         titleLabel.text = "Заберите заказ"
+        view.layoutIfNeeded()
     }
     
+    func setupNewStateTwo(){
+        routeButton.isHidden = true
+        cardView.heightAnchor.constraint(equalToConstant: 265).isActive = false
+        cardView.heightAnchor.constraint(equalToConstant: 194).isActive = true
+        
+        sourceLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 81).isActive = false
+        sourceLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16).isActive = true
+        
+        orderFromImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 118).isActive = false
+        orderFromImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 53).isActive = true
+        
+        addressLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 118).isActive = false
+        addressLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 53).isActive = true
+        
+        toCallButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 191).isActive = false
+        toCallButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 130).isActive = true
+        
+        toCallButton.rightAnchor.constraint(equalTo: cardView.centerXAnchor, constant: -5).isActive = false
+        toCallButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = true
+        view.layoutIfNeeded()
+        titleLabel.text = ""
+    }
     
     func setupCell(){
         setupCardView()

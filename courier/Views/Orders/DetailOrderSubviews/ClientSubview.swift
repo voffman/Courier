@@ -13,7 +13,7 @@ class ClientSubview: UIViewController {
     
     let cardView = CustomViews(style: .withShadow)
     
-    let titleLabel = CustomLabels(title: "Доставьте заказ клиенту", textSize: 20, style: .bold, alignment: .justified)
+    let titleLabel = CustomLabels(title: "", textSize: 20, style: .bold, alignment: .justified)
     let clientImage = UIImageView(image: UIImage(named: "Client"))
     let clientLabel = CustomLabels(title: "Валерия Добровольская", textSize: 14, style: .light)
     let phoneLabel = CustomLabels(title: "8 (700) 700 70 70", textSize: 14, style: .regular)
@@ -165,7 +165,7 @@ class ClientSubview: UIViewController {
     
     func setupToCallButton(){
         toCallButton.translatesAutoresizingMaskIntoConstraints = false
-        toCallButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 191).isActive = true // 191
+        toCallButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 170).isActive = true // 191
         toCallButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
         toCallButton.rightAnchor.constraint(equalTo: cardView.centerXAnchor, constant: -5).isActive = true
         toCallButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
@@ -227,9 +227,10 @@ class ClientSubview: UIViewController {
         presenter?.getCoordinates(latitude: latitude, longitude: longitude)
     }
     
-    func setupTwoButtonsState(){
-        titleLabel.isHidden = false
-        toCallButton.isHidden = false
+    func setupNewStateOne(){
+        //titleLabel.isHidden = false
+        titleLabel.title = "Доставьте заказ клиенту"
+        titleLabel.setLabel()
         
         clientImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
         clientLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 61).isActive = true
@@ -248,13 +249,17 @@ class ClientSubview: UIViewController {
         routeButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
 
         cardView.bottomAnchor.constraint(equalTo: routeButton.bottomAnchor, constant: 20).isActive = true
+
+        view.layoutIfNeeded()
         
     }
     
-    func setupOnlyCallButtonState(){
-        titleLabel.isHidden = false
+    func setupNewStateTwo(){
+
+        titleLabel.title = "Доставьте заказ клиенту"
+        titleLabel.setLabel()
+        
         routeButton.isHidden = true
-        toCallButton.isHidden = false
         
         clientImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
         clientLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 61).isActive = true
@@ -264,16 +269,15 @@ class ClientSubview: UIViewController {
         addressTitleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 134).isActive = true
         addressLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 154).isActive = true
 
+        toCallButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 206).isActive = true
         toCallButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
-
         cardView.bottomAnchor.constraint(equalTo: toCallButton.bottomAnchor, constant: 20).isActive = true
-        
+        view.layoutIfNeeded()
     }
     
     func setupCell(){
         setupCardView()
         setupTitleLabel()
-        titleLabel.isHidden = true
         setupClientImage()
         setupClientLabel()
         setupPhoneLabel()
@@ -282,7 +286,6 @@ class ClientSubview: UIViewController {
         setupAddressTitleLabel()
         setupAddressLabel()
         setupToCallButton()
-        toCallButton.isHidden = true
         setupRouteButton()
         setupCommentCardView()
         setupCommentImage()
