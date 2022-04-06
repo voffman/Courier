@@ -10,7 +10,7 @@ import UIKit
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
    
    @objc func updateView() {
-        viewWillAppear(true)
+        viewDidLoad()
     }
     
     var presenter: TabBarPresenterProtocol?
@@ -22,10 +22,6 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         self.presenter = presenter
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateView), name: NSNotification.Name(rawValue: "themeChanged"), object: nil)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         let item1 = UINavigationController(rootViewController: OrdersView())
         let item2 = UINavigationController(rootViewController: HistoryTableView())
@@ -46,6 +42,11 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         self.tabBar.backgroundColor = Colors.white
         let controllers = [item1,item2,item3,item4]
         self.viewControllers = controllers
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
 
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {

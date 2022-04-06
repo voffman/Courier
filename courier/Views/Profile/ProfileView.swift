@@ -346,10 +346,12 @@ class ProfileView: MVPController {
             if post.status {
                 self.activityStatusLabel.text = "Активен"
                 self.activityStatusLabel.textColor = Colors.lightGreen
+               // self.presenter?.startTracking() // MARK:
             }
             else {
                 self.activityStatusLabel.text = "Неактивен"
                 self.activityStatusLabel.textColor = Colors.red
+                self.presenter?.stopTracking()
             }
             
         })
@@ -385,13 +387,13 @@ class ProfileView: MVPController {
             presenter?.sessionStart()
             activityStatusLabel.text = "Активен"
             activityStatusLabel.textColor = Colors.lightGreen
-
+            checkActivity()
         }
-        else{
+        else {
             presenter?.sessionStop()
             activityStatusLabel.text = "Неактивен"
             activityStatusLabel.textColor = Colors.red
-
+            checkActivity()
         }
     }
     
@@ -437,6 +439,7 @@ extension ProfileView: ProfileViewProtocol{
     }
     
     func goToChooseNavigatorView() {
+        
         let chooseNavigatorView = ChooseNavigatorView()
         self.navigationController?.pushViewController(chooseNavigatorView, animated: true)
     }

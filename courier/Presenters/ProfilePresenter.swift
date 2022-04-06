@@ -9,6 +9,8 @@ import Foundation
 
 protocol ProfileViewPresenterProtocol: AnyObject {
     init(view: ProfileViewProtocol)
+    func startTracking()
+    func stopTracking()
     func removeBearer()
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ())
     func sessionStart()
@@ -27,6 +29,17 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     }
     
     let api = ApiService()
+    
+    let locationService = LocationService()
+    
+    func startTracking() {
+       // locationService.start()
+        locationService.trackingWithDelay(seconds: 5)
+    }
+    
+    func stopTracking() {
+        locationService.stop()
+    }
     
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ()) {
         

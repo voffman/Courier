@@ -35,12 +35,14 @@ class CustomTextFields: UITextField {
             self.layer.cornerRadius = 4
             self.layer.borderWidth = 0.4
             self.layer.borderColor = Colors.gray.cgColor
+            self.textColor = Colors.black
             self.placeholder = pHolder
             
         case .withPhoneNumberFormatter:
             self.layer.cornerRadius = 4
             self.layer.borderWidth = 0.4
             self.layer.borderColor = Colors.gray.cgColor
+            self.textColor = Colors.black
             self.placeholder = "  + 7 ( _ _ _ ) _ _ _ - _ _ - _ _"
             // пока без реального форматирования
             

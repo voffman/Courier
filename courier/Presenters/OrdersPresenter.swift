@@ -10,6 +10,8 @@ import Foundation
 // То, что выполняю в здесь
 protocol OrdersViewPresenterProtocol: AnyObject {
     init(view: OrdersViewProtocol)
+    func startTracking()
+    func stopTracking()
     func startUserActivity()
     func checkUserActivity()
 }
@@ -23,6 +25,17 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
     }
     
     let api = ApiService()
+    
+    let locationService = LocationService()
+    
+    func startTracking() {
+      //  locationService.start()
+        locationService.trackingWithDelay(seconds: 5)
+    }
+    
+    func stopTracking() {
+        locationService.stop()
+    }
     
     func startUserActivity() {
         
@@ -38,6 +51,10 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
         api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
             if post.status {
                 self.view?.goToOrderListTableView()
+                self.startTracking()
+            }
+            else {
+                self.stopTracking()
             }
 
         } errorResponse: { error in

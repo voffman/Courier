@@ -50,6 +50,7 @@
 		5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316027A0F679000777A9 /* CustomAlerts.swift */; };
 		5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */; };
 		50475EE727BCC0FA00AD27E2 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50475EE627BCC0FA00AD27E2 /* AlertView.swift */; };
+		5048D95827FD4BE4005BF3D1 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5048D95727FD4BE4005BF3D1 /* LocationService.swift */; };
 		5053619727EC24B900559006 /* EmployeeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5053619627EC24B900559006 /* EmployeeResponse.swift */; };
 		5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC7279A734100E4A686 /* OrderListTableView.swift */; };
 		5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC9279A7CD400E4A686 /* OrderListCell.swift */; };
@@ -127,6 +128,7 @@
 		5043316027A0F679000777A9 /* CustomAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlerts.swift; sourceTree = "<group>"; };
 		5043316227A0F6D0000777A9 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		50475EE627BCC0FA00AD27E2 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		5048D95727FD4BE4005BF3D1 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		5053619627EC24B900559006 /* EmployeeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeResponse.swift; sourceTree = "<group>"; };
 		5062EFC7279A734100E4A686 /* OrderListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListTableView.swift; sourceTree = "<group>"; };
 		5062EFC9279A7CD400E4A686 /* OrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListCell.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				50FDDEAA27C78CBA000B71AF /* DateManager.swift */,
 				50217C4827CF1B630066C3F0 /* PhoneNumberFormatter.swift */,
 				50DDAD8327E1D55E00EF83BC /* DecimalNumberFormatter.swift */,
+				5048D95727FD4BE4005BF3D1 /* LocationService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				5031835A27ACFDD7001C9BEB /* ScheduleCell.swift in Sources */,
 				50A5731C27B3D89E00E3013F /* UserResponse.swift in Sources */,
 				502618B427A7957D00CEA57C /* OrdersPresenter.swift in Sources */,
+				5048D95827FD4BE4005BF3D1 /* LocationService.swift in Sources */,
 				50FFC1CC27B0CAB500478F1D /* ScheduleDayOffCell.swift in Sources */,
 				5043316327A0F6D0000777A9 /* CustomSegmentedControl.swift in Sources */,
 				5031835C27ACFF78001C9BEB /* TabBarController.swift in Sources */,
