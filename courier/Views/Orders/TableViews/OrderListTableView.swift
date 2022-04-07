@@ -247,7 +247,6 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         if cellRowToTimerMapping[row] == nil {
             var dateTimeStatusFinishSeconds: Int = 0
             let post = data[indexPath.row]
-            print("таймерр: \(post.dateTimeStatusFinish)")
             
           dateTimeStatusFinishSeconds = dateManager.converteDateToSeconds(dateString: post.dateTimeStatusFinish, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
             

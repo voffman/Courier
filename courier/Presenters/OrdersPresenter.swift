@@ -10,8 +10,6 @@ import Foundation
 // То, что выполняю в здесь
 protocol OrdersViewPresenterProtocol: AnyObject {
     init(view: OrdersViewProtocol)
-    func startTracking()
-    func stopTracking()
     func startUserActivity()
     func checkUserActivity()
 }
@@ -27,19 +25,11 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
     let api = ApiService()
     
     let locationService = LocationService()
-    
-    func startTracking() {
-      //  locationService.start()
-        locationService.trackingWithDelay(seconds: 5)
-    }
-    
-    func stopTracking() {
-        locationService.stop()
-    }
-    
+
     func startUserActivity() {
         
         api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivity"), object: nil)
             self.view?.goToOrderListTableView()
             
         } errorResponse: { error in
@@ -51,10 +41,10 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
         api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
             if post.status {
                 self.view?.goToOrderListTableView()
-                self.startTracking()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivity"), object: nil)
             }
             else {
-                self.stopTracking()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStop"), object: nil)
             }
 
         } errorResponse: { error in

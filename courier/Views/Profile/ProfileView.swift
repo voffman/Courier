@@ -289,7 +289,10 @@ class ProfileView: MVPController {
     }
     
     @objc func navigationSettingButtonAction(sender: UIButton){
+        // MARK: для тестирования остановки таймера
+      //  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStop"), object: nil)
         goToChooseNavigatorView()
+
     }
     
     @objc func exitButtonAction(sender: UIButton){
@@ -346,12 +349,12 @@ class ProfileView: MVPController {
             if post.status {
                 self.activityStatusLabel.text = "Активен"
                 self.activityStatusLabel.textColor = Colors.lightGreen
-               // self.presenter?.startTracking() // MARK:
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivity"), object: nil)
             }
             else {
                 self.activityStatusLabel.text = "Неактивен"
                 self.activityStatusLabel.textColor = Colors.red
-                self.presenter?.stopTracking()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStop"), object: nil)
             }
             
         })

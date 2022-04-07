@@ -12,15 +12,22 @@ class LocationService: NSObject, CLLocationManagerDelegate  {
     
     private let locationManager = CLLocationManager()
     var timer : Timer?
+    var isTimerActive = false
+    
+    var count = 0
 //    override init() {
 //        super.init()
 //        configurate()
 //    }
     
+    let api = ApiService()
+    
     private func configurate() {
         locationManager.delegate = self
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+       // locationManager.distanceFilter = 10
     }
     
     func requestPermission() {
@@ -33,22 +40,31 @@ class LocationService: NSObject, CLLocationManagerDelegate  {
         configurate()
         locationManager.startUpdatingLocation()
         locationManager.startMonitoringSignificantLocationChanges()
-        
-        print("старт 5 сек")
+        count += 1
+        print("\(count) -й старт таймера")
     }
     
     func stop() {
         locationManager.stopUpdatingLocation()
         locationManager.stopMonitoringSignificantLocationChanges()
         timer?.invalidate()
-        timer = nil
+        isTimerActive = false
+       // timer = nil
     }
     
     
     func trackingWithDelay(seconds: Double) {
-        timer = Timer.scheduledTimer(timeInterval: seconds, target: self, selector: #selector(start), userInfo: nil, repeats: true)
-        timer?.tolerance = 0.25
-        
+        if isTimerActive {
+            print("Таймер уже запущен")
+           // timer?.invalidate()
+         //   timer = nil
+        }
+        else {
+            timer = Timer.scheduledTimer(timeInterval: seconds, target: self, selector: #selector(start), userInfo: nil, repeats: true)
+            timer?.tolerance = 0.25
+            isTimerActive = true
+
+        }
     }
 
     
@@ -57,6 +73,18 @@ class LocationService: NSObject, CLLocationManagerDelegate  {
         if let location = locations.last {
             print("Широта (latitude)", location.coordinate.latitude)
             print("Долгота (longitude) ", location.coordinate.longitude)
+
+            var errorResponse: ErrorResponse?
+            api.saveCourierLocation(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", latitude: String(location.coordinate.latitude), longitude: String(location.coordinate.longitude)){ error in
+                errorResponse = error
+                guard let errorResponse = errorResponse else { return }
+                print("Ошибка: \(errorResponse)")
+            }
+//            if #available(iOS 14.0, *) {
+//                print("Статус: \(manager.authorizationStatus.rawValue)")
+//            } else {
+//                // Fallback on earlier versions
+//            }
         }
         else {
             print("Широта (latitude) не определена")

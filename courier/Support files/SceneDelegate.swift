@@ -27,7 +27,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         else {
             window.rootViewController = LoginView()
-           // window.rootViewController = TabBarController()
         }
         
         

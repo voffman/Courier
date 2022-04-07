@@ -41,6 +41,9 @@ private let courierSlotStopURL = baseURL + "courier/slot/stop"
 // Profile
 private let employeeURL = baseURL + "user"
 
+//courier location
+private let locationURL = baseURL + "location"
+
 let networkManager = NetworkManager()
 
 class ApiService {
@@ -255,5 +258,14 @@ class ApiService {
         }
     }
     
+    // MARK: courier location
+    func saveCourierLocation(token: String, latitude: String, longitude: String, completion: @escaping (ErrorResponse)->()){
+        networkManager.request(url: locationURL, method: .post, headers: [.authorization(bearerToken: token)], body: ["lat": latitude, "long": longitude]) { response in
+            print(response.data ?? "Нет данных")
+
+        } ifError: { error in
+            completion(error)
+        }
+    }
     
 }

@@ -9,8 +9,6 @@ import Foundation
 
 protocol ProfileViewPresenterProtocol: AnyObject {
     init(view: ProfileViewProtocol)
-    func startTracking()
-    func stopTracking()
     func removeBearer()
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ())
     func sessionStart()
@@ -31,15 +29,6 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     let api = ApiService()
     
     let locationService = LocationService()
-    
-    func startTracking() {
-       // locationService.start()
-        locationService.trackingWithDelay(seconds: 5)
-    }
-    
-    func stopTracking() {
-        locationService.stop()
-    }
     
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ()) {
         
@@ -62,6 +51,8 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     func sessionStart() {
         api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
             print("Сессия запущена")
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivity"), object: nil)
+            
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
@@ -71,6 +62,8 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     func sessionStop() {
         api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
             print("Сессия остановлена")
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStop"), object: nil)
+            
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
