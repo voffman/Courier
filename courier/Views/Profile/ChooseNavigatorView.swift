@@ -13,7 +13,7 @@ class ChooseNavigatorView: MVPController {
     let gisTitleLabel = CustomLabels(title: "2ГИС", textSize: 16, style: .regular)
 //    let exitArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     let gisButton = CustomButtons(title: "", style: .transparent)
-    let lineImage = UIImageView(image: UIImage(named: "Line"))
+    let firstDividerView = CustomViews(style: .divider)
     let yaNavTitleLabel = CustomLabels(title: "Яндекс Навигатор", textSize: 16, style: .regular)
 //    let exitArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     let yaNavButton = CustomButtons(title: "", style: .transparent)
@@ -45,12 +45,13 @@ class ChooseNavigatorView: MVPController {
 
     }
     
-    func setupFirstLineImage(){
-        view.addSubview(lineImage)
-        
-        lineImage.translatesAutoresizingMaskIntoConstraints = false
-        lineImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 51).isActive = true
-        lineImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    func setupFirstDividerView(){
+        view.addSubview(firstDividerView)
+        firstDividerView.setView()
+        firstDividerView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 51).isActive = true
+        firstDividerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        firstDividerView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        firstDividerView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = true
     }
     
     func setupGisTitleLabel(){
@@ -120,7 +121,7 @@ class ChooseNavigatorView: MVPController {
     func setupView(){
         self.view.backgroundColor = Colors.backgroundColor
         setupCardView()
-        setupFirstLineImage()
+        setupFirstDividerView()
         setupGisTitleLabel()
         setupGisButton()
         setupYaNavTitleLabel()

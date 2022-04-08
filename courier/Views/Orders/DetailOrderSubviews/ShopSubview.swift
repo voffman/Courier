@@ -16,6 +16,7 @@ class ShopSubview: UIViewController {
     let cardView = CustomViews(style: .withShadow)
     let titleLabel = CustomLabels(title: "Направляйтесь      в отправную точку", textSize: 20, style: .bold, alignment: .justified)
     let sourceLabel = CustomLabels(title: "Источник (название заведения)", textSize: 14, style: .regular)
+    let orderFromBackgroundView = CustomViews(style: .circle)
     let orderFromImage = UIImageView(image: UIImage(named: "Storefront"))
     let addressLabel = CustomLabels(title: "Казыбек Би, Нуркена Абдирова, 7, дом 8, квартира 42", textSize: 14, style: .regular)
     let toCallButton = CustomButtons(title: "ПОЗВОНИТЬ", style: .normal)
@@ -41,6 +42,8 @@ class ShopSubview: UIViewController {
         titleLabel.setLabel()
         self.view.addSubview(sourceLabel)
         sourceLabel.setLabel()
+        self.view.addSubview(orderFromBackgroundView)
+        orderFromBackgroundView.setView()
         self.view.addSubview(orderFromImage)
         self.view.addSubview(addressLabel)
         addressLabel.setLabel()
@@ -88,12 +91,20 @@ class ShopSubview: UIViewController {
 
     }
     
+    func setupOrderFromBackgroundView() {
+        orderFromBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        orderFromBackgroundView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 118).isActive = true
+        orderFromBackgroundView.leftAnchor.constraint(equalTo:cardView.leftAnchor, constant: 16).isActive = true
+        orderFromBackgroundView.backgroundColor = Colors.white
+        orderFromBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderFromBackgroundView.layer.borderWidth = 1
+        
+    }
+    
     func setupOrderFromImage(){
         orderFromImage.translatesAutoresizingMaskIntoConstraints = false
-        orderFromImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 118).isActive = true
-        orderFromImage.leftAnchor.constraint(equalTo:cardView.leftAnchor, constant: 16).isActive = true
-        orderFromImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        orderFromImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        orderFromImage.centerXAnchor.constraint(equalTo: orderFromBackgroundView.centerXAnchor).isActive = true
+        orderFromImage.centerYAnchor.constraint(equalTo: orderFromBackgroundView.centerYAnchor).isActive = true
     }
     
     func setupAddressLabel(){
@@ -150,8 +161,9 @@ class ShopSubview: UIViewController {
         sourceLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 81).isActive = false
         sourceLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16).isActive = true
         
-        orderFromImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 118).isActive = false
-        orderFromImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 53).isActive = true
+        //orderFromImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 118).isActive = false
+        //orderFromImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 53).isActive = true
+        orderFromBackgroundView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 53).isActive = true
         
         addressLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 118).isActive = false
         addressLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 53).isActive = true
@@ -169,6 +181,7 @@ class ShopSubview: UIViewController {
         setupCardView()
         setupTitleLabel()
         setupSourceLabel()
+        setupOrderFromBackgroundView()
         setupOrderFromImage()
         setupAddressLabel()
         setupToCallButton()

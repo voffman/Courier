@@ -14,7 +14,7 @@ class ErrorView: UIViewController {
     let nameLabel = CustomLabels(title: "Имя ошибки", textSize: 20, style: .bold, alignment: .center)
     let messageLabel = CustomLabels(title: "Сообщение", textSize: 16, style: .regular, alignment: .justified)
     
-    let orderLineImage = UIImageView(image: UIImage(named: "Line"))
+    let dividerView = CustomViews(style: .divider)
     
     let codeLabel = CustomLabels(title: "Код ошибки: ", textSize: 14, style: .regular, alignment: .justified)
     let statusLabel = CustomLabels(title: "Статус: ", textSize: 14, style: .regular, alignment: .justified)
@@ -73,12 +73,14 @@ class ErrorView: UIViewController {
         messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: onVC.view.frame.size.width - 20).isActive = true
         messageLabel.bottomAnchor.constraint(equalTo: cardView.topAnchor, constant: 175).isActive = true
         
-        cardView.addSubview(orderLineImage)
-        orderLineImage.translatesAutoresizingMaskIntoConstraints = false
-        orderLineImage.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
-        orderLineImage.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 180).isActive = true
-        orderLineImage.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 15).isActive = true
-        orderLineImage.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -15).isActive = true
+        cardView.addSubview(dividerView)
+        dividerView.setView()
+        dividerView.translatesAutoresizingMaskIntoConstraints = false
+        dividerView.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
+        dividerView.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 180).isActive = true
+        dividerView.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 15).isActive = true
+        dividerView.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -15).isActive = true
+        dividerView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         cardView.addSubview(codeLabel)
         codeLabel.setLabel()

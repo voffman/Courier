@@ -18,13 +18,20 @@ class OrderListCell: UITableViewCell {
     let orderIdLabel = CustomLabels(title: "№ 356167", textSize: 14, style: .bold)
     let orderPriceLabel = CustomLabels(title: "• 10 000 ₸", textSize: 14, style: .light)
     let orderSourceLabel = CustomLabels(title: "Источник (название заведения)", textSize: 14, style: .regular)
-    let orderLineImage = UIImageView(image: UIImage(named: "Line"))
+    let orderDividerView = CustomViews(style: .divider)
     
     let orderTransitionArrowButton = CustomButtons(title: "", style: .transparent)
     
-    let orderFromImage = UIImageView(image: UIImage(named: "Storefront"))
-    let orderDownArrowImage = UIImageView(image: UIImage(named: "Arrow_downward"))
-    let orderToImage = UIImageView(image: UIImage(named: "Place"))
+    
+    let orderFromBackgroundView = CustomViews(style: .circle)
+    
+    let orderFromImage = UIImageView(image: UIImage(named: "Storefront")?.withRenderingMode(.alwaysTemplate))
+    let orderDownArrowBackgroundView = CustomViews(style: .circle)
+    let orderDownArrowImage = UIImageView(image: UIImage(named: "Arrow_downward")?.withRenderingMode(.alwaysTemplate))
+    
+    
+    let orderToBackgroundView = CustomViews(style: .circle)
+    let orderToImage = UIImageView(image: UIImage(named: "Place")?.withRenderingMode(.alwaysTemplate))
     
     let orderFromLabel = CustomLabels(title: "Откуда", textSize: 14, style: .light)
     let orderFromAddressLabel = CustomLabels(title: "Казыбек Би, Нуркена Абдирова, 7, дом 8, квартира 42", textSize: 14, style: .regular)
@@ -54,7 +61,10 @@ class OrderListCell: UITableViewCell {
 //        contentView.addSubview(orderTransitionArrowButtonImage)
         contentView.addSubview(orderTransitionArrowButton)
         orderTransitionArrowButton.setButton()
-        contentView.addSubview(orderLineImage)
+        contentView.addSubview(orderDividerView)
+        orderDividerView.setView()
+        contentView.addSubview(orderFromBackgroundView)
+        orderFromBackgroundView.setView()
         contentView.addSubview(orderFromImage)
         contentView.addSubview(orderFromLabel)
         orderFromLabel.setLabel()
@@ -64,7 +74,11 @@ class OrderListCell: UITableViewCell {
         orderToLabel.setLabel()
         contentView.addSubview(orderToAddressLabel)
         orderToAddressLabel.setLabel()
+        contentView.addSubview(orderDownArrowBackgroundView)
+        orderDownArrowBackgroundView.setView()
         contentView.addSubview(orderDownArrowImage)
+        contentView.addSubview(orderToBackgroundView)
+        orderToBackgroundView.setView()
         contentView.addSubview(orderToImage)
         contentView.addSubview(orderTimerView)
         orderTimerView.setView()
@@ -158,35 +172,70 @@ class OrderListCell: UITableViewCell {
         orderTransitionArrowButton.imageEdgeInsets = UIEdgeInsets(top: -10, left: 0, bottom: 0, right: -UIScreen.main.bounds.width + 67)
     }
     
-    func setupLineImage(){
-        orderLineImage.translatesAutoresizingMaskIntoConstraints = false
-        orderLineImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        orderLineImage.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 71).isActive = true
-        orderLineImage.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 15).isActive = true
-        orderLineImage.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -15).isActive = true
-        
+    func setupOrderDividerView(){
+        orderDividerView.translatesAutoresizingMaskIntoConstraints = false
+        orderDividerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        orderDividerView.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 71).isActive = true
+        orderDividerView.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 15).isActive = true
+        orderDividerView.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -15).isActive = true
+        orderDividerView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+    }
+    
+    
+    func setupOrderFromBackgroundView() {
+        orderFromBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        orderFromBackgroundView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        orderFromBackgroundView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 88).isActive = true
+        orderFromBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderFromBackgroundView.layer.borderWidth = 1
     }
     
     func setupOrderFromImage(){
-        orderFromImage.frame = CGRect(x: 16,
-                                      y: 88,
-                                      width: 40,
-                                      height: 40)
+        orderFromImage.translatesAutoresizingMaskIntoConstraints = false
+        orderFromImage.centerXAnchor.constraint(equalTo: orderFromBackgroundView.centerXAnchor).isActive = true
+        orderFromImage.centerYAnchor.constraint(equalTo: orderFromBackgroundView.centerYAnchor).isActive = true
+        
+//        orderFromImage.frame = CGRect(x: 16,
+//                                      y: 88,
+//                                      width: 40,
+//                                      height: 40)
+    }
+    
+    func setupDownArrowBackgroundView() {
+        orderDownArrowBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        orderDownArrowBackgroundView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        orderDownArrowBackgroundView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 136).isActive = true
     }
     
     func setupDownArrowImage(){
-        orderDownArrowImage.frame = CGRect(x: 16,
-                                           y: 144,
-                                           width: 40,
-                                           height: 40)
+        orderDownArrowImage.translatesAutoresizingMaskIntoConstraints = false
+        orderDownArrowImage.centerXAnchor.constraint(equalTo: orderDownArrowBackgroundView.centerXAnchor).isActive = true
+        orderDownArrowImage.centerYAnchor.constraint(equalTo: orderDownArrowBackgroundView.centerYAnchor).isActive = true
+//        orderDownArrowImage.frame = CGRect(x: 16,
+//                                           y: 144,
+//                                           width: 40,
+//                                           height: 40)
         
     }
     
+    func setupOrderToBackgroundView() {
+        orderToBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        orderToBackgroundView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        orderToBackgroundView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 184).isActive = true
+        orderToBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderToBackgroundView.layer.borderWidth = 1
+    }
+    
     func setupOrderToImage(){
-        orderToImage.frame = CGRect(x: 16,
-                                    y: 194,
-                                    width: 40,
-                                    height: 40)
+        orderToImage.translatesAutoresizingMaskIntoConstraints = false
+        orderToImage.centerXAnchor.constraint(equalTo: orderToBackgroundView.centerXAnchor).isActive = true
+        orderToImage.centerYAnchor.constraint(equalTo: orderToBackgroundView.centerYAnchor).isActive = true
+        
+        
+//        orderToImage.frame = CGRect(x: 16,
+//                                    y: 194,
+//                                    width: 40,
+//                                    height: 40)
     }
     func setupOrderFromLabel(){
         orderFromLabel.frame = CGRect(x: 64,
@@ -305,8 +354,12 @@ class OrderListCell: UITableViewCell {
         orderFromLabel.style = .primary
         orderFromLabel.setLabel()
         
-        orderFromImage.image = UIImage(named: "StorefrontOrange")
-        
+        orderFromImage.tintColor = Colors.white
+        orderFromBackgroundView.backgroundColor = Colors.orange
+        orderFromBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderFromBackgroundView.layer.borderWidth = 0
+        orderToBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderToBackgroundView.layer.borderWidth = 1
     }
     
     func setupGotOrder(){
@@ -314,17 +367,30 @@ class OrderListCell: UITableViewCell {
         orderStateButton.setButton()
         orderFromLabel.style = .light
         orderFromLabel.setLabel()
-        orderFromImage.image = UIImage(named: "StorefrontCompleted")
-        orderDownArrowImage.image = UIImage(named: "Arrow_downward_Orange")
-        
+        orderFromBackgroundView.backgroundColor = Colors.lightGray
+        orderFromBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderFromBackgroundView.layer.borderWidth = 0
+        orderFromImage.tintColor = Colors.gray
+        orderDownArrowImage.tintColor = Colors.white
+        orderDownArrowBackgroundView.backgroundColor = Colors.orange
+        orderToBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderToBackgroundView.layer.borderWidth = 1
+
     }
     
     func setupArrivedToClient(){
-        orderFromImage.image = UIImage(named: "StorefrontCompleted")
-        orderDownArrowImage.image = UIImage(named: "Arrow_downward_Completed")
+        orderFromImage.tintColor = Colors.gray
+        orderFromBackgroundView.backgroundColor = Colors.lightGray
+        orderFromBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderFromBackgroundView.layer.borderWidth = 0
+        orderDownArrowImage.tintColor = Colors.gray
+        orderDownArrowBackgroundView.backgroundColor = Colors.lightGray
         orderToLabel.style = .primary
         orderToLabel.setLabel()
-        orderToImage.image = UIImage(named: "Place_orange")
+        orderToBackgroundView.backgroundColor = Colors.orange
+        orderToImage.tintColor = Colors.white
+        orderToBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderToBackgroundView.layer.borderWidth = 0
         
 //        orderTimerView.isHidden = true
 //        orderTimerImage.isHidden = true
@@ -341,11 +407,16 @@ class OrderListCell: UITableViewCell {
         orderStateButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = false
         orderToLabel.style = .light
         orderToLabel.setLabel()
-        orderToImage.image = UIImage(named: "Place")
-
-        orderFromImage.image = UIImage(named: "Storefront")
-        orderDownArrowImage.image = UIImage(named: "Arrow_downward")
-        orderToImage.image = UIImage(named: "Place")
+        orderToBackgroundView.backgroundColor = Colors.white
+        orderToImage.tintColor = Colors.orange
+        orderFromImage.tintColor = Colors.orange
+        orderFromBackgroundView.backgroundColor = Colors.white
+        orderFromBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderFromBackgroundView.layer.borderWidth = 1
+        orderDownArrowImage.tintColor = Colors.orange
+        orderDownArrowBackgroundView.backgroundColor = Colors.white
+        orderToBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        orderToBackgroundView.layer.borderWidth = 1
         orderFromLabel.style = .light
         orderFromLabel.setLabel()
         orderToLabel.style = .light
@@ -369,13 +440,15 @@ class OrderListCell: UITableViewCell {
         setupPriceLabel()
         setupSourceLabel()
         setupTransitionArrowButton()
-        setupLineImage()
-        
+        setupOrderDividerView()
+        setupOrderFromBackgroundView()
         setupOrderFromImage()
         setupOrderFromLabel()
+        setupDownArrowBackgroundView()
         setupDownArrowImage()
         setupOrderFromAddressLabel()
         setupOrderToLabel()
+        setupOrderToBackgroundView()
         setupOrderToImage()
         setupOrderToAddressLabel()
         

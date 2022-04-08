@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @objc func startTracking() {
         print("Старт трэкинг")
-        locationService.trackingWithDelay(seconds: 5)
+        locationService.trackingWithDelay(seconds: 30)
     }
     
     @objc func stopTracking() {

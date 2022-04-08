@@ -10,8 +10,8 @@ import UIKit
 
 class DetailOrderTableViewFooter: UIView {
     
-    let firstLineImage = UIImageView(image: UIImage(named: "Line"))
-    let secondLineImage = UIImageView(image: UIImage(named: "Line"))
+    let firstDividerView = CustomViews(style: .divider)
+    let secondDividerView = CustomViews(style: .divider)
     
     let sumTitleLabel = CustomLabels(title: "Итого", textSize: 14, style: .bold, alignment: .left)
     let sumLabel = CustomLabels(title: "4 000 000 ₸", textSize: 14, style: .bold, alignment: .right)
@@ -21,8 +21,10 @@ class DetailOrderTableViewFooter: UIView {
     let paymentLabel = CustomLabels(title: "Неоплачен", textSize: 14, style: .timerRed, alignment: .right)
     
     func addElements(){
-        self.addSubview(firstLineImage)
-        self.addSubview(secondLineImage)
+        self.addSubview(firstDividerView)
+        firstDividerView.setView()
+        self.addSubview(secondDividerView)
+        secondDividerView.setView()
         self.addSubview(sumTitleLabel)
         sumTitleLabel.setLabel()
         self.addSubview(sumLabel)
@@ -64,8 +66,8 @@ class DetailOrderTableViewFooter: UIView {
     func createFooterView(){
         self.backgroundColor = Colors.white
         
-        firstLineImage.translatesAutoresizingMaskIntoConstraints = false
-        secondLineImage.translatesAutoresizingMaskIntoConstraints = false
+        firstDividerView.translatesAutoresizingMaskIntoConstraints = false
+        secondDividerView.translatesAutoresizingMaskIntoConstraints = false
         sumTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         sumLabel.translatesAutoresizingMaskIntoConstraints = false
         customerAmountTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -73,20 +75,22 @@ class DetailOrderTableViewFooter: UIView {
         paymentTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         paymentLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        firstLineImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 35).isActive = true
-        firstLineImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true
-        firstLineImage.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -6).isActive = true
-        firstLineImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        firstDividerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 35).isActive = true
+        firstDividerView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true
+        firstDividerView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -6).isActive = true
+        firstDividerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        firstDividerView.heightAnchor.constraint(equalToConstant: 1).isActive = true
 
         sumTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 9).isActive = true
         sumTitleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true
         sumLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 9).isActive = true
         sumLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -6).isActive = true
         
-        secondLineImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 70).isActive = true
-        secondLineImage.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true
-        secondLineImage.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -6).isActive = true
-        secondLineImage.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        secondDividerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 70).isActive = true
+        secondDividerView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true
+        secondDividerView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -6).isActive = true
+        secondDividerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        secondDividerView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         customerAmountTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 45).isActive = true
         customerAmountTitleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 6).isActive = true

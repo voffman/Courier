@@ -12,27 +12,29 @@ class ProfileView: MVPController {
     let colors = Colors()
     
     let cardView = CustomViews(style: .withShadow)
-    let profileImage = UIImageView(image: UIImage(named: "Profile"))
+    let profileBackgroundView = CustomViews(style: .circle)
+    let profileBorderView = CustomViews(cicrleWidth: 48, circleHeight: 48)
+    let profileImage = UIImageView(image: UIImage(named: "Avatar"))
     let courierNameLabel = CustomLabels(title: "Пользователь", textSize: 16, style: .bold, alignment: .center)
     let inventoryLabel = CustomLabels(title: "Инвентарь: #", textSize: 14, style: .regular, alignment: .center)
-    let firstLineImage = UIImageView(image: UIImage(named: "Line"))
+    let firstDividerView = CustomViews(style: .divider)
     let colorSchemeTitleLabel = CustomLabels(title: "Цветовая тема", textSize: 14, style: .bold)
-    let colorSchemeImage = UIImageView(image: UIImage(named: "Palette"))
+    let colorSchemeImage = UIImageView(image: UIImage(named: "Palette")?.withRenderingMode(.alwaysTemplate))
     let colorSchemeLabel = CustomLabels(title: "Светлая", textSize: 14, style: .regular)
     let colorSchemeSwitch = UISwitch()
-    let secondLineImage = UIImageView(image: UIImage(named: "Line"))
+    let secondDividerView = CustomViews(style: .divider)
     let activityStatusTitleLabel = CustomLabels(title: "Статус активности", textSize: 14, style: .bold)
-    let activityStatusImage = UIImageView(image: UIImage(named: "Switch"))
+    let activityStatusImage = UIImageView(image: UIImage(named: "Switch")?.withRenderingMode(.alwaysTemplate))
     let activityStatusLabel = CustomLabels(title: "Неизвестно", textSize: 14, style: .regular)
     let activityStatusSwitch = UISwitch()
-    let thirdLineImage = UIImageView(image: UIImage(named: "Line"))
+    let thirdDividerView = CustomViews(style: .divider)
     let navigationSettingTitleLabel = CustomLabels(title: "Навигация", textSize: 14, style: .bold)
-    let navigationSettingImage = UIImageView(image: UIImage(named: "Navigation"))
+    let navigationSettingImage = UIImageView(image: UIImage(named: "Navigation")?.withRenderingMode(.alwaysTemplate))
     let navigationSettingLabel = CustomLabels(title: "Нет данных", textSize: 14, style: .light)
-    let navigationSettingArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
+    let navigationSettingArrowButtonImage = UIImageView(image: UIImage(named: "Arrow")?.withRenderingMode(.alwaysTemplate))
     let navigationSettingButton = CustomButtons(title: "", style: .transparent)
-    let fourthLineImage = UIImageView(image: UIImage(named: "Line"))
-    let exitImage = UIImageView(image: UIImage(named: "ExitArrow"))
+    let fourthDividerView = CustomViews(style: .divider)
+    let exitImage = UIImageView(image: UIImage(named: "ExitArrow")?.withRenderingMode(.alwaysTemplate))
     let exitTitleLabel = CustomLabels(title: "Выйти из аккаунта", textSize: 16, style: .regular)
 //    let exitArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     let exitButton = CustomButtons(title: "", style: .transparent)
@@ -64,12 +66,28 @@ class ProfileView: MVPController {
 
     }
     
-    func setupProfileImage(){
-        view.addSubview(profileImage)
-        
+    func setupProfileBorderView(){
+        view.addSubview(profileBorderView)
+        profileBorderView.setView()
+        profileBorderView.translatesAutoresizingMaskIntoConstraints = false
+        profileBorderView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: -24).isActive = true
+        profileBorderView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        profileBorderView.backgroundColor = Colors.backgroundColor
+    }
+    
+    func setupProfileBackgroundView(){
+        profileBorderView.addSubview(profileBackgroundView)
+        profileBackgroundView.setView()
+        profileBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        profileBackgroundView.centerXAnchor.constraint(equalTo: profileBorderView.centerXAnchor).isActive = true
+        profileBackgroundView.centerYAnchor.constraint(equalTo: profileBorderView.centerYAnchor).isActive = true
+    }
+    
+    func setupProfileImage() {
+        profileBackgroundView.addSubview(profileImage)
         profileImage.translatesAutoresizingMaskIntoConstraints = false
-        profileImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: -20).isActive = true
-        profileImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        profileImage.centerXAnchor.constraint(equalTo: profileBackgroundView.centerXAnchor).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: profileBackgroundView.centerYAnchor).isActive = true
     }
     
     func setupCourierNameLabel(){
@@ -90,12 +108,15 @@ class ProfileView: MVPController {
         inventoryLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
-    func setupFirstLineImage(){
-        view.addSubview(firstLineImage)
-        
-        firstLineImage.translatesAutoresizingMaskIntoConstraints = false
-        firstLineImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 95).isActive = true
-        firstLineImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    func setupFirstDividerView(){
+        view.addSubview(firstDividerView)
+        firstDividerView.setView()
+        firstDividerView.translatesAutoresizingMaskIntoConstraints = false
+        firstDividerView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 95).isActive = true
+        firstDividerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        firstDividerView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        firstDividerView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = true
+
     }
     
     func setupColorSchemeTitleLabel(){
@@ -103,16 +124,16 @@ class ProfileView: MVPController {
         colorSchemeTitleLabel.setLabel()
         
         colorSchemeTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        colorSchemeTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 130).isActive = true
+        colorSchemeTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 110).isActive = true
         colorSchemeTitleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
         
     }
     
     func setupColorSchemeImage(){
         view.addSubview(colorSchemeImage)
-        
+        colorSchemeImage.tintColor = Colors.black
         colorSchemeImage.translatesAutoresizingMaskIntoConstraints = false
-        colorSchemeImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 141).isActive = true
+        colorSchemeImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 121).isActive = true
         colorSchemeImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 18).isActive = true
     }
     
@@ -121,7 +142,7 @@ class ProfileView: MVPController {
         colorSchemeLabel.setLabel()
         
         colorSchemeLabel.translatesAutoresizingMaskIntoConstraints = false
-        colorSchemeLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 152).isActive = true
+        colorSchemeLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 132).isActive = true
         colorSchemeLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
     }
     
@@ -129,17 +150,19 @@ class ProfileView: MVPController {
         view.addSubview(colorSchemeSwitch)
         colorSchemeSwitch.isOn = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isDarkMode)
         colorSchemeSwitch.translatesAutoresizingMaskIntoConstraints = false
-        colorSchemeSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 134).isActive = true
+        colorSchemeSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 114).isActive = true
         colorSchemeSwitch.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
         colorSchemeSwitch.addTarget(self, action: #selector(themeSwitchStateDidChange(_:)), for: .valueChanged)
     }
     
-    func setupSecondLineImage(){
-        view.addSubview(secondLineImage)
-        
-        secondLineImage.translatesAutoresizingMaskIntoConstraints = false
-        secondLineImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 185).isActive = true
-        secondLineImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    func setupSecondDividerView(){
+        view.addSubview(secondDividerView)
+        secondDividerView.setView()
+        secondDividerView.translatesAutoresizingMaskIntoConstraints = false
+        secondDividerView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 165).isActive = true
+        secondDividerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        secondDividerView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        secondDividerView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = true
     }
     
     func setupActivityStatusTitleLabel(){
@@ -147,15 +170,15 @@ class ProfileView: MVPController {
         activityStatusTitleLabel.setLabel()
         
         activityStatusTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        activityStatusTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 200).isActive = true
+        activityStatusTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 180).isActive = true
         activityStatusTitleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
     }
     
     func setupActivityStatusImage(){
         view.addSubview(activityStatusImage)
-        
+        activityStatusImage.tintColor = Colors.black
         activityStatusImage.translatesAutoresizingMaskIntoConstraints = false
-        activityStatusImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 215).isActive = true
+        activityStatusImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 195).isActive = true
         activityStatusImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 18).isActive = true
         
         
@@ -166,7 +189,7 @@ class ProfileView: MVPController {
         activityStatusLabel.setLabel()
         
         activityStatusLabel.translatesAutoresizingMaskIntoConstraints = false
-        activityStatusLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 222).isActive = true
+        activityStatusLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 202).isActive = true
         activityStatusLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
     }
     
@@ -174,17 +197,19 @@ class ProfileView: MVPController {
         view.addSubview(activityStatusSwitch)
         
         activityStatusSwitch.translatesAutoresizingMaskIntoConstraints = false
-        activityStatusSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 205).isActive = true
+        activityStatusSwitch.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 185).isActive = true
         activityStatusSwitch.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
         activityStatusSwitch.addTarget(self, action: #selector(activitySwitchStateDidChange(_:)), for: .valueChanged)
     }
     
-    func setupThirdLineImage(){
-        view.addSubview(thirdLineImage)
-        
-        thirdLineImage.translatesAutoresizingMaskIntoConstraints = false
-        thirdLineImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 255).isActive = true
-        thirdLineImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    func setupThirdDividerView(){
+        view.addSubview(thirdDividerView)
+        thirdDividerView.setView()
+        thirdDividerView.translatesAutoresizingMaskIntoConstraints = false
+        thirdDividerView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 235).isActive = true
+        thirdDividerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        thirdDividerView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        thirdDividerView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = true
     }
     
     func setupNavigationTitleLabel(){
@@ -192,16 +217,16 @@ class ProfileView: MVPController {
         navigationSettingTitleLabel.setLabel()
         
         navigationSettingTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        navigationSettingTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 270).isActive = true
+        navigationSettingTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 250).isActive = true
         navigationSettingTitleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
         
     }
     
     func setupNavigationImage(){
         view.addSubview(navigationSettingImage)
-        
+        navigationSettingImage.tintColor = Colors.black
         navigationSettingImage.translatesAutoresizingMaskIntoConstraints = false
-        navigationSettingImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 280).isActive = true
+        navigationSettingImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 260).isActive = true
         navigationSettingImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 18).isActive = true
 
     }
@@ -212,7 +237,7 @@ class ProfileView: MVPController {
         navigationSettingLabel.setLabel()
         
         navigationSettingLabel.translatesAutoresizingMaskIntoConstraints = false
-        navigationSettingLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 292).isActive = true
+        navigationSettingLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 272).isActive = true
         navigationSettingLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
 
     }
@@ -230,29 +255,30 @@ class ProfileView: MVPController {
         navigationSettingButton.setButton()
         
         navigationSettingButton.translatesAutoresizingMaskIntoConstraints = false
-        navigationSettingButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 256).isActive = true
+        navigationSettingButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 236).isActive = true
         navigationSettingButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 5).isActive = true
         navigationSettingButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -5).isActive = true
-        navigationSettingButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -61).isActive = true
+        navigationSettingButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -81).isActive = true
         navigationSettingButton.setImage(UIImage(named: "Arrow"), for: .normal)
         navigationSettingButton.imageEdgeInsets = UIEdgeInsets(top: 3, left: 0, bottom: 0, right: -UIScreen.main.bounds.width + 63)
-        
         navigationSettingButton.addTarget(self, action: #selector(navigationSettingButtonAction(sender:)), for: .touchUpInside)
     }
     
     func setupFourthLineImage(){
-        view.addSubview(fourthLineImage)
-        
-        fourthLineImage.translatesAutoresizingMaskIntoConstraints = false
-        fourthLineImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 325).isActive = true
-        fourthLineImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        view.addSubview(fourthDividerView)
+        fourthDividerView.setView()
+        fourthDividerView.translatesAutoresizingMaskIntoConstraints = false
+        fourthDividerView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 305).isActive = true
+        fourthDividerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        fourthDividerView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        fourthDividerView.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -16).isActive = true
     }
     
     func setupExitImage(){
         view.addSubview(exitImage)
-        
+        exitImage.tintColor = Colors.black
         exitImage.translatesAutoresizingMaskIntoConstraints = false
-        exitImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 348).isActive = true
+        exitImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 328).isActive = true
         exitImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 18).isActive = true
     }
     
@@ -261,7 +287,7 @@ class ProfileView: MVPController {
         exitTitleLabel.setLabel()
         
         exitTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        exitTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 343).isActive = true
+        exitTitleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 323).isActive = true
         exitTitleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
     }
     
@@ -278,13 +304,12 @@ class ProfileView: MVPController {
         exitButton.setButton()
         
         exitButton.translatesAutoresizingMaskIntoConstraints = false
-        exitButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 326).isActive = true
+        exitButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 306).isActive = true
         exitButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 5).isActive = true
         exitButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -5).isActive = true
         exitButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10).isActive = true
         exitButton.setImage(UIImage(named: "Arrow"), for: .normal)
-        exitButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: -UIScreen.main.bounds.width + 63)
-        
+        exitButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 20, right: -UIScreen.main.bounds.width + 63)
         exitButton.addTarget(self, action: #selector(exitButtonAction(sender:)), for: .touchUpInside)
     }
     
@@ -314,20 +339,22 @@ class ProfileView: MVPController {
     func setupView(){
         self.view.backgroundColor = Colors.backgroundColor
         setupCardView()
+        setupProfileBorderView()
+        setupProfileBackgroundView()
         setupProfileImage()
         setupCourierNameLabel()
         setupInventoryLabel()
-        setupFirstLineImage()
+        setupFirstDividerView()
         setupColorSchemeTitleLabel()
         setupColorSchemeImage()
         setupColorSchemeLabel()
         setupColorSchemeSwitch()
-        setupSecondLineImage()
+        setupSecondDividerView()
         setupActivityStatusTitleLabel()
         setupActivityStatusImage()
         setupActivityStatusLabel()
         setupActivityStatusSwitch()
-        setupThirdLineImage()
+        setupThirdDividerView()
         setupNavigationTitleLabel()
         setupNavigationImage()
         setupNavigationLabel()

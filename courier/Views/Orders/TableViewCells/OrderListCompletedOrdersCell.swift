@@ -15,7 +15,7 @@ class OrderListCompletedOrdersCell: UITableViewCell {
     let orderIdLabel = CustomLabels(title: "№ 356167", textSize: 14, style: .bold)
     let orderPriceLabel = CustomLabels(title: "• 20 000 ₸", textSize: 14, style: .light)
     let orderSourcelabel = CustomLabels(title: "Источник (название заведения)", textSize: 14, style: .regular)
-    let orderLineImage = UIImageView(image: UIImage(named: "Line"))
+    let orderDividerView = CustomViews(style: .divider)
     
     let orderTransitionArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     
@@ -48,7 +48,8 @@ class OrderListCompletedOrdersCell: UITableViewCell {
         contentView.addSubview(orderSourcelabel)
         orderSourcelabel.setLabel()
         contentView.addSubview(orderTransitionArrowButtonImage)
-        contentView.addSubview(orderLineImage)
+        contentView.addSubview(orderDividerView)
+        orderDividerView.setView()
         contentView.addSubview(orderFromImage)
         contentView.addSubview(orderFromLabel)
         orderFromLabel.setLabel()
@@ -132,12 +133,13 @@ class OrderListCompletedOrdersCell: UITableViewCell {
         
     }
     
-    func setupLineImage(){
-        orderLineImage.translatesAutoresizingMaskIntoConstraints = false
-        orderLineImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        orderLineImage.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 71).isActive = true
-        orderLineImage.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 15).isActive = true
-        orderLineImage.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -15).isActive = true
+    func setupOrderDividerView(){
+        orderDividerView.translatesAutoresizingMaskIntoConstraints = false
+        orderDividerView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        orderDividerView.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 71).isActive = true
+        orderDividerView.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 15).isActive = true
+        orderDividerView.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -15).isActive = true
+        orderDividerView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
     }
     
@@ -201,7 +203,7 @@ class OrderListCompletedOrdersCell: UITableViewCell {
         setupPriceLabel()
         setupSourceLabel()
         setupTransitionArrowButtonImage()
-        setupLineImage()
+        setupOrderDividerView()
         
         setupOrderFromImage()
         setupOrderFromLabel()

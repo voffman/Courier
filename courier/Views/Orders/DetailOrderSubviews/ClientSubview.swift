@@ -14,16 +14,20 @@ class ClientSubview: UIViewController {
     let cardView = CustomViews(style: .withShadow)
     
     let titleLabel = CustomLabels(title: "", textSize: 20, style: .bold, alignment: .justified)
+    let clientBackgroundView = CustomViews(style: .circle)
     let clientImage = UIImageView(image: UIImage(named: "Client"))
     let clientLabel = CustomLabels(title: "Валерия Добровольская", textSize: 14, style: .light)
     let phoneLabel = CustomLabels(title: "8 (700) 700 70 70", textSize: 14, style: .regular)
-    let lineImage = UIImageView(image: UIImage(named: "Line"))
+    let dividerView = CustomViews(style: .divider)
     let addressImage = UIImageView(image: UIImage(named: "Place"))
+    let addressBackgroundView = CustomViews(style: .circle)
     let addressTitleLabel = CustomLabels(title: "Адрес", textSize: 14, style: .light)
     let addressLabel = CustomLabels(title: "Казыбек Би, Нуркена Абдирова, 7, дом 8, квартира 42", textSize: 14, style: .regular)
     let routeButton = CustomButtons(title: "МАРШРУТ", style: .normal)
     let toCallButton = CustomButtons(title: "ПОЗВОНИТЬ", style: .normal)
     let commentCardView = CustomViews(style: .withShadow)
+    let commentBorderView = CustomViews(cicrleWidth: 48, circleHeight: 48)
+    let commentBackgroundView = CustomViews(style: .circle)
     let commentImage = UIImageView(image: UIImage(named: "Comment"))
     let commentTitleLabel = CustomLabels(title: "Комментарий клиента", textSize: 14, style: .light, alignment: .center)
     let commentLabel = CustomLabels(title: "Пожалуйста, пусть курьер позвонит, когда подъедет. Я хочу встретить его и забрать заказ. Это сюрприз для детей.", textSize: 16, style: .regular, alignment: .justified)
@@ -45,12 +49,17 @@ class ClientSubview: UIViewController {
         cardView.setView()
         self.view.addSubview(titleLabel)
         titleLabel.setLabel()
+        self.view.addSubview(clientBackgroundView)
+        clientBackgroundView.setView()
         self.view.addSubview(clientImage)
         self.view.addSubview(clientLabel)
         clientLabel.setLabel()
         self.view.addSubview(phoneLabel)
         phoneLabel.setLabel()
-        self.view.addSubview(lineImage)
+        self.view.addSubview(dividerView)
+        dividerView.setView()
+        self.view.addSubview(addressBackgroundView)
+        addressBackgroundView.setView()
         self.view.addSubview(addressImage)
         self.view.addSubview(addressTitleLabel)
         addressTitleLabel.setLabel()
@@ -62,6 +71,10 @@ class ClientSubview: UIViewController {
         routeButton.setButton()
         self.view.addSubview(commentCardView)
         commentCardView.setView()
+        self.view.addSubview(commentBorderView)
+        commentBorderView.setView()
+        self.view.addSubview(commentBackgroundView)
+        commentBackgroundView.setView()
         self.view.addSubview(commentImage)
         self.view.addSubview(commentTitleLabel)
         commentTitleLabel.setLabel()
@@ -105,12 +118,22 @@ class ClientSubview: UIViewController {
         titleLabel.numberOfLines = 1
     }
     
+    
+    func setupClientBackgroundView(){
+        clientBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        clientBackgroundView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16).isActive = true // 16
+        clientBackgroundView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        clientBackgroundView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        clientBackgroundView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        clientBackgroundView.backgroundColor = Colors.white
+        clientBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        clientBackgroundView.layer.borderWidth = 1
+    }
+    
     func setupClientImage(){
         clientImage.translatesAutoresizingMaskIntoConstraints = false
-        clientImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16).isActive = true // 16
-        clientImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
-        clientImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        clientImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        clientImage.centerXAnchor.constraint(equalTo: clientBackgroundView.centerXAnchor).isActive = true
+        clientImage.centerYAnchor.constraint(equalTo: clientBackgroundView.centerYAnchor).isActive = true
         
     }
     
@@ -129,21 +152,30 @@ class ClientSubview: UIViewController {
         phoneLabel.text? = phoneLabel.text?.applyPatternOnNumbers(pattern: "+# (###) ### ####", replacementCharacter: "#") ?? ""
     }
     
-    func setupLineImage(){
-        lineImage.translatesAutoresizingMaskIntoConstraints = false
-        lineImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        lineImage.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 71).isActive = true // 71
-        lineImage.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 15).isActive = true
-        lineImage.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -15).isActive = true
+    func setupDividerView(){
+        dividerView.translatesAutoresizingMaskIntoConstraints = false
+        dividerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        dividerView.topAnchor.constraint(equalTo:  cardView.topAnchor, constant: 71).isActive = true // 71
+        dividerView.leftAnchor.constraint(equalTo:  cardView.leftAnchor, constant: 15).isActive = true
+        dividerView.rightAnchor.constraint(equalTo:  cardView.rightAnchor, constant: -15).isActive = true
+        dividerView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        dividerView.widthAnchor.constraint(equalToConstant: 308).isActive = true
         
+    }
+    
+    func setupAddressBackgroundView() {
+        addressBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        addressBackgroundView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 89).isActive = true // 89
+        addressBackgroundView.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
+        addressBackgroundView.backgroundColor = Colors.white
+        addressBackgroundView.layer.borderColor = Colors.lightGray.cgColor
+        addressBackgroundView.layer.borderWidth = 1
     }
     
     func setupAddressImage(){
         addressImage.translatesAutoresizingMaskIntoConstraints = false
-        addressImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 89).isActive = true // 89
-        addressImage.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 16).isActive = true
-        addressImage.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        addressImage.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        addressImage.centerXAnchor.constraint(equalTo: addressBackgroundView.centerXAnchor).isActive = true
+        addressImage.centerYAnchor.constraint(equalTo: addressBackgroundView.centerYAnchor).isActive = true
     }
     
     func setupAddressTitleLabel(){
@@ -203,10 +235,24 @@ class ClientSubview: UIViewController {
         //commentTitleLabel.rightAnchor.constraint(equalTo: commentCardView.rightAnchor, constant: -16).isActive = true
     }
     
+    func setupCommentBorderView() {
+        commentBorderView.translatesAutoresizingMaskIntoConstraints = false
+        commentBorderView.topAnchor.constraint(equalTo: commentCardView.topAnchor, constant: -24).isActive = true
+        commentBorderView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        commentBorderView.backgroundColor = Colors.backgroundColor
+    }
+    
+    func setupCommentBackgroundView() {
+        commentBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        commentBackgroundView.centerXAnchor.constraint(equalTo: commentBorderView.centerXAnchor).isActive = true
+        commentBackgroundView.centerYAnchor.constraint(equalTo: commentBorderView.centerYAnchor).isActive = true
+    }
+    
+    
     func setupCommentImage(){
         commentImage.translatesAutoresizingMaskIntoConstraints = false
-        commentImage.topAnchor.constraint(equalTo: commentCardView.topAnchor, constant: -20).isActive = true
-        commentImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        commentImage.centerXAnchor.constraint(equalTo: commentBackgroundView.centerXAnchor).isActive = true
+        commentImage.centerYAnchor.constraint(equalTo: commentBackgroundView.centerYAnchor).isActive = true
     }
     
     func setupCommentLabel(){
@@ -232,11 +278,11 @@ class ClientSubview: UIViewController {
         titleLabel.title = "Доставьте заказ клиенту"
         titleLabel.setLabel()
         
-        clientImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
+        clientBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
         clientLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 61).isActive = true
         phoneLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 81).isActive = true
-        lineImage.topAnchor.constraint(equalTo:  view.topAnchor, constant: 116).isActive = true
-        addressImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 133).isActive = true
+        dividerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 116).isActive = true
+        addressBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 133).isActive = true
         addressTitleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 134).isActive = true
         addressLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 154).isActive = true
 
@@ -261,11 +307,11 @@ class ClientSubview: UIViewController {
         
         routeButton.isHidden = true
         
-        clientImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
+        clientBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
         clientLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 61).isActive = true
         phoneLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 81).isActive = true
-        lineImage.topAnchor.constraint(equalTo:  view.topAnchor, constant: 116).isActive = true
-        addressImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 133).isActive = true
+        dividerView.topAnchor.constraint(equalTo:  view.topAnchor, constant: 116).isActive = true
+        addressBackgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 133).isActive = true
         addressTitleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 134).isActive = true
         addressLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 154).isActive = true
 
@@ -278,16 +324,20 @@ class ClientSubview: UIViewController {
     func setupCell(){
         setupCardView()
         setupTitleLabel()
+        setupClientBackgroundView()
         setupClientImage()
         setupClientLabel()
         setupPhoneLabel()
-        setupLineImage()
+        setupDividerView()
+        setupAddressBackgroundView()
         setupAddressImage()
         setupAddressTitleLabel()
         setupAddressLabel()
         setupToCallButton()
         setupRouteButton()
         setupCommentCardView()
+        setupCommentBorderView()
+        setupCommentBackgroundView()
         setupCommentImage()
         setupCommentTitleLabel()
         setupCommentLabel()

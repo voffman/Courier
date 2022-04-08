@@ -67,8 +67,8 @@ class OrderListTableView: MVPController {
     func setupOrderCount(isHidden: Bool){
         self.view.addSubview(countView)
         countView.backgroundColor = Colors.lightGray
-        countView.layer.cornerRadius = 12 // countView.layer.bounds/2
-       // countView.clipsToBounds = true
+        countView.layer.cornerRadius = countView.frame.size.width / 2
+        countView.clipsToBounds = true
         
         countView.translatesAutoresizingMaskIntoConstraints = false
         if UIScreen.main.bounds.size.height > 750 {
@@ -86,7 +86,6 @@ class OrderListTableView: MVPController {
             countView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -1).isActive = true
             countView.heightAnchor.constraint(equalToConstant: 20).isActive = true
             countView.widthAnchor.constraint(equalToConstant: 20).isActive = true
-            countView.layer.cornerRadius = 10
             
         }
 
