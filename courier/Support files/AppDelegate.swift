@@ -11,6 +11,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    let notifications = Notifications()
     let locationService = LocationService()
     
     @objc func startTracking() {
@@ -36,10 +37,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = LoginView()
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(startTracking), name: NSNotification.Name(rawValue: "userActivity"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stopTracking), name: NSNotification.Name(rawValue: "userActivityStop"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(startTracking), name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stopTracking), name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
         
 
+        notifications.registerForPushNotifications()
+        notifications.getRegisterStatusForPushNotifications()
+        notifications.notificationCenter.delegate = self // требует extention
+        
         window?.makeKeyAndVisible()
     
         return true

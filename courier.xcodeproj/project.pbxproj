@@ -62,6 +62,7 @@
 		5080760C27FA9A8C008E763B /* ChooseNavigatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5080760B27FA9A8C008E763B /* ChooseNavigatorPresenter.swift */; };
 		5085083727D8B4D800D0E15A /* ScheduleFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085083627D8B4D800D0E15A /* ScheduleFooterView.swift */; };
 		5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5086CE752797CD4500972D6B /* ConfirmLoginView.swift */; };
+		509046C82803D58900750FDF /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509046C72803D58900750FDF /* Notifications.swift */; };
 		5093F6C3279EA2E300A53157 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5093F6C2279EA2E300A53157 /* Assets.xcassets */; };
 		50A5731A27B3CF0500E3013F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5731927B3CF0500E3013F /* NetworkManager.swift */; };
 		50A5731C27B3D89E00E3013F /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5731B27B3D89E00E3013F /* UserResponse.swift */; };
@@ -140,6 +141,7 @@
 		5080760B27FA9A8C008E763B /* ChooseNavigatorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseNavigatorPresenter.swift; sourceTree = "<group>"; };
 		5085083627D8B4D800D0E15A /* ScheduleFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFooterView.swift; sourceTree = "<group>"; };
 		5086CE752797CD4500972D6B /* ConfirmLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLoginView.swift; sourceTree = "<group>"; };
+		509046C72803D58900750FDF /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		5093F6C2279EA2E300A53157 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50A5731927B3CF0500E3013F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		50A5731B27B3D89E00E3013F /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				50217C4827CF1B630066C3F0 /* PhoneNumberFormatter.swift */,
 				50DDAD8327E1D55E00EF83BC /* DecimalNumberFormatter.swift */,
 				5048D95727FD4BE4005BF3D1 /* LocationService.swift */,
+				509046C72803D58900750FDF /* Notifications.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */,
 				5006FCE427BA24A90047DD6A /* ApiService.swift in Sources */,
 				5053619727EC24B900559006 /* EmployeeResponse.swift in Sources */,
+				509046C82803D58900750FDF /* Notifications.swift in Sources */,
 				5031835527ACFD45001C9BEB /* ProfileView.swift in Sources */,
 				5043316127A0F679000777A9 /* CustomAlerts.swift in Sources */,
 				50CBB7BC27D9F19A0035DA85 /* History.swift in Sources */,
@@ -769,6 +773,7 @@
 				DEVELOPMENT_TEAM = MNLX298A3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "courier/Support files/Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Для возможности отслеживания геолокации в фоне, требуется выбрать ПРИ ИСПОЛЬЗОВАНИИ";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -799,6 +804,7 @@
 				DEVELOPMENT_TEAM = MNLX298A3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "courier/Support files/Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Для возможности отслеживания геолокации в фоне, требуется выбрать ПРИ ИСПОЛЬЗОВАНИИ";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

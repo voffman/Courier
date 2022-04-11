@@ -5,7 +5,7 @@
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Для возможности отслеживания геолокации в фоне, требуется выбрать ВСЕГДА</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Для возможности отслеживания геолокации в фоне, требуется выбрать ПРИ ИСПОЛЬЗОВАНИИ</string>
+	<string>Для возможности отслеживания геолокации в фоне, требуется выбрать ВСЕГДА</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -31,6 +31,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
+		<string>remote-notification</string>
 	</array>
 </dict>
 </plist>

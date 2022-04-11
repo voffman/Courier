@@ -51,7 +51,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     func sessionStart() {
         api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
             print("Сессия запущена")
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivity"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
             
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
@@ -62,7 +62,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     func sessionStop() {
         api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
             print("Сессия остановлена")
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStop"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
             
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)

@@ -29,7 +29,7 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
     func startUserActivity() {
         
         api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivity"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
             self.view?.goToOrderListTableView()
             
         } errorResponse: { error in
@@ -41,10 +41,10 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
         api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
             if post.status {
                 self.view?.goToOrderListTableView()
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivity"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
             }
             else {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStop"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
             }
 
         } errorResponse: { error in
