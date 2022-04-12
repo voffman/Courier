@@ -150,12 +150,55 @@ class OrderListTableView: MVPController {
         self.navigationController?.viewControllers = navigationArray
     }
     
+    @objc func goToDetailTableView(_ notification: NSNotification) {
+        
+        let userInfo = notification.userInfo
+        
+        guard let value = userInfo else {
+            return
+        }
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: value)
+            let item = try JSONDecoder().decode(CourierOrderResponseElement.self, from: jsonData)
+            
+            let detailVC = DetailOrderTableView(courierOrderResponseElement: item)
+            present(detailVC, animated: true, completion: nil)
+        }
+        
+        catch {
+            print(error)
+        }
+    }
+    
+    @objc func openProfileView(_ notification: NSNotification) {
+        let profileView = ProfileView()
+       // self.navigationController?.pushViewController(profileView, animated: true)
+        present(profileView, animated: true, completion: nil)
+    }
+    
+    @objc func updateTableViewIfPush(_ notification: NSNotification) {
+        let userInfo = notification.userInfo
+        
+        guard let value = userInfo else {
+            return
+        }
+        print("updateTableViewIfPush")
+        self.tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let presenter = OrderListPresenter(view: self)
         self.presenter = presenter
-
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.goToDetailTableView(_:)),
+                                               name: NSNotification.Name(rawValue: "updateOrderByTap"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTableViewIfPush(_:)),
+                                               name: NSNotification.Name(rawValue: "updateOrder"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.openProfileView(_:)),
+                                               name: NSNotification.Name(rawValue: "closeSlotByTap"), object: nil)
         setupTableView()
         setupWaitViewElement()
         view.addSubview(sc.segmentedControlContainerView)

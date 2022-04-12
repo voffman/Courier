@@ -12,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let notifications = Notifications()
+    let notificationsActions = NotificationsActions()
     let locationService = LocationService()
     
     @objc func startTracking() {
@@ -64,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
     func applicationWillTerminate(_ application: UIApplication) {

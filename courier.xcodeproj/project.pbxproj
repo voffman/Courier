@@ -62,6 +62,7 @@
 		5080760C27FA9A8C008E763B /* ChooseNavigatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5080760B27FA9A8C008E763B /* ChooseNavigatorPresenter.swift */; };
 		5085083727D8B4D800D0E15A /* ScheduleFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085083627D8B4D800D0E15A /* ScheduleFooterView.swift */; };
 		5086CE762797CD4500972D6B /* ConfirmLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5086CE752797CD4500972D6B /* ConfirmLoginView.swift */; };
+		508FA19028052D4900482528 /* NotificationsActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FA18F28052D4900482528 /* NotificationsActions.swift */; };
 		509046C82803D58900750FDF /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509046C72803D58900750FDF /* Notifications.swift */; };
 		5093F6C3279EA2E300A53157 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5093F6C2279EA2E300A53157 /* Assets.xcassets */; };
 		50A5731A27B3CF0500E3013F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5731927B3CF0500E3013F /* NetworkManager.swift */; };
@@ -141,6 +142,7 @@
 		5080760B27FA9A8C008E763B /* ChooseNavigatorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseNavigatorPresenter.swift; sourceTree = "<group>"; };
 		5085083627D8B4D800D0E15A /* ScheduleFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFooterView.swift; sourceTree = "<group>"; };
 		5086CE752797CD4500972D6B /* ConfirmLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLoginView.swift; sourceTree = "<group>"; };
+		508FA18F28052D4900482528 /* NotificationsActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsActions.swift; sourceTree = "<group>"; };
 		509046C72803D58900750FDF /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		5093F6C2279EA2E300A53157 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50A5731927B3CF0500E3013F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 				50DDAD8327E1D55E00EF83BC /* DecimalNumberFormatter.swift */,
 				5048D95727FD4BE4005BF3D1 /* LocationService.swift */,
 				509046C72803D58900750FDF /* Notifications.swift */,
+				508FA18F28052D4900482528 /* NotificationsActions.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -598,6 +601,7 @@
 				50A5731A27B3CF0500E3013F /* NetworkManager.swift in Sources */,
 				5030A5D727B504A000863939 /* CourierOrderResponse.swift in Sources */,
 				5031835A27ACFDD7001C9BEB /* ScheduleCell.swift in Sources */,
+				508FA19028052D4900482528 /* NotificationsActions.swift in Sources */,
 				50A5731C27B3D89E00E3013F /* UserResponse.swift in Sources */,
 				502618B427A7957D00CEA57C /* OrdersPresenter.swift in Sources */,
 				5048D95827FD4BE4005BF3D1 /* LocationService.swift in Sources */,

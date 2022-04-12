@@ -24,27 +24,17 @@ class Notifications: NSObject, UNUserNotificationCenterDelegate {
     }
     
     func setNotificationsCategories() {
-        // 1
-        let slotAction = UNNotificationAction(identifier: "stopSessionAction",
-                                              title: "Закрыть сессию",
-                                              options: [])
-        
-        // 2
         let slotCategory = UNNotificationCategory(identifier: "closeSlot",
-                                                  actions: [slotAction],
+                                                  actions: [],
                                                   intentIdentifiers: [],
                                                   options: [])
           
-        let orderAction = UNNotificationAction(identifier: "changeStatusAction",
-                                                title: "Сменить статус",
-                                                options: [])
-          
           
         let orderCategory = UNNotificationCategory(identifier: "updateOrder",
-                                                    actions: [orderAction],
+                                                    actions: [],
                                                     intentIdentifiers: [],
                                                     options: [])
-        // 3
+        
         notificationCenter.setNotificationCategories([slotCategory, orderCategory])
     }
     
@@ -102,23 +92,44 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
     
   
   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+      
+      switch notification.request.content.categoryIdentifier {
+          
+      case "closeSlot":
+          print("close slot")
+          notificationsActions.closeSlot()
+         break
+
+      case "updateOrder":
+          print("update order")
+          let userInfo = notification.request.content.userInfo
+          notificationsActions.updateOrder(userInfo: userInfo)
+         break
+
+      default:
+          print("default")
+         break
+      }
+      
       completionHandler([.alert, .sound])
   }
     
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler:
              @escaping () -> Void) {
-        
-       switch response.actionIdentifier {
-       case "stopSessionAction":
-       // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStop"), object: nil)
-          print("stopSessionAction")
+  
+       switch response.notification.request.content.categoryIdentifier {
+       case "closeSlot":
+           print("close slot by tap")
+           notificationsActions.closeSlotByTap()
           break
-            
-       case "changeStatusAction":
-          print("changeStatusAction")
+
+       case "updateOrder":
+           print("update order by tap")
+           let userInfo = response.notification.request.content.userInfo
+           notificationsActions.updateOrderByTap(userInfo: userInfo)
           break
-            
+
        default:
            print("default")
           break
