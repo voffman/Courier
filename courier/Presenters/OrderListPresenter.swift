@@ -15,6 +15,7 @@ protocol OrderListTableViewPresenterProtocol: AnyObject {
     func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ())
     func didTap (model: CourierOrderResponseElement)
     func didStatusTap (model: CourierOrderResponseElement)
+    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ())
 }
 
 class OrderListPresenter: OrderListTableViewPresenterProtocol {
@@ -61,9 +62,17 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     
     public func didStatusTap (model: CourierOrderResponseElement){
 
-        // не вызывается напрямую так как экшны кпопки
         self.view?.showStatusAlert(courierOrderResponseElement: model)
 
+    }
+    
+    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ()) {
+        api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
+            completion(post)
+
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
+        }
     }
     
 }

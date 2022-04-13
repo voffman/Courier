@@ -44,7 +44,6 @@ class OrderListCell: UITableViewCell {
     let orderTimerLabel = CustomLabels(title: "--:--", textSize: 20, style: .light)
     
     let orderStateButton = CustomButtons(title: "НЕТ ДАННЫХ", style: .primary)
-    
     let dateManager = DateManager()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -307,6 +306,14 @@ class OrderListCell: UITableViewCell {
         orderTimerLabel.setLabel()
     }
     
+    func changeTimerToGray(){
+        orderTimerView.style = .timerGray
+        orderTimerView.setView()
+        orderTimerImage.image = UIImage(named: "TimerGray")
+        orderTimerLabel.style = .light
+        orderTimerLabel.setLabel()
+    }
+    
     func setupStateButton(){
         orderStateButton.translatesAutoresizingMaskIntoConstraints = false
         orderStateButton.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 257).isActive = true
@@ -358,6 +365,8 @@ class OrderListCell: UITableViewCell {
         orderFromBackgroundView.backgroundColor = Colors.orange
         orderFromBackgroundView.layer.borderColor = Colors.lightGray.cgColor
         orderFromBackgroundView.layer.borderWidth = 0
+        orderToBackgroundView.backgroundColor = Colors.white
+        orderToImage.tintColor = Colors.orange
         orderToBackgroundView.layer.borderColor = Colors.lightGray.cgColor
         orderToBackgroundView.layer.borderWidth = 1
     }
@@ -373,6 +382,8 @@ class OrderListCell: UITableViewCell {
         orderFromImage.tintColor = Colors.gray
         orderDownArrowImage.tintColor = Colors.white
         orderDownArrowBackgroundView.backgroundColor = Colors.orange
+        orderToBackgroundView.backgroundColor = Colors.white
+        orderToImage.tintColor = Colors.orange
         orderToBackgroundView.layer.borderColor = Colors.lightGray.cgColor
         orderToBackgroundView.layer.borderWidth = 1
 
@@ -415,6 +426,8 @@ class OrderListCell: UITableViewCell {
         orderFromBackgroundView.layer.borderWidth = 1
         orderDownArrowImage.tintColor = Colors.orange
         orderDownArrowBackgroundView.backgroundColor = Colors.white
+        orderToBackgroundView.backgroundColor = Colors.white
+        orderToImage.tintColor = Colors.orange
         orderToBackgroundView.layer.borderColor = Colors.lightGray.cgColor
         orderToBackgroundView.layer.borderWidth = 1
         orderFromLabel.style = .light
@@ -428,6 +441,8 @@ class OrderListCell: UITableViewCell {
         orderTimerView.isHidden = false
         orderTimerImage.isHidden = false
         orderTimerLabel.isHidden = false
+        setupTimer()
+        
     }
     
     

@@ -13,7 +13,6 @@ protocol ProfileViewPresenterProtocol: AnyObject {
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ())
     func sessionStart()
     func sessionStop()
-   // func sessionStopAndGoToLoginView()
     func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ())
     func getDefaultNavigatorValue()->String
 }
@@ -52,7 +51,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
         api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
             print("Сессия запущена")
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
-            
+           // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
@@ -63,7 +62,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
         api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
             print("Сессия остановлена")
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
-            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
@@ -83,13 +82,4 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
         return UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? ""
     }
     
-//    func sessionStopAndGoToLoginView() {
-//        api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
-//            self.view?.goToLoginView()
-//            self.removeBearer()
-//
-//        } errorResponse: { error in
-//            self.view?.showErrorView(errorResponseData: error)
-//        }
-//    }
 }

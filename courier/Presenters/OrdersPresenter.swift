@@ -11,7 +11,7 @@ import Foundation
 protocol OrdersViewPresenterProtocol: AnyObject {
     init(view: OrdersViewProtocol)
     func startUserActivity()
-    func checkUserActivity()
+    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ())
 }
 
 class OrdersPresenter: OrdersViewPresenterProtocol {
@@ -37,15 +37,9 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
         }
     }
     
-    func checkUserActivity() {
+    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ()) {
         api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
-            if post.status {
-                self.view?.goToOrderListTableView()
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
-            }
-            else {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
-            }
+            completion(post)
 
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)

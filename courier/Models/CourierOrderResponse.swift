@@ -74,8 +74,8 @@ struct Point: Codable {
 // MARK: - Transitions
 struct Transitions: Codable {
     let status: Int
-    let title, alertTitle, alertDescription, alertPositive: String
-    let alertNegative: String
+    let title, alertTitle, alertDescription, alertPositive: String? // Может частично не быть в экземпляре заказа
+    let alertNegative: String? // Может не быть в экземпляре заказа
 }
 
 typealias CourierOrderResponse = [CourierOrderResponseElement]

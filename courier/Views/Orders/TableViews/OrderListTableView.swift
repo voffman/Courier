@@ -27,7 +27,7 @@ class OrderListTableView: MVPController {
     var orderStatus: Int = 0
     
     var cellRowToTimerMapping: [Int: Timer] = [:]
-    
+    var nmsp = 0
     let dateManager = DateManager()
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -163,7 +163,9 @@ class OrderListTableView: MVPController {
             let item = try JSONDecoder().decode(CourierOrderResponseElement.self, from: jsonData)
             
             let detailVC = DetailOrderTableView(courierOrderResponseElement: item)
-            present(detailVC, animated: true, completion: nil)
+
+            self.tabBarController?.selectedIndex = 0
+            self.navigationController?.pushViewController(detailVC, animated: true)
         }
         
         catch {
@@ -173,8 +175,8 @@ class OrderListTableView: MVPController {
     
     @objc func openProfileView(_ notification: NSNotification) {
         let profileView = ProfileView()
-       // self.navigationController?.pushViewController(profileView, animated: true)
-        present(profileView, animated: true, completion: nil)
+        self.tabBarController?.selectedIndex = 3
+        self.navigationController?.pushViewController(profileView, animated: true)
     }
     
     @objc func updateTableViewIfPush(_ notification: NSNotification) {
@@ -183,8 +185,19 @@ class OrderListTableView: MVPController {
         guard let value = userInfo else {
             return
         }
+    
         print("updateTableViewIfPush")
         self.tableView.reloadData()
+    }
+    
+
+    
+    @objc func stopSession() {
+        
+        let tabBarController = TabBarController()
+        tabBarController.modalPresentationStyle = .fullScreen
+        
+        self.present(tabBarController, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -199,6 +212,8 @@ class OrderListTableView: MVPController {
                                                name: NSNotification.Name(rawValue: "updateOrder"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.openProfileView(_:)),
                                                name: NSNotification.Name(rawValue: "closeSlotByTap"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.stopSession),
+                                               name: NSNotification.Name(rawValue: "stopSession"), object: nil)
         setupTableView()
         setupWaitViewElement()
         view.addSubview(sc.segmentedControlContainerView)
@@ -218,6 +233,7 @@ class OrderListTableView: MVPController {
     
     override func viewWillAppear(_ animated: Bool) {
         checkOrders()
+        checkActivity()
         print("дата перезагружена")
     }
     
@@ -302,11 +318,23 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
                 let seconds = Int(numberOfSecondsPassed) % 60
                 
                 
+
+                self.nmsp = numberOfSecondsPassed
+                let visibleCell = self.tableView.cellForRow(at: indexPath) as? OrderListCell
+
                 if numberOfSecondsPassed < 60 {
-                    cell.changeTimerToRed()
+                    visibleCell?.changeTimerToRed()
+                } else {
+                    visibleCell?.changeTimerToGray()
                 }
+                visibleCell?.orderTimerLabel.text = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
                 
-                cell.orderTimerLabel.text = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
+
+                
+                
+                
+               // cell.numberOfSecondsPassed = numberOfSecondsPassed
+               // cell.orderTimerLabel.text = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
 
             }
             cellRowToTimerMapping[row] = timer
@@ -392,6 +420,7 @@ protocol OrderListTableViewProtocol: AnyObject, MVPControllerProtocol  {
     func checkArchiveOrders()
     func goToDetailOrderTableView(courierOrderResponseElement: CourierOrderResponseElement)
     func showStatusAlert(courierOrderResponseElement: CourierOrderResponseElement)
+    func checkActivity()
 }
 
 extension OrderListTableView: OrderListTableViewProtocol{
@@ -443,6 +472,21 @@ extension OrderListTableView: OrderListTableViewProtocol{
                   sendButtonSelector: #selector(sendAlertButtonAction),
                   cancelButtonTitle: courierOrderResponseElement.transitions.alertNegative,
                   sendButtonTitle: courierOrderResponseElement.transitions.alertPositive)
+    }
+    
+    func checkActivity(){
+        presenter?.checkUserActivity(completion: { post in
+            
+            if post.status {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
+             //   NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+            }
+            else {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
+            }
+            
+        })
     }
     
 }

@@ -127,13 +127,21 @@ class OrdersView: MVPController {
         navigationItem.rightBarButtonItem?.tintColor = Colors.red
     }
     
+//    @objc func startSession() {
+//        self.navigationController?.pushViewController(OrderListTableView(), animated: true)
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkActivity()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let presenter = OrdersPresenter(view:  self)
         self.presenter = presenter
         createNavigationBar()
         setupView()
-        presenter.checkUserActivity()
         // Do any additional setup after loading the view.
     }
     
@@ -153,11 +161,28 @@ class OrdersView: MVPController {
 // То, что выполняю во вью
 protocol OrdersViewProtocol: AnyObject, MVPControllerProtocol  {
     func goToOrderListTableView()
+    func checkActivity()
 }
 
 extension OrdersView: OrdersViewProtocol {
     func goToOrderListTableView() {
         let orderList = OrderListTableView()
         self.navigationController?.pushViewController(orderList, animated: true)
+    }
+    
+    func checkActivity(){
+        presenter?.checkUserActivity(completion: { post in
+            
+            if post.status {
+                self.goToOrderListTableView()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
+              //  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+            }
+            else {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
+            }
+            
+        })
     }
 }

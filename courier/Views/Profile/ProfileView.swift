@@ -376,12 +376,16 @@ class ProfileView: MVPController {
             if post.status {
                 self.activityStatusLabel.text = "Активен"
                 self.activityStatusLabel.textColor = Colors.lightGreen
+                self.activityStatusSwitch.isOn = true
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
+              //  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
             }
             else {
                 self.activityStatusLabel.text = "Неактивен"
                 self.activityStatusLabel.textColor = Colors.red
+                self.activityStatusSwitch.isOn = false
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
             }
             
         })
@@ -440,6 +444,7 @@ class ProfileView: MVPController {
         super.viewWillAppear(animated)
         navigationSettingLabel.title = presenter?.getDefaultNavigatorValue()
         navigationSettingLabel.setLabel()
+        checkActivity()
     }
     
     override func viewDidLoad() {
@@ -449,7 +454,7 @@ class ProfileView: MVPController {
         createNavigationBar()
         setupView()
         configureData()
-        checkActivity()
+
         checkThemeMode()
     }
 }
