@@ -27,7 +27,6 @@ class OrderListTableView: MVPController {
     var orderStatus: Int = 0
     
     var cellRowToTimerMapping: [Int: Timer] = [:]
-    var nmsp = 0
     let dateManager = DateManager()
     
     @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -136,6 +135,7 @@ class OrderListTableView: MVPController {
     func createNavigationBar(){
         let navigationBarLeftItemLabel = CustomLabels(title: "Заказы", textSize: 20, style: .bold)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.navigationBar.barTintColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.setHidesBackButton(true, animated: true)
         navigationBarLeftItemLabel.setLabel()
@@ -177,17 +177,61 @@ class OrderListTableView: MVPController {
         let profileView = ProfileView()
         self.tabBarController?.selectedIndex = 3
         self.navigationController?.pushViewController(profileView, animated: true)
+        guard let navigationController = self.navigationController else { return }
+        var navigationArray = navigationController.viewControllers
+
+        if navigationArray.count == 2 {
+            navigationArray.removeLast()
+        }
+        
+        if navigationArray.count == 1 {
+            let orderList = OrderListTableView()
+            navigationArray.append(orderList)
+            navigationArray.removeFirst()
+        }
+
+        self.navigationController?.viewControllers = navigationArray
     }
     
+    var row: Int?
+    var item: CourierOrderResponseElement?
+    
     @objc func updateTableViewIfPush(_ notification: NSNotification) {
+        tableView.reloadData()
+        
         let userInfo = notification.userInfo
         
         guard let value = userInfo else {
             return
         }
-    
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: value)
+            let item = try JSONDecoder().decode(CourierOrderResponseElement.self, from: jsonData)
+
+            // MARK: получить indexPath по индексу совпадающего id в массиве data
+            let row = data.firstIndex(where: { $0.id == item.id })
+            
+            guard let row = row else {
+                return
+            }
+            
+            self.row = row
+            self.item = item
+            let indexPath = IndexPath(row: row, section: 0)
+            
+            let visibleCell = self.tableView.cellForRow(at: indexPath) as? OrderListCell
+            
+            visibleCell?.configure(orderId: item.id, orderPrice: item.sumTotal, orderSource: item.companyName, orderFromAddress: item.addressFrom.address, orderToAddress: "\(item.addressTo.street) \(item.addressTo.house)", orderAcceptButtonTitle: item.statusName, orderStatusCode: item.status)
+            
+            visibleCell?.setNeedsLayout()
+        }
+        
+        catch {
+            print(error)
+        }
+        
         print("updateTableViewIfPush")
-        self.tableView.reloadData()
     }
     
 
@@ -317,9 +361,6 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
                 let minutes = Int(numberOfSecondsPassed) / 60 % 60
                 let seconds = Int(numberOfSecondsPassed) % 60
                 
-                
-
-                self.nmsp = numberOfSecondsPassed
                 let visibleCell = self.tableView.cellForRow(at: indexPath) as? OrderListCell
 
                 if numberOfSecondsPassed < 60 {
@@ -328,11 +369,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
                     visibleCell?.changeTimerToGray()
                 }
                 visibleCell?.orderTimerLabel.text = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
-                
 
-                
-                
-                
                // cell.numberOfSecondsPassed = numberOfSecondsPassed
                // cell.orderTimerLabel.text = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
 
@@ -382,7 +419,19 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
     @objc func orderTransitionArrowButtonWasTapped(sender:UIButton){
         let rowIndex:Int = sender.tag
         print("row index ", rowIndex)
-        presenter?.didTap(model: data[rowIndex])
+        // MARK: обработать поведение при уведомлении
+        
+        if row != nil && rowIndex == row {
+            
+            guard let item = item  else { return }
+            
+            presenter?.didTap(model: item)
+         }
+         else {
+            presenter?.didTap(model: data[rowIndex])
+         }
+         
+       // presenter?.didTap(model: data[rowIndex])
     }
     
     @objc func stateButtonWasTapped(sender: UIButton) {

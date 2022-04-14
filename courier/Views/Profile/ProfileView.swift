@@ -47,6 +47,10 @@ class ProfileView: MVPController {
         cardView.translatesAutoresizingMaskIntoConstraints = false
         cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
+        if #available(iOS 11, *) {
+            cardView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 25).isActive = true
+            
+        } else {
         if UIScreen.main.bounds.size.height > 750 {
             cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/7.5).isActive = true
         }
@@ -58,7 +62,7 @@ class ProfileView: MVPController {
         if UIScreen.main.bounds.size.height <= 640 {
             cardView.topAnchor.constraint(equalTo:  view.topAnchor, constant: self.view.frame.height/6.5).isActive = true
         }
-        
+        }
         cardView.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 10).isActive = true
         cardView.rightAnchor.constraint(equalTo:  view.rightAnchor, constant: -10).isActive = true
         cardView.heightAnchor.constraint(equalToConstant: 386).isActive = true
@@ -434,6 +438,7 @@ class ProfileView: MVPController {
     func createNavigationBar(){
         let navigationBarLeftItemLabel = CustomLabels(title: "Расписание", textSize: 20, style: .bold)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.navigationBar.barTintColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.setHidesBackButton(true, animated: true)
         navigationBarLeftItemLabel.setLabel()

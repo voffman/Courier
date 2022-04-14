@@ -40,6 +40,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         self.tabBar.unselectedItemTintColor = Colors.gray
         self.tabBar.tintColor = Colors.orange
         self.tabBar.backgroundColor = Colors.white
+        self.tabBar.barTintColor = Colors.white
         let controllers = [item1,item2,item3,item4]
         self.viewControllers = controllers
     }

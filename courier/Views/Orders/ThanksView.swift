@@ -159,6 +159,7 @@ class ThanksView: UIViewController {
     func createNavigationBar(title: String){
         let navigationBarLeftItemLabel = CustomLabels(title: title, textSize: 20, style: .bold)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.navigationBar.barTintColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.setHidesBackButton(true, animated: true)
         navigationBarLeftItemLabel.setLabel()

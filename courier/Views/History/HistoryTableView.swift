@@ -22,6 +22,7 @@ class HistoryTableView: MVPController {
     func createNavigationBar(){
         let navigationBarLeftItemLabel = CustomLabels(title: "История", textSize: 20, style: .bold)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.navigationBar.barTintColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.setHidesBackButton(true, animated: true)
         navigationBarLeftItemLabel.setLabel()

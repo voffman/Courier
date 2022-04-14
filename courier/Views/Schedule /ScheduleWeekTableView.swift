@@ -85,6 +85,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     
     func createNavigationBar(title: String){
         self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.navigationBar.barTintColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.setHidesBackButton(true, animated: true)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: makeBackButton())

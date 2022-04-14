@@ -67,7 +67,7 @@ class AlertView: UIViewController {
         messageLabel.setLabel()
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
-        messageLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 57).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5).isActive = true
         messageLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
         messageLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
         messageLabel.bottomAnchor.constraint(lessThanOrEqualTo: cardView.topAnchor, constant: 175).isActive = true

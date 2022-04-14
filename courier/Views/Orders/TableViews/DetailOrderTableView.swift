@@ -244,6 +244,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         let navigationBarRightItemLabel = CustomLabels(title: String(dataPosts.sumTotal.formattedWithSeparator) + " ₸", textSize: 20, style: .light)
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
+        self.navigationController?.navigationBar.barTintColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
         navigationBarRightItemLabel.setLabel()
         navigationItem.title = "№ " + String(dataPosts.id)
