@@ -30,13 +30,16 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     let locationService = LocationService()
     
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ()) {
-        
+        if api.isConnectedToInternet {
         api.getEmployeeData(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { posts in
             completion(posts)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
 
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        }
     }
     
     func removeBearer() {
@@ -48,38 +51,50 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     }
     
     func sessionStart() {
-        api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
-            print("Сессия запущена")
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
-           // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-        } errorResponse: { error in
-            self.view?.showErrorView(errorResponseData: error)
+        if api.isConnectedToInternet {
+            api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
+                print("Сессия запущена")
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
+                // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
+            }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     
     
     func sessionStop() {
-        api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
-            print("Сессия остановлена")
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
-        } errorResponse: { error in
-            self.view?.showErrorView(errorResponseData: error)
+        if api.isConnectedToInternet {
+            api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
+                print("Сессия остановлена")
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
+            }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     
     func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ()) {
-        api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
-            completion(post)
-
-        } errorResponse: { error in
-            self.view?.showErrorView(errorResponseData: error)
+        if api.isConnectedToInternet {
+            api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
+                completion(post)
+                
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
+            }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     
     func getDefaultNavigatorValue() -> String {
         print("навигатор: \(UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "")")
-        return UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? ""
+        return UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "Не задан"
     }
     
 }

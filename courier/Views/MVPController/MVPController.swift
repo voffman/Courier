@@ -13,7 +13,7 @@ protocol MVPControllerProtocol {
     func showAlert(name: String?, message: String?, cancelButtonSelector: Selector, sendButtonSelector: Selector, cancelButtonTitle: String?, sendButtonTitle: String?)
     func showLoadingView(isHidden: Bool)
     func showContentView(isHidden: Bool)
-    func showMessage(message: String)
+    func showMessage(title: String?, message: String)
     
 }
 
@@ -23,6 +23,7 @@ class MVPController: UIViewController, MVPControllerProtocol {
     private let alertView = AlertView()
     private let loadingView = LoadingView()
     private let contentView = ContentView()
+    private let messageView = MessageView()
 
     @objc func errorButtonAction(){
         self.navigationController?.navigationBar.layer.zPosition = +1
@@ -79,15 +80,29 @@ class MVPController: UIViewController, MVPControllerProtocol {
         contentView.showContentView(onView: self.view, isHidden: isHidden)
     }
     
-    func showMessage(message: String){
+  @objc func showMessageAction() {
+      self.messageView.messageView?.isHidden = true
+      
+      self.navigationController?.navigationBar.layer.zPosition = +1
+      self.tabBarController?.tabBar.layer.zPosition = +1
+    }
+    
+    func showMessage(title: String? = "Внимание", message: String){
         print("Message: \(message)")
+        
+        self.navigationController?.navigationBar.layer.zPosition = -1
+        self.tabBarController?.tabBar.layer.zPosition = -1
+        
+
+        messageView.configureData(name: title, message: message)
+        messageView.showMessageView(onVC: self)
+        messageView.okButton.addTarget(self, action: #selector(showMessageAction), for: .touchUpInside)
     }
     
     //func createPresenter -> T{}
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //MARK: self.view.addSubview(*view) -> выводится под вью (cardView) наследника
         self.navigationController?.isNavigationBarHidden = true
     }
 }

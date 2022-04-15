@@ -28,30 +28,40 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     let api = ApiService()
     
     func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
-        
-        api.getOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? ""){ posts in
-            completion(posts)
-        } errorResponse: { error in
-            self.view?.showErrorView(errorResponseData: error)
+        if api.isConnectedToInternet {
+            api.getOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? ""){ posts in
+                completion(posts)
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
+            }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     
     func getArchiveOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
-        
-        api.getArchiveOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? ""){ posts in
-            completion(posts)
-        } errorResponse: { error in
-            self.view?.showErrorView(errorResponseData: error)
+        if api.isConnectedToInternet {
+            api.getArchiveOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? ""){ posts in
+                completion(posts)
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
+            }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     
     func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ()) {
-        api.changeOrderStatus(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", orderId: orderId, status: status) { post in
-            completion(post)
-        } errorResponse: { error in
-            self.view?.showErrorView(errorResponseData: error)
+        if api.isConnectedToInternet {
+            api.changeOrderStatus(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", orderId: orderId, status: status) { post in
+                completion(post)
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
+            }
+            
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
-
     }
     
     public func didTap (model: CourierOrderResponseElement){
@@ -67,11 +77,15 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     }
     
     func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ()) {
-        api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
-            completion(post)
-
-        } errorResponse: { error in
-            self.view?.showErrorView(errorResponseData: error)
+        if api.isConnectedToInternet {
+            api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
+                completion(post)
+                
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
+            }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     

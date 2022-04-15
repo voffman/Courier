@@ -264,6 +264,14 @@ class ClientSubview: UIViewController {
         commentLabel.bottomAnchor.constraint(equalTo: commentCardView.bottomAnchor, constant: -20).isActive = true
     }
     
+    func hideComment() {
+        self.commentCardView.isHidden = true
+        self.commentImage.isHidden = true
+        self.commentBackgroundView.isHidden = true
+        self.commentTitleLabel.isHidden = true
+    }
+    
+    
     @objc func toCallButtonAction(){
         presenter?.getPhoneNumber(phoneNumber: phoneLabel.text ?? "")
 
@@ -403,5 +411,9 @@ extension ClientSubview: ClientSubviewProtocol{
         self.commentLabel.text = comment
         self.latitude = latitude ?? "0"
         self.longitude = longitude ?? "0"
+        
+        if comment == nil {
+            hideComment()
+        }
     }
 }

@@ -21,14 +21,26 @@ class ConfirmLoginView: MVPController {
     private var presenter: ConfirmLoginViewPresenterProtocol?
     
     var timer = Timer()
-    var count = 5
+    var count = 50
     var timerValue = ""
+    
+    let phoneNumber: String
+
+    init(phoneNumber: String) {
+        self.phoneNumber = phoneNumber
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     func launchTimer(){
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(incrementCountLabel), userInfo: nil, repeats: true)
         timer.tolerance = 0.5
         // Задается время по истечению которого таймер будет остановлен
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 50) {
             self.timer.invalidate()
             self.sendAgainButton.isHidden = false
             self.sendAgainButton.setButton()
@@ -83,10 +95,7 @@ class ConfirmLoginView: MVPController {
         
         smsLabel.topAnchor.constraint(equalTo:  titleLabel.bottomAnchor, constant: 25).isActive = true
         smsLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 20).isActive = true
-        guard let presenter = presenter else {
-            return
-        }
-        smsLabel.text = "Мы отправили СМС с кодом подтверждения на номер \(String(describing: presenter.returnPhoneNumber()))"
+        smsLabel.text = "Мы отправили СМС с кодом подтверждения на номер \(phoneNumber)"
     }
     
     func setupSendAgainLabel(){
@@ -141,7 +150,11 @@ class ConfirmLoginView: MVPController {
         
         confirmTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         confirmTextField.widthAnchor.constraint(equalToConstant: 320).isActive = true
-        
+        confirmTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        confirmTextField.text = String(confirmTextField.text!.prefix(4))
     }
     
     func setupConfirmButton(){
@@ -163,8 +176,13 @@ class ConfirmLoginView: MVPController {
     
     
     @objc func confirmButtonAction(sender: UIButton!){
-        presenter?.setSMSCode(code: confirmTextField.text ?? "Нет данных")
-        presenter?.requestAuthKey()
+        if confirmTextField.text?.count != 4 {
+            showMessage(message: "Введите полученный SMS-код. Код не должен быть менее 4-х цифр.")
+        }
+        else {
+        presenter?.requestAuthKey(phoneNumber: phoneNumber, smsCode: confirmTextField.text ?? "")
+            
+        }
     }
     
     @objc func sendAgainButtonAction(sender: UIButton!){
@@ -172,10 +190,9 @@ class ConfirmLoginView: MVPController {
         self.sendAgainButton.setButton()
         self.confirmButton.style = .secondary
         self.confirmButton.setButton()
-        
-        //presenter?.sendSMSAgain()
         count = 5
         launchTimer()
+        presenter?.sendSMS(phoneNumber: phoneNumber)
     }
     
     

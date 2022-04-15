@@ -222,7 +222,7 @@ class OrderListTableView: MVPController {
             
             let visibleCell = self.tableView.cellForRow(at: indexPath) as? OrderListCell
             
-            visibleCell?.configure(orderId: item.id, orderPrice: item.sumTotal, orderSource: item.companyName, orderFromAddress: item.addressFrom.address, orderToAddress: "\(item.addressTo.street) \(item.addressTo.house)", orderAcceptButtonTitle: item.statusName, orderStatusCode: item.status)
+            visibleCell?.configure(orderId: item.id, orderPrice: item.sumTotal, orderSource: item.companyName, orderFromAddress: item.addressFrom.address, orderToAddress: "\(item.addressTo.street) \(item.addressTo.house)", orderAcceptButtonTitle: item.transitions.title, orderStatusCode: item.status)
             
             visibleCell?.setNeedsLayout()
         }
@@ -391,7 +391,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             
             cell.orderStateButton.tag = indexPath.row
             
-            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderAcceptButtonTitle: post.statusName, orderStatusCode: post.status)
+            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderAcceptButtonTitle: post.transitions.title, orderStatusCode: post.status)
             
             cell.contentView.isUserInteractionEnabled = true
             

@@ -56,6 +56,7 @@
 		5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC9279A7CD400E4A686 /* OrderListCell.swift */; };
 		5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065CCA127993A2700B38BAB /* OrdersView.swift */; };
 		5067AEED27A8F36200010950 /* StateSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5067AEEC27A8F36200010950 /* StateSubview.swift */; };
+		506D3C6D28093EA40082FB32 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3C6C28093EA40082FB32 /* MessageView.swift */; };
 		5070D35427D85AE0008AEC0F /* PickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5070D35327D85AE0008AEC0F /* PickerController.swift */; };
 		50759FBD27F18B3F0002F7E3 /* OrderStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50759FBC27F18B3F0002F7E3 /* OrderStatusResponse.swift */; };
 		5080760A27FA9A2F008E763B /* ChooseNavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5080760927FA9A2F008E763B /* ChooseNavigatorView.swift */; };
@@ -136,6 +137,7 @@
 		5062EFC9279A7CD400E4A686 /* OrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListCell.swift; sourceTree = "<group>"; };
 		5065CCA127993A2700B38BAB /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
 		5067AEEC27A8F36200010950 /* StateSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateSubview.swift; sourceTree = "<group>"; };
+		506D3C6C28093EA40082FB32 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		5070D35327D85AE0008AEC0F /* PickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
 		50759FBC27F18B3F0002F7E3 /* OrderStatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStatusResponse.swift; sourceTree = "<group>"; };
 		5080760927FA9A2F008E763B /* ChooseNavigatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseNavigatorView.swift; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				50DFF72627BBA3960066BB37 /* LoadingView.swift */,
 				50DFF72827BBA3A90066BB37 /* ContentView.swift */,
 				50475EE627BCC0FA00AD27E2 /* AlertView.swift */,
+				506D3C6C28093EA40082FB32 /* MessageView.swift */,
 			);
 			path = MVPController;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				501D409927A26EE200F67C6B /* DetailOrderTableView.swift in Sources */,
 				50A5731A27B3CF0500E3013F /* NetworkManager.swift in Sources */,
 				5030A5D727B504A000863939 /* CourierOrderResponse.swift in Sources */,
+				506D3C6D28093EA40082FB32 /* MessageView.swift in Sources */,
 				5031835A27ACFDD7001C9BEB /* ScheduleCell.swift in Sources */,
 				508FA19028052D4900482528 /* NotificationsActions.swift in Sources */,
 				50A5731C27B3D89E00E3013F /* UserResponse.swift in Sources */,

@@ -326,6 +326,7 @@ class ProfileView: MVPController {
     
     @objc func exitButtonAction(sender: UIButton){
         presenter?.removeBearer()
+       // presenter.stopTimer()
         goToLoginView()
     }
     
@@ -447,8 +448,7 @@ class ProfileView: MVPController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationSettingLabel.title = presenter?.getDefaultNavigatorValue()
-        navigationSettingLabel.setLabel()
+        createNavigationBar()
         checkActivity()
     }
     
@@ -456,10 +456,11 @@ class ProfileView: MVPController {
         super.viewDidLoad()
         let presenter = ProfilePresenter(view: self)
         self.presenter = presenter
-        createNavigationBar()
+
         setupView()
         configureData()
-
+        navigationSettingLabel.title = presenter.getDefaultNavigatorValue()
+        navigationSettingLabel.setLabel()
         checkThemeMode()
     }
 }

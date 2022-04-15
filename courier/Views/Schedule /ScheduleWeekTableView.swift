@@ -37,7 +37,6 @@ class ScheduleWeekTableView: MVPController {
         self.view.backgroundColor = Colors.backgroundColor
         setupTableView()
 
-        checkPosts(id: String(dataPosts.id))
         scheduleFooterView.submitButton.addTarget(self, action: #selector(submitScheduleAction), for: .touchUpInside)
     }
     
@@ -96,6 +95,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createNavigationBar(title: dateManager.convert(dateString: dataPosts.dateStart, convertToDateFormat: "dd MMM") + " - " + dateManager.convert(dateString: dataPosts.dateEnd, convertToDateFormat: "dd MMM"))
+        checkPosts(id: String(dataPosts.id))
     }
     
     override func viewDidLayoutSubviews() {

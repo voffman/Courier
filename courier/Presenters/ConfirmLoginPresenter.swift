@@ -10,9 +10,9 @@ import Foundation
 // То, что выполняю в здесь
 protocol ConfirmLoginViewPresenterProtocol: AnyObject {
     init(view: ConfirmLoginViewProtocol)
-    func requestAuthKey()
-    func returnPhoneNumber() -> String
-    func setSMSCode(code: String)
+    func requestAuthKey(phoneNumber: String, smsCode: String)
+    func sendSMS(phoneNumber: String?)
+
 }
 
 class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
@@ -24,8 +24,9 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
     
     let api = ApiService()
 
-    func requestAuthKey() {
-        api.getAuthKey( phoneNumber: UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber) ?? "", smsCode: UserDefaults.standard.string(forKey: UserDefaultsKeys.smsCode) ?? ""){ bearer in
+    func requestAuthKey(phoneNumber: String, smsCode: String) {
+        if api.isConnectedToInternet {
+        api.getAuthKey( phoneNumber: phoneNumber, smsCode: smsCode){ bearer in
             UserDefaults.standard.set(bearer, forKey: UserDefaultsKeys.bearer)
             if UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) != ""{
                 self.view?.goToOrdersViewTabBar()
@@ -33,13 +34,30 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        }
     }
     
-    func returnPhoneNumber() -> String {
-        return UserDefaults.standard.string(forKey: UserDefaultsKeys.phoneNumber) ?? "Нет данных"
-    }
-    
-    func setSMSCode(code: String){
-        UserDefaults.standard.set(code, forKey: UserDefaultsKeys.smsCode)
+    func sendSMS(phoneNumber: String?) {
+        
+        var errorResponse: ErrorResponse?
+        
+        guard let phoneNumber = phoneNumber else {
+            return
+        }
+        
+        var clearPhoneNumber = phoneNumber
+        let charsToRemove: Set<Character> = ["(", ")", "-", " "]
+        clearPhoneNumber.removeAll(where: { charsToRemove.contains($0) })
+        if api.isConnectedToInternet {
+            api.sendSMS(phoneNumber: clearPhoneNumber) { error in
+                errorResponse = error
+                guard let errorResponse = errorResponse else { return }
+                self.view?.showErrorView(errorResponseData: errorResponse)
+            }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        }
     }
 }

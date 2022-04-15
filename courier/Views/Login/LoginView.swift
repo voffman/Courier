@@ -77,6 +77,7 @@ class LoginView: MVPController {
     @objc func textFieldDidChange(_ textField: UITextField) {
         guard let text = textField.text else { return }
         textField.text = text.applyPatternOnNumbers(pattern: "+# (###) ###-####", replacementCharacter: "#")
+        phoneNumberTextField.text = String(phoneNumberTextField.text!.prefix(24))
     }
     
     func setupLoginButton(){
@@ -109,11 +110,16 @@ class LoginView: MVPController {
     }
     
     @objc func loginButtonAction(sender: UIButton!){
+        
+        if phoneNumberTextField.text?.count == 0 {
+            showMessage(message: "Введите номер телефона")
+        }
+        else {
+            presenter?.sendSMS(phoneNumber: phoneNumberTextField.text)
+            // презентер никогда не запрашивает данные от вью
+            presenter?.goToConfirmLoginView()
+        }
 
-        presenter?.sendSMS(phoneNumber: phoneNumberTextField.text)
-
-        // презентер никогда не запрашивает данные от вью
-        presenter?.goToConfirmLoginView()
     }
 
     override func viewDidLoad() {
@@ -127,7 +133,6 @@ class LoginView: MVPController {
 
 // То, что выполняю во вью
 protocol LoginViewProtocol: AnyObject, MVPControllerProtocol  {
-// to chto otnosytsa k ekranu logina
     func goToConfirmLoginView()
     func popVC()
 }
@@ -135,9 +140,9 @@ protocol LoginViewProtocol: AnyObject, MVPControllerProtocol  {
 extension LoginView: LoginViewProtocol{
 
     func goToConfirmLoginView() {
-        let vc = ConfirmLoginView()
+        let vc = ConfirmLoginView(phoneNumber: phoneNumberTextField.text ?? "")
         vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true) // MARK: не дает появиться errorView
+        present(vc, animated: true)
     }
     
     func popVC() {

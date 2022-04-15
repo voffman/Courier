@@ -42,17 +42,21 @@ private let courierSlotStopURL = baseURL + "courier/slot/stop"
 private let employeeURL = baseURL + "user"
 
 //courier location
-private let locationURL = baseURL + "location"
+private let locationURL = baseURL + "courier/location"
 
 let networkManager = NetworkManager()
 
 class ApiService {
     
+    var isConnectedToInternet:Bool {
+        return NetworkReachabilityManager()?.isReachable ?? false
+    }
+    
     // MARK: Auth
     func sendSMS(phoneNumber: String, completion: @escaping (ErrorResponse)->()){
         networkManager.request(url: smsURL, method: .post, body: ["phone": phoneNumber]) { response in
             print(response.data ?? "Нет данных")
-
+// заглушку сделать 
         } ifError: { error in
             completion(error)
         }

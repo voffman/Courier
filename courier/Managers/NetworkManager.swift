@@ -144,7 +144,7 @@ final class NetworkManager {
             }
             
         case .post:
-            AF.request(url, method: .post, parameters: body, headers: headers).validate(statusCode: 200..<500).response { response in
+            AF.request(url, method: .post, parameters: body, headers: headers).validate(statusCode: 200..<300).response { response in
                 switch response.result {
                 case .success:
                     print("response.result \(response.result)")

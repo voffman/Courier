@@ -27,22 +27,29 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
     let locationService = LocationService()
 
     func startUserActivity() {
-        
-        api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
-            self.view?.goToOrderListTableView()
-            
-        } errorResponse: { error in
-            self.view?.showErrorView(errorResponseData: error)
+        if api.isConnectedToInternet {
+            api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
+                self.view?.goToOrderListTableView()
+                
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
+            }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     
     func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ()) {
-        api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
-            completion(post)
-
-        } errorResponse: { error in
-            self.view?.showErrorView(errorResponseData: error)
+        if api.isConnectedToInternet {
+            api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
+                completion(post)
+                
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
+            }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
 }

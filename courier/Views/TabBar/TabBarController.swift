@@ -10,7 +10,26 @@ import UIKit
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
    
    @objc func updateView() {
-        viewDidLoad()
+       let item1 = UINavigationController(rootViewController: OrdersView())
+       let item2 = UINavigationController(rootViewController: HistoryTableView())
+       let item3 = UINavigationController(rootViewController: ScheduleTableView())
+       let item4 = UINavigationController(rootViewController: ProfileView())
+       
+       let icon1 = UITabBarItem(title: "Заказы", image: UIImage(named: "TabBarItem1"), selectedImage: UIImage(named: ""))
+       let icon2 = UITabBarItem(title: "История", image: UIImage(named: "TabBarItem2"), selectedImage: UIImage(named: ""))
+       let icon3 = UITabBarItem(title: "Расписание", image: UIImage(named: "TabBarItem3"), selectedImage: UIImage(named: ""))
+       let icon4 = UITabBarItem(title: "Профиль", image: UIImage(named: "TabBarItem4"), selectedImage: UIImage(named: ""))
+       
+       item1.tabBarItem = icon1
+       item2.tabBarItem = icon2
+       item3.tabBarItem = icon3
+       item4.tabBarItem = icon4
+       self.tabBar.unselectedItemTintColor = Colors.gray
+       self.tabBar.tintColor = Colors.orange
+       self.tabBar.backgroundColor = Colors.white
+       self.tabBar.barTintColor = Colors.white
+       let controllers = [item1,item2,item3,item4]
+       self.viewControllers = controllers
     }
     
     var presenter: TabBarPresenterProtocol?
@@ -47,7 +66,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        viewDidLoad()
     }
 
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {

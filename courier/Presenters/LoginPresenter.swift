@@ -26,29 +26,35 @@ class LoginPresenter: LoginViewPresenterProtocol {
     let api = ApiService()
     
     func sendSMS(phoneNumber: String?) {
-        // Здесь выпоняется запрос по получению "СМС"
-        // Api.getLogin
-        // две функции для обработки успеха или ошибки
         
         var errorResponse: ErrorResponse?
         
         guard let phoneNumber = phoneNumber else {
             return
         }
-
-        // view.shoeErrrorView
-        UserDefaults.standard.set(phoneNumber, forKey: UserDefaultsKeys.phoneNumber)
-        api.sendSMS(phoneNumber: phoneNumber) { error in
-            errorResponse = error
-            guard let errorResponse = errorResponse else { return }
-            //
-            self.view?.popVC()
-            self.view?.showErrorView(errorResponseData: errorResponse)
-
+        
+        var clearPhoneNumber = phoneNumber
+        let charsToRemove: Set<Character> = ["(", ")", "-", " "]
+        clearPhoneNumber.removeAll(where: { charsToRemove.contains($0) })
+        
+        
+        if api.isConnectedToInternet {
+            api.sendSMS(phoneNumber: clearPhoneNumber) { error in
+                errorResponse = error
+                guard let errorResponse = errorResponse else { return }
+                //
+                self.view?.popVC()
+                self.view?.showErrorView(errorResponseData: errorResponse)
+                
+            }
+        } else {
+            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     
     func goToConfirmLoginView() {
+        if api.isConnectedToInternet {
         self.view?.goToConfirmLoginView()
+        }
     }
 }

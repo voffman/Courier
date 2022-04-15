@@ -190,7 +190,7 @@ class DetailOrderTableView: MVPController {
                                                                     comment: dataPosts.comments,
                                                                     latitude: dataPosts.addressTo.lat,
                                                                     longitude: dataPosts.addressTo.long)
-        stateSubview.configure(buttonTitle: dataPosts.statusName, status: dataPosts.status, timerValue: dataPosts.dateTimeStatusFinish)
+        stateSubview.configure(buttonTitle: dataPosts.transitions.title ?? "", status: dataPosts.status, timerValue: dataPosts.dateTimeStatusFinish)
   
     }
 }
@@ -351,6 +351,12 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
         let post = dataPosts.orderItems[indexPath.row]
         footerTableView.addData(sum: dataPosts.sumTotal, customerAmount: dataPosts.customerAmount ?? "-", paymentType: dataPosts.paymentTypeID)
+        
+        if dataPosts.customerAmount == nil {
+            footerTableView.hideCustomerAmount()
+            footerTableView.frame.size.height = 75
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailOrderCell.identifire, for: indexPath) as! DetailOrderCell
         
         cell.configure(orderName: post.name + " \(post.orderItemDescription ?? "")", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price.formattedWithSeparator) + " ₸")

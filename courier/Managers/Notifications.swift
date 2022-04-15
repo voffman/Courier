@@ -92,7 +92,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
     
   
   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-      
+      // распарсиваю userinfo
+      // смотрю на action event
+      //categoryIdentifier не нужны
       switch notification.request.content.categoryIdentifier {
           
       case "closeSlot":

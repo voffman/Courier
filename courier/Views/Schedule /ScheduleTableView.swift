@@ -35,7 +35,10 @@ class ScheduleTableView: MVPController {
         self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = Colors.backgroundColor
         setupTableView()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         checkPosts()
     }
 

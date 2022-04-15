@@ -101,10 +101,11 @@ class HistoryTableView: MVPController {
         pickerController.pickerViewButton.addTarget(self, action: #selector(popUpPicker(sender:)), for: .touchUpInside)
         pickerController.pickerViewButton.translatesAutoresizingMaskIntoConstraints = false
         pickerController.pickerViewButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        pickerController.pickerViewButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/1.5).isActive = true
+        pickerController.pickerViewButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         pickerController.pickerViewButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        if UIScreen.main.bounds.size.height > 750{        pickerController.pickerViewButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 97).isActive = true
+        if UIScreen.main.bounds.size.height > 750{
+            pickerController.pickerViewButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 97).isActive = true
         } else if UIScreen.main.bounds.size.height > 640 {
             pickerController.pickerViewButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 69).isActive = true
         }
@@ -114,6 +115,11 @@ class HistoryTableView: MVPController {
         }
         
         setupTableView()
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         checkPosts(dateStart: self.dateManager.getStringDateFor(days: 0), dateFinish: self.dateManager.getStringDateFor(days: 0))
     }
 

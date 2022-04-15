@@ -104,6 +104,14 @@ class DetailOrderTableViewFooter: UIView {
         
     }
     
+    func hideCustomerAmount() {
+        customerAmountTitleLabel.isHidden = true
+        customerAmountLabel.isHidden = true
+        secondDividerView.isHidden = true
+        paymentTypeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 45).isActive = true
+        paymentLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 45).isActive = true
+    }
+    
     
 }
 
