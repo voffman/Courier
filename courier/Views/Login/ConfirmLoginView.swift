@@ -12,18 +12,18 @@ class ConfirmLoginView: MVPController {
     let cardView = CustomViews(style: .withShadow)
     let titleLabel = CustomLabels(title: "Вход для курьеров", textSize: 24, style: .bold)
     let smsLabel = CustomLabels(title: "Мы отправили СМС с кодом подтверждения на номер ", textSize: 14, style: .regular)
-    let sendAgainLabel = CustomLabels(title: "Отправить еще раз через 0:50 сек", textSize: 14, style: .light)
+    let sendAgainLabel = CustomLabels(title: "Отправить еще раз через 1:00 мин", textSize: 14, style: .light)
     let sendAgainButton = CustomButtons(title: "ОТПРАВИТЬ ЕЩЕ РАЗ", style: .primary)
     let codeConfirmLabel = CustomLabels(title: "Код подтверждения", textSize: 12, style: .light)
     let confirmTextField = CustomTextFields(pHolder: "", style: .normal)
-    let confirmButton = CustomButtons(title: "ПОДТВЕРДИТЬ", style: .secondary)
+    let confirmButton = CustomButtons(title: "ПОДТВЕРДИТЬ", style: .primary)
 
     private var presenter: ConfirmLoginViewPresenterProtocol?
     
     var timer = Timer()
-    var count = 50
+    var count = 60
     var timerValue = ""
-    
+    var isMinuts = false
     let phoneNumber: String
 
     init(phoneNumber: String) {
@@ -40,12 +40,14 @@ class ConfirmLoginView: MVPController {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(incrementCountLabel), userInfo: nil, repeats: true)
         timer.tolerance = 0.5
         // Задается время по истечению которого таймер будет остановлен
-        DispatchQueue.main.asyncAfter(deadline: .now() + 50) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
             self.timer.invalidate()
             self.sendAgainButton.isHidden = false
             self.sendAgainButton.setButton()
             self.confirmButton.style = .primary
+            self.confirmButton.isEnabled = true
             self.confirmButton.setButton()
+            
           //  self.sendAgainLabel.isHidden = true
             
         }
@@ -57,7 +59,15 @@ class ConfirmLoginView: MVPController {
         let minutes = Int(count) / 60 % 60
         let seconds = Int(count) % 60
         timerValue = String(format:"%01i:%02i", minutes, seconds)
-        sendAgainLabel.title = "Отправить еще раз через \(timerValue) сек"
+        
+       isMinuts = count > 59 ? true: false
+
+        if isMinuts {
+        sendAgainLabel.title = "Отправить еще раз через \(timerValue) мин"
+        }
+        else {
+            sendAgainLabel.title = "Отправить еще раз через \(timerValue) сек"
+        }
         sendAgainLabel.setLabel()
     }
     
@@ -105,7 +115,7 @@ class ConfirmLoginView: MVPController {
         
         sendAgainLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         sendAgainLabel.topAnchor.constraint(equalTo:  smsLabel.bottomAnchor, constant: 45).isActive = true
-        sendAgainLabel.text = "Отправить еще раз через 0:50 сек"
+        sendAgainLabel.text = "Отправить еще раз через 1:00 мин"
     }
     
     
@@ -189,8 +199,10 @@ class ConfirmLoginView: MVPController {
         self.sendAgainButton.isHidden = true
         self.sendAgainButton.setButton()
         self.confirmButton.style = .secondary
+        self.confirmButton.isEnabled = false
         self.confirmButton.setButton()
-        count = 5
+        count = 60
+        self.timerValue = "Отправить еще раз через 1:00 мин"
         launchTimer()
         presenter?.sendSMS(phoneNumber: phoneNumber)
     }

@@ -28,13 +28,13 @@ class NotificationsActions: MVPController {
     }
     
     func updateOrderByTap(userInfo: [AnyHashable : Any]) {
-        let dict: [AnyHashable: Any] = userInfo["COURIER_ORDER_RESPONSE"] as! [AnyHashable : Any]
+        let dict: [AnyHashable: Any] = userInfo["actionData"] as! [AnyHashable : Any]
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateOrderByTap"), object: nil, userInfo: dict)
     }
     
     func updateOrder(userInfo: [AnyHashable : Any]) {
-        let dict: [AnyHashable: Any] = userInfo["COURIER_ORDER_RESPONSE"] as! [AnyHashable : Any]
+        let dict: [AnyHashable: Any] = userInfo["actionData"] as! [AnyHashable : Any]
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateOrder"), object: nil, userInfo: dict)
     }

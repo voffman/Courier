@@ -21,8 +21,6 @@ class ErrorView: UIViewController {
     let typeLabel = CustomLabels(title: "Тип: ", textSize: 14, style: .regular, alignment: .justified)
     
     let sendButton = CustomButtons(title: "ОК", style: .primary)
-
-    var errorView : UIView?
     
     //MARK: выбрать что-то одно
     func configureData(errorResponseData: ErrorResponse){
@@ -111,7 +109,7 @@ class ErrorView: UIViewController {
         sendButton.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
         sendButton.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
       
-        errorView = backgroundView
+        self.view = backgroundView
     }
 
     override func viewDidLoad() {

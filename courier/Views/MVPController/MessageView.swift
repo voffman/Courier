@@ -16,7 +16,7 @@ class MessageView: UIViewController {
     
     let okButton = CustomButtons(title: "ОК", style: .primary)
 
-    var messageView: UIView?
+
     
     
     func configureData(name: String?, message: String?, okButton: String? = "Подтвердить"){
@@ -36,7 +36,6 @@ class MessageView: UIViewController {
         let backgroundView = UIView.init(frame: onVC.view.bounds)
         backgroundView.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
       //  UIApplication.shared.keyWindow!.addSubview(backgroundView)
-        
         onVC.view.addSubview(backgroundView)
         backgroundView.addSubview(cardView)
         cardView.setView()
@@ -80,10 +79,8 @@ class MessageView: UIViewController {
         messageLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
         messageLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
         messageLabel.bottomAnchor.constraint(equalTo: okButton.topAnchor, constant: -25).isActive = true
-      
 
-        
-        messageView = backgroundView
+        self.view = backgroundView
     }
     
     override func viewDidLoad() {

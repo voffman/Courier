@@ -70,7 +70,7 @@ class StateSubview: UIViewController {
         orderTimerLabel.widthAnchor.constraint(equalToConstant: 125).isActive = true
   
         orderTimerLabel.topAnchor.constraint(equalTo: orderTimerView.topAnchor, constant: 12).isActive = true
-        orderTimerLabel.leftAnchor.constraint(equalTo: orderTimerView.leftAnchor, constant: 36).isActive = true
+        orderTimerLabel.leftAnchor.constraint(equalTo: orderTimerView.leftAnchor, constant: 40).isActive = true
         
     }
     
@@ -176,6 +176,7 @@ class StateSubview: UIViewController {
     func launchTimer(){
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(incrementCountLabel), userInfo: nil, repeats: true)
         timer.tolerance = 0.5
+        RunLoop.current.add(self.timer, forMode: RunLoop.Mode.common)
         // Задается время по истечению которого таймер будет остановлен
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(count)) {
             self.timer.invalidate()
@@ -184,15 +185,18 @@ class StateSubview: UIViewController {
     
     @objc func incrementCountLabel(){
         count -= 1
-        let hours = Int(count) / 3600
-        let minutes = Int(count) / 60 % 60
+        let minutes = Int(count) / 60
         let seconds = Int(count) % 60
-        timerValue = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
+        timerValue = String(format:"%02i:%03i", minutes, seconds)
         orderTimerLabel.title = "\(timerValue)"
         orderTimerLabel.setLabel()
         
         if count < 60 {
             changeTimerToRed()
+        }
+        if count <= 0 {
+            self.timer.invalidate()
+            orderTimerLabel.text = "00:00"
         }
     }
     
@@ -201,7 +205,6 @@ class StateSubview: UIViewController {
         self.stateButton.title = buttonTitle.uppercased()
         self.status = status
         self.timerValue = timerValue
-        print("таймервэлью: ", timerValue)
         count = dateManager.converteDateToSeconds(dateString: timerValue, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
        // self.orderTimerLabel.text = self.timerValue
 

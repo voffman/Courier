@@ -53,20 +53,21 @@ class ApiService {
     }
     
     // MARK: Auth
-    func sendSMS(phoneNumber: String, completion: @escaping (ErrorResponse)->()){
+    func sendSMS(phoneNumber: String, completion: @escaping (AFDataResponse<Data?>)->(), errorResponse: @escaping (ErrorResponse)->()){
         networkManager.request(url: smsURL, method: .post, body: ["phone": phoneNumber]) { response in
             print(response.data ?? "Нет данных")
-// заглушку сделать 
+            completion(response)
+            
         } ifError: { error in
-            completion(error)
+            errorResponse(error)
         }
     }
     
-    func getAuthKey(phoneNumber: String, smsCode: String, completion: @escaping (String)->(), errorResponse: @escaping (ErrorResponse)->()){
+    func getAuthKey(phoneNumber: String, smsCode: String, completion: @escaping ([UserResponse])->(), errorResponse: @escaping (ErrorResponse)->()){
         networkManager.request(url: loginByCodeURL, method: .post, body: ["phone": phoneNumber, "code": smsCode], model: UserResponse.self) { posts, post  in
             
             print("Ключ: ", post?.authKey ?? "Нет данных")
-            completion(post?.authKey ?? "")
+            completion(posts)
             
         } ifError: { error in
 

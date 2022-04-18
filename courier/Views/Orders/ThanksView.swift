@@ -169,7 +169,7 @@ class ThanksView: UIViewController {
     func configureData(){
         let dateManager = DateManager()
         
-     let dateTimeFinishString = dateManager.convert(dateString: dataPost.dateTimeFinish, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ", convertToDateFormat: "HH:mm")
+        let dateTimeFinishString = dateManager.convert(dateString: dataPost.dateTimeFinish, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ", convertToDateFormat: "HH ч : mm мин")
         
      let isOnTime = dateManager.compareCurrentDateWithDate(dateString: dateTimeFinishString, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
         
@@ -188,7 +188,7 @@ class ThanksView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        createNavigationBar(title: "Заказ № 356167")
+        createNavigationBar(title: "Заказ № \(dataPost.id)")
         configureData()
         // Do any additional setup after loading the view.
     }

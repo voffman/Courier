@@ -283,7 +283,8 @@ class OrderListCell: UITableViewCell {
     
     func setupTimerLabel(){
         orderTimerLabel.translatesAutoresizingMaskIntoConstraints = false
-        orderTimerLabel.centerXAnchor.constraint(equalTo: orderTimerView.centerXAnchor, constant: 6).isActive = true // 16
+        orderTimerLabel.leftAnchor.constraint(equalTo: orderTimerView.leftAnchor, constant: 40).isActive = true
+       // orderTimerLabel.centerXAnchor.constraint(equalTo: orderTimerView.centerXAnchor, constant: 46).isActive = true // 16
         orderTimerLabel.centerYAnchor.constraint(equalTo: orderTimerView.centerYAnchor, constant: 0).isActive = true
         orderTimerLabel.heightAnchor.constraint(equalToConstant: orderTimerLabel.intrinsicContentSize.width).isActive = true
         orderTimerLabel.widthAnchor.constraint(equalToConstant: 130).isActive = true

@@ -16,8 +16,6 @@ class AlertView: UIViewController {
     
     let cancelButton = CustomButtons(title: "Отмена", style: .normal)
     let sendButton = CustomButtons(title: "Подтвердить", style: .primary)
-
-    var alertView: UIView?
     
     
     func configureData(name: String?, message: String?, cancelButton: String? = "Отмена", sendButton: String? = "Подтвердить"){
@@ -61,7 +59,8 @@ class AlertView: UIViewController {
         
         nameLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
         nameLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 18).isActive = true
-        nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: self.view.frame.size.width - 30).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
         
         cardView.addSubview(messageLabel)
         messageLabel.setLabel()
@@ -92,7 +91,7 @@ class AlertView: UIViewController {
         sendButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
         sendButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -20).isActive = true
         
-        alertView = backgroundView
+        self.view = backgroundView
     }
     
     override func viewDidLoad() {

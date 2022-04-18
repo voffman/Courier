@@ -61,6 +61,7 @@ class DetailOrderTableView: MVPController {
                                                                         latitude: dataPosts.addressTo.lat,
                                                                         longitude: dataPosts.addressTo.long)
             shadowViewForTableView.isHidden = true
+            clientSubview.setupPhoneLabel()
             
         case 2:
             scrollView.isScrollEnabled = true

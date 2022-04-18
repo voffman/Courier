@@ -449,6 +449,8 @@ class ProfileView: MVPController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createNavigationBar()
+        navigationSettingLabel.title = presenter?.getDefaultNavigatorValue()
+        navigationSettingLabel.setLabel()
         checkActivity()
     }
     
@@ -459,8 +461,7 @@ class ProfileView: MVPController {
 
         setupView()
         configureData()
-        navigationSettingLabel.title = presenter.getDefaultNavigatorValue()
-        navigationSettingLabel.setLabel()
+
         checkThemeMode()
     }
 }

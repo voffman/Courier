@@ -28,7 +28,7 @@ class MVPController: UIViewController, MVPControllerProtocol {
     @objc func errorButtonAction(){
         self.navigationController?.navigationBar.layer.zPosition = +1
         self.tabBarController?.tabBar.layer.zPosition = +1
-        errorView.errorView?.isHidden = true
+        errorView.view.isHidden = true
     }
  
     func showErrorView(errorResponseData: ErrorResponse?){
@@ -66,7 +66,7 @@ class MVPController: UIViewController, MVPControllerProtocol {
     }
     
     func dismissAlertView(){
-        self.alertView.alertView?.isHidden = true
+        self.alertView.view.isHidden = true
         
         self.navigationController?.navigationBar.layer.zPosition = +1
         self.tabBarController?.tabBar.layer.zPosition = +1
@@ -81,7 +81,7 @@ class MVPController: UIViewController, MVPControllerProtocol {
     }
     
   @objc func showMessageAction() {
-      self.messageView.messageView?.isHidden = true
+      self.messageView.view.isHidden = true
       
       self.navigationController?.navigationBar.layer.zPosition = +1
       self.tabBarController?.tabBar.layer.zPosition = +1

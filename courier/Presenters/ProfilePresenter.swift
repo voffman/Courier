@@ -94,7 +94,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     
     func getDefaultNavigatorValue() -> String {
         print("навигатор: \(UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "")")
-        return UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "Не задан"
+        return UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "2ГИС"
     }
     
 }

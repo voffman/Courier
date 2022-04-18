@@ -23,29 +23,12 @@ class Notifications: NSObject, UNUserNotificationCenterDelegate {
         }
     }
     
-    func setNotificationsCategories() {
-        let slotCategory = UNNotificationCategory(identifier: "closeSlot",
-                                                  actions: [],
-                                                  intentIdentifiers: [],
-                                                  options: [])
-          
-          
-        let orderCategory = UNNotificationCategory(identifier: "updateOrder",
-                                                    actions: [],
-                                                    intentIdentifiers: [],
-                                                    options: [])
-        
-        notificationCenter.setNotificationCategories([slotCategory, orderCategory])
-    }
-    
     func registerForPushNotifications() {
         notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) {
             (granted, error) in
             print("Is permission granted: \(granted)")
             
             guard granted else { return }
-            
-            self.setNotificationsCategories()
             
             self.getNotificationSettings()
         }
@@ -95,8 +78,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
       // распарсиваю userinfo
       // смотрю на action event
       //categoryIdentifier не нужны
-      switch notification.request.content.categoryIdentifier {
-          
+      let userInfo = notification.request.content.userInfo
+      let actionEvent = userInfo["actionEvent"] as? String ?? "Отсутствует actionEvent"
+      
+      switch actionEvent {
+
       case "closeSlot":
           print("close slot")
           notificationsActions.closeSlot()
@@ -119,8 +105,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler:
              @escaping () -> Void) {
+        
+        let userInfo = response.notification.request.content.userInfo
+        let actionEvent = userInfo["actionEvent"] as? String ?? "Отсутствует actionEvent"
   
-       switch response.notification.request.content.categoryIdentifier {
+       switch actionEvent {
        case "closeSlot":
            print("close slot by tap")
            notificationsActions.closeSlotByTap()

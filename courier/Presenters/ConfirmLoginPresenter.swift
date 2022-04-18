@@ -26,22 +26,26 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
 
     func requestAuthKey(phoneNumber: String, smsCode: String) {
         if api.isConnectedToInternet {
-        api.getAuthKey( phoneNumber: phoneNumber, smsCode: smsCode){ bearer in
-            UserDefaults.standard.set(bearer, forKey: UserDefaultsKeys.bearer)
-            if UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) != ""{
-                self.view?.goToOrdersViewTabBar()
+            api.getAuthKey( phoneNumber: phoneNumber, smsCode: smsCode){ posts in
+                
+                for post in posts {
+                    UserDefaults.standard.set(post.authKey, forKey: UserDefaultsKeys.bearer)
+                    if UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) != ""{
+                        self.view?.goToOrdersViewTabBar()
+                    } else {
+                        self.view?.showMessage(title: "Внимание", message: "Неправильный код")
+                    }
+                }
+                
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
             }
-        } errorResponse: { error in
-            self.view?.showErrorView(errorResponseData: error)
-        }
         } else {
             view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     
     func sendSMS(phoneNumber: String?) {
-        
-        var errorResponse: ErrorResponse?
         
         guard let phoneNumber = phoneNumber else {
             return
@@ -51,13 +55,13 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
         let charsToRemove: Set<Character> = ["(", ")", "-", " "]
         clearPhoneNumber.removeAll(where: { charsToRemove.contains($0) })
         if api.isConnectedToInternet {
-            api.sendSMS(phoneNumber: clearPhoneNumber) { error in
-                errorResponse = error
-                guard let errorResponse = errorResponse else { return }
-                self.view?.showErrorView(errorResponseData: errorResponse)
+            api.sendSMS(phoneNumber: clearPhoneNumber) { completion in
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
             }
         } else {
             view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+            
         }
     }
 }

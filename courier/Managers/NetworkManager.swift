@@ -121,7 +121,7 @@ final class NetworkManager {
             AF.request(url, parameters: body, headers: headers).validate(statusCode: 200..<300).response { response in
                 switch response.result {
                 case .success:
-                    print("ttt response.result \(response.result)")
+                    print("response.result \(response.result)")
                     print("response.data \(String(describing: response.data))")
                     print("response.request \(String(describing: response.request))")
                     print("response.error \(String(describing: response.error))")

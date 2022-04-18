@@ -12,7 +12,6 @@ import Foundation
 protocol LoginViewPresenterProtocol: AnyObject {
     init(view: LoginViewProtocol)
     func sendSMS(phoneNumber: String?)
-    func goToConfirmLoginView()
 }
 
 class LoginPresenter: LoginViewPresenterProtocol {
@@ -27,8 +26,6 @@ class LoginPresenter: LoginViewPresenterProtocol {
     
     func sendSMS(phoneNumber: String?) {
         
-        var errorResponse: ErrorResponse?
-        
         guard let phoneNumber = phoneNumber else {
             return
         }
@@ -37,24 +34,18 @@ class LoginPresenter: LoginViewPresenterProtocol {
         let charsToRemove: Set<Character> = ["(", ")", "-", " "]
         clearPhoneNumber.removeAll(where: { charsToRemove.contains($0) })
         
-        
         if api.isConnectedToInternet {
-            api.sendSMS(phoneNumber: clearPhoneNumber) { error in
-                errorResponse = error
-                guard let errorResponse = errorResponse else { return }
-                //
-                self.view?.popVC()
-                self.view?.showErrorView(errorResponseData: errorResponse)
+            api.sendSMS(phoneNumber: clearPhoneNumber) { completion in
+                if (200...300).contains(completion.response?.statusCode ?? 0) {
+                    self.view?.goToConfirmLoginView()
+                }
                 
+            } errorResponse: { error in
+                self.view?.showErrorView(errorResponseData: error)
             }
         } else {
             view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
-        }
-    }
-    
-    func goToConfirmLoginView() {
-        if api.isConnectedToInternet {
-        self.view?.goToConfirmLoginView()
+            
         }
     }
 }

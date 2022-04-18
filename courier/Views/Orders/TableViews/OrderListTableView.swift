@@ -357,8 +357,8 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
                                 
                 numberOfSecondsPassed -= 1
                 
-                let hours = Int(numberOfSecondsPassed) / 3600
-                let minutes = Int(numberOfSecondsPassed) / 60 % 60
+              //  let hours = Int(numberOfSecondsPassed) / 3600
+                let minutes = Int(numberOfSecondsPassed) / 60 // % 60
                 let seconds = Int(numberOfSecondsPassed) % 60
                 
                 let visibleCell = self.tableView.cellForRow(at: indexPath) as? OrderListCell
@@ -368,8 +368,13 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     visibleCell?.changeTimerToGray()
                 }
-                visibleCell?.orderTimerLabel.text = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
-
+                if numberOfSecondsPassed <= 0 {
+                    capturedTimer.invalidate()
+                    visibleCell?.orderTimerLabel.text = "00:00"
+                }
+                else {
+                    visibleCell?.orderTimerLabel.text = String(format:"%02i:%03i", minutes, seconds)
+                }
                // cell.numberOfSecondsPassed = numberOfSecondsPassed
                // cell.orderTimerLabel.text = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
 
