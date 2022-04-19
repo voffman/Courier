@@ -37,7 +37,14 @@ class ConfirmLoginView: MVPController {
     
     
     func launchTimer(){
+        
+        var bgTask = UIBackgroundTaskIdentifier(rawValue: 0)
+            bgTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+                UIApplication.shared.endBackgroundTask(bgTask)
+            })
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(incrementCountLabel), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer, forMode: RunLoop.Mode.default)
+        
         timer.tolerance = 0.5
         // Задается время по истечению которого таймер будет остановлен
         DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
@@ -190,7 +197,11 @@ class ConfirmLoginView: MVPController {
             showMessage(message: "Введите полученный SMS-код. Код не должен быть менее 4-х цифр.")
         }
         else {
-        presenter?.requestAuthKey(phoneNumber: phoneNumber, smsCode: confirmTextField.text ?? "")
+            presenter?.requestAuthKey(phoneNumber: phoneNumber, smsCode: confirmTextField.text ?? "")
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
+                self.showMessage(title: "Внимание", message: "Введен непавильный код.")
+            }
             
         }
     }

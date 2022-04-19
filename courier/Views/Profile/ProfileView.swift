@@ -376,7 +376,6 @@ class ProfileView: MVPController {
     
     func checkActivity(){
         presenter?.checkUserActivity(completion: { post in
-            self.activityStatusSwitch.isOn = post.status
             
             if post.status {
                 self.activityStatusLabel.text = "Активен"
@@ -426,13 +425,11 @@ class ProfileView: MVPController {
             presenter?.sessionStart()
             activityStatusLabel.text = "Активен"
             activityStatusLabel.textColor = Colors.lightGreen
-            checkActivity()
         }
         else {
             presenter?.sessionStop()
             activityStatusLabel.text = "Неактивен"
             activityStatusLabel.textColor = Colors.red
-            checkActivity()
         }
     }
     
