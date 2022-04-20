@@ -30,7 +30,7 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
                 
                 for post in posts {
                     UserDefaults.standard.set(post.authKey, forKey: UserDefaultsKeys.bearer)
-                    if UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) != ""{
+                    if UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) != nil{
                         self.view?.goToOrdersViewTabBar()
                     } else {
                         self.view?.showMessage(title: "Внимание", message: "Неправильный код")

@@ -8,7 +8,6 @@
 import Foundation
 import Alamofire
 
-// функции типа toLogin
 // url зашиты здесь
 // базовый метод http://courier.emenu.softlab.kz/v1/ + константа
 // цель отдть данные
@@ -64,7 +63,7 @@ class ApiService {
     }
     
     func getAuthKey(phoneNumber: String, smsCode: String, completion: @escaping ([UserResponse])->(), errorResponse: @escaping (ErrorResponse)->()){
-        networkManager.request(url: loginByCodeURL, method: .post, body: ["phone": phoneNumber, "code": smsCode], model: UserResponse.self) { posts, post  in
+        networkManager.request(url: loginByCodeURL, method: .post, validateRange: 200...401, body: ["phone": phoneNumber, "code": smsCode], model: UserResponse.self) { posts, post  in
             
             print("Ключ: ", post?.authKey ?? "Нет данных")
             completion(posts)

@@ -33,22 +33,25 @@ class AlertView: UIViewController {
         self.sendButton.setButton()
     }
 
-    func showAlertView(onVC: UIViewController){
-        let backgroundView = UIView.init(frame: onVC.view.bounds)
+    func showAlertView(){
+        
+        let onVC = UIApplication.shared.keyWindow!
+        
+        let backgroundView = UIView.init(frame: onVC.bounds)
         backgroundView.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
       //  UIApplication.shared.keyWindow!.addSubview(backgroundView)
         
-        onVC.view.addSubview(backgroundView)
+        onVC.addSubview(backgroundView)
         backgroundView.addSubview(cardView)
         cardView.setView()
         
         cardView.translatesAutoresizingMaskIntoConstraints = false
         
-        cardView.centerXAnchor.constraint(equalTo: onVC.view.centerXAnchor).isActive = true
-        cardView.centerYAnchor.constraint(equalTo: onVC.view.centerYAnchor).isActive = true
+        cardView.centerXAnchor.constraint(equalTo: onVC.centerXAnchor).isActive = true
+        cardView.centerYAnchor.constraint(equalTo: onVC.centerYAnchor).isActive = true
 
-        cardView.leftAnchor.constraint(equalTo:  onVC.view.leftAnchor, constant: 20).isActive = true
-        cardView.rightAnchor.constraint(equalTo:  onVC.view.rightAnchor, constant: -20).isActive = true
+        cardView.leftAnchor.constraint(equalTo:  onVC.leftAnchor, constant: 20).isActive = true
+        cardView.rightAnchor.constraint(equalTo:  onVC.rightAnchor, constant: -20).isActive = true
         cardView.heightAnchor.constraint(equalToConstant: 293).isActive = true
 
         

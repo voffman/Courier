@@ -199,9 +199,9 @@ class ConfirmLoginView: MVPController {
         else {
             presenter?.requestAuthKey(phoneNumber: phoneNumber, smsCode: confirmTextField.text ?? "")
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
-                self.showMessage(title: "Внимание", message: "Введен непавильный код.")
-            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
+//                self.showMessage(title: "Внимание", message: "Введен непавильный код.")
+//            }
             
         }
     }

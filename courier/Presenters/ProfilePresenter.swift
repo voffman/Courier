@@ -56,8 +56,10 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
                 print("Сессия запущена")
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
                 // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+                self.view?.checkActivity()
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
+                self.view?.checkActivity()
             }
         } else {
             view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
@@ -71,8 +73,10 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
                 print("Сессия остановлена")
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
+                self.view?.checkActivity()
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
+                self.view?.checkActivity()
             }
         } else {
             view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")

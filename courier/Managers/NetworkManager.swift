@@ -10,7 +10,7 @@ import Alamofire
 
 final class NetworkManager {
     
-    func request<T: Decodable>(url: URLConvertible, method: HTTPMethod, headers: HTTPHeaders? = [], body: [String: Any]? = [:], model: T.Type, isSingleInstance: Bool? = false, ifSuccess: @escaping ([T], T?)->(), ifError: @escaping (ErrorResponse)->()) {
+    func request<T: Decodable>(url: URLConvertible, method: HTTPMethod, validateRange: ClosedRange<Int> = 200...299, headers: HTTPHeaders? = [], body: [String: Any]? = [:], model: T.Type, isSingleInstance: Bool? = false, ifSuccess: @escaping ([T], T?)->(), ifError: @escaping (ErrorResponse)->()) {
         
         switch method{
             
@@ -19,7 +19,7 @@ final class NetworkManager {
             switch isSingleInstance {
                 
             case true:
-                AF.request(url, method: .get, parameters: body, headers: headers).validate(statusCode: 200..<300).responseDecodable(of: T.self) { response in
+                AF.request(url, method: .get, parameters: body, headers: headers).validate(statusCode: validateRange).responseDecodable(of: T.self) { response in
                     
                     switch response.result {
                     case .success(let posts):
@@ -51,7 +51,7 @@ final class NetworkManager {
                 }
                 
             case false:
-                AF.request(url, method: .get, parameters: body, headers: headers).validate(statusCode: 200..<300).responseDecodable(of: [T].self) { response in
+                AF.request(url, method: .get, parameters: body, headers: headers).validate(statusCode: validateRange).responseDecodable(of: [T].self) { response in
                     
                     switch response.result {
                     case .success(let posts):
@@ -88,7 +88,7 @@ final class NetworkManager {
 
         case .post:
             
-            AF.request(url, method: .post, parameters: body, headers: headers).validate(statusCode: 200..<300).responseDecodable(of: T.self) { response in
+            AF.request(url, method: .post, parameters: body, headers: headers).validate(statusCode: validateRange).responseDecodable(of: T.self) { response in
                 switch response.result {
                 case .success(let result):
                     ifSuccess([result], result)
@@ -113,12 +113,12 @@ final class NetworkManager {
     }
     
     
-    func request(url: URLConvertible, method: HTTPMethod, headers: HTTPHeaders? = [], body: [String: Any]? = [:], ifSuccess: @escaping (AFDataResponse<Data?>)->(), ifError: @escaping (ErrorResponse)->()){
+    func request(url: URLConvertible, method: HTTPMethod, validateRange: ClosedRange<Int> = 200...299, headers: HTTPHeaders? = [], body: [String: Any]? = [:], ifSuccess: @escaping (AFDataResponse<Data?>)->(), ifError: @escaping (ErrorResponse)->()){
        
         switch method {
             
         case .get:
-            AF.request(url, parameters: body, headers: headers).validate(statusCode: 200..<300).response { response in
+            AF.request(url, parameters: body, headers: headers).validate(statusCode: validateRange).response { response in
                 switch response.result {
                 case .success:
                     print("response.result \(response.result)")
@@ -144,7 +144,7 @@ final class NetworkManager {
             }
             
         case .post:
-            AF.request(url, method: .post, parameters: body, headers: headers).validate(statusCode: 200..<300).response { response in
+            AF.request(url, method: .post, parameters: body, headers: headers).validate(statusCode: validateRange).response { response in
                 switch response.result {
                 case .success:
                     print("response.result \(response.result)")

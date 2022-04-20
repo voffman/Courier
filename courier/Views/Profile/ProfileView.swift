@@ -374,26 +374,6 @@ class ProfileView: MVPController {
     }
     
     
-    func checkActivity(){
-        presenter?.checkUserActivity(completion: { post in
-            
-            if post.status {
-                self.activityStatusLabel.text = "Активен"
-                self.activityStatusLabel.textColor = Colors.lightGreen
-                self.activityStatusSwitch.isOn = true
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
-              //  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-            }
-            else {
-                self.activityStatusLabel.text = "Неактивен"
-                self.activityStatusLabel.textColor = Colors.red
-                self.activityStatusSwitch.isOn = false
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
-            }
-            
-        })
-    }
     
     func checkThemeMode() {
       let isDarkMode = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isDarkMode)
@@ -467,6 +447,7 @@ class ProfileView: MVPController {
 protocol ProfileViewProtocol: AnyObject, MVPControllerProtocol {
     func goToLoginView()
     func goToChooseNavigatorView()
+    func checkActivity()
 }
 
 extension ProfileView: ProfileViewProtocol{
@@ -482,4 +463,26 @@ extension ProfileView: ProfileViewProtocol{
         let chooseNavigatorView = ChooseNavigatorView()
         self.navigationController?.pushViewController(chooseNavigatorView, animated: true)
     }
+    
+    func checkActivity(){
+        presenter?.checkUserActivity(completion: { post in
+            
+            if post.status {
+                self.activityStatusLabel.text = "Активен"
+                self.activityStatusLabel.textColor = Colors.lightGreen
+                self.activityStatusSwitch.isOn = true
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
+              //  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+            }
+            else {
+                self.activityStatusLabel.text = "Неактивен"
+                self.activityStatusLabel.textColor = Colors.red
+                self.activityStatusSwitch.isOn = false
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
+            }
+            
+        })
+    }
+
 }
