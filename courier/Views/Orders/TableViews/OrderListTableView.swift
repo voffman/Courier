@@ -373,6 +373,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
                     visibleCell?.orderTimerLabel.text = "00:00"
                 }
                 else {
+                   // visibleCell?.orderTimerLabel.text = "--:--"
                     visibleCell?.orderTimerLabel.text = String(format:"%02i:%03i", minutes, seconds)
                 }
                // cell.numberOfSecondsPassed = numberOfSecondsPassed

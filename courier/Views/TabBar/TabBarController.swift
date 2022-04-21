@@ -13,22 +13,25 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
        let item1 = UINavigationController(rootViewController: OrdersView())
        let item2 = UINavigationController(rootViewController: HistoryTableView())
        let item3 = UINavigationController(rootViewController: ScheduleTableView())
-       let item4 = UINavigationController(rootViewController: ProfileView())
-       
+       let item4 = UINavigationController(rootViewController: IncomeView())
+       let item5 = UINavigationController(rootViewController: ProfileView())
+
        let icon1 = UITabBarItem(title: "Заказы", image: UIImage(named: "TabBarItem1"), selectedImage: UIImage(named: ""))
        let icon2 = UITabBarItem(title: "История", image: UIImage(named: "TabBarItem2"), selectedImage: UIImage(named: ""))
        let icon3 = UITabBarItem(title: "Расписание", image: UIImage(named: "TabBarItem3"), selectedImage: UIImage(named: ""))
-       let icon4 = UITabBarItem(title: "Профиль", image: UIImage(named: "TabBarItem4"), selectedImage: UIImage(named: ""))
+       let icon4 = UITabBarItem(title: "Мой доход", image: UIImage(named: "outline_account_balance_wallet_black"), selectedImage: UIImage(named: ""))
+       let icon5 = UITabBarItem(title: "Профиль", image: UIImage(named: "TabBarItem5"), selectedImage: UIImage(named: ""))
        
        item1.tabBarItem = icon1
        item2.tabBarItem = icon2
        item3.tabBarItem = icon3
        item4.tabBarItem = icon4
+       item5.tabBarItem = icon5
        self.tabBar.unselectedItemTintColor = Colors.gray
        self.tabBar.tintColor = Colors.orange
        self.tabBar.backgroundColor = Colors.white
        self.tabBar.barTintColor = Colors.white
-       let controllers = [item1,item2,item3,item4]
+       let controllers = [item1,item2,item3,item4, item5]
        self.viewControllers = controllers
     }
     
@@ -45,22 +48,28 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         let item1 = UINavigationController(rootViewController: OrdersView())
         let item2 = UINavigationController(rootViewController: HistoryTableView())
         let item3 = UINavigationController(rootViewController: ScheduleTableView())
-        let item4 = UINavigationController(rootViewController: ProfileView())
+        let item4 = UINavigationController(rootViewController: IncomeView())
+        let item5 = UINavigationController(rootViewController: ProfileView())
+
+        
         
         let icon1 = UITabBarItem(title: "Заказы", image: UIImage(named: "TabBarItem1"), selectedImage: UIImage(named: ""))
         let icon2 = UITabBarItem(title: "История", image: UIImage(named: "TabBarItem2"), selectedImage: UIImage(named: ""))
         let icon3 = UITabBarItem(title: "Расписание", image: UIImage(named: "TabBarItem3"), selectedImage: UIImage(named: ""))
-        let icon4 = UITabBarItem(title: "Профиль", image: UIImage(named: "TabBarItem4"), selectedImage: UIImage(named: ""))
+        let icon4 = UITabBarItem(title: "Мой доход", image: UIImage(named: "outline_account_balance_wallet_black"), selectedImage: UIImage(named: ""))
+        let icon5 = UITabBarItem(title: "Профиль", image: UIImage(named: "TabBarItem5"), selectedImage: UIImage(named: ""))
+
         
         item1.tabBarItem = icon1
         item2.tabBarItem = icon2
         item3.tabBarItem = icon3
         item4.tabBarItem = icon4
+        item5.tabBarItem = icon5
         self.tabBar.unselectedItemTintColor = Colors.gray
         self.tabBar.tintColor = Colors.orange
         self.tabBar.backgroundColor = Colors.white
         self.tabBar.barTintColor = Colors.white
-        let controllers = [item1,item2,item3,item4]
+        let controllers = [item1,item2,item3,item4, item5]
         self.viewControllers = controllers
     }
 

@@ -58,6 +58,7 @@
 		506D3C6D28093EA40082FB32 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3C6C28093EA40082FB32 /* MessageView.swift */; };
 		5070D35427D85AE0008AEC0F /* PickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5070D35327D85AE0008AEC0F /* PickerController.swift */; };
 		50759FBD27F18B3F0002F7E3 /* OrderStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50759FBC27F18B3F0002F7E3 /* OrderStatusResponse.swift */; };
+		507D737E281154DC00EE44A9 /* IncomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507D737D281154DC00EE44A9 /* IncomeView.swift */; };
 		5080760A27FA9A2F008E763B /* ChooseNavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5080760927FA9A2F008E763B /* ChooseNavigatorView.swift */; };
 		5080760C27FA9A8C008E763B /* ChooseNavigatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5080760B27FA9A8C008E763B /* ChooseNavigatorPresenter.swift */; };
 		5085083727D8B4D800D0E15A /* ScheduleFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085083627D8B4D800D0E15A /* ScheduleFooterView.swift */; };
@@ -138,6 +139,7 @@
 		506D3C6C28093EA40082FB32 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		5070D35327D85AE0008AEC0F /* PickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
 		50759FBC27F18B3F0002F7E3 /* OrderStatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStatusResponse.swift; sourceTree = "<group>"; };
+		507D737D281154DC00EE44A9 /* IncomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeView.swift; sourceTree = "<group>"; };
 		5080760927FA9A2F008E763B /* ChooseNavigatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseNavigatorView.swift; sourceTree = "<group>"; };
 		5080760B27FA9A8C008E763B /* ChooseNavigatorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseNavigatorPresenter.swift; sourceTree = "<group>"; };
 		5085083627D8B4D800D0E15A /* ScheduleFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFooterView.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				5031834D27ACFA94001C9BEB /* History */,
 				5031834E27ACFAD8001C9BEB /* Schedule  */,
 				5031834F27ACFB04001C9BEB /* Profile */,
+				507D737C2811546700EE44A9 /* Income */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -390,6 +393,14 @@
 				501CE7C727AA88B700C8DC05 /* ThanksView.swift */,
 			);
 			path = Orders;
+			sourceTree = "<group>";
+		};
+		507D737C2811546700EE44A9 /* Income */ = {
+			isa = PBXGroup;
+			children = (
+				507D737D281154DC00EE44A9 /* IncomeView.swift */,
+			);
+			path = Income;
 			sourceTree = "<group>";
 		};
 		50A5731827B3CEC400E3013F /* Managers */ = {
@@ -616,6 +627,7 @@
 				5006FCE827BA69BB0047DD6A /* MVPController.swift in Sources */,
 				50759FBD27F18B3F0002F7E3 /* OrderStatusResponse.swift in Sources */,
 				5017ABB327B00A4400C60897 /* ScheduleWeekCell.swift in Sources */,
+				507D737E281154DC00EE44A9 /* IncomeView.swift in Sources */,
 				5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */,
 				5006FCE427BA24A90047DD6A /* ApiService.swift in Sources */,
 				5053619727EC24B900559006 /* EmployeeResponse.swift in Sources */,
