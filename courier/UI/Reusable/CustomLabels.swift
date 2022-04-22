@@ -15,6 +15,7 @@ class CustomLabels: UILabel {
         case light
         case timerRed
         case primary
+        case regularGreen
         
     }
     
@@ -73,6 +74,13 @@ class CustomLabels: UILabel {
             self.text = title
             self.font = UIFont.systemFont(ofSize: textSize)
             self.textColor = Colors.orange
+            
+        case .regularGreen:
+            self.text = title
+            self.font = UIFont.systemFont(ofSize: textSize)
+            self.textColor = Colors.green
+            self.textAlignment = .natural
+            self.numberOfLines = 0
             
         case .none:
             print("None")

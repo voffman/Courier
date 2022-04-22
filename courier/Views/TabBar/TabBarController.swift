@@ -13,7 +13,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
        let item1 = UINavigationController(rootViewController: OrdersView())
        let item2 = UINavigationController(rootViewController: HistoryTableView())
        let item3 = UINavigationController(rootViewController: ScheduleTableView())
-       let item4 = UINavigationController(rootViewController: IncomeView())
+       let item4 = UINavigationController(rootViewController: SalaryView())
        let item5 = UINavigationController(rootViewController: ProfileView())
 
        let icon1 = UITabBarItem(title: "Заказы", image: UIImage(named: "TabBarItem1"), selectedImage: UIImage(named: ""))
@@ -48,10 +48,8 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         let item1 = UINavigationController(rootViewController: OrdersView())
         let item2 = UINavigationController(rootViewController: HistoryTableView())
         let item3 = UINavigationController(rootViewController: ScheduleTableView())
-        let item4 = UINavigationController(rootViewController: IncomeView())
+        let item4 = UINavigationController(rootViewController: SalaryView())
         let item5 = UINavigationController(rootViewController: ProfileView())
-
-        
         
         let icon1 = UITabBarItem(title: "Заказы", image: UIImage(named: "TabBarItem1"), selectedImage: UIImage(named: ""))
         let icon2 = UITabBarItem(title: "История", image: UIImage(named: "TabBarItem2"), selectedImage: UIImage(named: ""))
@@ -75,7 +73,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewDidLoad()
+        //viewDidLoad()
     }
 
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {

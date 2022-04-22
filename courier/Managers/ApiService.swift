@@ -43,6 +43,10 @@ private let employeeURL = baseURL + "user"
 //courier location
 private let locationURL = baseURL + "courier/location"
 
+// Salary
+private let salaryURL = baseURL + "courier/salary/period"
+
+
 let networkManager = NetworkManager()
 
 class ApiService {
@@ -271,5 +275,16 @@ class ApiService {
             completion(error)
         }
     }
+    
+    // MARK: Salary
+    func getSalary(token: String, dateStart: String, dateEnd: String, completion: @escaping (Salary)->(), errorResponse: @escaping (ErrorResponse)->()) {
+        networkManager.request(url: salaryURL, method: .post, headers: [.authorization(bearerToken: token)], body: ["dateStart": dateStart,"dateEnd": dateEnd], model: Salary.self, isSingleInstance: true) { _, post in
+            completion(post!)
+        } ifError: { error in
+            errorResponse(error)
+        }
+    }
+    
+    
     
 }

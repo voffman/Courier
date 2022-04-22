@@ -51,6 +51,8 @@
 		50475EE727BCC0FA00AD27E2 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50475EE627BCC0FA00AD27E2 /* AlertView.swift */; };
 		5048D95827FD4BE4005BF3D1 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5048D95727FD4BE4005BF3D1 /* LocationService.swift */; };
 		5053619727EC24B900559006 /* EmployeeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5053619627EC24B900559006 /* EmployeeResponse.swift */; };
+		5054785A28129E530022ADF3 /* SalaryViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054785928129E530022ADF3 /* SalaryViewPresenter.swift */; };
+		5054785E2812A8FD0022ADF3 /* Salary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054785D2812A8FD0022ADF3 /* Salary.swift */; };
 		5062EFC8279A734100E4A686 /* OrderListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC7279A734100E4A686 /* OrderListTableView.swift */; };
 		5062EFCA279A7CD400E4A686 /* OrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062EFC9279A7CD400E4A686 /* OrderListCell.swift */; };
 		5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065CCA127993A2700B38BAB /* OrdersView.swift */; };
@@ -58,7 +60,7 @@
 		506D3C6D28093EA40082FB32 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3C6C28093EA40082FB32 /* MessageView.swift */; };
 		5070D35427D85AE0008AEC0F /* PickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5070D35327D85AE0008AEC0F /* PickerController.swift */; };
 		50759FBD27F18B3F0002F7E3 /* OrderStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50759FBC27F18B3F0002F7E3 /* OrderStatusResponse.swift */; };
-		507D737E281154DC00EE44A9 /* IncomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507D737D281154DC00EE44A9 /* IncomeView.swift */; };
+		507D737E281154DC00EE44A9 /* SalaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507D737D281154DC00EE44A9 /* SalaryView.swift */; };
 		5080760A27FA9A2F008E763B /* ChooseNavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5080760927FA9A2F008E763B /* ChooseNavigatorView.swift */; };
 		5080760C27FA9A8C008E763B /* ChooseNavigatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5080760B27FA9A8C008E763B /* ChooseNavigatorPresenter.swift */; };
 		5085083727D8B4D800D0E15A /* ScheduleFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085083627D8B4D800D0E15A /* ScheduleFooterView.swift */; };
@@ -132,6 +134,8 @@
 		50475EE627BCC0FA00AD27E2 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		5048D95727FD4BE4005BF3D1 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		5053619627EC24B900559006 /* EmployeeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeResponse.swift; sourceTree = "<group>"; };
+		5054785928129E530022ADF3 /* SalaryViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalaryViewPresenter.swift; sourceTree = "<group>"; };
+		5054785D2812A8FD0022ADF3 /* Salary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salary.swift; sourceTree = "<group>"; };
 		5062EFC7279A734100E4A686 /* OrderListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListTableView.swift; sourceTree = "<group>"; };
 		5062EFC9279A7CD400E4A686 /* OrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListCell.swift; sourceTree = "<group>"; };
 		5065CCA127993A2700B38BAB /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
@@ -139,7 +143,7 @@
 		506D3C6C28093EA40082FB32 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		5070D35327D85AE0008AEC0F /* PickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
 		50759FBC27F18B3F0002F7E3 /* OrderStatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStatusResponse.swift; sourceTree = "<group>"; };
-		507D737D281154DC00EE44A9 /* IncomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeView.swift; sourceTree = "<group>"; };
+		507D737D281154DC00EE44A9 /* SalaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalaryView.swift; sourceTree = "<group>"; };
 		5080760927FA9A2F008E763B /* ChooseNavigatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseNavigatorView.swift; sourceTree = "<group>"; };
 		5080760B27FA9A8C008E763B /* ChooseNavigatorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseNavigatorPresenter.swift; sourceTree = "<group>"; };
 		5085083627D8B4D800D0E15A /* ScheduleFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFooterView.swift; sourceTree = "<group>"; };
@@ -241,6 +245,7 @@
 				5041FE6E27DB5ADA00A28CB0 /* CourierSlotResponse.swift */,
 				5053619627EC24B900559006 /* EmployeeResponse.swift */,
 				50759FBC27F18B3F0002F7E3 /* OrderStatusResponse.swift */,
+				5054785D2812A8FD0022ADF3 /* Salary.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -255,7 +260,7 @@
 				5031834D27ACFA94001C9BEB /* History */,
 				5031834E27ACFAD8001C9BEB /* Schedule  */,
 				5031834F27ACFB04001C9BEB /* Profile */,
-				507D737C2811546700EE44A9 /* Income */,
+				507D737C2811546700EE44A9 /* Salary */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -276,6 +281,7 @@
 				50CBB7B527D9C7D00035DA85 /* HistoryPresenter.swift */,
 				5041FE6C27DB4ED800A28CB0 /* ProfilePresenter.swift */,
 				5080760B27FA9A8C008E763B /* ChooseNavigatorPresenter.swift */,
+				5054785928129E530022ADF3 /* SalaryViewPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -395,12 +401,12 @@
 			path = Orders;
 			sourceTree = "<group>";
 		};
-		507D737C2811546700EE44A9 /* Income */ = {
+		507D737C2811546700EE44A9 /* Salary */ = {
 			isa = PBXGroup;
 			children = (
-				507D737D281154DC00EE44A9 /* IncomeView.swift */,
+				507D737D281154DC00EE44A9 /* SalaryView.swift */,
 			);
-			path = Income;
+			path = Salary;
 			sourceTree = "<group>";
 		};
 		50A5731827B3CEC400E3013F /* Managers */ = {
@@ -615,6 +621,7 @@
 				5031835A27ACFDD7001C9BEB /* ScheduleCell.swift in Sources */,
 				508FA19028052D4900482528 /* NotificationsActions.swift in Sources */,
 				50A5731C27B3D89E00E3013F /* UserResponse.swift in Sources */,
+				5054785E2812A8FD0022ADF3 /* Salary.swift in Sources */,
 				502618B427A7957D00CEA57C /* OrdersPresenter.swift in Sources */,
 				5048D95827FD4BE4005BF3D1 /* LocationService.swift in Sources */,
 				50FFC1CC27B0CAB500478F1D /* ScheduleDayOffCell.swift in Sources */,
@@ -627,11 +634,12 @@
 				5006FCE827BA69BB0047DD6A /* MVPController.swift in Sources */,
 				50759FBD27F18B3F0002F7E3 /* OrderStatusResponse.swift in Sources */,
 				5017ABB327B00A4400C60897 /* ScheduleWeekCell.swift in Sources */,
-				507D737E281154DC00EE44A9 /* IncomeView.swift in Sources */,
+				507D737E281154DC00EE44A9 /* SalaryView.swift in Sources */,
 				5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */,
 				5006FCE427BA24A90047DD6A /* ApiService.swift in Sources */,
 				5053619727EC24B900559006 /* EmployeeResponse.swift in Sources */,
 				509046C82803D58900750FDF /* Notifications.swift in Sources */,
+				5054785A28129E530022ADF3 /* SalaryViewPresenter.swift in Sources */,
 				5031835527ACFD45001C9BEB /* ProfileView.swift in Sources */,
 				50CBB7BC27D9F19A0035DA85 /* History.swift in Sources */,
 				5016304F27968D2100D0734F /* Colors.swift in Sources */,
