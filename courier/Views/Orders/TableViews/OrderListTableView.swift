@@ -330,8 +330,6 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         switch sc.segmentedControl.selectedSegmentIndex {
         case 0:
             countView.backgroundColor = Colors.lightGray
-            self.countLabel.title = String(data.count)
-            self.countLabel.setLabel()
             return data.count
         case 1:
               countView.backgroundColor = Colors.orange
@@ -486,11 +484,9 @@ extension OrderListTableView: OrderListTableViewProtocol{
                 self.waitViewElement.isHidden = true
                 self.waitViewElement.setupView()
                 self.data = posts
-               // print("Постов - ", posts.count)
                 self.sc.segmentedControlContainerView.isHidden = false
                 self.setupOrderCount(isHidden: false)
-                self.countLabel.title = String(posts.count)
-                self.countLabel.setLabel()
+
                 self.tableView.reloadData()
             }
         })

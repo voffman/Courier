@@ -69,6 +69,9 @@ class SalaryView: MVPController {
     
     let dateManager = DateManager()
     
+    var startDate: String = "С"
+    var endDate: String = "По"
+    
     private var presenter: IncomeViewPresenterProtocol?
     
     func setupScrollView(){
@@ -210,26 +213,153 @@ class SalaryView: MVPController {
         
     }
     
+
+    
+    @objc func popUpPicker(sender: UISegmentedControl) {
+        
+        let dateStartPickerController = UIDatePicker()
+        let dateEndPickerController = UIDatePicker()
+        
+        let startDateTitleLabel = CustomLabels(title: "Дата начала", textSize: 14, style: .regular)
+        let endDateTitleLabel = CustomLabels(title: "Дата окончания", textSize: 14, style: .regular)
+        
+        let vc = UIViewController()
+        vc.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        
+        dateStartPickerController.addTarget(self, action: #selector(dateStartPickerValueChanged(_:)), for: .valueChanged)
+        dateEndPickerController.addTarget(self, action: #selector(dateEndPickerValueChanged(_:)), for: .valueChanged)
+        
+        dateStartPickerController.datePickerMode = .date
+        dateEndPickerController.datePickerMode = .date
+        
+        vc.view.addSubview(startDateTitleLabel)
+        vc.view.addSubview(endDateTitleLabel)
+        
+        vc.view.addSubview(dateStartPickerController)
+        vc.view.addSubview(dateEndPickerController)
+        
+        startDateTitleLabel.setLabel()
+        endDateTitleLabel.setLabel()
+        
+        startDateTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        startDateTitleLabel.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor, constant: -75).isActive = true
+        
+        endDateTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        endDateTitleLabel.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor, constant: 75).isActive = true
+        
+        dateStartPickerController.translatesAutoresizingMaskIntoConstraints = false
+        dateStartPickerController.topAnchor.constraint(equalTo: vc.view.topAnchor, constant: 50).isActive = true
+        dateStartPickerController.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor, constant: -75).isActive = true
+        
+        dateEndPickerController.translatesAutoresizingMaskIntoConstraints = false
+        dateEndPickerController.topAnchor.constraint(equalTo: vc.view.topAnchor, constant: 50).isActive = true
+        dateEndPickerController.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor, constant: 75).isActive = true
+        
+        let alert = UIAlertController(title: "Выберите период", message: "", preferredStyle: .actionSheet)
+        
+        alert.popoverPresentationController?.sourceView = vc.view
+        alert.popoverPresentationController?.sourceRect = vc.view.bounds
+        
+        
+        var heightMultipler = 0.5
+        
+        switch UIScreen.main.bounds.size.height {
+            
+        case let x where x > 812:
+            heightMultipler = 0.325
+            break
+            
+        case let x where x > 750:
+            heightMultipler = 0.335 // mini
+            break
+            
+        case let x where x > 640:
+            heightMultipler = 0.425
+            break
+            
+        case let x where x <= 640:
+            heightMultipler = 0.5
+            break
+            
+        default:
+            break
+        }
+        
+        
+        let alertHeight:NSLayoutConstraint = NSLayoutConstraint(item: alert.view!, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * heightMultipler)
+        
+            alert.view.addConstraint(alertHeight)
+        
+        alert.setValue(vc, forKey: "contentViewController")
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { (UIAlertAction) in
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Выбрать", style: .default, handler: { (UIAlertAction) in
+            self.dateLabel.text = " \(self.startDate) - \(self.endDate)"
+            // MARK: get days between two dates
+            // подставляю в запрос dateStart и dateEnd. Если надо переформатирую
+            let dateStartConverted = self.dateManager.convert(dateString: self.startDate, stringDateFormat: "d MMMM Y", convertToDateFormat: "yyyy-MM-dd")
+            let dateEndConverted = self.dateManager.convert(dateString: self.endDate, stringDateFormat: "d MMMM Y", convertToDateFormat: "yyyy-MM-dd")
+            self.presenter?.getInfo(dateStart: dateStartConverted, dateEnd: dateEndConverted)
+            print("дададададдададдд: \(self.startDate)")
+            print("дататататтата: \(dateStartConverted)")
+            
+            
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+
+    
+    @objc func dateStartPickerValueChanged(_ sender: UIDatePicker){
+        
+        let dateFormatter: DateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "d MMMM Y"
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        sender.maximumDate = Date()
+        let selectedDate: String = dateFormatter.string(from: sender.date)
+        
+        startDate = selectedDate
+        print("Selected start value \(selectedDate)")
+    }
+    
+    
+    @objc func dateEndPickerValueChanged(_ sender: UIDatePicker){
+        
+        let dateFormatter: DateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "d MMMM Y"
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        sender.maximumDate = Date()
+        let selectedDate: String = dateFormatter.string(from: sender.date)
+        
+        endDate = selectedDate
+        print("Selected end value \(selectedDate)")
+    }
+    
+    
     @objc func segmentedValueChanged(_ sender:UISegmentedControl!)
     {
         if segmentedControl.selectedSegmentIndex == 0 {
             presenter?.getInfo(dateStart: dateManager.getStringDateFor(days: 0), dateEnd: dateManager.getStringDateFor(days: 0))
-            let todayDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM")
-            let previousDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM Y")
+            startDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM")
+            endDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM Y")
             
-            dateLabel.text = " \(todayDate) - \(previousDate)"
+            dateLabel.text = " \(startDate) - \(endDate)"
         }
         if segmentedControl.selectedSegmentIndex == 1 {
             presenter?.getInfo(dateStart: dateManager.getStringDateFor(days: -7), dateEnd: dateManager.getStringDateFor(days: 0))
-            let todayDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM")
-            let previousDate = dateManager.getStringDateFor(days: -7, stringDateFormat: "dd MMMM Y")
+            startDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM")
+            endDate = dateManager.getStringDateFor(days: -7, stringDateFormat: "dd MMMM Y")
             
-            dateLabel.text = " \(todayDate) - \(previousDate)"
+            dateLabel.text = " \(startDate) - \(endDate)"
         }
         
         if segmentedControl.selectedSegmentIndex == 2 {
-            // datePicker
-            // showDatePicker
+            popUpPicker(sender: segmentedControl)
+
         }
     }
     
@@ -241,10 +371,10 @@ class SalaryView: MVPController {
         dateLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 80).isActive = true
         dateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         
-        let todayDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM")
-        let previousDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM Y")
+        startDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM")
+        endDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM Y")
         
-        dateLabel.text = " \(todayDate) - \(previousDate)"
+        dateLabel.text = " \(startDate) - \(endDate)"
     }
     
     // MARK: список

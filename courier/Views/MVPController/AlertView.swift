@@ -52,9 +52,7 @@ class AlertView: UIViewController {
 
         cardView.leftAnchor.constraint(equalTo:  onVC.leftAnchor, constant: 20).isActive = true
         cardView.rightAnchor.constraint(equalTo:  onVC.rightAnchor, constant: -20).isActive = true
-        cardView.heightAnchor.constraint(equalToConstant: 293).isActive = true
-
-        
+        cardView.heightAnchor.constraint(equalToConstant: 140 + CGFloat(messageLabel.text?.count ?? 0)/(messageLabel.textSize * 0.1)).isActive = true
         cardView.addSubview(nameLabel)
         
         nameLabel.setLabel()
@@ -72,7 +70,6 @@ class AlertView: UIViewController {
         messageLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5).isActive = true
         messageLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 10).isActive = true
         messageLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -10).isActive = true
-        messageLabel.bottomAnchor.constraint(lessThanOrEqualTo: cardView.topAnchor, constant: 175).isActive = true
  
         cardView.addSubview(cancelButton)
         cancelButton.setButton()
