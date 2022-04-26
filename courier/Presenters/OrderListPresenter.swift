@@ -10,12 +10,12 @@ import Foundation
 // То, что выполняю в здесь
 protocol OrderListTableViewPresenterProtocol: AnyObject {
     init(view: OrderListTableViewProtocol)
-    func getOrders( completion: @escaping ([CourierOrderResponseElement]) -> ())
-    func getArchiveOrders(completion: @escaping ([CourierOrderResponseElement]) -> ())
+    func getOrders()
+    func getArchiveOrders()
     func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ())
     func didTap (model: CourierOrderResponseElement)
     func didStatusTap (model: CourierOrderResponseElement)
-    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ())
+    func checkUserActivity()
 }
 
 class OrderListPresenter: OrderListTableViewPresenterProtocol {
@@ -27,10 +27,10 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     
     let api = ApiService()
     
-    func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
+    func getOrders(){
         if api.isConnectedToInternet {
-            api.getOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? ""){ posts in
-                completion(posts)
+            api.getOrders(){ posts in
+                self.view?.isHaveOrders(posts: posts)
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
             }
@@ -39,10 +39,10 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
         }
     }
     
-    func getArchiveOrders(completion: @escaping ([CourierOrderResponseElement]) -> ()){
+    func getArchiveOrders(){
         if api.isConnectedToInternet {
-            api.getArchiveOrders(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? ""){ posts in
-                completion(posts)
+            api.getArchiveOrders(){ posts in
+                self.view?.isHaveArchiveOrders(posts: posts)
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
             }
@@ -53,7 +53,7 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     
     func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ()) {
         if api.isConnectedToInternet {
-            api.changeOrderStatus(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", orderId: orderId, status: status) { post in
+            api.changeOrderStatus(orderId: orderId, status: status) { post in
                 completion(post)
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
@@ -76,10 +76,15 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
 
     }
     
-    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ()) {
+    func checkUserActivity() {
         if api.isConnectedToInternet {
-            api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
-                completion(post)
+            api.courierSlotActivity() { post in
+                if post.status {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+                }
+                else {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
+                }
                 
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)

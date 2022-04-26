@@ -10,7 +10,7 @@ import Foundation
 // То, что выполняю в здесь
 protocol ScheduleWeekTableViewPresenterProtocol: AnyObject {
     init(view: ScheduleWeekTableViewProtocol)
-    func getScheduleWeek(id: String, completion: @escaping ([ScheduleByIDElement]) -> ())
+    func getScheduleWeek(id: String)
     func applyStatusById(id: String)
 }
 
@@ -24,11 +24,10 @@ class ScheduleWeekPresenter: ScheduleWeekTableViewPresenterProtocol{
     
     let api = ApiService()
     
-    func getScheduleWeek(id: String, completion: @escaping ([ScheduleByIDElement]) -> ()) {
+    func getScheduleWeek(id: String) {
         if api.isConnectedToInternet {
-            api.getCourierScheduleById(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", id: id) { posts in
-                completion(posts)
-                
+            api.getCourierScheduleById(id: id) { posts in
+                self.view?.isHaveScheduleWeek(posts: posts)
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
             }
@@ -40,7 +39,7 @@ class ScheduleWeekPresenter: ScheduleWeekTableViewPresenterProtocol{
     
     func applyStatusById(id: String) {
         if api.isConnectedToInternet {
-        api.scheduleApplyStatus(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", id: id) { error in
+        api.scheduleApplyStatus(id: id) { error in
             self.view?.showErrorView(errorResponseData: error)
         }
         } else {

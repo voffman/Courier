@@ -12,7 +12,7 @@ protocol ShopSubviewPresenterProtocol: AnyObject {
     init(view: ShopSubviewProtocol)
     func getCoordinates(latitude: String, longitude: String)
     func openDownloadLink()
-    func getPhoneNumber(phoneNumber: String)
+    func returnPhoneNumberURL(phoneNumber: String)
 }
 
 class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
@@ -60,7 +60,7 @@ class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
         view?.openApp(appURL: url)
     }
     
-    func getPhoneNumber(phoneNumber: String) {
+    func returnPhoneNumberURL(phoneNumber: String) {
         let urlString = "tel://" + phoneNumber
         guard let url = URL(string: urlString) else { return }
         

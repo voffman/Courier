@@ -69,16 +69,16 @@ class HistoryTableView: MVPController {
             switch self.pickerController.selectedRow{
                 
             case 0:
-                self.checkPosts(dateStart: self.dateManager.getStringDateFor(days: 0), dateFinish: self.dateManager.getStringDateFor(days: 0))
+                self.presenter?.getHistory(dateStart: self.dateManager.getStringDateFor(days: 0), dateFinish: self.dateManager.getStringDateFor(days: 0))
                 
             case 1:
-                self.checkPosts(dateStart: self.dateManager.getStringDateFor(days: -7), dateFinish: self.dateManager.getStringDateFor(days: 0))
+                self.presenter?.getHistory(dateStart: self.dateManager.getStringDateFor(days: -7), dateFinish: self.dateManager.getStringDateFor(days: 0))
                 
             case 2:
-                self.checkPosts(dateStart: self.dateManager.getStringDateFor(days: -30), dateFinish: self.dateManager.getStringDateFor(days: 0))
+                self.presenter?.getHistory(dateStart: self.dateManager.getStringDateFor(days: -30), dateFinish: self.dateManager.getStringDateFor(days: 0))
                 
             case 3:
-                self.checkPosts(dateStart: self.dateManager.getStringDateFor(days: -90), dateFinish: self.dateManager.getStringDateFor(days: 0))
+                self.presenter?.getHistory(dateStart: self.dateManager.getStringDateFor(days: -90), dateFinish: self.dateManager.getStringDateFor(days: 0))
 
             default:
                 break
@@ -120,7 +120,7 @@ class HistoryTableView: MVPController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkPosts(dateStart: self.dateManager.getStringDateFor(days: 0), dateFinish: self.dateManager.getStringDateFor(days: 0))
+        presenter?.getHistory(dateStart: self.dateManager.getStringDateFor(days: 0), dateFinish: self.dateManager.getStringDateFor(days: 0))
     }
 
 }
@@ -182,22 +182,21 @@ extension HistoryTableView: UITableViewDelegate, UITableViewDataSource {
 }
 
 protocol HistoryTableViewProtocol: AnyObject, MVPControllerProtocol  {
-    func checkPosts(dateStart: String, dateFinish: String)
+    func isHaveHistory(posts: [HistoryElement])
 }
 
 extension HistoryTableView: HistoryTableViewProtocol{
-    func checkPosts(dateStart: String, dateFinish: String) {
-        presenter?.getHistory(dateStart: dateStart, dateFinish: dateFinish, completion: { posts in
-            if !posts.isEmpty{
-                print("Кол-во постов \(posts.count)")
-                self.data = posts
-                self.tableView.reloadData()
-            }
-            else{
-                self.data = posts
-                self.tableView.reloadData()
-            }
-        })
+    
+    func isHaveHistory(posts: [HistoryElement]) {
+        if !posts.isEmpty{
+            print("Кол-во постов \(posts.count)")
+            self.data = posts
+            self.tableView.reloadData()
+        }
+        else{
+            self.data = posts
+            self.tableView.reloadData()
+        }
     }
 }
 

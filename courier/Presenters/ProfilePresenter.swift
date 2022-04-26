@@ -13,8 +13,8 @@ protocol ProfileViewPresenterProtocol: AnyObject {
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ())
     func sessionStart()
     func sessionStop()
-    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ())
-    func getDefaultNavigatorValue()->String
+    func checkUserActivity()
+    func returnDefaultNavigatorValue()->String
 }
 
 class ProfilePresenter: ProfileViewPresenterProtocol {
@@ -31,7 +31,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ()) {
         if api.isConnectedToInternet {
-        api.getEmployeeData(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { posts in
+        api.getEmployeeData() { posts in
             completion(posts)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
@@ -52,14 +52,14 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     
     func sessionStart() {
         if api.isConnectedToInternet {
-            api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
+            api.courierSlotActivityStart() { response in
                 print("Сессия запущена")
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
                 // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-                self.view?.checkActivity()
+                self.checkUserActivity()
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
-                self.view?.checkActivity()
+                self.checkUserActivity()
             }
         } else {
             view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
@@ -69,24 +69,23 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     
     func sessionStop() {
         if api.isConnectedToInternet {
-            api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
+            api.courierSlotActivityStop() { response in
                 print("Сессия остановлена")
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
-                self.view?.checkActivity()
+                self.checkUserActivity()
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
-                self.view?.checkActivity()
+                self.checkUserActivity()
             }
         } else {
             view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     
-    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ()) {
+    func checkUserActivity() {
         if api.isConnectedToInternet {
-            api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
-                completion(post)
+            api.courierSlotActivity() { post in
+                self.view?.updateSessionStatus(post: post)
                 
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
@@ -96,7 +95,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
         }
     }
     
-    func getDefaultNavigatorValue() -> String {
+    func returnDefaultNavigatorValue() -> String {
         print("навигатор: \(UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "")")
         return UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "2ГИС"
     }

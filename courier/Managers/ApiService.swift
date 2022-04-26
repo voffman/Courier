@@ -67,130 +67,83 @@ class ApiService {
     }
     
     func getAuthKey(phoneNumber: String, smsCode: String, completion: @escaping ([UserResponse])->(), errorResponse: @escaping (ErrorResponse)->()){
-        networkManager.request(url: loginByCodeURL, method: .post, validateRange: 200...401, body: ["phone": phoneNumber, "code": smsCode], model: UserResponse.self) { posts, post  in
+        networkManager.request(url: loginByCodeURL, method: .post, validateRange: 200...401, body: ["phone": phoneNumber, "code": smsCode], model: UserResponse.self, isSingleInstance: true) { posts, post  in
             
             print("Ключ: ", post?.authKey ?? "Нет данных")
             completion(posts)
             
         } ifError: { error in
-
             errorResponse(error)
-            
-             print("Имя: \(error.name ?? "Нет данных")")
-             print("Сообщение: \(error.message ?? "Нет данных")")
-             print("Код: \(error.code ?? 0) ")
-             print("Статус: \(error.status ?? 0)")
-             print("Тип ошибки: \(error.type ?? "Нет данных")")
-             
         }
     }
     
     // MARK: Order
-    func getOrders(token: String, completion: @escaping ([CourierOrderResponseElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+    func getOrders(completion: @escaping ([CourierOrderResponseElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
         
-        networkManager.request(url: orderListURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierOrderResponseElement.self) { posts, _  in
+        networkManager.request(url: orderListURL, method: .get, model: CourierOrderResponseElement.self) { posts, _  in
             completion(posts)
             
         } ifError: { error in
             errorResponse(error)
-            
-             print("Имя: \(error.name ?? "Нет данных")")
-             print("Сообщение: \(error.message ?? "Нет данных")")
-             print("Код: \(error.code ?? 0) ")
-             print("Статус: \(error.status ?? 0)")
-             print("Тип ошибки: \(error.type ?? "Нет данных")")
-            
         }
     }
     
-    func getArchiveOrders(token: String, completion: @escaping ([CourierOrderResponseElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+    func getArchiveOrders(completion: @escaping ([CourierOrderResponseElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
         
-        networkManager.request(url: orderArchiveURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierOrderResponseElement.self) { posts, _  in
+        networkManager.request(url: orderArchiveURL, method: .get, model: CourierOrderResponseElement.self) { posts, _  in
             completion(posts)
             
         } ifError: { error in
             errorResponse(error)
-            
-             print("Имя: \(error.name ?? "Нет данных")")
-             print("Сообщение: \(error.message ?? "Нет данных")")
-             print("Код: \(error.code ?? 0) ")
-             print("Статус: \(error.status ?? 0)")
-             print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
     
-    func changeOrderStatus(token: String, orderId: String, status: String,  completion: @escaping (OrderStatusResponse)->(), errorResponse: @escaping (ErrorResponse)->()){
-        networkManager.request(url: orderListStatusURLPart1 + orderId + orderListStatusURLPart2 + status, method: .get, headers: [.authorization(bearerToken: token)], model: OrderStatusResponse.self, isSingleInstance: true) { posts, post  in
+    func changeOrderStatus(orderId: String, status: String,  completion: @escaping (OrderStatusResponse)->(), errorResponse: @escaping (ErrorResponse)->()){
+        networkManager.request(url: orderListStatusURLPart1 + orderId + orderListStatusURLPart2 + status, method: .get, model: OrderStatusResponse.self, isSingleInstance: true) { posts, post  in
             completion(post!)
             
         } ifError: { error in
-
             errorResponse(error)
-            
-            print("Имя: \(error.name ?? "Нет данных")")
-            print("Сообщение: \(error.message ?? "Нет данных")")
-            print("Код: \(error.code ?? 0) ")
-            print("Статус: \(error.status ?? 0)")
-            print("Тип ошибки: \(error.type ?? "Нет данных")")
-             
         }
     }
     
     
     // MARK: History
     
-    func getCourierHistory(token: String, dateStart: String, dateFinish: String, completion: @escaping ([HistoryElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+    func getCourierHistory(dateStart: String, dateFinish: String, completion: @escaping ([HistoryElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
         
-        networkManager.request(url: historyURLPart1 + dateStart + historyURLPart2 + dateFinish, method: .get, headers: [.authorization(bearerToken: token)], body: ["dateStart": dateStart, "dateFinish": dateFinish], model: HistoryElement.self) { posts, _  in
+        networkManager.request(url: historyURLPart1 + dateStart + historyURLPart2 + dateFinish, method: .get, body: ["dateStart": dateStart, "dateFinish": dateFinish], model: HistoryElement.self) { posts, _  in
             completion(posts)
             
         } ifError: { error in
             errorResponse(error)
-            
-             print("Имя: \(error.name ?? "Нет данных")")
-             print("Сообщение: \(error.message ?? "Нет данных")")
-             print("Код: \(error.code ?? 0) ")
-             print("Статус: \(error.status ?? 0)")
-             print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
     
    
     // MARK: Schedule
-    func getCourierSchedule(token: String, page: String, completion: @escaping ([ScheduleElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+    func getCourierSchedule(page: String, completion: @escaping ([ScheduleElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
        
-        networkManager.request(url: scheduleListURL + page, method: .get, headers: [.authorization(bearerToken: token)], model: ScheduleElement.self) { posts, _  in
+        networkManager.request(url: scheduleListURL + page, method: .get, model: ScheduleElement.self) { posts, _  in
             completion(posts)
 
         } ifError: { error in
             errorResponse(error)
-            
-            print("Имя: \(error.name ?? "Нет данных")")
-            print("Сообщение: \(error.message ?? "Нет данных")")
-            print("Код: \(error.code ?? 0) ")
-            print("Статус: \(error.status ?? 0)")
-            print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
     
-    func getCourierScheduleById(token: String, id: String, completion: @escaping ([ScheduleByIDElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
-        networkManager.request(url: scheduleByIdURL + id, method: .get, headers: [.authorization(bearerToken: token)], model: ScheduleByIDElement.self) { posts, _ in
+    func getCourierScheduleById(id: String, completion: @escaping ([ScheduleByIDElement]) -> (), errorResponse: @escaping (ErrorResponse)->()){
+        networkManager.request(url: scheduleByIdURL + id, method: .get, model: ScheduleByIDElement.self) { posts, _ in
 
             completion(posts)
         } ifError: { error in
             errorResponse(error)
-            
-            print("Имя: \(error.name ?? "Нет данных")")
-            print("Сообщение: \(error.message ?? "Нет данных")")
-            print("Код: \(error.code ?? 0) ")
-            print("Статус: \(error.status ?? 0)")
-            print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
 
     }
 
-    func scheduleApplyStatus(token: String, id: String, errorResponse: @escaping (ErrorResponse)->()){
-        networkManager.request(url: scheduleApplyIdURL + id, method: .get, headers: [.authorization(bearerToken: token)]) { response in
+    func scheduleApplyStatus(id: String, errorResponse: @escaping (ErrorResponse)->()){
+        networkManager.request(url: scheduleApplyIdURL + id, method: .get) { response in
             print(response.data ?? "Нет данных")
         } ifError: { error in
             errorResponse(error)
@@ -199,76 +152,49 @@ class ApiService {
     
     // MARK: Courier Slot
     
-    func courierSlotActivity(token: String, completion: @escaping (CourierSlotResponse) -> (), errorResponse: @escaping (ErrorResponse)->()){
+    func courierSlotActivity(completion: @escaping (CourierSlotResponse) -> (), errorResponse: @escaping (ErrorResponse)->()){
        
-        networkManager.request(url: courierSlotURL, method: .get, headers: [.authorization(bearerToken: token)], model: CourierSlotResponse.self, isSingleInstance: true) { _, post  in
-            completion(post ?? CourierSlotResponse(sessionStart: "", sessionEnd: "", status: false, point: Pointttt(id: 0, name: "", pointDescription: "", lat: "", long: "")))
+        networkManager.request(url: courierSlotURL, method: .get, model: CourierSlotResponse.self, isSingleInstance: true) { _, post  in
+            completion(post ?? CourierSlotResponse(sessionStart: "", sessionEnd: "", status: false, point: PointSlot(id: 0, name: "", description: "", lat: "", long: "")))
 
         } ifError: { error in
-            
             errorResponse(error)
-
-            print("Имя: \(error.name ?? "Нет данных")")
-            print("Сообщение: \(error.message ?? "Нет данных")")
-            print("Код: \(error.code ?? 0) ")
-            print("Статус: \(error.status ?? 0)")
-            print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
     
-    func courierSlotActivityStart(token: String, completion: @escaping (AFDataResponse<Data?>)->(), errorResponse: @escaping (ErrorResponse)->()){
+    func courierSlotActivityStart(completion: @escaping (AFDataResponse<Data?>)->(), errorResponse: @escaping (ErrorResponse)->()){
        
-        networkManager.request(url: courierSlotStartURL, method: .get, headers: [.authorization(bearerToken: token)]) { response in
+        networkManager.request(url: courierSlotStartURL, method: .get) { response in
             completion(response)
             
         } ifError: { error in
             errorResponse(error)
-            
-            print("Имя: \(error.name ?? "Нет данных")")
-            print("Сообщение: \(error.message ?? "Нет данных")")
-            print("Код: \(error.code ?? 0) ")
-            print("Статус: \(error.status ?? 0)")
-            print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
     
-    func courierSlotActivityStop(token: String, completion: @escaping (AFDataResponse<Data?>)->(), errorResponse: @escaping (ErrorResponse)->()){
+    func courierSlotActivityStop(completion: @escaping (AFDataResponse<Data?>)->(), errorResponse: @escaping (ErrorResponse)->()){
        
-        networkManager.request(url: courierSlotStopURL, method: .get, headers: [.authorization(bearerToken: token)]) { response in
+        networkManager.request(url: courierSlotStopURL, method: .get) { response in
             completion(response)
             
         } ifError: { error in
             errorResponse(error)
-            
-            print("Имя: \(error.name ?? "Нет данных")")
-            print("Сообщение: \(error.message ?? "Нет данных")")
-            print("Код: \(error.code ?? 0) ")
-            print("Статус: \(error.status ?? 0)")
-            print("Тип ошибки: \(error.type ?? "Нет данных")")
         }
     }
     
     // MARK: Profile
-    func getEmployeeData(token: String, completion: @escaping (EmployeeResponse)->(), errorResponse: @escaping (ErrorResponse)->()){
-        networkManager.request(url: employeeURL, method: .get, headers: [.authorization(bearerToken: token)], model: EmployeeResponse.self, isSingleInstance: true) { posts, post  in
+    func getEmployeeData(completion: @escaping (EmployeeResponse)->(), errorResponse: @escaping (ErrorResponse)->()){
+        networkManager.request(url: employeeURL, method: .get, model: EmployeeResponse.self, isSingleInstance: true) { posts, post  in
             completion(post!)
             
         } ifError: { error in
-
             errorResponse(error)
-            
-            print("Имя: \(error.name ?? "Нет данных")")
-            print("Сообщение: \(error.message ?? "Нет данных")")
-            print("Код: \(error.code ?? 0) ")
-            print("Статус: \(error.status ?? 0)")
-            print("Тип ошибки: \(error.type ?? "Нет данных")")
-             
         }
     }
     
     // MARK: courier location
-    func saveCourierLocation(token: String, latitude: String, longitude: String, completion: @escaping (ErrorResponse)->()){
-        networkManager.request(url: locationURL, method: .post, headers: [.authorization(bearerToken: token)], body: ["lat": latitude, "long": longitude]) { response in
+    func saveCourierLocation(latitude: String, longitude: String, completion: @escaping (ErrorResponse)->()){
+        networkManager.request(url: locationURL, method: .post, body: ["lat": latitude, "long": longitude]) { response in
             print(response.data ?? "Нет данных")
 
         } ifError: { error in
@@ -277,14 +203,11 @@ class ApiService {
     }
     
     // MARK: Salary
-    func getSalary(token: String, dateStart: String, dateEnd: String, completion: @escaping (Salary)->(), errorResponse: @escaping (ErrorResponse)->()) {
-        networkManager.request(url: salaryURL, method: .post, headers: [.authorization(bearerToken: token)], body: ["dateStart": dateStart,"dateEnd": dateEnd], model: Salary.self, isSingleInstance: true) { _, post in
+    func getSalary(dateStart: String, dateEnd: String, completion: @escaping (Salary)->(), errorResponse: @escaping (ErrorResponse)->()) {
+        networkManager.request(url: salaryURL, method: .post, body: ["dateStart": dateStart,"dateEnd": dateEnd], model: Salary.self, isSingleInstance: true) { _, post in
             completion(post!)
         } ifError: { error in
             errorResponse(error)
         }
     }
-    
-    
-    
 }

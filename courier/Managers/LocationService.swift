@@ -49,7 +49,7 @@ class LocationService: NSObject, CLLocationManagerDelegate  {
         locationManager.stopMonitoringSignificantLocationChanges()
         timer?.invalidate()
         isTimerActive = false
-       // timer = nil
+        timer = nil
     }
     
     
@@ -75,7 +75,7 @@ class LocationService: NSObject, CLLocationManagerDelegate  {
             print("Долгота (longitude) ", location.coordinate.longitude)
 
             var errorResponse: ErrorResponse?
-            api.saveCourierLocation(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", latitude: String(location.coordinate.latitude), longitude: String(location.coordinate.longitude)){ error in
+            api.saveCourierLocation(latitude: String(location.coordinate.latitude), longitude: String(location.coordinate.longitude)){ error in
                 errorResponse = error
                 guard let errorResponse = errorResponse else { return }
                 print("Ошибка: \(errorResponse)")

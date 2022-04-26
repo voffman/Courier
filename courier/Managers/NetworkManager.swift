@@ -10,91 +10,68 @@ import Alamofire
 
 final class NetworkManager {
     
-    func request<T: Decodable>(url: URLConvertible, method: HTTPMethod, validateRange: ClosedRange<Int> = 200...299, headers: HTTPHeaders? = [], body: [String: Any]? = [:], model: T.Type, isSingleInstance: Bool? = false, ifSuccess: @escaping ([T], T?)->(), ifError: @escaping (ErrorResponse)->()) {
+   private func printError(error: ErrorResponse){
+        print("Имя: \(error.name ?? "Нет данных")")
+        print("Сообщение: \(error.message ?? "Нет данных")")
+        print("Код: \(error.code ?? 0) ")
+        print("Статус: \(error.status ?? 0)")
+        print("Тип ошибки: \(error.type ?? "Нет данных")")
+    }
+    
+  private func printResponseError(response: DataResponse<ErrorResponse, AFError>){
+        print("response.result \(response.result)")
+        print("response.data \(String(describing: response.data))")
+        print("response.request \(String(describing: response.request))")
+        print("response.error \(String(describing: response.error))")
+    }
+    
+    func request<T: Decodable>(url: URLConvertible, method: HTTPMethod, validateRange: ClosedRange<Int> = 200...299, headers: HTTPHeaders? = [.authorization(bearerToken: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "")], body: [String: Any]? = [:], model: T.Type, isSingleInstance: Bool? = false, ifSuccess: @escaping ([T], T?)->(), ifError: @escaping (ErrorResponse)->()) {
         
-        switch method{
+        switch isSingleInstance {
             
-        case .get:
-            
-            switch isSingleInstance {
+        case true:
+            AF.request(url, method: method, parameters: body, headers: headers).validate(statusCode: validateRange).responseDecodable(of: T.self) { response in
                 
-            case true:
-                AF.request(url, method: .get, parameters: body, headers: headers).validate(statusCode: validateRange).responseDecodable(of: T.self) { response in
-                    
-                    switch response.result {
-                    case .success(let posts):
-                        ifSuccess([posts],  posts)
-                        
-                    case .failure(let error):
-                        print(String(describing: error))
-                        AF.request(url, headers: headers).validate().responseDecodable(of: ErrorResponse.self) { response in
-                            
-                            switch response.result {
-                            case .success(let errorValue):
-                                ifError(errorValue)
-                                
-                            case .failure(let error):
-                                print(String(describing: error))
-                                AF.request(url, headers: headers).validate().responseDecodable(of: ErrorResponse.self) { response in
-                                    
-                                    switch response.result {
-                                    case .success(let errorValue):
-                                        ifError(errorValue)
-                                        
-                                    case .failure(let error):
-                                        print(String(describing: error))
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
-            case false:
-                AF.request(url, method: .get, parameters: body, headers: headers).validate(statusCode: validateRange).responseDecodable(of: [T].self) { response in
-                    
-                    switch response.result {
-                    case .success(let posts):
-                        ifSuccess(posts, posts as? T)
-                        
-                    case .failure(let error):
-                        print(String(describing: error))
-                        AF.request(url, headers: headers).validate().responseDecodable(of: ErrorResponse.self) { response in
-                            
-                            switch response.result {
-                            case .success(let errorValue):
-                                ifError(errorValue)
-                                
-                            case .failure(let error):
-                                print(String(describing: error))
-                                AF.request(url, headers: headers).validate().responseDecodable(of: ErrorResponse.self) { response in
-                                    
-                                    switch response.result {
-                                    case .success(let errorValue):
-                                        ifError(errorValue)
-                                        
-                                    case .failure(let error):
-                                        print(String(describing: error))
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
-            default:
-                break
-            }
-
-        case .post:
-            
-            AF.request(url, method: .post, parameters: body, headers: headers).validate(statusCode: validateRange).responseDecodable(of: T.self) { response in
                 switch response.result {
-                case .success(let result):
-                    ifSuccess([result], result)
+                case .success(let posts):
+                    ifSuccess([posts], posts)
                     
                 case .failure(let error):
-                    print("Error description is: \(String(describing: error))")
+                    print(String(describing: error))
+                    AF.request(url, headers: headers).validate().responseDecodable(of: ErrorResponse.self) { response in
+                        
+                        switch response.result {
+                        case .success(let errorValue):
+                            self.printError(error: errorValue)
+                            ifError(errorValue)
+                            
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            
+                            AF.request(url, headers: headers).validate().responseDecodable(of: ErrorResponse.self) { response in
+                                
+                                switch response.result {
+                                case .success(let errorValue):
+                                    ifError(errorValue)
+                                    
+                                case .failure(let error):
+                                    print(String(describing: error))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+        case false:
+            AF.request(url, method: .get, parameters: body, headers: headers).validate(statusCode: validateRange).responseDecodable(of: [T].self) { response in
+                
+                switch response.result {
+                case .success(let posts):
+                    ifSuccess(posts, posts as? T)
+                    
+                case .failure(let error):
+                    print(String(describing: error))
                     AF.request(url, headers: headers).validate().responseDecodable(of: ErrorResponse.self) { response in
                         
                         switch response.result {
@@ -103,127 +80,50 @@ final class NetworkManager {
                             
                         case .failure(let error):
                             print(String(describing: error))
+                            self.printResponseError(response: response)
+                            
+                            AF.request(url, headers: headers).validate().responseDecodable(of: ErrorResponse.self) { response in
+                                switch response.result {
+                                case .success(let errorValue):
+                                    ifError(errorValue)
+                                    
+                                case .failure(let error):
+                                    print(String(describing: error))
+                                }
+                            }
                         }
                     }
                 }
             }
+            
         default:
-            return
+            break
         }
     }
     
     
-    func request(url: URLConvertible, method: HTTPMethod, validateRange: ClosedRange<Int> = 200...299, headers: HTTPHeaders? = [], body: [String: Any]? = [:], ifSuccess: @escaping (AFDataResponse<Data?>)->(), ifError: @escaping (ErrorResponse)->()){
-       
-        switch method {
-            
-        case .get:
-            AF.request(url, parameters: body, headers: headers).validate(statusCode: validateRange).response { response in
-                switch response.result {
-                case .success:
-                    print("response.result \(response.result)")
-                    print("response.data \(String(describing: response.data))")
-                    print("response.request \(String(describing: response.request))")
-                    print("response.error \(String(describing: response.error))")
-                    ifSuccess(response)
-
-                    
-                case .failure(let error):
-                    print(error)
-                    AF.request(url, headers: headers).responseDecodable(of: ErrorResponse.self) { response in
+    func request(url: URLConvertible, method: HTTPMethod, validateRange: ClosedRange<Int> = 200...299, headers: HTTPHeaders? = [.authorization(bearerToken: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "")], body: [String: Any]? = [:], ifSuccess: @escaping (AFDataResponse<Data?>)->(), ifError: @escaping (ErrorResponse)->()){
+        
+        AF.request(url, method: method, parameters: body, headers: headers).validate(statusCode: validateRange).response { response in
+            switch response.result {
+            case .success:
+                ifSuccess(response)
+                
+            case .failure(let error):
+                print(error)
+                
+                AF.request(url, headers: headers).responseDecodable(of: ErrorResponse.self) { response in
+                    switch response.result {
+                    case .success(let errorValue):
+                        self.printError(error: errorValue)
+                        ifError(errorValue)
                         
-                        switch response.result {
-                        case .success(let errorValue):
-                            ifError(errorValue)
-                            
-                        case .failure(let error):
-                            print(String(describing: error))
-                        }
+                    case .failure(let error):
+                        print(String(describing: error))
                     }
                 }
             }
-            
-        case .post:
-            AF.request(url, method: .post, parameters: body, headers: headers).validate(statusCode: validateRange).response { response in
-                switch response.result {
-                case .success:
-                    print("response.result \(response.result)")
-                    print("response.data \(String(describing: response.data))")
-                    print("response.request \(String(describing: response.request))")
-                    print("response.error \(String(describing: response.error))")
-                    ifSuccess(response)
-                    
-                case .failure(let error):
-                    print(error)
-                    AF.request(url, headers: headers).responseDecodable(of: ErrorResponse.self) { response in
-                        
-                        switch response.result {
-                        case .success(let errorValue):
-                            ifError(errorValue)
-                            
-                        case .failure(let error):
-                            print(String(describing: error))
-                        }
-                    }
-                }
-            }
-            
-        default:
-            return
         }
     }
 }
-
-
-// MARK: методы
-/*
- func getRequest<T: Decodable>(url: URLConvertible, headers: HTTPHeaders, model: T.Type ,completion:  @escaping ([T])->()){
- AF.request(url, headers: headers).validate().responseDecodable(of: [T].self) { response in
- switch response.result {
- case .success(let posts):
- 
- completion(posts)
- print("status \(response.response!.statusCode)" )
- case .failure(let error):
- print(String(describing: error))
- 
- }
- }
- }
- 
- 
- func getRequest(url: URLConvertible, headers: HTTPHeaders){
- AF.request(url, headers: headers).responseJSON { response in
- print(response)
- }
- }
- 
- 
- func postRequest<T: Decodable>(url: URLConvertible, headers: HTTPHeaders, body: [String: Any], model: T.Type ,completion: @escaping (T)->()) {
- AF.request(url, method: .post, parameters: body, headers: headers).responseDecodable(of: T.self) { response in
- switch response.result {
- case let .success(result):
- completion(result)
- print("status \(response.response!.statusCode)" )
- case let .failure(error):
- print("Error description is: \(String(describing: error))")
- 
- }
- }
- }
- 
- func postRequest(url: URLConvertible, headers: HTTPHeaders, body: [String: Any]){
- AF.request(url, method: .post, parameters: body, encoding:  URLEncoding.queryString, headers: headers).response { response in
- switch response.result {
- case .success:
- print(response.result)
- print("status \(response.response!.statusCode)" )
- //   print("status 2 - \(response)" )
- case let .failure(error):
- print(error)
- }
- }
- }
- }
- */
 

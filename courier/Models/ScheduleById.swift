@@ -7,48 +7,17 @@
 
 import Foundation
 
-/*
-// Example
-// MARK: - ScheduleByID
-struct ScheduleByID: Codable {
-    let dateItem, timeStart, timeEnd: String
-    let point: Pointt
-}
-
-// MARK: - Point
-struct Pointt: Codable {
-    let id: Int
-    let name, pointDescription: String
-    let lat, long: Double
-
-    enum CodingKeys: String, CodingKey {
-        case id, name
-        case pointDescription = "description"
-        case lat, long
-    }
-}
-
-*/
-
-
-// Response Body
 // MARK: - ScheduleByIDElement
 struct ScheduleByIDElement: Codable {
     let dateItem: String
     let timeStart, timeEnd: String?
-    let point: Pointt?
+    let point: PointSchedule?
 }
 
 // MARK: - Point
-struct Pointt: Codable {
+struct PointSchedule: Codable {
     let id: Int
-    let name, pointDescription, lat, long: String
-
-    enum CodingKeys: String, CodingKey {
-        case id, name
-        case pointDescription = "description"
-        case lat, long
-    }
+    let name, description, lat, long: String
 }
 
 typealias ScheduleByID = [ScheduleByIDElement]

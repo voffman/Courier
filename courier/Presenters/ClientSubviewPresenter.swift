@@ -13,7 +13,7 @@ protocol ClientSubviewPresenterProtocol: AnyObject {
     init(view: ClientSubviewProtocol)
     func getCoordinates(latitude: String, longitude: String)
     func openDownloadLink()
-    func getPhoneNumber(phoneNumber: String)
+    func returnPhoneNumberURL(phoneNumber: String)
 }
 
 class ClientSubviewPresenter: ClientSubviewPresenterProtocol {
@@ -61,7 +61,7 @@ class ClientSubviewPresenter: ClientSubviewPresenterProtocol {
         view?.openApp(appURL: url)
     }
     
-    func getPhoneNumber(phoneNumber: String) {
+    func returnPhoneNumberURL(phoneNumber: String) {
         let urlString = "tel://" + phoneNumber
         guard let url = URL(string: urlString) else { return }
         

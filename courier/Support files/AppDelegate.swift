@@ -38,8 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = LoginView()
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(startTracking), name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stopTracking), name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(startTracking), name: NSNotification.Name(rawValue: "startSession"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stopTracking), name: NSNotification.Name(rawValue: "stopSession"), object: nil)
         
 
         notifications.registerForPushNotifications()

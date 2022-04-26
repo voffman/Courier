@@ -39,7 +39,7 @@ class ScheduleTableView: MVPController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkPosts()
+        presenter?.getSchedule(page: "0")
     }
 
 }
@@ -100,8 +100,8 @@ extension ScheduleTableView: UITableViewDelegate, UITableViewDataSource{
 }
 
 protocol ScheduleTableViewProtocol: AnyObject, MVPControllerProtocol  {
-    func checkPosts()
     func goToScheduleWeek(scheduleElement: ScheduleElement)
+    func isHaveSchedule(posts: [ScheduleElement])
 }
 
 extension ScheduleTableView: ScheduleTableViewProtocol {
@@ -112,14 +112,10 @@ extension ScheduleTableView: ScheduleTableViewProtocol {
         self.navigationController?.pushViewController(scheduleWeekTableView, animated: true)
     }
     
-    func checkPosts() {
-        presenter?.getSchedule(page: "0", completion: { posts in
-            if !posts.isEmpty{
-                print("Кол-во постов \(posts.count)")
-                self.data = posts
-                self.tableView.reloadData()
-            }
-        })
+    func isHaveSchedule(posts: [ScheduleElement]) {
+        print("Кол-во постов \(posts.count)")
+        self.data = posts
+        self.tableView.reloadData()
     }
     
 }

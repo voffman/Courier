@@ -26,7 +26,7 @@ class SalaryPresenter: IncomeViewPresenterProtocol {
     
     func getInfo(dateStart: String, dateEnd: String) {
         if api.isConnectedToInternet {
-            api.getSalary(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", dateStart: dateStart, dateEnd: dateEnd) { post in
+            api.getSalary(dateStart: dateStart, dateEnd: dateEnd) { post in
                 self.view?.configureData(salary: post)
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)

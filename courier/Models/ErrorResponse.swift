@@ -12,6 +12,3 @@ struct ErrorResponse: Codable {
     let code, status: Int?
     let type: String?
 }
-
-// выводить коды ошибки JSON-а как в сваггере   "message": "Пользователя не существует", "code": 0, "status": 404,
-// и передавать в MVP контроллер

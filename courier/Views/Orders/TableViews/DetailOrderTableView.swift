@@ -309,15 +309,10 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         sc.segmentedControlContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
-
         tableView.topAnchor.constraint(equalTo:  contentView.topAnchor, constant: sc.segmentedControlContainerView.frame.height + 15).isActive = true
-        
         tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
-        
         tableView.bottomAnchor.constraint(equalTo: stateSubview.view.topAnchor, constant: 0).isActive = true
-
         tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20).isActive = true
-        
         
         shopSubview.view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -351,7 +346,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
             
         
         let post = dataPosts.orderItems[indexPath.row]
-        footerTableView.addData(sum: dataPosts.sumTotal, customerAmount: dataPosts.customerAmount ?? "-", paymentType: dataPosts.paymentTypeID)
+        footerTableView.addData(sum: dataPosts.sumTotal, customerAmount: dataPosts.customerAmount ?? "-", paymentType: dataPosts.paymentTypeId)
         
         if dataPosts.customerAmount == nil {
             footerTableView.hideCustomerAmount()
@@ -360,7 +355,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailOrderCell.identifire, for: indexPath) as! DetailOrderCell
         
-        cell.configure(orderName: post.name + " \(post.orderItemDescription ?? "")", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price.formattedWithSeparator) + " ₸")
+        cell.configure(orderName: post.name + " \(post.description ?? "")", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price.formattedWithSeparator) + " ₸")
         
         return cell
 

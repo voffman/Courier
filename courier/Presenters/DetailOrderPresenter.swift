@@ -24,7 +24,7 @@ class DetailOrderPresenter: DetailOrderTableViewPresenterProtocol {
     
     func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ()) {
         if api.isConnectedToInternet {
-            api.changeOrderStatus(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", orderId: orderId, status: status) { post in
+            api.changeOrderStatus(orderId: orderId, status: status) { post in
                 completion(post)
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)

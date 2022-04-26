@@ -12,7 +12,7 @@ class NotificationsActions: MVPController {
     let api = ApiService()
     
     func closeSlot() {
-        api.courierSlotActivityStop(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
+        api.courierSlotActivityStop() { response in
             print("Сессия остановлена")
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
             

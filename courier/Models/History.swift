@@ -10,61 +10,48 @@ import Foundation
 // MARK: - HistoryElement
 struct HistoryElement: Codable {
     let id: Int
-    let externalID: String?
-    let companyID: Int
+    let externalId: String?
+    let companyId: Int
     let companyName, phone, customerName: String
     let status: Int
     let statusName: String
-    let point: Point
+    let point: PointHistory
     let createdAt, updatedAt, setCourierDateTime: String
-    let orderItems: [OrderItem]
+    let orderItems: [OrderItemHistory]
     let sumItems: Int?
     let deliveryPrice: Int
     let deliveryTime: String?
     let dateTimeFinish: String
-    let correctionalPrice, sumTotal, paymentTypeID: Int
-    let addressFrom: AddressFrom
-    let addressTo: AddressTo
+    let correctionalPrice, sumTotal, paymentTypeId: Int
+    let addressFrom: AddressFromHistory
+    let addressTo: AddressToHistory
     let comments, customerAmount: String?
     let redistributed: Bool
 
-    enum CodingKeys: String, CodingKey {
-        case id
-        case externalID = "externalId"
-        case companyID = "companyId"
-        case companyName, phone, customerName, status, statusName, point, createdAt, updatedAt, setCourierDateTime, orderItems, sumItems, deliveryPrice, deliveryTime, dateTimeFinish, correctionalPrice, sumTotal
-        case paymentTypeID = "paymentTypeId"
-        case addressFrom, addressTo, comments, customerAmount, redistributed
-    }
 }
 
 // MARK: - AddressFrom
-struct AddressFromm: Codable {
+struct AddressFromHistory: Codable {
     let address, lat, long, phone: String
 }
 
 // MARK: - AddressTo
-struct AddressToo: Codable {
+struct AddressToHistory: Codable {
     let street, house, lat, long: String
     let flat: String?
 }
 
 // MARK: - OrderItem
-struct OrderItemm: Codable {
+struct OrderItemHistory: Codable {
     let name: String
     let quantity, price: Int
 }
 
 // MARK: - Point
-struct Pointtt: Codable {
+struct PointHistory: Codable {
     let id: Int
-    let name, pointDescription, lat, long: String
+    let name, description, lat, long: String
 
-    enum CodingKeys: String, CodingKey {
-        case id, name
-        case pointDescription = "description"
-        case lat, long
-    }
 }
 
 typealias History = [HistoryElement]

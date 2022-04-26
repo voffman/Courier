@@ -175,6 +175,7 @@ class StateSubview: UIViewController {
     
     func launchTimer(){
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(incrementCountLabel), userInfo: nil, repeats: true)
+        timer.fire()
         timer.tolerance = 0.5
         RunLoop.current.add(self.timer, forMode: RunLoop.Mode.common)
         // Задается время по истечению которого таймер будет остановлен

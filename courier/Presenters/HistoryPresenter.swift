@@ -10,7 +10,7 @@ import Foundation
 
 protocol HistoryTableViewPresenterProtocol: AnyObject {
     init(view: HistoryTableViewProtocol)
-    func getHistory(dateStart: String, dateFinish: String, completion: @escaping ([HistoryElement]) -> ())
+    func getHistory(dateStart: String, dateFinish: String)
 }
 
 class HistoryPresenter: HistoryTableViewPresenterProtocol {
@@ -24,10 +24,10 @@ class HistoryPresenter: HistoryTableViewPresenterProtocol {
     
     let api = ApiService()
     
-    func getHistory(dateStart: String, dateFinish: String, completion: @escaping ([HistoryElement]) -> ()) {
+    func getHistory(dateStart: String, dateFinish: String) {
         if api.isConnectedToInternet {
-            api.getCourierHistory(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "", dateStart: dateStart, dateFinish: dateFinish) { posts in
-                completion(posts)
+            api.getCourierHistory(dateStart: dateStart, dateFinish: dateFinish) { posts in
+                self.view?.isHaveHistory(posts: posts)
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
             }

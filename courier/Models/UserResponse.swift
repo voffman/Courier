@@ -12,28 +12,7 @@ struct UserResponse: Codable {
     let id: Int?
     let fio, phone, email, lastLogin: String?
     let authKey, role, accesses, allowedCities: String?
-    let companyID: Int?
+    let companyId: Int?
     let inventory: String?
-    let courierTypeID: Int?
-
-    enum CodingKeys: String, CodingKey {
-        case id, fio, phone, email, lastLogin, authKey, role, accesses, allowedCities
-        case companyID = "companyId"
-        case inventory
-        case courierTypeID = "courierTypeId"
-    }
+    let courierTypeId: Int?
 }
-
-// MARK: ответ
-
-//struct UserResponse: Codable {
-//    let id: Int
-//    let fio, phone, lastLogin, authKey: String
-//    let inventory: String
-//    let courierTypeID: Int
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id, fio, phone, lastLogin, authKey, inventory
-//        case courierTypeID = "courierTypeId"
-//    }
-//}

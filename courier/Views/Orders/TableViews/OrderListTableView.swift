@@ -56,7 +56,7 @@ class OrderListTableView: MVPController {
                 self.navigationController?.pushViewController(thanksView, animated: true)
             }
             
-            self.checkOrders()
+            self.presenter?.getOrders()
         })
         dismissAlertView()
             
@@ -271,13 +271,13 @@ class OrderListTableView: MVPController {
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
 
-        checkOrders()
-        checkArchiveOrders()
+        presenter.getOrders()
+        presenter.getArchiveOrders()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        checkOrders()
-        checkActivity()
+        presenter?.getOrders()
+        presenter?.checkUserActivity()
         print("дата перезагружена")
     }
     
@@ -469,45 +469,37 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
 }
 
 protocol OrderListTableViewProtocol: AnyObject, MVPControllerProtocol  {
-    func checkOrders()
-    func checkArchiveOrders()
+    //func checkOrders()
+    func isHaveOrders(posts: [CourierOrderResponseElement])
+    func isHaveArchiveOrders(posts: [CourierOrderResponseElement])
     func goToDetailOrderTableView(courierOrderResponseElement: CourierOrderResponseElement)
     func showStatusAlert(courierOrderResponseElement: CourierOrderResponseElement)
-    func checkActivity()
 }
 
 extension OrderListTableView: OrderListTableViewProtocol{
     
-    func checkOrders(){
-        presenter?.getOrders( completion: { posts in
-            if !posts.isEmpty{
-                self.waitViewElement.isHidden = true
-                self.waitViewElement.setupView()
-                self.data = posts
-                self.sc.segmentedControlContainerView.isHidden = false
-                self.setupOrderCount(isHidden: false)
+    func isHaveOrders(posts: [CourierOrderResponseElement]) {
+        self.waitViewElement.isHidden = true
+        self.waitViewElement.setupView()
+        self.data = posts
+        self.sc.segmentedControlContainerView.isHidden = false
+        self.setupOrderCount(isHidden: false)
 
-                self.tableView.reloadData()
-            }
-        })
+        self.tableView.reloadData()
     }
     
-    func checkArchiveOrders(){
-        presenter?.getArchiveOrders( completion: { posts in
-            if !posts.isEmpty{
-                self.dataArchive = posts
-                print("Архивных постов - ", posts.count)
-                self.countLabel.title = String(posts.count)
-                self.countLabel.setLabel()
-                //self.tableView.reloadData() (при смене segmentedControl элемента)
-            }
-            else{
-                self.countLabel.title = String(posts.count)
-                self.countLabel.setLabel()
-                print("Архивных постов нет - ", posts.count)
-            }
-        })
-        
+    func isHaveArchiveOrders(posts: [CourierOrderResponseElement]){
+        if !posts.isEmpty{
+            self.dataArchive = posts
+            print("Архивных постов - ", posts.count)
+            self.countLabel.title = String(posts.count)
+            self.countLabel.setLabel()
+        }
+        else{
+            self.countLabel.title = String(posts.count)
+            self.countLabel.setLabel()
+            print("Архивных постов нет - ", posts.count)
+        }
     }
     
     func goToDetailOrderTableView(courierOrderResponseElement: CourierOrderResponseElement) {
@@ -523,21 +515,6 @@ extension OrderListTableView: OrderListTableViewProtocol{
                   sendButtonSelector: #selector(sendAlertButtonAction),
                   cancelButtonTitle: courierOrderResponseElement.transitions.alertNegative,
                   sendButtonTitle: courierOrderResponseElement.transitions.alertPositive)
-    }
-    
-    func checkActivity(){
-        presenter?.checkUserActivity(completion: { post in
-            
-            if post.status {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
-             //   NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-            }
-            else {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
-            }
-            
-        })
     }
     
 }

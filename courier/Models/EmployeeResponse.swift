@@ -17,11 +17,6 @@ struct EmployeeResponse: Codable {
     let allowedCities: [AllowedCity]?
     let inventory: String?
     let courierTypeID: Int?
-
-    enum CodingKeys: String, CodingKey {
-        case id, fio, phone, lastLogin, authKey, role, accesses, allowedCities, inventory
-        case courierTypeID
-    }
 }
 
 // MARK: - AllowedCity

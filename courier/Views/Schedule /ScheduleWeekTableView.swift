@@ -95,7 +95,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createNavigationBar(title: dateManager.convert(dateString: dataPosts.dateStart, convertToDateFormat: "dd MMM") + " - " + dateManager.convert(dateString: dataPosts.dateEnd, convertToDateFormat: "dd MMM"))
-        checkPosts(id: String(dataPosts.id))
+        presenter?.getScheduleWeek(id: String(dataPosts.id))
     }
     
     override func viewDidLayoutSubviews() {
@@ -144,19 +144,19 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
 }
 
 protocol ScheduleWeekTableViewProtocol: AnyObject, MVPControllerProtocol  {
-    func checkPosts(id: String)
+    func isHaveScheduleWeek(posts: [ScheduleByIDElement])
 }
 
 extension ScheduleWeekTableView: ScheduleWeekTableViewProtocol{
-    func checkPosts(id: String) {
-        presenter?.getScheduleWeek(id: id, completion: { posts in
-            if !posts.isEmpty{
-                print("Кол-во постов по айди \(posts.count)")
-                self.data = posts
-                self.tableView.reloadData()
-                self.scheduleFooterView.createFooterView(isHidden: self.dataPosts.isConfirmed)
-                self.tableView.tableFooterView = self.scheduleFooterView // грузить после того как загрузятся ячейки или данные
-            }
-        })
+    
+    func isHaveScheduleWeek(posts: [ScheduleByIDElement]) {
+        if !posts.isEmpty{
+            print("Кол-во постов по айди \(posts.count)")
+            self.data = posts
+            self.tableView.reloadData()
+            self.scheduleFooterView.createFooterView(isHidden: self.dataPosts.isConfirmed)
+            self.tableView.tableFooterView = self.scheduleFooterView // грузить после того как загрузятся ячейки или данные
+        }
     }
+
 }

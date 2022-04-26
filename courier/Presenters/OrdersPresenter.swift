@@ -11,7 +11,7 @@ import Foundation
 protocol OrdersViewPresenterProtocol: AnyObject {
     init(view: OrdersViewProtocol)
     func startUserActivity()
-    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ())
+    func checkUserActivity()
 }
 
 class OrdersPresenter: OrdersViewPresenterProtocol {
@@ -28,8 +28,8 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
 
     func startUserActivity() {
         if api.isConnectedToInternet {
-            api.courierSlotActivityStart(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { response in
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
+            api.courierSlotActivityStart() { response in
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
                 self.view?.goToOrderListTableView()
                 
             } errorResponse: { error in
@@ -40,10 +40,16 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
         }
     }
     
-    func checkUserActivity(completion: @escaping (CourierSlotResponse) -> ()) {
+    func checkUserActivity() {
         if api.isConnectedToInternet {
-            api.courierSlotActivity(token: UserDefaults.standard.string(forKey: UserDefaultsKeys.bearer) ?? "") { post in
-                completion(post)
+            api.courierSlotActivity() { post in
+                if post.status {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+                    self.view?.goToOrderListTableView()
+                }
+                else {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
+                }
                 
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)

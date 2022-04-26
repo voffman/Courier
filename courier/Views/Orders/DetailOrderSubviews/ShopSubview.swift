@@ -142,7 +142,7 @@ class ShopSubview: UIViewController {
     }
     
     @objc func toCallButtonAction(){
-        presenter?.getPhoneNumber(phoneNumber: phoneNumber)
+        presenter?.returnPhoneNumberURL(phoneNumber: phoneNumber)
     }
     
     func setupNewStateOne(){

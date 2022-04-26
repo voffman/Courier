@@ -273,7 +273,7 @@ class ClientSubview: UIViewController {
     
     
     @objc func toCallButtonAction(){
-        presenter?.getPhoneNumber(phoneNumber: phoneLabel.text ?? "")
+        presenter?.returnPhoneNumberURL(phoneNumber: phoneLabel.text ?? "")
 
     }
     

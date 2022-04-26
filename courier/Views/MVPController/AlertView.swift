@@ -52,7 +52,7 @@ class AlertView: UIViewController {
 
         cardView.leftAnchor.constraint(equalTo:  onVC.leftAnchor, constant: 20).isActive = true
         cardView.rightAnchor.constraint(equalTo:  onVC.rightAnchor, constant: -20).isActive = true
-        cardView.heightAnchor.constraint(equalToConstant: 140 + CGFloat(messageLabel.text?.count ?? 0)/(messageLabel.textSize * 0.1)).isActive = true
+        cardView.heightAnchor.constraint(equalToConstant: 140 + CGFloat(messageLabel.text?.count ?? 0)/(messageLabel.textSize * 0.05)).isActive = true
         cardView.addSubview(nameLabel)
         
         nameLabel.setLabel()

@@ -134,7 +134,7 @@ class OrdersView: MVPController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkActivity()
+        presenter?.checkUserActivity()
     }
     
     override func viewDidLoad() {
@@ -162,7 +162,6 @@ class OrdersView: MVPController {
 // То, что выполняю во вью
 protocol OrdersViewProtocol: AnyObject, MVPControllerProtocol  {
     func goToOrderListTableView()
-    func checkActivity()
 }
 
 extension OrdersView: OrdersViewProtocol {
@@ -171,19 +170,4 @@ extension OrdersView: OrdersViewProtocol {
         self.navigationController?.pushViewController(orderList, animated: true)
     }
     
-    func checkActivity(){
-        presenter?.checkUserActivity(completion: { post in
-            
-            if post.status {
-                self.goToOrderListTableView()
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStartTracking"), object: nil)
-              //  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-            }
-            else {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userActivityStopTracking"), object: nil)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
-            }
-            
-        })
-    }
 }
