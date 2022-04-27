@@ -11,8 +11,8 @@ import Foundation
 // То, что выполняю в здесь
 protocol ChooseNavigatorPresenterProtocol: AnyObject {
     init(view: ChooseNavigatorViewProtocol)
-    func setDefaultNavigatorTo2GIS()
-    func setDefaultNavigatorToYandex()
+    func gisButtonTapped()
+    func yaNavButtonTapped()
 }
 
 class ChooseNavigatorPresenter: ChooseNavigatorPresenterProtocol {
@@ -23,11 +23,11 @@ class ChooseNavigatorPresenter: ChooseNavigatorPresenterProtocol {
         self.view = view
     }
     
-    func setDefaultNavigatorTo2GIS() {
+    func gisButtonTapped() {
         UserDefaults.standard.set("2ГИС", forKey: UserDefaultsKeys.defaultNavigator)
     }
     
-    func setDefaultNavigatorToYandex() {
+    func yaNavButtonTapped() {
         UserDefaults.standard.set("Яндекс Навигатор", forKey: UserDefaultsKeys.defaultNavigator)
     }
 

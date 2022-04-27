@@ -100,7 +100,7 @@ class OrdersView: MVPController {
     @objc func sendAlertButtonAction(){
         print("Геолокация включена")
         dismissAlertView()
-        presenter?.startUserActivity()
+        presenter?.sendAlertButtonTapped()
     }
     
     @objc func startWorkButtonAction(){
@@ -134,7 +134,7 @@ class OrdersView: MVPController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter?.checkUserActivity()
+        presenter?.viewWillAppear()
     }
     
     override func viewDidLoad() {

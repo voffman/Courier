@@ -10,7 +10,7 @@ import Foundation
 // То, что выполняю в здесь
 protocol DetailOrderTableViewPresenterProtocol: AnyObject {
     init(view: DetailOrderTableViewProtocol)
-    func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ())
+    func sendAlertButtonTapped(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ())
 }
 
 class DetailOrderPresenter: DetailOrderTableViewPresenterProtocol {
@@ -22,7 +22,7 @@ class DetailOrderPresenter: DetailOrderTableViewPresenterProtocol {
     
     let api = ApiService()
     
-    func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ()) {
+    func sendAlertButtonTapped(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ()) {
         api.changeOrderStatus(orderId: orderId, status: status) { post in
             completion(post)
         } errorResponse: { error in

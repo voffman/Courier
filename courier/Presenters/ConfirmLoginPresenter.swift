@@ -10,8 +10,8 @@ import Foundation
 // То, что выполняю в здесь
 protocol ConfirmLoginViewPresenterProtocol: AnyObject {
     init(view: ConfirmLoginViewProtocol)
-    func requestAuthKey(phoneNumber: String, smsCode: String)
-    func sendSMS(phoneNumber: String?)
+    func confirmButtonTapped(phoneNumber: String, smsCode: String)
+    func sendAgainButtonTapped(phoneNumber: String?)
 
 }
 
@@ -24,7 +24,7 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
     
     let api = ApiService()
 
-    func requestAuthKey(phoneNumber: String, smsCode: String) {
+    func confirmButtonTapped(phoneNumber: String, smsCode: String) {
         api.getAuthKey( phoneNumber: phoneNumber, smsCode: smsCode){ posts in
             
             for post in posts {
@@ -41,7 +41,7 @@ class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
         }
     }
     
-    func sendSMS(phoneNumber: String?) {
+    func sendAgainButtonTapped(phoneNumber: String?) {
         
         guard let phoneNumber = phoneNumber else {
             return

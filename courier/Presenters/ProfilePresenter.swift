@@ -9,12 +9,11 @@ import Foundation
 
 protocol ProfileViewPresenterProtocol: AnyObject {
     init(view: ProfileViewProtocol)
-    func removeBearer()
-    func getEmployeeData(completion: @escaping (EmployeeResponse) -> ())
-    func sessionStart()
-    func sessionStop()
-    func checkUserActivity()
-    func returnDefaultNavigatorValue()->String
+    func viewDidLoad()
+    func exitButtonTapped()
+    func activityStatusSwitchTurnOn()
+    func activityStatusSwitchTurnOff()
+    func viewWillAppear()
 }
 
 class ProfilePresenter: ProfileViewPresenterProtocol {
@@ -29,58 +28,55 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     
     let locationService = LocationService()
     
-    func getEmployeeData(completion: @escaping (EmployeeResponse) -> ()) {
-        api.getEmployeeData() { posts in
-            completion(posts)
+    func viewDidLoad() {
+        api.getEmployeeData() { post in
+            self.view?.configureData(post: post)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
     }
     
-    func removeBearer() {
+    func exitButtonTapped() {
         UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.bearer)
-        
+        self.view?.goToLoginView()
 //        if let appDomain = Bundle.main.bundleIdentifier {
 //        UserDefaults.standard.removePersistentDomain(forName: appDomain)
 //         }
     }
     
-    func sessionStart() {
+    func activityStatusSwitchTurnOn() {
         api.courierSlotActivityStart() { response in
             print("Сессия запущена")
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
             // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-            self.checkUserActivity()
+            self.viewWillAppear()
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
-            self.checkUserActivity()
+            self.viewWillAppear()
         }
     }
     
     
-    func sessionStop() {
+    func activityStatusSwitchTurnOff() {
         api.courierSlotActivityStop() { response in
             print("Сессия остановлена")
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
-            self.checkUserActivity()
+            self.viewWillAppear()
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
-            self.checkUserActivity()
+            self.viewWillAppear()
         }
     }
     
-    func checkUserActivity() {
+    func viewWillAppear() {
         api.courierSlotActivity() { post in
             self.view?.updateSessionStatus(post: post)
+            
+            let navigator = UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "2ГИС"
+            self.view?.getNavigatorValue(value: navigator)
             
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
     }
-    
-    func returnDefaultNavigatorValue() -> String {
-        print("навигатор: \(UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "")")
-        return UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "2ГИС"
-    }
-    
 }

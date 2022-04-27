@@ -11,7 +11,7 @@ import Foundation
 // То, что выполняю в здесь
 protocol LoginViewPresenterProtocol: AnyObject {
     init(view: LoginViewProtocol)
-    func sendSMS(phoneNumber: String?)
+    func buttonTapped(phoneNumber: String?)
 }
 
 class LoginPresenter: LoginViewPresenterProtocol {
@@ -24,7 +24,7 @@ class LoginPresenter: LoginViewPresenterProtocol {
     
     let api = ApiService()
     
-    func sendSMS(phoneNumber: String?) {
+    func buttonTapped(phoneNumber: String?) {
         
         guard let phoneNumber = phoneNumber else {
             return

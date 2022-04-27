@@ -335,7 +335,7 @@ class SalaryView: MVPController {
             let dateStartConverted = self.dateManager.convert(dateString: self.startDate, stringDateFormat: "d MMMM Y", convertToDateFormat: "yyyy-MM-dd")
             let dateEndConverted = self.dateManager.convert(dateString: self.endDate, stringDateFormat: "d MMMM Y", convertToDateFormat: "yyyy-MM-dd")
             
-            self.presenter?.getInfo(dateStart: dateStartConverted, dateEnd: dateEndConverted)
+            self.presenter?.viewNeedsUpdateDate(dateStart: dateStartConverted, dateEnd: dateEndConverted)
             
         }))
         
@@ -375,14 +375,14 @@ class SalaryView: MVPController {
     @objc func segmentedValueChanged(_ sender:UISegmentedControl!)
     {
         if segmentedControl.selectedSegmentIndex == 0 {
-            presenter?.getInfo(dateStart: dateManager.getStringDateFor(days: 0), dateEnd: dateManager.getStringDateFor(days: 0))
+            presenter?.viewNeedsUpdateDate(dateStart: dateManager.getStringDateFor(days: 0), dateEnd: dateManager.getStringDateFor(days: 0))
             startDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM")
             endDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM Y")
             
             dateLabel.text = " \(startDate) - \(endDate)"
         }
         if segmentedControl.selectedSegmentIndex == 1 {
-            presenter?.getInfo(dateStart: dateManager.getStringDateFor(days: -7), dateEnd: dateManager.getStringDateFor(days: 0))
+            presenter?.viewNeedsUpdateDate(dateStart: dateManager.getStringDateFor(days: -7), dateEnd: dateManager.getStringDateFor(days: 0))
             startDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM")
             endDate = dateManager.getStringDateFor(days: -7, stringDateFormat: "dd MMMM Y")
             
@@ -630,7 +630,7 @@ class SalaryView: MVPController {
         setupView()
         setupScrollView()
         createNavigationBar()
-        presenter.getInfo(dateStart: dateManager.getStringDateFor(days: 0), dateEnd: dateManager.getStringDateFor(days: 0))
+        presenter.viewNeedsUpdateDate(dateStart: dateManager.getStringDateFor(days: 0), dateEnd: dateManager.getStringDateFor(days: 0))
         
     }
     

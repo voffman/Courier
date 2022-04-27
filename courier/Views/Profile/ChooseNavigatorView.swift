@@ -103,12 +103,12 @@ class ChooseNavigatorView: MVPController {
     }
     
     @objc func gisButtonAction(sender: UIButton){
-        presenter?.setDefaultNavigatorTo2GIS()
+        presenter?.gisButtonTapped()
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc func yaNavButtonAction(sender: UIButton){
-        presenter?.setDefaultNavigatorToYandex()
+        presenter?.yaNavButtonTapped()
         self.navigationController?.popViewController(animated: true)
     }
     

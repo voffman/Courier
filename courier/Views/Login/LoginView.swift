@@ -116,7 +116,7 @@ class LoginView: MVPController {
         }
         else {
             // 
-            presenter?.sendSMS(phoneNumber: phoneNumberTextField.text)
+            presenter?.buttonTapped(phoneNumber: phoneNumberTextField.text)
             // презентер никогда не запрашивает данные от вью
         }
 

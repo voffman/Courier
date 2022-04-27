@@ -113,7 +113,7 @@ class DetailOrderTableView: MVPController {
     
     @objc func sendAlertButtonAction(){
         print("статус меняется...")
-        presenter?.changeStatus(orderId: String(dataPosts.id), status: String(dataPosts.transitions.status), completion: { post in
+        presenter?.sendAlertButtonTapped(orderId: String(dataPosts.id), status: String(dataPosts.transitions.status), completion: { post in
             print("статус изменен ", post.statusName)
             print("статус изменен на ", post.status)
             

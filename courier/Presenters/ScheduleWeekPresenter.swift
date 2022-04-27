@@ -10,8 +10,8 @@ import Foundation
 // То, что выполняю в здесь
 protocol ScheduleWeekTableViewPresenterProtocol: AnyObject {
     init(view: ScheduleWeekTableViewProtocol)
-    func getScheduleWeek(id: String)
-    func applyStatusById(id: String)
+    func viewWillAppear(id: String)
+    func submitScheduleButtonTapped(id: String)
 }
 
 class ScheduleWeekPresenter: ScheduleWeekTableViewPresenterProtocol{
@@ -24,15 +24,15 @@ class ScheduleWeekPresenter: ScheduleWeekTableViewPresenterProtocol{
     
     let api = ApiService()
     
-    func getScheduleWeek(id: String) {
-            api.getCourierScheduleById(id: id) { posts in
-                self.view?.isHaveScheduleWeek(posts: posts)
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
-            }
+    func viewWillAppear(id: String) {
+        api.getCourierScheduleById(id: id) { posts in
+            self.view?.checkScheduleWeek(posts: posts)
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
+        }
     }
     
-    func applyStatusById(id: String) {
+    func submitScheduleButtonTapped(id: String) {
         api.scheduleApplyStatus(id: id) { error in
             self.view?.showErrorView(errorResponseData: error)
         }

@@ -273,12 +273,12 @@ class ClientSubview: UIViewController {
     
     
     @objc func toCallButtonAction(){
-        presenter?.returnPhoneNumberURL(phoneNumber: phoneLabel.text ?? "")
+        presenter?.toCallButtonTapped(phoneNumber: phoneLabel.text ?? "")
 
     }
     
     @objc func routeButtonAction(){
-        presenter?.getCoordinates(latitude: latitude, longitude: longitude)
+        presenter?.routeButtonTapped(latitude: latitude, longitude: longitude)
     }
     
     func setupNewStateOne(){
@@ -397,7 +397,7 @@ extension ClientSubview: ClientSubviewProtocol{
         if UIApplication.shared.canOpenURL(appURL) {
             UIApplication.shared.open(appURL)
         } else {
-            presenter?.openDownloadLink()
+            presenter?.navigationAppIsNotAvailable()
         }
     }
     

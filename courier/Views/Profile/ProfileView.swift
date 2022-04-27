@@ -237,9 +237,6 @@ class ProfileView: MVPController {
     
     func setupNavigationLabel(){
         view.addSubview(navigationSettingLabel)
-        navigationSettingLabel.title = presenter?.returnDefaultNavigatorValue() // напрямую нельзя viewIs ready
-        navigationSettingLabel.setLabel()
-        
         navigationSettingLabel.translatesAutoresizingMaskIntoConstraints = false
         navigationSettingLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 272).isActive = true
         navigationSettingLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
@@ -325,20 +322,7 @@ class ProfileView: MVPController {
     }
     
     @objc func exitButtonAction(sender: UIButton){
-        presenter?.removeBearer()
-       // presenter.stopTimer()
-        goToLoginView()
-    }
-    
-    func configureData(){
-
-        presenter?.getEmployeeData(completion: { post in
-            
-        self.courierNameLabel.text = post.fio
-        self.inventoryLabel.text = "Инвентарь: \(post.inventory ?? "")"
-        })
-        self.courierNameLabel.setLabel()
-        self.inventoryLabel.setLabel()
+        presenter?.exitButtonTapped()
     }
     
     func setupView(){
@@ -400,12 +384,12 @@ class ProfileView: MVPController {
 
     @objc func activitySwitchStateDidChange(_ sender: UISwitch){
         if (sender.isOn == true){
-            presenter?.sessionStart()
+            presenter?.activityStatusSwitchTurnOn()
             activityStatusLabel.text = "Активен"
             activityStatusLabel.textColor = Colors.lightGreen
         }
         else {
-            presenter?.sessionStop()
+            presenter?.activityStatusSwitchTurnOff()
             activityStatusLabel.text = "Неактивен"
             activityStatusLabel.textColor = Colors.red
         }
@@ -430,9 +414,7 @@ class ProfileView: MVPController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createNavigationBar()
-        navigationSettingLabel.title = presenter?.returnDefaultNavigatorValue()
-        navigationSettingLabel.setLabel()
-        presenter?.checkUserActivity()
+        presenter?.viewWillAppear()
     }
     
     override func viewDidLoad() {
@@ -441,7 +423,7 @@ class ProfileView: MVPController {
         self.presenter = presenter
 
         setupView()
-        configureData()
+        presenter.viewDidLoad()
 
         checkThemeMode()
         clearStubText()
@@ -453,6 +435,8 @@ protocol ProfileViewProtocol: AnyObject, MVPControllerProtocol {
     func goToLoginView()
     func goToChooseNavigatorView()
     func updateSessionStatus(post: CourierSlotResponse)
+    func getNavigatorValue(value: String)
+    func configureData(post: EmployeeResponse)
 }
 
 extension ProfileView: ProfileViewProtocol{
@@ -464,7 +448,6 @@ extension ProfileView: ProfileViewProtocol{
     }
     
     func goToChooseNavigatorView() {
-        
         let chooseNavigatorView = ChooseNavigatorView()
         self.navigationController?.pushViewController(chooseNavigatorView, animated: true)
     }
@@ -482,6 +465,16 @@ extension ProfileView: ProfileViewProtocol{
             self.activityStatusSwitch.isOn = false
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
         }
+    }
+    
+    func getNavigatorValue(value: String) {
+        navigationSettingLabel.title = value
+        navigationSettingLabel.setLabel()
+    }
+    
+    func configureData(post: EmployeeResponse){
+        self.courierNameLabel.text = post.fio
+        self.inventoryLabel.text = "Инвентарь: \(post.inventory ?? "")"
     }
 
 }

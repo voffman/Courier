@@ -10,7 +10,7 @@ import Foundation
 // То, что выполняю в здесь
 protocol ScheduleTableViewPresenterProtocol: AnyObject {
     init(view: ScheduleTableViewProtocol)
-    func getSchedule(page: String)
+    func viewWillAppear(page: String)
     func didTap (model: ScheduleElement)
 }
 
@@ -23,9 +23,9 @@ class SchedulePresenter: ScheduleTableViewPresenterProtocol{
     
     let api = ApiService()
     
-    func getSchedule(page: String) {
+    func viewWillAppear(page: String) {
         api.getCourierSchedule(page: page) { posts in
-            self.view?.isHaveSchedule(posts: posts)
+            self.view?.checkSchedule(posts: posts)
             
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)

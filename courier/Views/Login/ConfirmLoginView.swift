@@ -197,12 +197,7 @@ class ConfirmLoginView: MVPController {
             showMessage(message: "Введите полученный SMS-код. Код не должен быть менее 4-х цифр.")
         }
         else {
-            presenter?.requestAuthKey(phoneNumber: phoneNumber, smsCode: confirmTextField.text ?? "")
-
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
-//                self.showMessage(title: "Внимание", message: "Введен непавильный код.")
-//            }
-            
+            presenter?.confirmButtonTapped(phoneNumber: phoneNumber, smsCode: confirmTextField.text ?? "")
         }
     }
     
@@ -215,7 +210,7 @@ class ConfirmLoginView: MVPController {
         count = 60
         self.timerValue = "Отправить еще раз через 1:00 мин"
         launchTimer()
-        presenter?.sendSMS(phoneNumber: phoneNumber)
+        presenter?.sendAgainButtonTapped(phoneNumber: phoneNumber)
     }
     
     

@@ -10,9 +10,9 @@ import Foundation
 // То, что выполняю в здесь
 protocol ShopSubviewPresenterProtocol: AnyObject {
     init(view: ShopSubviewProtocol)
-    func getCoordinates(latitude: String, longitude: String)
-    func openDownloadLink()
-    func returnPhoneNumberURL(phoneNumber: String)
+    func routeButtonTapped(latitude: String, longitude: String)
+    func navigationAppIsNotAvailable()
+    func toCallButtonTapped(phoneNumber: String)
 }
 
 class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
@@ -23,7 +23,7 @@ class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
     }
 
     
-    func getCoordinates(latitude: String, longitude: String){
+    func routeButtonTapped(latitude: String, longitude: String){
         let defaultNavigator = UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator)
         var urlString = ""
         
@@ -43,7 +43,7 @@ class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
          
     }
     
-    func openDownloadLink() {
+    func navigationAppIsNotAvailable() {
         let defaultNavigator = UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator)
         var urlString = ""
         // Ошибка так как The iOS Simulator does not have an App Store.
@@ -60,7 +60,7 @@ class ShopSubviewPresenter: ShopSubviewPresenterProtocol {
         view?.openApp(appURL: url)
     }
     
-    func returnPhoneNumberURL(phoneNumber: String) {
+    func toCallButtonTapped(phoneNumber: String) {
         let urlString = "tel://" + phoneNumber
         guard let url = URL(string: urlString) else { return }
         

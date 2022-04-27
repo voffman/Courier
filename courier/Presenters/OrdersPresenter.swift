@@ -10,8 +10,8 @@ import Foundation
 // То, что выполняю в здесь
 protocol OrdersViewPresenterProtocol: AnyObject {
     init(view: OrdersViewProtocol)
-    func startUserActivity()
-    func checkUserActivity()
+    func sendAlertButtonTapped()
+    func viewWillAppear()
 }
 
 class OrdersPresenter: OrdersViewPresenterProtocol {
@@ -26,7 +26,7 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
     
     let locationService = LocationService()
 
-    func startUserActivity() {
+    func sendAlertButtonTapped() {
         api.courierSlotActivityStart() { response in
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
             self.view?.goToOrderListTableView()
@@ -36,7 +36,7 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
         }
     }
     
-    func checkUserActivity() {
+    func viewWillAppear() {
         api.courierSlotActivity() { post in
             if post.status {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)

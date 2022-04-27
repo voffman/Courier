@@ -10,7 +10,7 @@ import Foundation
 // То, что выполняю в здесь
 protocol SalaryViewPresenterProtocol: AnyObject {
     init(view: SalaryViewProtocol)
-    func getInfo(dateStart: String, dateEnd: String)
+    func viewNeedsUpdateDate(dateStart: String, dateEnd: String)
 }
 
 
@@ -24,7 +24,7 @@ class SalaryPresenter: SalaryViewPresenterProtocol {
     
     let api = ApiService()
     
-    func getInfo(dateStart: String, dateEnd: String) {
+    func viewNeedsUpdateDate(dateStart: String, dateEnd: String) {
         api.getSalary(dateStart: dateStart, dateEnd: dateEnd) { post in
             self.view?.configureData(salary: post)
         } errorResponse: { error in

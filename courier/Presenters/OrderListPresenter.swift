@@ -10,12 +10,12 @@ import Foundation
 // То, что выполняю в здесь
 protocol OrderListTableViewPresenterProtocol: AnyObject {
     init(view: OrderListTableViewProtocol)
-    func getOrders()
-    func getArchiveOrders()
-    func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ())
+    func actionOrdersTabIsOpen()
+    func archiveOrdersTabIsOpen()
+    func orderStateAlertSendButtonTapped(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ())
     func didTap (model: CourierOrderResponseElement)
     func didStatusTap (model: CourierOrderResponseElement)
-    func checkUserActivity()
+    func viewIsLoaded()
 }
 
 class OrderListPresenter: OrderListTableViewPresenterProtocol {
@@ -27,23 +27,23 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     
     let api = ApiService()
     
-    func getOrders(){
+    func actionOrdersTabIsOpen(){
         api.getOrders(){ posts in
-            self.view?.isHaveOrders(posts: posts)
+            self.view?.checkOrders(posts: posts)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
     }
     
-    func getArchiveOrders(){
+    func archiveOrdersTabIsOpen(){
         api.getArchiveOrders(){ posts in
-            self.view?.isHaveArchiveOrders(posts: posts)
+            self.view?.checkArchiveOrders(posts: posts)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
         }
     }
     
-    func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ()) {
+    func orderStateAlertSendButtonTapped(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ()) {
         api.changeOrderStatus(orderId: orderId, status: status) { post in
             completion(post)
         } errorResponse: { error in
@@ -63,7 +63,7 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
         
     }
     
-    func checkUserActivity() {
+    func viewIsLoaded() {
         api.courierSlotActivity() { post in
             if post.status {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)

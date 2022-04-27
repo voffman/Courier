@@ -138,11 +138,11 @@ class ShopSubview: UIViewController {
     }
     
     @objc func routeButtonAction(){
-        presenter?.getCoordinates(latitude: latitude, longitude: longitude)
+        presenter?.routeButtonTapped(latitude: latitude, longitude: longitude)
     }
     
     @objc func toCallButtonAction(){
-        presenter?.returnPhoneNumberURL(phoneNumber: phoneNumber)
+        presenter?.toCallButtonTapped(phoneNumber: phoneNumber)
     }
     
     func setupNewStateOne(){
@@ -221,7 +221,7 @@ extension ShopSubview: ShopSubviewProtocol{
         if UIApplication.shared.canOpenURL(appURL) {
             UIApplication.shared.open(appURL)
         } else {
-            presenter?.openDownloadLink()
+            presenter?.navigationAppIsNotAvailable()
         }
     }
     

@@ -46,7 +46,7 @@ class OrderListTableView: MVPController {
 
         print("статус меняется...")
 
-        presenter?.changeStatus(orderId: String(orderID), status: String(orderStatus), completion: { post in
+        presenter?.orderStateAlertSendButtonTapped(orderId: String(orderID), status: String(orderStatus), completion: { post in
             // Из-за ошибки ответа может не выполняться здесь код
             print("статус изменен на: ", post.statusName)
             
@@ -56,7 +56,7 @@ class OrderListTableView: MVPController {
                 self.navigationController?.pushViewController(thanksView, animated: true)
             }
             
-            self.presenter?.getOrders()
+            self.presenter?.actionOrdersTabIsOpen()
         })
         dismissAlertView()
             
@@ -271,13 +271,13 @@ class OrderListTableView: MVPController {
         sc.segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         sc.setupContainerConstraints()
 
-        presenter.getOrders()
-        presenter.getArchiveOrders()
+        presenter.actionOrdersTabIsOpen()
+        presenter.archiveOrdersTabIsOpen()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        presenter?.getOrders()
-        presenter?.checkUserActivity()
+        presenter?.actionOrdersTabIsOpen()
+        presenter?.viewIsLoaded()
         print("дата перезагружена")
     }
     
@@ -396,7 +396,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             cell.contentView.isUserInteractionEnabled = true
             
             cell.configureStatusState() // В ячейке OrderListCell
-            cell.orderStateButton.addTarget(self, action: #selector(stateButtonWasTapped(sender:)), for: .touchUpInside)
+            cell.orderStateButton.addTarget(self, action: #selector(stateButtonTapped(sender:)), for: .touchUpInside)
             setupTimer(for: cell, indexPath: indexPath)
             return cell
             
@@ -434,7 +434,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
        // presenter?.didTap(model: data[rowIndex])
     }
     
-    @objc func stateButtonWasTapped(sender: UIButton) {
+    @objc func stateButtonTapped(sender: UIButton) {
         let rowIndex:Int = sender.tag
         
         presenter?.didStatusTap(model: data[rowIndex])
@@ -466,15 +466,15 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
 
 protocol OrderListTableViewProtocol: AnyObject, MVPControllerProtocol  {
     //func checkOrders()
-    func isHaveOrders(posts: [CourierOrderResponseElement])
-    func isHaveArchiveOrders(posts: [CourierOrderResponseElement])
+    func checkOrders(posts: [CourierOrderResponseElement])
+    func checkArchiveOrders(posts: [CourierOrderResponseElement])
     func goToDetailOrderTableView(courierOrderResponseElement: CourierOrderResponseElement)
     func showStatusAlert(courierOrderResponseElement: CourierOrderResponseElement)
 }
 
 extension OrderListTableView: OrderListTableViewProtocol{
     
-    func isHaveOrders(posts: [CourierOrderResponseElement]) {
+    func checkOrders(posts: [CourierOrderResponseElement]) {
         if !posts.isEmpty{
         self.waitViewElement.isHidden = true
         self.waitViewElement.setupView()
@@ -486,7 +486,7 @@ extension OrderListTableView: OrderListTableViewProtocol{
         }
     }
     
-    func isHaveArchiveOrders(posts: [CourierOrderResponseElement]){
+    func checkArchiveOrders(posts: [CourierOrderResponseElement]){
         if !posts.isEmpty{
             self.dataArchive = posts
             print("Архивных постов - ", posts.count)

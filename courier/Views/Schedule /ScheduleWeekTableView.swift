@@ -45,7 +45,7 @@ class ScheduleWeekTableView: MVPController {
     }
     
     @objc func submitScheduleAction(){
-        presenter?.applyStatusById(id: String(dataPosts.id))
+        presenter?.submitScheduleButtonTapped(id: String(dataPosts.id))
     }
 }
 
@@ -95,7 +95,7 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createNavigationBar(title: dateManager.convert(dateString: dataPosts.dateStart, convertToDateFormat: "dd MMM") + " - " + dateManager.convert(dateString: dataPosts.dateEnd, convertToDateFormat: "dd MMM"))
-        presenter?.getScheduleWeek(id: String(dataPosts.id))
+        presenter?.viewWillAppear(id: String(dataPosts.id))
     }
     
     override func viewDidLayoutSubviews() {
@@ -144,12 +144,12 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
 }
 
 protocol ScheduleWeekTableViewProtocol: AnyObject, MVPControllerProtocol  {
-    func isHaveScheduleWeek(posts: [ScheduleByIDElement])
+    func checkScheduleWeek(posts: [ScheduleByIDElement])
 }
 
 extension ScheduleWeekTableView: ScheduleWeekTableViewProtocol{
     
-    func isHaveScheduleWeek(posts: [ScheduleByIDElement]) {
+    func checkScheduleWeek(posts: [ScheduleByIDElement]) {
         if !posts.isEmpty{
             print("Кол-во постов по айди \(posts.count)")
             self.data = posts
