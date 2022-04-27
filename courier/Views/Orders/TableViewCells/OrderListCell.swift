@@ -99,7 +99,7 @@ class OrderListCell: UITableViewCell {
                           orderSource: String?,
                           orderFromAddress: String?,
                           orderToAddress: String?,
-                          orderAcceptButtonTitle: String?, orderStatusCode: Int){
+                          orderAcceptButtonTitle: String?, orderStatusCode: Int, orderTime: String){
         self.orderIdLabel.text = "№ \(String(orderId))"
         self.orderPriceLabel.text = "• \(String(orderPrice.formattedWithSeparator)) ₸"
         self.orderSourceLabel.text = orderSource
@@ -109,13 +109,25 @@ class OrderListCell: UITableViewCell {
         self.orderStateButton.setButton()
         self.statusCode = orderStatusCode
         
-//        guard let orderTime = orderTime else {
-//            return
-//        }
-//
-//        let orderTimeConverted = dateManager.convert(dateString: orderTime, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ", convertToDateFormat: "dd:HH:mm")
-//        self.orderTimerLabel.text = "\(orderTimeConverted)  "
-
+        var dateTimeStatusFinishSeconds: Int = 0
+        dateTimeStatusFinishSeconds = dateManager.converteDateToSeconds(dateString: orderTime, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
+        
+        let numberOfSecondsPassed = Int(dateTimeStatusFinishSeconds)
+        
+        let minutes = Int(numberOfSecondsPassed) / 60 // % 60
+        let seconds = Int(numberOfSecondsPassed) % 60
+        
+        if numberOfSecondsPassed < 60 {
+            changeTimerToRed()
+        } else {
+            changeTimerToGray()
+        }
+        if numberOfSecondsPassed <= 0 {
+            self.orderTimerLabel.text = "00:00"
+        }
+        else {
+            self.orderTimerLabel.text = String(format:"%02i:%03i", minutes, seconds)
+        }
     }
     
     override func prepareForReuse() {
@@ -366,6 +378,8 @@ class OrderListCell: UITableViewCell {
         orderFromBackgroundView.backgroundColor = Colors.orange
         orderFromBackgroundView.layer.borderColor = Colors.lightGray.cgColor
         orderFromBackgroundView.layer.borderWidth = 0
+        orderDownArrowImage.tintColor = Colors.orange
+        orderDownArrowBackgroundView.backgroundColor = Colors.white
         orderToBackgroundView.backgroundColor = Colors.white
         orderToImage.tintColor = Colors.orange
         orderToBackgroundView.layer.borderColor = Colors.lightGray.cgColor

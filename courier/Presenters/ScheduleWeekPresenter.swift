@@ -25,25 +25,16 @@ class ScheduleWeekPresenter: ScheduleWeekTableViewPresenterProtocol{
     let api = ApiService()
     
     func getScheduleWeek(id: String) {
-        if api.isConnectedToInternet {
             api.getCourierScheduleById(id: id) { posts in
                 self.view?.isHaveScheduleWeek(posts: posts)
             } errorResponse: { error in
                 self.view?.showErrorView(errorResponseData: error)
             }
-            
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
-        }
     }
     
     func applyStatusById(id: String) {
-        if api.isConnectedToInternet {
         api.scheduleApplyStatus(id: id) { error in
             self.view?.showErrorView(errorResponseData: error)
-        }
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
 }

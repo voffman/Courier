@@ -23,14 +23,10 @@ class DetailOrderPresenter: DetailOrderTableViewPresenterProtocol {
     let api = ApiService()
     
     func changeStatus(orderId: String, status: String, completion: @escaping (OrderStatusResponse) -> ()) {
-        if api.isConnectedToInternet {
-            api.changeOrderStatus(orderId: orderId, status: status) { post in
-                completion(post)
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
-            }
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        api.changeOrderStatus(orderId: orderId, status: status) { post in
+            completion(post)
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
         }
     }
 }

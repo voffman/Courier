@@ -72,7 +72,7 @@ class SalaryView: MVPController {
     var startDate: String = "С"
     var endDate: String = "По"
     
-    private var presenter: IncomeViewPresenterProtocol?
+    private var presenter: SalaryViewPresenterProtocol?
     
     func setupScrollView(){
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -85,6 +85,32 @@ class SalaryView: MVPController {
         scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        switch UIScreen.main.bounds.size.height {
+            
+        case let x where x > 812:
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: -160, right: 0)
+            scrollView.contentInset = insets
+            break
+            
+        case let x where x > 750:
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: -130, right: 0)
+            scrollView.contentInset = insets
+            break
+            
+        case let x where x > 640:
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+            scrollView.contentInset = insets
+            break
+            
+        case let x where x <= 640:
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: 110, right: 0)
+            scrollView.contentInset = insets
+            break
+            
+        default:
+            break
+        }
         
         contentView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
         contentView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor).isActive = true
@@ -102,7 +128,7 @@ class SalaryView: MVPController {
         firstCardView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         
         if #available(iOS 11, *) {
-            firstCardView.topAnchor.constraint(equalTo:  contentView.safeAreaLayoutGuide.topAnchor, constant: 25).isActive = true
+            firstCardView.topAnchor.constraint(equalTo:  contentView.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
             
         } else {
             if UIScreen.main.bounds.size.height > 750 {
@@ -290,20 +316,26 @@ class SalaryView: MVPController {
         
             alert.view.addConstraint(alertHeight)
         
+        // если пользователь нажал "выбрать" не меняя дату в DatePicker()
+        let dateFormatter: DateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "d MMMM Y"
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        
+        self.startDate = dateFormatter.string(from: Date())
+        self.endDate = dateFormatter.string(from: Date())
+        
         alert.setValue(vc, forKey: "contentViewController")
         alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { (UIAlertAction) in
         }))
         
         alert.addAction(UIAlertAction(title: "Выбрать", style: .default, handler: { (UIAlertAction) in
             self.dateLabel.text = " \(self.startDate) - \(self.endDate)"
-            // MARK: get days between two dates
-            // подставляю в запрос dateStart и dateEnd. Если надо переформатирую
+            
             let dateStartConverted = self.dateManager.convert(dateString: self.startDate, stringDateFormat: "d MMMM Y", convertToDateFormat: "yyyy-MM-dd")
             let dateEndConverted = self.dateManager.convert(dateString: self.endDate, stringDateFormat: "d MMMM Y", convertToDateFormat: "yyyy-MM-dd")
-            self.presenter?.getInfo(dateStart: dateStartConverted, dateEnd: dateEndConverted)
-            print("дададададдададдд: \(self.startDate)")
-            print("дататататтата: \(dateStartConverted)")
             
+            self.presenter?.getInfo(dateStart: dateStartConverted, dateEnd: dateEndConverted)
             
         }))
         
@@ -599,7 +631,7 @@ class SalaryView: MVPController {
         setupScrollView()
         createNavigationBar()
         presenter.getInfo(dateStart: dateManager.getStringDateFor(days: 0), dateEnd: dateManager.getStringDateFor(days: 0))
-        // Do any additional setup after loading the view.
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -618,11 +650,11 @@ class SalaryView: MVPController {
 
 }
 
-protocol IncomeViewProtocol: AnyObject, MVPControllerProtocol  {
+protocol SalaryViewProtocol: AnyObject, MVPControllerProtocol  {
     func configureData(salary: Salary)
 }
 
-extension SalaryView: IncomeViewProtocol{
+extension SalaryView: SalaryViewProtocol{
     
     func configureData(salary: Salary) {
         currentBalanceLabel.text = String(salary.balance)

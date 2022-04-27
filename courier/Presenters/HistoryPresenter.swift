@@ -25,15 +25,10 @@ class HistoryPresenter: HistoryTableViewPresenterProtocol {
     let api = ApiService()
     
     func getHistory(dateStart: String, dateFinish: String) {
-        if api.isConnectedToInternet {
-            api.getCourierHistory(dateStart: dateStart, dateFinish: dateFinish) { posts in
-                self.view?.isHaveHistory(posts: posts)
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
-            }
-            
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        api.getCourierHistory(dateStart: dateStart, dateFinish: dateFinish) { posts in
+            self.view?.isHaveHistory(posts: posts)
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
         }
     }
     

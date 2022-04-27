@@ -51,10 +51,6 @@ let networkManager = NetworkManager()
 
 class ApiService {
     
-    var isConnectedToInternet:Bool {
-        return NetworkReachabilityManager()?.isReachable ?? false
-    }
-    
     // MARK: Auth
     func sendSMS(phoneNumber: String, completion: @escaping (AFDataResponse<Data?>)->(), errorResponse: @escaping (ErrorResponse)->()){
         networkManager.request(url: smsURL, method: .post, body: ["phone": phoneNumber]) { response in

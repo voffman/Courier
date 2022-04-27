@@ -237,7 +237,7 @@ class ProfileView: MVPController {
     
     func setupNavigationLabel(){
         view.addSubview(navigationSettingLabel)
-        navigationSettingLabel.title = presenter?.returnDefaultNavigatorValue()
+        navigationSettingLabel.title = presenter?.returnDefaultNavigatorValue() // напрямую нельзя viewIs ready
         navigationSettingLabel.setLabel()
         
         navigationSettingLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -27,35 +27,27 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
     let locationService = LocationService()
 
     func startUserActivity() {
-        if api.isConnectedToInternet {
-            api.courierSlotActivityStart() { response in
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-                self.view?.goToOrderListTableView()
-                
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
-            }
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        api.courierSlotActivityStart() { response in
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+            self.view?.goToOrderListTableView()
+            
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
         }
     }
     
     func checkUserActivity() {
-        if api.isConnectedToInternet {
-            api.courierSlotActivity() { post in
-                if post.status {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-                    self.view?.goToOrderListTableView()
-                }
-                else {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
-                }
-                
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
+        api.courierSlotActivity() { post in
+            if post.status {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+                self.view?.goToOrderListTableView()
             }
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+            else {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
+            }
+            
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
         }
     }
 }

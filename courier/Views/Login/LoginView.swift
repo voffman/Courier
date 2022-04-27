@@ -115,6 +115,7 @@ class LoginView: MVPController {
             showMessage(message: "Введите номер телефона")
         }
         else {
+            // 
             presenter?.sendSMS(phoneNumber: phoneNumberTextField.text)
             // презентер никогда не запрашивает данные от вью
         }

@@ -222,7 +222,7 @@ class OrderListTableView: MVPController {
             
             let visibleCell = self.tableView.cellForRow(at: indexPath) as? OrderListCell
             
-            visibleCell?.configure(orderId: item.id, orderPrice: item.sumTotal, orderSource: item.companyName, orderFromAddress: item.addressFrom.address, orderToAddress: "\(item.addressTo.street) \(item.addressTo.house)", orderAcceptButtonTitle: item.transitions.title, orderStatusCode: item.status)
+            visibleCell?.configure(orderId: item.id, orderPrice: item.sumTotal, orderSource: item.companyName, orderFromAddress: item.addressFrom.address, orderToAddress: "\(item.addressTo.street) \(item.addressTo.house)", orderAcceptButtonTitle: item.transitions.title, orderStatusCode: item.status, orderTime: item.dateTimeStatusFinish)
             
             visibleCell?.setNeedsLayout()
         }
@@ -371,12 +371,8 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
                     visibleCell?.orderTimerLabel.text = "00:00"
                 }
                 else {
-                   // visibleCell?.orderTimerLabel.text = "--:--"
                     visibleCell?.orderTimerLabel.text = String(format:"%02i:%03i", minutes, seconds)
                 }
-               // cell.numberOfSecondsPassed = numberOfSecondsPassed
-               // cell.orderTimerLabel.text = String(format:"%01i:%02i:%03i", hours, minutes, seconds)
-
             }
             cellRowToTimerMapping[row] = timer
             RunLoop.current.add(timer, forMode: .common)
@@ -395,7 +391,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             
             cell.orderStateButton.tag = indexPath.row
             
-            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderAcceptButtonTitle: post.transitions.title, orderStatusCode: post.status)
+            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderAcceptButtonTitle: post.transitions.title, orderStatusCode: post.status, orderTime: post.dateTimeStatusFinish)
             
             cell.contentView.isUserInteractionEnabled = true
             
@@ -479,6 +475,7 @@ protocol OrderListTableViewProtocol: AnyObject, MVPControllerProtocol  {
 extension OrderListTableView: OrderListTableViewProtocol{
     
     func isHaveOrders(posts: [CourierOrderResponseElement]) {
+        if !posts.isEmpty{
         self.waitViewElement.isHidden = true
         self.waitViewElement.setupView()
         self.data = posts
@@ -486,6 +483,7 @@ extension OrderListTableView: OrderListTableViewProtocol{
         self.setupOrderCount(isHidden: false)
 
         self.tableView.reloadData()
+        }
     }
     
     func isHaveArchiveOrders(posts: [CourierOrderResponseElement]){

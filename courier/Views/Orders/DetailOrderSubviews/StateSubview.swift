@@ -119,7 +119,6 @@ class StateSubview: UIViewController {
     //MARK: Состояния ячейки
 
     func setupAcceptedOrderState(){
-      //  stateButton.title = "ПРИБЫЛ В ЗАВЕДЕНИЕ"
         stateButton.leftAnchor.constraint(equalTo:  view.leftAnchor, constant: 130).isActive = true
         //stateButton.leftAnchor.constraint(equalTo:  orderTimerView.rightAnchor, constant: -10).isActive = true
         stateButton.setButton()
@@ -146,22 +145,15 @@ class StateSubview: UIViewController {
             
         case 0...13:
             print("Default state")
-           // stateSubview.setupAcceptedOrderState() // статус 15 принят, значит тут алерт
             
         case 15...50:
             setupAcceptedOrderState()
 
         case 75:
             setupAcceptedOrderState()
-          // setupArrivedToClient()
         
         case 100:
             stateButton.isEnabled = false
-//            let thanksView = ThanksView()
-//            
-//            thanksView.modalPresentationStyle = .fullScreen
-//            
-//            self.navigationController?.pushViewController(thanksView, animated: true)
             
         default:
             break
@@ -170,46 +162,54 @@ class StateSubview: UIViewController {
     
     
     var timer = Timer()
-    var count = 86400 // 24 часа
+    var numberOfSecondsPassed: Int = 0
     var timerValue = ""
     
     func launchTimer(){
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(incrementCountLabel), userInfo: nil, repeats: true)
-        timer.fire()
-        timer.tolerance = 0.5
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { capturedTimer in
+            self.timer.tolerance = 0.5
+        
+            self.numberOfSecondsPassed -= 1
+            let minutes = Int(self.numberOfSecondsPassed) / 60
+            let seconds = Int(self.numberOfSecondsPassed) % 60
+            self.timerValue = String(format:"%02i:%03i", minutes, seconds)
+            self.orderTimerLabel.text = "\(self.timerValue)"
+            print("стэйттайм: \(self.timerValue)")
+            if self.numberOfSecondsPassed <= 0 {
+                self.timer.invalidate()
+                self.orderTimerLabel.text = "00:00"
+            }
+
         RunLoop.current.add(self.timer, forMode: RunLoop.Mode.common)
-        // Задается время по истечению которого таймер будет остановлен
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(count)) {
-            self.timer.invalidate()
+        
         }
     }
     
-    @objc func incrementCountLabel(){
-        count -= 1
-        let minutes = Int(count) / 60
-        let seconds = Int(count) % 60
-        timerValue = String(format:"%02i:%03i", minutes, seconds)
-        orderTimerLabel.title = "\(timerValue)"
-        orderTimerLabel.setLabel()
+    func configureTimerValue() {
         
-        if count < 60 {
+        let minutes = Int(numberOfSecondsPassed) / 60 // % 60
+        let seconds = Int(numberOfSecondsPassed) % 60
+        
+        if numberOfSecondsPassed < 60 {
             changeTimerToRed()
         }
-        if count <= 0 {
-            self.timer.invalidate()
-            orderTimerLabel.text = "00:00"
+        print("каунт: \(numberOfSecondsPassed)")
+        if numberOfSecondsPassed <= 0 {
+            self.orderTimerLabel.text = "00:00"
+        }
+        else {
+            self.orderTimerLabel.text = String(format:"%02i:%03i", minutes, seconds)
         }
     }
-    
     
     func configure(buttonTitle: String, status: Int, timerValue: String) {
         self.stateButton.title = buttonTitle.uppercased()
         self.status = status
         self.timerValue = timerValue
-        count = dateManager.converteDateToSeconds(dateString: timerValue, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
-       // self.orderTimerLabel.text = self.timerValue
+        self.numberOfSecondsPassed = dateManager.converteDateToSeconds(dateString: timerValue, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
 
         stateButton.setButton()
+        configureTimerValue()
     }
     
     override func viewDidLayoutSubviews() {

@@ -30,15 +30,10 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     let locationService = LocationService()
     
     func getEmployeeData(completion: @escaping (EmployeeResponse) -> ()) {
-        if api.isConnectedToInternet {
         api.getEmployeeData() { posts in
             completion(posts)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
-        }
-
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
         }
     }
     
@@ -51,47 +46,35 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     }
     
     func sessionStart() {
-        if api.isConnectedToInternet {
-            api.courierSlotActivityStart() { response in
-                print("Сессия запущена")
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-                // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-                self.checkUserActivity()
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
-                self.checkUserActivity()
-            }
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        api.courierSlotActivityStart() { response in
+            print("Сессия запущена")
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+            // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
+            self.checkUserActivity()
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
+            self.checkUserActivity()
         }
     }
     
     
     func sessionStop() {
-        if api.isConnectedToInternet {
-            api.courierSlotActivityStop() { response in
-                print("Сессия остановлена")
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
-                self.checkUserActivity()
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
-                self.checkUserActivity()
-            }
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        api.courierSlotActivityStop() { response in
+            print("Сессия остановлена")
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
+            self.checkUserActivity()
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
+            self.checkUserActivity()
         }
     }
     
     func checkUserActivity() {
-        if api.isConnectedToInternet {
-            api.courierSlotActivity() { post in
-                self.view?.updateSessionStatus(post: post)
-                
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
-            }
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        api.courierSlotActivity() { post in
+            self.view?.updateSessionStatus(post: post)
+            
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
         }
     }
     

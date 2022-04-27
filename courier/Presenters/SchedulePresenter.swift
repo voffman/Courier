@@ -24,16 +24,11 @@ class SchedulePresenter: ScheduleTableViewPresenterProtocol{
     let api = ApiService()
     
     func getSchedule(page: String) {
-        if api.isConnectedToInternet {
-            api.getCourierSchedule(page: page) { posts in
-                self.view?.isHaveSchedule(posts: posts)
-                
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
-            }
+        api.getCourierSchedule(page: page) { posts in
+            self.view?.isHaveSchedule(posts: posts)
             
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
         }
     }
     public func didTap (model: ScheduleElement){

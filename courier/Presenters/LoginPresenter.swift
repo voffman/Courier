@@ -34,18 +34,13 @@ class LoginPresenter: LoginViewPresenterProtocol {
         let charsToRemove: Set<Character> = ["(", ")", "-", " "]
         clearPhoneNumber.removeAll(where: { charsToRemove.contains($0) })
         
-        if api.isConnectedToInternet {
-            api.sendSMS(phoneNumber: clearPhoneNumber) { completion in
-                if (200...300).contains(completion.response?.statusCode ?? 0) {
-                    self.view?.goToConfirmLoginView()
-                }
-                
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
+        api.sendSMS(phoneNumber: clearPhoneNumber) { completion in
+            if (200...300).contains(completion.response?.statusCode ?? 0) {
+                self.view?.goToConfirmLoginView()
             }
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
             
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
         }
     }
 }

@@ -8,32 +8,27 @@
 import Foundation
 
 // То, что выполняю в здесь
-protocol IncomeViewPresenterProtocol: AnyObject {
-    init(view: IncomeViewProtocol)
+protocol SalaryViewPresenterProtocol: AnyObject {
+    init(view: SalaryViewProtocol)
     func getInfo(dateStart: String, dateEnd: String)
 }
 
 
-class SalaryPresenter: IncomeViewPresenterProtocol {
+class SalaryPresenter: SalaryViewPresenterProtocol {
     
-    weak var view: IncomeViewProtocol?
+    weak var view: SalaryViewProtocol?
     // Тут можно объявить модель
-    required init(view: IncomeViewProtocol) {
+    required init(view: SalaryViewProtocol) {
         self.view = view
     }
     
     let api = ApiService()
     
     func getInfo(dateStart: String, dateEnd: String) {
-        if api.isConnectedToInternet {
-            api.getSalary(dateStart: dateStart, dateEnd: dateEnd) { post in
-                self.view?.configureData(salary: post)
-            } errorResponse: { error in
-                self.view?.showErrorView(errorResponseData: error)
-            }
-
-        } else {
-            view?.showMessage(title: "Внимание", message: "Нет подключения к интернету")
+        api.getSalary(dateStart: dateStart, dateEnd: dateEnd) { post in
+            self.view?.configureData(salary: post)
+        } errorResponse: { error in
+            self.view?.showErrorView(errorResponseData: error)
         }
     }
     
