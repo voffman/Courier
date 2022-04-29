@@ -72,7 +72,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
         api.courierSlotActivity() { post in
             self.view?.updateSessionStatus(post: post)
             
-            let navigator = UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? "2ГИС"
+            let navigator = UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? Navigators.doubleGIS
             self.view?.getNavigatorValue(value: navigator)
             
         } errorResponse: { error in

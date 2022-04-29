@@ -15,7 +15,7 @@ class SalaryView: MVPController {
     let moneyImage = UIImageView(image: UIImage(named: "baseline_monetization_on_black")?.withRenderingMode(.alwaysTemplate))
     
     let currentBalanceTitleLabel = CustomLabels(title: "Текущий баланс", textSize: 16, style: .regular)
-    let currentBalanceLabel = CustomLabels(title: "9 200 ₸", textSize: 48, style: .regularGreen)
+    let currentBalanceLabel = CustomLabels(title: "9 200 ₸", textSize: 48, style: .regular)
     let currentBalanceHelpLabel = CustomLabels(title: "До вычета налогов", textSize: 14, style: .regular)
     
     let secondCardView = CustomViews(style: .withShadow)
@@ -29,33 +29,28 @@ class SalaryView: MVPController {
     
     let clockImage = UIImageView(image: UIImage(named: "baseline_schedule_black")?.withRenderingMode(.alwaysTemplate))
     let clockTitleLabel = CustomLabels(title: "Часы", textSize: 14, style: .regular)
-    let clockLabel = CustomLabels(title: "5 000 ₸", textSize: 14, style: .regular)
+    let clockLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
     
     let orderImage = UIImageView(image: UIImage(named: "outline_local_mall_black")?.withRenderingMode(.alwaysTemplate))
     let orderTitleLabel = CustomLabels(title: "Заказы", textSize: 14, style: .regular)
-    let orderLabel = CustomLabels(title: "3 000 ₸", textSize: 14, style: .regular)
+    let orderLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
     
     let bonusImage = UIImageView(image: UIImage(named: "outline_paid_black")?.withRenderingMode(.alwaysTemplate))
     let bonusTitleLabel = CustomLabels(title: "Бонус", textSize: 14, style: .regular)
-    let bonusLabel = CustomLabels(title: "1 200 ₸", textSize: 14, style: .regular)
+    let bonusLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
     
     
     let fineImage = UIImageView(image: UIImage(named: "outline_report_black")?.withRenderingMode(.alwaysTemplate))
     let fineTitleLabel = CustomLabels(title: "Штраф", textSize: 14, style: .regular)
-    let fineLabel = CustomLabels(title: "0 ₸", textSize: 14, style: .regular)
-    
-    let cashBonusImage = UIImageView(image: UIImage(named: "outline_paid_black")?.withRenderingMode(.alwaysTemplate))
-    let cashBonusTitleLabel = CustomLabels(title: "Премия", textSize: 14, style: .regular)
-    let cashBonusLabel = CustomLabels(title: "0 ₸", textSize: 14, style: .regular)
-    
+    let fineLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
     
     let retentionImage = UIImageView(image: UIImage(named: "baseline_report_problem_black")?.withRenderingMode(.alwaysTemplate))
     let retentionTitleLabel = CustomLabels(title: "Удержания", textSize: 14, style: .regular)
-    let retentionLabel = CustomLabels(title: "0 ₸", textSize: 14, style: .regular)
+    let retentionLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
     
     let totalImage = UIImageView(image: UIImage(named: "outline_account_balance_wallet_black")?.withRenderingMode(.alwaysTemplate))
     let totalTitleLabel = CustomLabels(title: "Итого", textSize: 14, style: .regular)
-    let totalLabel = CustomLabels(title: "0 ₸", textSize: 14, style: .regular)
+    let totalLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
     
     
     let thirdCardView = CustomViews(style: .withShadow)
@@ -187,7 +182,7 @@ class SalaryView: MVPController {
     func setupCurrentBalanceLabel() {
         firstCardView.addSubview(currentBalanceLabel)
         currentBalanceLabel.setLabel()
-        
+        currentBalanceLabel.textColor = Colors.green
         currentBalanceLabel.translatesAutoresizingMaskIntoConstraints = false
         currentBalanceLabel.topAnchor.constraint(equalTo: firstCardView.topAnchor, constant: 48).isActive = true
         currentBalanceLabel.centerXAnchor.constraint(equalTo: firstCardView.centerXAnchor).isActive = true
@@ -467,10 +462,12 @@ class SalaryView: MVPController {
         bonusTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         bonusTitleLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 160).isActive = true
         bonusTitleLabel.leftAnchor.constraint(equalTo: secondCardView.leftAnchor, constant: 60).isActive = true
+        bonusTitleLabel.textColor = Colors.orange
         
         bonusLabel.translatesAutoresizingMaskIntoConstraints = false
         bonusLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 160).isActive = true
         bonusLabel.rightAnchor.constraint(equalTo: secondCardView.rightAnchor, constant: -30).isActive = true
+        bonusLabel.textColor = Colors.orange
         
         secondCardView.addSubview(fineImage)
         secondCardView.addSubview(fineTitleLabel)
@@ -490,26 +487,7 @@ class SalaryView: MVPController {
         fineLabel.translatesAutoresizingMaskIntoConstraints = false
         fineLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 190).isActive = true
         fineLabel.rightAnchor.constraint(equalTo: secondCardView.rightAnchor, constant: -30).isActive = true
-        
-        secondCardView.addSubview(cashBonusImage)
-        secondCardView.addSubview(cashBonusTitleLabel)
-        cashBonusTitleLabel.setLabel()
-        secondCardView.addSubview(cashBonusLabel)
-        cashBonusLabel.setLabel()
-        
-        cashBonusImage.translatesAutoresizingMaskIntoConstraints = false
-        cashBonusImage.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 215).isActive = true
-        cashBonusImage.leftAnchor.constraint(equalTo: secondCardView.leftAnchor, constant: 30).isActive = true
-        cashBonusImage.tintColor = Colors.black
-        
-        cashBonusTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        cashBonusTitleLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 220).isActive = true
-        cashBonusTitleLabel.leftAnchor.constraint(equalTo: secondCardView.leftAnchor, constant: 60).isActive = true
-        
-        cashBonusLabel.translatesAutoresizingMaskIntoConstraints = false
-        cashBonusLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 220).isActive = true
-        cashBonusLabel.rightAnchor.constraint(equalTo: secondCardView.rightAnchor, constant: -30).isActive = true
-        
+        fineLabel.textColor = Colors.red
         
         secondCardView.addSubview(retentionImage)
         secondCardView.addSubview(retentionTitleLabel)
@@ -518,37 +496,40 @@ class SalaryView: MVPController {
         retentionLabel.setLabel()
         
         retentionImage.translatesAutoresizingMaskIntoConstraints = false
-        retentionImage.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 245).isActive = true
+        retentionImage.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 215).isActive = true
         retentionImage.leftAnchor.constraint(equalTo: secondCardView.leftAnchor, constant: 30).isActive = true
         retentionImage.tintColor = Colors.black
         
         retentionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        retentionTitleLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 250).isActive = true
+        retentionTitleLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 220).isActive = true
         retentionTitleLabel.leftAnchor.constraint(equalTo: secondCardView.leftAnchor, constant: 60).isActive = true
         
         retentionLabel.translatesAutoresizingMaskIntoConstraints = false
-        retentionLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 250).isActive = true
+        retentionLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 220).isActive = true
         retentionLabel.rightAnchor.constraint(equalTo: secondCardView.rightAnchor, constant: -30).isActive = true
-        
+        retentionLabel.textColor = Colors.red
         
         secondCardView.addSubview(totalImage)
         secondCardView.addSubview(totalTitleLabel)
         totalTitleLabel.setLabel()
         secondCardView.addSubview(totalLabel)
+        
         totalLabel.setLabel()
         
         totalImage.translatesAutoresizingMaskIntoConstraints = false
-        totalImage.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 275).isActive = true
+        totalImage.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 245).isActive = true
         totalImage.leftAnchor.constraint(equalTo: secondCardView.leftAnchor, constant: 30).isActive = true
         totalImage.tintColor = Colors.black
         
         totalTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalTitleLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 280).isActive = true
+        totalTitleLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 250).isActive = true
         totalTitleLabel.leftAnchor.constraint(equalTo: secondCardView.leftAnchor, constant: 60).isActive = true
         
         totalLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 280).isActive = true
+        totalLabel.topAnchor.constraint(equalTo: secondCardView.topAnchor, constant: 250).isActive = true
         totalLabel.rightAnchor.constraint(equalTo: secondCardView.rightAnchor, constant: -30).isActive = true
+        
+        totalLabel.textColor = Colors.green
         
     }
     
@@ -657,17 +638,16 @@ protocol SalaryViewProtocol: AnyObject, MVPControllerProtocol  {
 extension SalaryView: SalaryViewProtocol{
     
     func configureData(salary: Salary) {
-        currentBalanceLabel.text = String(salary.balance)
+        currentBalanceLabel.text = "\(String(salary.balance.removeZerosFromEnd())) ₸"
         
-        clockLabel.text = String(salary.workHours)
-        orderLabel.text = String(salary.orderAmount)
-        bonusLabel.text = String(salary.bonusAmount)
-        fineLabel.text = String(salary.penaltyAmount)
-        cashBonusLabel.text = String(salary.countSuccessOrders)
-        retentionLabel.text = String(salary.holdingAmount)
-        totalLabel.text = String(salary.totalAmount)
+        clockLabel.text = "\(String(salary.workHours.removeZerosFromEnd())) ₸"
+        orderLabel.text = "\(String(salary.orderAmount.removeZerosFromEnd())) ₸"
+        bonusLabel.text = "\(String(salary.bonusAmount.removeZerosFromEnd())) ₸"
+        fineLabel.text = "\(String(salary.penaltyAmount.removeZerosFromEnd())) ₸"
+        retentionLabel.text = "\(String(salary.holdingAmount.removeZerosFromEnd())) ₸"
+        totalLabel.text = "\(String(salary.totalAmount.removeZerosFromEnd())) ₸"
         
-        thirdCardViewSumLabel.text = String(salary.cashDeliveryAmount)
+        thirdCardViewSumLabel.text = "\(String(salary.cashDeliveryAmount.removeZerosFromEnd())) ₸"
     }
     
 }

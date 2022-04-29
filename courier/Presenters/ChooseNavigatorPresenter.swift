@@ -24,11 +24,11 @@ class ChooseNavigatorPresenter: ChooseNavigatorPresenterProtocol {
     }
     
     func gisButtonTapped() {
-        UserDefaults.standard.set("2ГИС", forKey: UserDefaultsKeys.defaultNavigator)
+        UserDefaults.standard.set(Navigators.doubleGIS, forKey: UserDefaultsKeys.defaultNavigator)
     }
     
     func yaNavButtonTapped() {
-        UserDefaults.standard.set("Яндекс Навигатор", forKey: UserDefaultsKeys.defaultNavigator)
+        UserDefaults.standard.set(Navigators.yandex, forKey: UserDefaultsKeys.defaultNavigator)
     }
 
 }

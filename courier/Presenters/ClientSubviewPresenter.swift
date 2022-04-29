@@ -23,42 +23,15 @@ class ClientSubviewPresenter: ClientSubviewPresenterProtocol {
         self.view = view
     }
     
+    let navigatorManager = NavigatorManager()
     
     func routeButtonTapped(latitude: String, longitude: String){
-        let defaultNavigator = UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator)
-        var urlString = ""
-        
-        if defaultNavigator == "2ГИС"{
-            urlString = "dgis://2gis.ru/routeSearch/rsType/car/to/\(longitude),\(latitude)"
-        }
-       else if defaultNavigator == "Яндекс Навигатор" {
-           urlString = "yandexmaps://maps.yandex.ru/?ll=\(longitude),\(latitude)&z=12&l=map"
-        }
-        else {
-            urlString = "http://maps.apple.com/maps?daddr=\(latitude),\(longitude)"
-        }
-        
-        guard let url = URL(string: urlString) else { return }
-        view?.openApp(appURL: url)
+        view?.openApp(appURL: navigatorManager.getCoordinates(latitude: latitude, longitude: longitude))
          
     }
     
     func navigationAppIsNotAvailable() {
-        let defaultNavigator = UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator)
-        var urlString = ""
-        // Ошибка так как The iOS Simulator does not have an App Store.
-        if defaultNavigator == "2ГИС"{
-            urlString = "https://itunes.apple.com/ru/app/id481627348?mt=8"
-           // urlString = "https://www.google.ru/"
-        }
-       else if defaultNavigator == "Яндекс Навигатор" {
-           urlString = "https://itunes.apple.com/ru/app/yandex.navigator/id474500851"
-        }
-        
-        //
-        guard let url = URL(string: urlString) else { return }
-        
-        view?.openApp(appURL: url)
+        view?.openApp(appURL: navigatorManager.openDownloadLink())
     }
     
     func toCallButtonTapped(phoneNumber: String) {

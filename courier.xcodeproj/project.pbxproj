@@ -15,6 +15,7 @@
 		500B62E727990E7F00EDC58A /* CustomLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62E627990E7F00EDC58A /* CustomLabels.swift */; };
 		500B62E9279913B600EDC58A /* CustomTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62E8279913B600EDC58A /* CustomTextFields.swift */; };
 		500B62EB279919A800EDC58A /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500B62EA279919A800EDC58A /* CustomViews.swift */; };
+		500FD875281B8F72003B6B3A /* NavigatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500FD874281B8F72003B6B3A /* NavigatorManager.swift */; };
 		501630352796786A00D0734F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501630342796786A00D0734F /* AppDelegate.swift */; };
 		501630372796786A00D0734F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501630362796786A00D0734F /* SceneDelegate.swift */; };
 		501630392796786A00D0734F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501630382796786A00D0734F /* LoginView.swift */; };
@@ -29,6 +30,8 @@
 		501D409D27A27C2300F67C6B /* ShopSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409C27A27C2300F67C6B /* ShopSubview.swift */; };
 		501D409F27A27C4B00F67C6B /* ClientSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D409E27A27C4B00F67C6B /* ClientSubview.swift */; };
 		50217C4927CF1B630066C3F0 /* PhoneNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50217C4827CF1B630066C3F0 /* PhoneNumberFormatter.swift */; };
+		50226327281C01F100E4B4F7 /* Navigators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50226326281C01F100E4B4F7 /* Navigators.swift */; };
+		5022632B281C0B7000E4B4F7 /* DoubleTrailingZerosFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022632A281C0B7000E4B4F7 /* DoubleTrailingZerosFormatter.swift */; };
 		502618B027A78E5A00CEA57C /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618AF27A78E5A00CEA57C /* LoginPresenter.swift */; };
 		502618B227A793FA00CEA57C /* ConfirmLoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618B127A793FA00CEA57C /* ConfirmLoginPresenter.swift */; };
 		502618B427A7957D00CEA57C /* OrdersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502618B327A7957D00CEA57C /* OrdersPresenter.swift */; };
@@ -96,6 +99,7 @@
 		500B62E627990E7F00EDC58A /* CustomLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabels.swift; sourceTree = "<group>"; };
 		500B62E8279913B600EDC58A /* CustomTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFields.swift; sourceTree = "<group>"; };
 		500B62EA279919A800EDC58A /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
+		500FD874281B8F72003B6B3A /* NavigatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorManager.swift; sourceTree = "<group>"; };
 		501630312796786A00D0734F /* courier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = courier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		501630342796786A00D0734F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		501630362796786A00D0734F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 		501D409C27A27C2300F67C6B /* ShopSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopSubview.swift; sourceTree = "<group>"; };
 		501D409E27A27C4B00F67C6B /* ClientSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSubview.swift; sourceTree = "<group>"; };
 		50217C4827CF1B630066C3F0 /* PhoneNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberFormatter.swift; sourceTree = "<group>"; };
+		50226326281C01F100E4B4F7 /* Navigators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigators.swift; sourceTree = "<group>"; };
+		5022632A281C0B7000E4B4F7 /* DoubleTrailingZerosFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTrailingZerosFormatter.swift; sourceTree = "<group>"; };
 		502618AF27A78E5A00CEA57C /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		502618B127A793FA00CEA57C /* ConfirmLoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLoginPresenter.swift; sourceTree = "<group>"; };
 		502618B327A7957D00CEA57C /* OrdersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersPresenter.swift; sourceTree = "<group>"; };
@@ -324,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				5016304E27968D2100D0734F /* Colors.swift */,
+				50226326281C01F100E4B4F7 /* Navigators.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -420,6 +427,8 @@
 				5048D95727FD4BE4005BF3D1 /* LocationService.swift */,
 				509046C72803D58900750FDF /* Notifications.swift */,
 				508FA18F28052D4900482528 /* NotificationsActions.swift */,
+				500FD874281B8F72003B6B3A /* NavigatorManager.swift */,
+				5022632A281C0B7000E4B4F7 /* DoubleTrailingZerosFormatter.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -637,10 +646,13 @@
 				507D737E281154DC00EE44A9 /* SalaryView.swift in Sources */,
 				5065CCA227993A2700B38BAB /* OrdersView.swift in Sources */,
 				5006FCE427BA24A90047DD6A /* ApiService.swift in Sources */,
+				5022632B281C0B7000E4B4F7 /* DoubleTrailingZerosFormatter.swift in Sources */,
 				5053619727EC24B900559006 /* EmployeeResponse.swift in Sources */,
+				50226327281C01F100E4B4F7 /* Navigators.swift in Sources */,
 				509046C82803D58900750FDF /* Notifications.swift in Sources */,
 				5054785A28129E530022ADF3 /* SalaryViewPresenter.swift in Sources */,
 				5031835527ACFD45001C9BEB /* ProfileView.swift in Sources */,
+				500FD875281B8F72003B6B3A /* NavigatorManager.swift in Sources */,
 				50CBB7BC27D9F19A0035DA85 /* History.swift in Sources */,
 				5016304F27968D2100D0734F /* Colors.swift in Sources */,
 				5031835827ACFDB1001C9BEB /* HistoryCell.swift in Sources */,
