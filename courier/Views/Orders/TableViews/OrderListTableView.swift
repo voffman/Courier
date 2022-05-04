@@ -107,11 +107,10 @@ class OrderListTableView: MVPController {
     func setupWaitViewElement(){
         self.view.addSubview(waitViewElement)
         waitViewElement.setupView()
-        waitViewElement.frame = CGRect(x: 10, y: 0, width: self.view.frame.width - 20, height: 149)
-        
         waitViewElement.translatesAutoresizingMaskIntoConstraints = false
-        waitViewElement.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
-        waitViewElement.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
+        waitViewElement.leftAnchor.constraint(equalTo: self.tableView.leftAnchor, constant: 10).isActive = true
+        waitViewElement.rightAnchor.constraint(equalTo: self.tableView.rightAnchor, constant: -10).isActive = true
+        waitViewElement.heightAnchor.constraint(equalToConstant: 149).isActive = true
         
         if #available(iOS 11, *) {
             waitViewElement.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 7).isActive = true

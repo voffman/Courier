@@ -12,6 +12,7 @@ class HistoryTableView: MVPController {
     let tableView = UITableView()
 
     let pickerController = PickerController()
+    let waitViewElement = WaitViewElement()
     
     private var presenter: HistoryTableViewPresenterProtocol?
     
@@ -88,6 +89,33 @@ class HistoryTableView: MVPController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func setupWaitViewElement(){
+        self.tableView.addSubview(waitViewElement)
+        waitViewElement.setupView()
+        
+        waitViewElement.translatesAutoresizingMaskIntoConstraints = false
+        waitViewElement.leftAnchor.constraint(equalTo: self.tableView.leftAnchor, constant: 10).isActive = true
+        waitViewElement.rightAnchor.constraint(equalTo: self.tableView.rightAnchor, constant: -10).isActive = true
+        waitViewElement.heightAnchor.constraint(equalToConstant: 149).isActive = true
+        if #available(iOS 11, *) {
+            waitViewElement.topAnchor.constraint(equalTo:  tableView.topAnchor, constant: 7).isActive = true
+
+        } else {
+
+        if UIScreen.main.bounds.size.height > 750 {
+            waitViewElement.topAnchor.constraint(equalTo:  tableView.topAnchor, constant: self.view.frame.height/9).isActive = true
+        }
+
+        if UIScreen.main.bounds.size.height > 640 {
+            waitViewElement.topAnchor.constraint(equalTo:  tableView.topAnchor, constant: self.view.frame.height/9).isActive = true
+        }
+
+            if UIScreen.main.bounds.size.height <= 640 {
+                waitViewElement.topAnchor.constraint(equalTo:  tableView.topAnchor, constant: self.view.frame.height/8).isActive = true
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -113,7 +141,7 @@ class HistoryTableView: MVPController {
         if UIScreen.main.bounds.size.height <= 640{
             pickerController.pickerViewButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 69).isActive = true
         }
-        
+        setupWaitViewElement()
         setupTableView()
 
     }
@@ -190,6 +218,8 @@ extension HistoryTableView: HistoryTableViewProtocol{
     func checkHistory(posts: [HistoryElement]) {
         if !posts.isEmpty{
             print("Кол-во постов \(posts.count)")
+            self.waitViewElement.isHidden = true
+            self.waitViewElement.setupView()
             self.data = posts
             self.tableView.reloadData()
         }

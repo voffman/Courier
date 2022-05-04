@@ -16,7 +16,7 @@ class SalaryView: MVPController {
     
     let currentBalanceTitleLabel = CustomLabels(title: "Текущий баланс", textSize: 16, style: .regular)
     let currentBalanceLabel = CustomLabels(title: "9 200 ₸", textSize: 48, style: .regular)
-    let currentBalanceHelpLabel = CustomLabels(title: "До вычета налогов", textSize: 14, style: .regular)
+    let currentBalanceHelpLabel = CustomLabels(title: "до вычета налогов", textSize: 14, style: .regular)
     
     let secondCardView = CustomViews(style: .withShadow)
     
@@ -49,15 +49,15 @@ class SalaryView: MVPController {
     let retentionLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
     
     let totalImage = UIImageView(image: UIImage(named: "outline_account_balance_wallet_black")?.withRenderingMode(.alwaysTemplate))
-    let totalTitleLabel = CustomLabels(title: "Итого", textSize: 14, style: .regular)
+    let totalTitleLabel = CustomLabels(title: "Итого", textSize: 14, style: .bold)
     let totalLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
     
     
     let thirdCardView = CustomViews(style: .withShadow)
     let thirdCardViewTitleLabel = CustomLabels(title: "Наличные за доставку", textSize: 20, style: .regular)
-    let thirdCardViewDateLabel = CustomLabels(title: "с 1 апреля по 12 мая 2021", textSize: 14, style: .regular)
+    let thirdCardViewDateLabel = CustomLabels(title: "на 12 мая 2021", textSize: 14, style: .regular)
     
-    let thirdCardViewSumLabel = CustomLabels(title: "1 500 ₸", textSize: 48, style: .regular)
+    let thirdCardViewSumLabel = CustomLabels(title: "1 500 ₸", textSize: 48, style: .bold)
     
     let scrollView = UIScrollView()
     let contentView = UIView()
@@ -363,6 +363,7 @@ class SalaryView: MVPController {
         let selectedDate: String = dateFormatter.string(from: sender.date)
         
         endDate = selectedDate
+        thirdCardViewDateLabel.text = endDate
         print("Selected end value \(selectedDate)")
     }
     
@@ -556,12 +557,14 @@ class SalaryView: MVPController {
     }
     
     func setupThirdCardViewDateLabel() {
-        thirdCardView.addSubview(dateLabel)
-        dateLabel.setLabel()
+        thirdCardView.addSubview(thirdCardViewDateLabel)
+        thirdCardViewDateLabel.setLabel()
         
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.topAnchor.constraint(equalTo: thirdCardView.topAnchor, constant: 26).isActive = true
-        dateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        thirdCardViewDateLabel.translatesAutoresizingMaskIntoConstraints = false
+        thirdCardViewDateLabel.topAnchor.constraint(equalTo: thirdCardView.topAnchor, constant: 40).isActive = true
+        thirdCardViewDateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        
+        thirdCardViewDateLabel.text = "на \(dateManager.getStringDateFor(days: 0, stringDateFormat: "dd MMMM Y"))"
     }
     
     func setupThirdCardViewSumLabel() {
@@ -569,7 +572,7 @@ class SalaryView: MVPController {
         thirdCardViewSumLabel.setLabel()
         
         thirdCardViewSumLabel.translatesAutoresizingMaskIntoConstraints = false
-        thirdCardViewSumLabel.topAnchor.constraint(equalTo: thirdCardView.topAnchor, constant: 48).isActive = true
+        thirdCardViewSumLabel.topAnchor.constraint(equalTo: thirdCardView.topAnchor, constant: 60).isActive = true
         thirdCardViewSumLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
     }
     
@@ -591,6 +594,7 @@ class SalaryView: MVPController {
         setupList()
         setupThirdCardView()
         setupThirdCardViewTitleLabel()
+        setupThirdCardViewDateLabel()
         setupThirdCardViewSumLabel()
     }
 

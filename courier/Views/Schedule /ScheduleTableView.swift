@@ -10,6 +10,7 @@ import UIKit
 class ScheduleTableView: MVPController {
     
     let tableView = UITableView()
+    let waitViewElement = WaitViewElement()
     
     private var presenter: ScheduleTableViewPresenterProtocol?
     
@@ -27,6 +28,33 @@ class ScheduleTableView: MVPController {
         navigationItem.rightBarButtonItem?.tintColor = Colors.red
     }
 
+    func setupWaitViewElement(){
+        self.tableView.addSubview(waitViewElement)
+        waitViewElement.setupView()
+        waitViewElement.translatesAutoresizingMaskIntoConstraints = false
+        waitViewElement.leftAnchor.constraint(equalTo: self.tableView.leftAnchor, constant: 10).isActive = true
+        waitViewElement.rightAnchor.constraint(equalTo: self.tableView.rightAnchor, constant: -10).isActive = true
+        waitViewElement.heightAnchor.constraint(equalToConstant: 149).isActive = true
+        
+        if #available(iOS 11, *) {
+            waitViewElement.topAnchor.constraint(equalTo:  tableView.safeAreaLayoutGuide.topAnchor, constant: 7).isActive = true
+            
+        } else {
+        
+        if UIScreen.main.bounds.size.height > 750 {
+            waitViewElement.topAnchor.constraint(equalTo:  tableView.topAnchor, constant: self.view.frame.height/9).isActive = true
+        }
+        
+        if UIScreen.main.bounds.size.height > 640 {
+            waitViewElement.topAnchor.constraint(equalTo:  tableView.topAnchor, constant: self.view.frame.height/9).isActive = true
+        }
+        
+            if UIScreen.main.bounds.size.height <= 640 {
+                waitViewElement.topAnchor.constraint(equalTo:  tableView.topAnchor, constant: self.view.frame.height/8).isActive = true
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let presenter = SchedulePresenter(view:  self)
@@ -34,6 +62,8 @@ class ScheduleTableView: MVPController {
         
         self.navigationController?.isNavigationBarHidden = true
         self.view.backgroundColor = Colors.backgroundColor
+        
+        setupWaitViewElement()
         setupTableView()
     }
     
@@ -113,9 +143,16 @@ extension ScheduleTableView: ScheduleTableViewProtocol {
     }
     
     func checkSchedule(posts: [ScheduleElement]) {
-        print("Кол-во постов \(posts.count)")
-        self.data = posts
-        self.tableView.reloadData()
+        if !posts.isEmpty{
+            print("Кол-во постов \(posts.count)")
+            self.waitViewElement.isHidden = true
+            self.waitViewElement.setupView()
+            self.data = posts
+            self.tableView.reloadData()
+        }
+        else{
+            self.data = posts
+            self.tableView.reloadData()
+        }
     }
-    
 }
