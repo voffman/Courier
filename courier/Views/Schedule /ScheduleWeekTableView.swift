@@ -29,6 +29,20 @@ class ScheduleWeekTableView: MVPController {
     
     let scheduleFooterView = ScheduleFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 68))
     
+    let refreshControl = UIRefreshControl()
+    
+    @objc func refresh(_ sender: AnyObject) {
+       // Code to refresh table view
+        presenter?.viewWillAppear(id: String(dataPosts.id))
+        refreshControl.endRefreshing()
+    }
+    
+    func setupPullToRefresh() {
+        tableView.addSubview(refreshControl)
+        refreshControl.attributedTitle = NSAttributedString(string: "Обновление")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let presenter = ScheduleWeekPresenter(view:  self)
@@ -38,6 +52,7 @@ class ScheduleWeekTableView: MVPController {
         setupTableView()
 
         scheduleFooterView.submitButton.addTarget(self, action: #selector(submitScheduleAction), for: .touchUpInside)
+        setupPullToRefresh()
     }
     
     @objc func backButtonAction(){

@@ -11,6 +11,7 @@ class OrderListTableView: MVPController {
     
     let tableView = UITableView()
     let waitViewElement = WaitViewElement()
+    let refreshControl = UIRefreshControl()
     
     private var presenter: OrderListTableViewPresenterProtocol?
     
@@ -62,6 +63,26 @@ class OrderListTableView: MVPController {
             
     }
     
+    @objc func refresh(_ sender: AnyObject) {
+       // Code to refresh table view
+        switch sc.segmentedControl.selectedSegmentIndex {
+        case 0:
+            presenter?.actionOrdersTabIsOpen()
+        case 1:
+            presenter?.archiveOrdersTabIsOpen()
+
+        default:
+            print("Ошибка pull to refresh")
+            refreshControl.endRefreshing()
+        }
+        refreshControl.endRefreshing()
+    }
+    
+    func setupPullToRefresh() {
+        tableView.addSubview(refreshControl)
+        refreshControl.attributedTitle = NSAttributedString(string: "Обновление")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+    }
     
     func setupOrderCount(isHidden: Bool){
         self.view.addSubview(countView)
@@ -272,6 +293,8 @@ class OrderListTableView: MVPController {
 
         presenter.actionOrdersTabIsOpen()
         presenter.archiveOrdersTabIsOpen()
+        
+        setupPullToRefresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {

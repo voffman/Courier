@@ -20,6 +20,30 @@ class HistoryTableView: MVPController {
     
     var data: [HistoryElement] = []
     
+    let refreshControl = UIRefreshControl()
+    
+    @objc func refresh(_ sender: AnyObject) {
+       // Code to refresh table view
+        switch self.pickerController.selectedRow{
+            
+        case 0:
+            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: 0), dateFinish: self.dateManager.getStringDateFor(days: 0))
+            
+        case 1:
+            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -7), dateFinish: self.dateManager.getStringDateFor(days: 0))
+            
+        case 2:
+            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -30), dateFinish: self.dateManager.getStringDateFor(days: 0))
+            
+        case 3:
+            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -90), dateFinish: self.dateManager.getStringDateFor(days: 0))
+
+        default:
+            break
+        }
+        refreshControl.endRefreshing()
+    }
+    
     func createNavigationBar(){
         let navigationBarLeftItemLabel = CustomLabels(title: "История", textSize: 20, style: .bold)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
@@ -29,6 +53,13 @@ class HistoryTableView: MVPController {
         navigationBarLeftItemLabel.setLabel()
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationBarLeftItemLabel)
     }
+    
+    func setupPullToRefresh() {
+        tableView.addSubview(refreshControl)
+        refreshControl.attributedTitle = NSAttributedString(string: "Обновление")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+    }
+
     
     @objc func popUpPicker(sender: UIButton) {
         
@@ -143,7 +174,7 @@ class HistoryTableView: MVPController {
         }
         setupWaitViewElement()
         setupTableView()
-
+        setupPullToRefresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {

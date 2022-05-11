@@ -16,6 +16,15 @@ class ScheduleTableView: MVPController {
     
     var data: [ScheduleElement] = []
     
+    let refreshControl = UIRefreshControl()
+    
+    @objc func refresh(_ sender: AnyObject) {
+       // Code to refresh table view
+        presenter?.viewWillAppear(page: "0")
+        refreshControl.endRefreshing()
+    }
+    
+    
     func createNavigationBar(){
         let navigationBarLeftItemLabel = CustomLabels(title: "Расписание", textSize: 20, style: .bold)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
@@ -27,6 +36,13 @@ class ScheduleTableView: MVPController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "SOSButton"), style: .done, target: self, action: nil)
         navigationItem.rightBarButtonItem?.tintColor = Colors.red
     }
+    
+    func setupPullToRefresh() {
+        tableView.addSubview(refreshControl)
+        refreshControl.attributedTitle = NSAttributedString(string: "Обновление")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+    }
+
 
     func setupWaitViewElement(){
         self.tableView.addSubview(waitViewElement)
@@ -65,6 +81,7 @@ class ScheduleTableView: MVPController {
         
         setupWaitViewElement()
         setupTableView()
+        setupPullToRefresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {

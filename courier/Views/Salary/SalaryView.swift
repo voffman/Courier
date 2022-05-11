@@ -69,6 +69,24 @@ class SalaryView: MVPController {
     
     private var presenter: SalaryViewPresenterProtocol?
     
+    let refreshControl = UIRefreshControl()
+    
+    @objc func refresh(_ sender: AnyObject) {
+        presenter?.viewNeedsUpdateDate(dateStart: startDate, dateEnd: endDate)
+        refreshControl.endRefreshing()
+    }
+    
+    func initStartEndDateValues() {
+        startDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "yyyy-MM-dd")
+        endDate = dateManager.getStringDateFor(days: 0, stringDateFormat: "yyyy-MM-dd")
+    }
+    
+    func setupPullToRefresh() {
+        contentView.addSubview(refreshControl)
+        refreshControl.attributedTitle = NSAttributedString(string: "Обновление")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+    }
+    
     func setupScrollView(){
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -269,11 +287,11 @@ class SalaryView: MVPController {
         endDateTitleLabel.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor, constant: 75).isActive = true
         
         dateStartPickerController.translatesAutoresizingMaskIntoConstraints = false
-        dateStartPickerController.topAnchor.constraint(equalTo: vc.view.topAnchor, constant: 50).isActive = true
+        dateStartPickerController.topAnchor.constraint(equalTo: vc.view.topAnchor, constant: 35).isActive = true
         dateStartPickerController.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor, constant: -75).isActive = true
         
         dateEndPickerController.translatesAutoresizingMaskIntoConstraints = false
-        dateEndPickerController.topAnchor.constraint(equalTo: vc.view.topAnchor, constant: 50).isActive = true
+        dateEndPickerController.topAnchor.constraint(equalTo: vc.view.topAnchor, constant: 35).isActive = true
         dateEndPickerController.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor, constant: 75).isActive = true
         
         let alert = UIAlertController(title: "Выберите период", message: "", preferredStyle: .actionSheet)
@@ -286,20 +304,24 @@ class SalaryView: MVPController {
         
         switch UIScreen.main.bounds.size.height {
             
+        case let x where x > 895: // max
+            heightMultipler = 0.275
+            break
+            
         case let x where x > 812:
-            heightMultipler = 0.325
+            heightMultipler = 0.3
             break
             
         case let x where x > 750:
-            heightMultipler = 0.335 // mini
+            heightMultipler = 0.315 // mini
             break
             
         case let x where x > 640:
-            heightMultipler = 0.425
+            heightMultipler = 0.385
             break
             
         case let x where x <= 640:
-            heightMultipler = 0.5
+            heightMultipler = 0.45
             break
             
         default:
@@ -317,6 +339,7 @@ class SalaryView: MVPController {
         dateFormatter.dateFormat = "d MMMM Y"
         dateFormatter.locale = Locale(identifier: "ru_RU")
         
+        
         self.startDate = dateFormatter.string(from: Date())
         self.endDate = dateFormatter.string(from: Date())
         
@@ -329,6 +352,9 @@ class SalaryView: MVPController {
             
             let dateStartConverted = self.dateManager.convert(dateString: self.startDate, stringDateFormat: "d MMMM Y", convertToDateFormat: "yyyy-MM-dd")
             let dateEndConverted = self.dateManager.convert(dateString: self.endDate, stringDateFormat: "d MMMM Y", convertToDateFormat: "yyyy-MM-dd")
+            // для pull to refresh
+            self.startDate = dateStartConverted
+            self.endDate = dateEndConverted
             
             self.presenter?.viewNeedsUpdateDate(dateStart: dateStartConverted, dateEnd: dateEndConverted)
             
@@ -616,7 +642,8 @@ class SalaryView: MVPController {
         setupScrollView()
         createNavigationBar()
         presenter.viewNeedsUpdateDate(dateStart: dateManager.getStringDateFor(days: 0), dateEnd: dateManager.getStringDateFor(days: 0))
-        
+        initStartEndDateValues()
+        setupPullToRefresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {
