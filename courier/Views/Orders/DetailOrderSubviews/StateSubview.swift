@@ -172,8 +172,13 @@ class StateSubview: UIViewController {
             self.numberOfSecondsPassed -= 1
             let minutes = Int(self.numberOfSecondsPassed) / 60
             let seconds = Int(self.numberOfSecondsPassed) % 60
-            self.timerValue = String(format:"%02i:%03i", minutes, seconds)
+            
+            let min = String(minutes)
+            let sec = String(seconds)
+
+            self.timerValue = String("\(min):\(sec)")
             self.orderTimerLabel.text = "\(self.timerValue)"
+            
             print("стэйттайм: \(self.timerValue)")
             if self.numberOfSecondsPassed <= 0 {
                 self.timer.invalidate()

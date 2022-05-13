@@ -38,6 +38,7 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     
     func exitButtonTapped() {
         UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.bearer)
+        NotificationCenter.default.removeObserver(self)
         self.view?.goToLoginView()
 //        if let appDomain = Bundle.main.bundleIdentifier {
 //        UserDefaults.standard.removePersistentDomain(forName: appDomain)

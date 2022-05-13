@@ -12,7 +12,7 @@ class HistoryTableView: MVPController {
     let tableView = UITableView()
 
     let pickerController = PickerController()
-    let waitViewElement = WaitViewElement()
+    let waitViewElement = WaitViewElement(titleLabel: "В списке пусто", helpLabel: "История заказов недоступна")
     
     private var presenter: HistoryTableViewPresenterProtocol?
     

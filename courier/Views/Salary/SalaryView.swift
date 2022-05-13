@@ -15,7 +15,7 @@ class SalaryView: MVPController {
     let moneyImage = UIImageView(image: UIImage(named: "baseline_monetization_on_black")?.withRenderingMode(.alwaysTemplate))
     
     let currentBalanceTitleLabel = CustomLabels(title: "Текущий баланс", textSize: 16, style: .regular)
-    let currentBalanceLabel = CustomLabels(title: "9 200 ₸", textSize: 48, style: .regular)
+    let currentBalanceLabel = CustomLabels(title: "", textSize: 48, style: .regular)
     let currentBalanceHelpLabel = CustomLabels(title: "до вычета налогов", textSize: 14, style: .regular)
     
     let secondCardView = CustomViews(style: .withShadow)
@@ -29,35 +29,35 @@ class SalaryView: MVPController {
     
     let clockImage = UIImageView(image: UIImage(named: "baseline_schedule_black")?.withRenderingMode(.alwaysTemplate))
     let clockTitleLabel = CustomLabels(title: "Часы", textSize: 14, style: .regular)
-    let clockLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
+    let clockLabel = CustomLabels(title: " ", textSize: 14, style: .regular)
     
     let orderImage = UIImageView(image: UIImage(named: "outline_local_mall_black")?.withRenderingMode(.alwaysTemplate))
     let orderTitleLabel = CustomLabels(title: "Заказы", textSize: 14, style: .regular)
-    let orderLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
+    let orderLabel = CustomLabels(title: " ", textSize: 14, style: .regular)
     
     let bonusImage = UIImageView(image: UIImage(named: "outline_paid_black")?.withRenderingMode(.alwaysTemplate))
     let bonusTitleLabel = CustomLabels(title: "Бонус", textSize: 14, style: .regular)
-    let bonusLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
+    let bonusLabel = CustomLabels(title: " ", textSize: 14, style: .regular)
     
     
     let fineImage = UIImageView(image: UIImage(named: "outline_report_black")?.withRenderingMode(.alwaysTemplate))
     let fineTitleLabel = CustomLabels(title: "Штраф", textSize: 14, style: .regular)
-    let fineLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
+    let fineLabel = CustomLabels(title: " ", textSize: 14, style: .regular)
     
     let retentionImage = UIImageView(image: UIImage(named: "baseline_report_problem_black")?.withRenderingMode(.alwaysTemplate))
     let retentionTitleLabel = CustomLabels(title: "Удержания", textSize: 14, style: .regular)
-    let retentionLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
+    let retentionLabel = CustomLabels(title: " ", textSize: 14, style: .regular)
     
     let totalImage = UIImageView(image: UIImage(named: "outline_account_balance_wallet_black")?.withRenderingMode(.alwaysTemplate))
     let totalTitleLabel = CustomLabels(title: "Итого", textSize: 14, style: .bold)
-    let totalLabel = CustomLabels(title: " ₸", textSize: 14, style: .regular)
+    let totalLabel = CustomLabels(title: " ", textSize: 14, style: .regular)
     
     
     let thirdCardView = CustomViews(style: .withShadow)
     let thirdCardViewTitleLabel = CustomLabels(title: "Наличные за доставку", textSize: 20, style: .regular)
     let thirdCardViewDateLabel = CustomLabels(title: "на 12 мая 2021", textSize: 14, style: .regular)
     
-    let thirdCardViewSumLabel = CustomLabels(title: "1 500 ₸", textSize: 48, style: .bold)
+    let thirdCardViewSumLabel = CustomLabels(title: " ", textSize: 48, style: .bold)
     
     let scrollView = UIScrollView()
     let contentView = UIView()

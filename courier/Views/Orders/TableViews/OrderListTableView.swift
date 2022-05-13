@@ -10,7 +10,7 @@ import UIKit
 class OrderListTableView: MVPController {
     
     let tableView = UITableView()
-    let waitViewElement = WaitViewElement()
+    let waitViewElement = WaitViewElement(titleLabel: "В списке пусто", helpLabel: "Ожидайте поступления заказов")
     let refreshControl = UIRefreshControl()
     
     private var presenter: OrderListTableViewPresenterProtocol?
@@ -393,7 +393,11 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
                     visibleCell?.orderTimerLabel.text = "00:00"
                 }
                 else {
-                    visibleCell?.orderTimerLabel.text = String(format:"%02i:%03i", minutes, seconds)
+                    
+                    let min = String(minutes)
+                    let sec = String(seconds)
+                    
+                    visibleCell?.orderTimerLabel.text = String("\(min):\(sec)")
                 }
             }
             cellRowToTimerMapping[row] = timer

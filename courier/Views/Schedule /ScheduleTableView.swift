@@ -10,7 +10,7 @@ import UIKit
 class ScheduleTableView: MVPController {
     
     let tableView = UITableView()
-    let waitViewElement = WaitViewElement()
+    let waitViewElement = WaitViewElement(titleLabel: "В списке пусто", helpLabel: "Расписание недоступно")
     
     private var presenter: ScheduleTableViewPresenterProtocol?
     
