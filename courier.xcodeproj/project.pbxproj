@@ -241,7 +241,6 @@
 		5016304827968B4800D0734F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5030A5B027B4CA2100863939 /* UserDefaultsKeys.swift */,
 				50A5731B27B3D89E00E3013F /* UserResponse.swift */,
 				5030A5D627B504A000863939 /* CourierOrderResponse.swift */,
 				5006FCEC27BA70990047DD6A /* ErrorResponse.swift */,
@@ -331,6 +330,7 @@
 			children = (
 				5016304E27968D2100D0734F /* Colors.swift */,
 				50226326281C01F100E4B4F7 /* Navigators.swift */,
+				5030A5B027B4CA2100863939 /* UserDefaultsKeys.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";

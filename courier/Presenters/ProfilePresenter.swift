@@ -30,6 +30,8 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     
     func viewDidLoad() {
         api.getEmployeeData() { post in
+            UserDefaults.standard.set(post.fio, forKey: UserDefaultsKeys.profileFio)
+            UserDefaults.standard.set(post.inventory, forKey: UserDefaultsKeys.profileInventory)
             self.view?.configureData(post: post)
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
@@ -38,6 +40,8 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     
     func exitButtonTapped() {
         UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.bearer)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.profileFio)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.profileInventory)
         NotificationCenter.default.removeObserver(self)
         self.view?.goToLoginView()
 //        if let appDomain = Bundle.main.bundleIdentifier {
@@ -70,11 +74,16 @@ class ProfilePresenter: ProfileViewPresenterProtocol {
     }
     
     func viewWillAppear() {
+        let profileFio = UserDefaults.standard.string(forKey: UserDefaultsKeys.profileFio)
+        let profileInventory = UserDefaults.standard.string(forKey: UserDefaultsKeys.profileInventory)
+        
+        self.view?.configureData(post: EmployeeResponse(id: nil, fio: profileFio, phone: nil, lastLogin: nil, authKey: nil, role: nil, accesses: nil, allowedCities: nil, inventory: profileInventory, courierTypeID: nil))
+        
+        let navigator = UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? Navigators.doubleGIS
+        self.view?.getNavigatorValue(value: navigator)
+        
         api.courierSlotActivity() { post in
             self.view?.updateSessionStatus(post: post)
-            
-            let navigator = UserDefaults.standard.string(forKey: UserDefaultsKeys.defaultNavigator) ?? Navigators.doubleGIS
-            self.view?.getNavigatorValue(value: navigator)
             
         } errorResponse: { error in
             self.view?.showErrorView(errorResponseData: error)
