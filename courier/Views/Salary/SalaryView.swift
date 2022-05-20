@@ -669,16 +669,16 @@ protocol SalaryViewProtocol: AnyObject, MVPControllerProtocol  {
 extension SalaryView: SalaryViewProtocol{
     
     func configureData(salary: Salary) {
-        currentBalanceLabel.text = "\(String(salary.balance.removeZerosFromEnd())) ₸"
+        currentBalanceLabel.text = "\(String(salary.balance?.removeZerosFromEnd() ?? "")) ₸"
         
-        clockLabel.text = "\(String(salary.workHours.removeZerosFromEnd())) ₸"
-        orderLabel.text = "\(String(salary.orderAmount.removeZerosFromEnd())) ₸"
-        bonusLabel.text = "\(String(salary.bonusAmount.removeZerosFromEnd())) ₸"
-        fineLabel.text = "\(String(salary.penaltyAmount.removeZerosFromEnd())) ₸"
-        retentionLabel.text = "\(String(salary.holdingAmount.removeZerosFromEnd())) ₸"
-        totalLabel.text = "\(String(salary.totalAmount.removeZerosFromEnd())) ₸"
+        clockLabel.text = "\(String(salary.workHours?.removeZerosFromEnd() ?? "")) ₸"
+        orderLabel.text = "\(String(salary.orderAmount?.removeZerosFromEnd() ?? "")) ₸"
+        bonusLabel.text = "\(String(salary.bonusAmount?.removeZerosFromEnd() ?? "")) ₸"
+        fineLabel.text = "\(String(salary.penaltyAmount?.removeZerosFromEnd() ?? "")) ₸"
+        retentionLabel.text = "\(String(salary.holdingAmount?.removeZerosFromEnd() ?? "")) ₸"
+        totalLabel.text = "\(String(salary.totalAmount?.removeZerosFromEnd() ?? "")) ₸"
         
-        thirdCardViewSumLabel.text = "\(String(salary.cashDeliveryAmount.removeZerosFromEnd())) ₸"
+        thirdCardViewSumLabel.text = "\(String(salary.cashDeliveryAmount?.removeZerosFromEnd() ?? "")) ₸"
     }
     
 }

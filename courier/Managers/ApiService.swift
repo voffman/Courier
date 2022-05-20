@@ -96,7 +96,7 @@ class ApiService {
     
     func changeOrderStatus(orderId: String, status: String,  completion: @escaping (OrderStatusResponse)->(), errorResponse: @escaping (ErrorResponse)->()){
         networkManager.request(url: orderListStatusURLPart1 + orderId + orderListStatusURLPart2 + status, method: .get, model: OrderStatusResponse.self, isSingleInstance: true) { posts, post  in
-            completion(post!)
+            completion(post ?? OrderStatusResponse(id: nil, companyId: nil, companyName: nil, phone: nil, customerName: nil, status: nil, statusName: nil, createdAt: nil, updatedAt: nil, setCourierDateTime: nil, orderItems: nil, sumItems: nil, deliveryPrice: nil, dateTimeFinish: nil, correctionalPrice: nil, sumTotal: nil, paymentTypeId: nil, addressFrom: nil, addressTo: nil, redistributed: nil))
             
         } ifError: { error in
             errorResponse(error)
@@ -151,7 +151,7 @@ class ApiService {
     func courierSlotActivity(completion: @escaping (CourierSlotResponse) -> (), errorResponse: @escaping (ErrorResponse)->()){
        
         networkManager.request(url: courierSlotURL, method: .get, model: CourierSlotResponse.self, isSingleInstance: true) { _, post  in
-            completion(post ?? CourierSlotResponse(sessionStart: "", sessionEnd: "", status: false, point: PointSlot(id: 0, name: "", description: "", lat: "", long: "")))
+            completion(post ?? CourierSlotResponse(sessionStart: nil, sessionEnd: nil, status: nil, point: nil))
 
         } ifError: { error in
             errorResponse(error)
@@ -181,7 +181,7 @@ class ApiService {
     // MARK: Profile
     func getEmployeeData(completion: @escaping (EmployeeResponse)->(), errorResponse: @escaping (ErrorResponse)->()){
         networkManager.request(url: employeeURL, method: .get, model: EmployeeResponse.self, isSingleInstance: true) { posts, post  in
-            completion(post!)
+            completion(post ?? EmployeeResponse(id: nil, fio: nil, phone: nil, lastLogin: nil, authKey: nil, role: nil, accesses: nil, allowedCities: nil, inventory: nil, courierTypeID: nil))
             
         } ifError: { error in
             errorResponse(error)
@@ -201,7 +201,7 @@ class ApiService {
     // MARK: Salary
     func getSalary(dateStart: String, dateEnd: String, completion: @escaping (Salary)->(), errorResponse: @escaping (ErrorResponse)->()) {
         networkManager.request(url: salaryURL, method: .post, body: ["dateStart": dateStart,"dateEnd": dateEnd], model: Salary.self, isSingleInstance: true) { _, post in
-            completion(post!)
+            completion(post ?? Salary(countSuccessOrders: nil, workHours: nil, hoursAmount: nil, orderAmount: nil, penaltyAmount: nil, totalAmount: nil, bonusAmount: nil, balance: nil, cashDeliveryAmount: nil, holdingAmount: nil, distance: nil))
         } ifError: { error in
             errorResponse(error)
         }

@@ -43,7 +43,11 @@ class DetailOrderTableView: MVPController {
             shopSubview.view.isHidden = false
             tableView.isHidden = true
 
-            shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address, phoneNumber: dataPosts.addressFrom.phone, latitude: dataPosts.addressFrom.lat, longitude: dataPosts.addressFrom.long)
+            shopSubview.configure(source: dataPosts.companyName,
+                                  address: dataPosts.addressFrom?.address,
+                                  phoneNumber: dataPosts.addressFrom?.phone,
+                                  latitude: dataPosts.addressFrom?.lat,
+                                  longitude: dataPosts.addressFrom?.long)
             shadowViewForTableView.isHidden = true
             
         case 1:
@@ -53,15 +57,15 @@ class DetailOrderTableView: MVPController {
             tableView.isHidden = true
             
             clientSubview.configure(clientName: dataPosts.customerName, clientPhone: dataPosts.phone, address:
-                                                                        "\(dataPosts.addressTo.street) " +
-                                                                        "\(dataPosts.addressTo.house) " +
-                                                                        "\(dataPosts.addressTo.flat ?? "") " +
-                                                                        "\(dataPosts.addressTo.addressMore ?? "") ",
-                                                                        comment: dataPosts.comments,
-                                                                        latitude: dataPosts.addressTo.lat,
-                                                                        longitude: dataPosts.addressTo.long)
-            shadowViewForTableView.isHidden = true
-            clientSubview.setupPhoneLabel()
+                                    "\(dataPosts.addressTo?.street ?? "") " +
+                                    "\(dataPosts.addressTo?.house ?? "") " +
+                                    "\(dataPosts.addressTo?.flat ?? "") " +
+                                    "\(dataPosts.addressTo?.addressMore ?? "") ",
+                                    comment: dataPosts.comments,
+                                    latitude: dataPosts.addressTo?.lat,
+                                    longitude: dataPosts.addressTo?.long)
+                                    shadowViewForTableView.isHidden = true
+                                    clientSubview.setupPhoneLabel()
             
         case 2:
             scrollView.isScrollEnabled = true
@@ -113,11 +117,11 @@ class DetailOrderTableView: MVPController {
     
     @objc func sendAlertButtonAction(){
         print("статус меняется...")
-        presenter?.sendAlertButtonTapped(orderId: String(dataPosts.id), status: String(dataPosts.transitions.status), completion: { post in
+        presenter?.sendAlertButtonTapped(orderId: String(dataPosts.id ?? 0), status: String(dataPosts.transitions?.status ?? 0), completion: { post in
             print("статус изменен ", post.statusName)
             print("статус изменен на ", post.status)
             
-            if self.dataPosts.transitions.status == 100 {
+            if self.dataPosts.transitions?.status == 100 {
                 let thanksView = ThanksView(statusResponse: post)
                 
                 thanksView.modalPresentationStyle = .fullScreen
@@ -134,20 +138,35 @@ class DetailOrderTableView: MVPController {
 
     @objc func stateButtonAction(sender: UIButton){
         print("статус: ",dataPosts.status)
-        switch dataPosts.status{
+        switch dataPosts.status ?? 0 {
             
         case 0...13:
             print("Default state")
 
-            showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
+            showAlert(name: dataPosts.transitions?.alertTitle,
+                      message: dataPosts.transitions?.alertDescription,
+                      cancelButtonSelector: #selector(cancelAlertButtonAction),
+                      sendButtonSelector: #selector(sendAlertButtonAction),
+                      cancelButtonTitle: dataPosts.transitions?.alertNegative,
+                      sendButtonTitle: dataPosts.transitions?.alertPositive)
             
         case 15...50:
 
-            showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
+            showAlert(name: dataPosts.transitions?.alertTitle,
+                      message: dataPosts.transitions?.alertDescription,
+                      cancelButtonSelector: #selector(cancelAlertButtonAction),
+                      sendButtonSelector: #selector(sendAlertButtonAction),
+                      cancelButtonTitle: dataPosts.transitions?.alertNegative,
+                      sendButtonTitle: dataPosts.transitions?.alertPositive)
 
         case 75:
 
-            showAlert(name: dataPosts.transitions.alertTitle, message: dataPosts.transitions.alertDescription, cancelButtonSelector: #selector(cancelAlertButtonAction), sendButtonSelector: #selector(sendAlertButtonAction), cancelButtonTitle: dataPosts.transitions.alertNegative, sendButtonTitle: dataPosts.transitions.alertPositive)
+            showAlert(name: dataPosts.transitions?.alertTitle,
+                      message: dataPosts.transitions?.alertDescription,
+                      cancelButtonSelector: #selector(cancelAlertButtonAction),
+                      sendButtonSelector: #selector(sendAlertButtonAction),
+                      cancelButtonTitle: dataPosts.transitions?.alertNegative,
+                      sendButtonTitle: dataPosts.transitions?.alertPositive)
         
         case 100:
             break
@@ -182,16 +201,26 @@ class DetailOrderTableView: MVPController {
         tableView.isHidden = true
         stateSubview.stateButton.addTarget(self, action: #selector(stateButtonAction(sender:)), for: .touchUpInside)
         
-        shopSubview.configure(source: dataPosts.companyName, address: dataPosts.addressFrom.address, phoneNumber: dataPosts.addressFrom.phone, latitude: dataPosts.addressFrom.lat, longitude: dataPosts.addressFrom.long)
-        clientSubview.configure(clientName: dataPosts.customerName, clientPhone: dataPosts.phone, address:
-                                                                    "\(dataPosts.addressTo.street) " +
-                                                                    "\(dataPosts.addressTo.house) " +
-                                                                    "\(dataPosts.addressTo.flat ?? "") " +
-                                                                    "\(dataPosts.addressTo.addressMore ?? "") ",
-                                                                    comment: dataPosts.comments,
-                                                                    latitude: dataPosts.addressTo.lat,
-                                                                    longitude: dataPosts.addressTo.long)
-        stateSubview.configure(buttonTitle: dataPosts.transitions.title ?? "", status: dataPosts.status, timerValue: dataPosts.dateTimeStatusFinish)
+        shopSubview.configure(source: dataPosts.companyName,
+                              address: dataPosts.addressFrom?.address,
+                              phoneNumber: dataPosts.addressFrom?.phone,
+                              latitude: dataPosts.addressFrom?.lat,
+                              longitude: dataPosts.addressFrom?.long)
+        
+        clientSubview.configure(clientName: dataPosts.customerName,
+                                clientPhone: dataPosts.phone,
+                                address:
+                                "\(dataPosts.addressTo?.street ?? "") " +
+                                "\(dataPosts.addressTo?.house ?? "") " +
+                                "\(dataPosts.addressTo?.flat ?? "") " +
+                                "\(dataPosts.addressTo?.addressMore ?? "") ",
+                                comment: dataPosts.comments,
+                                latitude: dataPosts.addressTo?.lat,
+                                longitude: dataPosts.addressTo?.long)
+        
+        stateSubview.configure(buttonTitle: dataPosts.transitions?.title ?? "",
+                               status: dataPosts.status ?? 0,
+                               timerValue: dataPosts.dateTimeStatusFinish ?? "")
   
     }
 }
@@ -242,13 +271,13 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func createNavigationBar(){
-        let navigationBarRightItemLabel = CustomLabels(title: String(dataPosts.sumTotal.formattedWithSeparator) + " ₸", textSize: 20, style: .light)
+        let navigationBarRightItemLabel = CustomLabels(title: String(dataPosts.sumTotal?.formattedWithSeparator ?? "") + " ₸", textSize: 20, style: .light)
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.navigationController?.navigationBar.backgroundColor = Colors.white
         self.navigationController?.navigationBar.barTintColor = Colors.white
         self.navigationController?.isNavigationBarHidden = false
         navigationBarRightItemLabel.setLabel()
-        navigationItem.title = "№ " + String(dataPosts.id)
+        navigationItem.title = "№ " + String(dataPosts.id ?? 0)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: navigationBarRightItemLabel)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: makeBackButton())
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Colors.black]
@@ -258,7 +287,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         super.viewWillAppear(animated)
         createNavigationBar()
         
-        switch dataPosts.status{
+        switch dataPosts.status ?? 0{
             
         case 0...15:
             break
@@ -339,14 +368,14 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return dataPosts.orderItems.count
+        return dataPosts.orderItems?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             
         
-        let post = dataPosts.orderItems[indexPath.row]
-        footerTableView.addData(sum: dataPosts.sumTotal, customerAmount: dataPosts.customerAmount ?? "-", paymentType: dataPosts.paymentTypeId)
+        let post = dataPosts.orderItems?[indexPath.row]
+        footerTableView.addData(sum: dataPosts.sumTotal ?? 0, customerAmount: dataPosts.customerAmount ?? "-", paymentType: dataPosts.paymentTypeId ?? 0)
         
         if dataPosts.customerAmount == nil {
             footerTableView.hideCustomerAmount()
@@ -355,7 +384,7 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailOrderCell.identifire, for: indexPath) as! DetailOrderCell
         
-        cell.configure(orderName: post.name + " \(post.description ?? "")", orderCount: String(post.quantity) + " шт", orderPrice: String(post.price.formattedWithSeparator) + " ₸")
+        cell.configure(orderName: post?.name ?? "" + " \(post?.description ?? "")", orderCount: String(post?.quantity ?? 0) + " шт", orderPrice: String(post?.price?.formattedWithSeparator ?? "") + " ₸")
         
         return cell
 

@@ -9,9 +9,9 @@ import Foundation
 
 // Response Body
 struct ScheduleElement: Codable {
-    let id: Int
-    let dateStart, dateEnd: String
-    let isConfirmed: Bool
+    let id: Int?
+    let dateStart, dateEnd: String?
+    let isConfirmed: Bool?
 }
 
 typealias Schedule = [ScheduleElement]

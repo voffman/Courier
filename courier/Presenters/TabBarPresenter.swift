@@ -25,13 +25,13 @@ class TabBarPresenter: TabBarPresenterProtocol{
     
     func tabBarIsLoaded() {
         api.courierSlotActivity() { post in
-            if post.status {
+            if post.status ?? false {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
-                self.view?.checkActivity(isActive: post.status)
+                self.view?.checkActivity(isActive: post.status ?? false)
             }
             else {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "stopSession"), object: nil)
-                self.view?.checkActivity(isActive: post.status)
+                self.view?.checkActivity(isActive: post.status ?? false)
             }
             
         } errorResponse: { error in

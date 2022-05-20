@@ -453,7 +453,7 @@ extension ProfileView: ProfileViewProtocol{
     }
     
     func updateSessionStatus(post: CourierSlotResponse) {
-        if post.status {
+        if post.status ?? false {
             self.activityStatusLabel.text = "Активен"
             self.activityStatusLabel.textColor = Colors.lightGreen
             self.activityStatusSwitch.isOn = true

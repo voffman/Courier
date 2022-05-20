@@ -9,15 +9,15 @@ import Foundation
 
 // MARK: - ScheduleByIDElement
 struct ScheduleByIDElement: Codable {
-    let dateItem: String
+    let dateItem: String?
     let timeStart, timeEnd: String?
     let point: PointSchedule?
 }
 
 // MARK: - Point
 struct PointSchedule: Codable {
-    let id: Int
-    let name, description, lat, long: String
+    let id: Int?
+    let name, description, lat, long: String?
 }
 
 typealias ScheduleByID = [ScheduleByIDElement]

@@ -27,16 +27,20 @@ class HistoryTableView: MVPController {
         switch self.pickerController.selectedRow{
             
         case 0:
-            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: 0), dateFinish: self.dateManager.getStringDateFor(days: 0))
+            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: 0),
+                                                dateFinish: self.dateManager.getStringDateFor(days: 0))
             
         case 1:
-            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -7), dateFinish: self.dateManager.getStringDateFor(days: 0))
+            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -7),
+                                                dateFinish: self.dateManager.getStringDateFor(days: 0))
             
         case 2:
-            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -30), dateFinish: self.dateManager.getStringDateFor(days: 0))
+            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -30),
+                                                dateFinish: self.dateManager.getStringDateFor(days: 0))
             
         case 3:
-            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -90), dateFinish: self.dateManager.getStringDateFor(days: 0))
+            self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -90),
+                                                dateFinish: self.dateManager.getStringDateFor(days: 0))
 
         default:
             break
@@ -101,16 +105,20 @@ class HistoryTableView: MVPController {
             switch self.pickerController.selectedRow{
                 
             case 0:
-                self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: 0), dateFinish: self.dateManager.getStringDateFor(days: 0))
+                self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: 0),
+                                                    dateFinish: self.dateManager.getStringDateFor(days: 0))
                 
             case 1:
-                self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -7), dateFinish: self.dateManager.getStringDateFor(days: 0))
+                self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -7),
+                                                    dateFinish: self.dateManager.getStringDateFor(days: 0))
                 
             case 2:
-                self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -30), dateFinish: self.dateManager.getStringDateFor(days: 0))
+                self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -30),
+                                                    dateFinish: self.dateManager.getStringDateFor(days: 0))
                 
             case 3:
-                self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -90), dateFinish: self.dateManager.getStringDateFor(days: 0))
+                self.presenter?.viewNeedsUpdateData(dateStart: self.dateManager.getStringDateFor(days: -90),
+                                                    dateFinish: self.dateManager.getStringDateFor(days: 0))
 
             default:
                 break
@@ -225,7 +233,11 @@ extension HistoryTableView: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: HistoryCell.identifire, for: indexPath) as! HistoryCell
         cell.backgroundColor = Colors.backgroundColor
-        cell.configure(orderId: post.id, orderDate: post.dateTimeFinish, orderPrice: post.sumTotal, orderStatus: post.statusName, orderSource: post.companyName)
+        cell.configure(orderId: post.id ?? 0,
+                       orderDate: post.dateTimeFinish,
+                       orderPrice: post.sumTotal ?? 0,
+                       orderStatus: post.statusName,
+                       orderSource: post.companyName)
         
         return cell
     }

@@ -65,7 +65,7 @@ class OrderListPresenter: OrderListTableViewPresenterProtocol {
     
     func viewIsLoaded() {
         api.courierSlotActivity() { post in
-            if post.status {
+            if post.status ?? false {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
             }
             else {

@@ -242,7 +242,14 @@ class OrderListTableView: MVPController {
             
             let visibleCell = self.tableView.cellForRow(at: indexPath) as? OrderListCell
             
-            visibleCell?.configure(orderId: item.id, orderPrice: item.sumTotal, orderSource: item.companyName, orderFromAddress: item.addressFrom.address, orderToAddress: "\(item.addressTo.street) \(item.addressTo.house)", orderAcceptButtonTitle: item.transitions.title, orderStatusCode: item.status, orderTime: item.dateTimeStatusFinish)
+            visibleCell?.configure(orderId: item.id ?? 0,
+                                   orderPrice: item.sumTotal ?? 0,
+                                   orderSource: item.companyName,
+                                   orderFromAddress: item.addressFrom?.address,
+                                   orderToAddress: "\(item.addressTo?.street ?? "") \(item.addressTo?.house ?? "")",
+                                   orderAcceptButtonTitle: item.transitions?.title,
+                                   orderStatusCode: item.status ?? 0,
+                                   orderTime: item.dateTimeStatusFinish ?? "")
             
             visibleCell?.setNeedsLayout()
         }
@@ -370,7 +377,7 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             var dateTimeStatusFinishSeconds: Int = 0
             let post = data[indexPath.row]
             
-          dateTimeStatusFinishSeconds = dateManager.converteDateToSeconds(dateString: post.dateTimeStatusFinish, stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
+            dateTimeStatusFinishSeconds = dateManager.converteDateToSeconds(dateString: post.dateTimeStatusFinish ?? "", stringDateFormat: "yyyy-MM-dd HH:mm:ssZ")
             
             var numberOfSecondsPassed = Int(dateTimeStatusFinishSeconds)
             let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { capturedTimer in
@@ -417,7 +424,14 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             
             cell.orderStateButton.tag = indexPath.row
             
-            cell.configure(orderId: post.id, orderPrice: post.sumTotal, orderSource: post.companyName, orderFromAddress: post.addressFrom.address, orderToAddress: "\(post.addressTo.street) \(post.addressTo.house)", orderAcceptButtonTitle: post.transitions.title, orderStatusCode: post.status, orderTime: post.dateTimeStatusFinish)
+            cell.configure(orderId: post.id ?? 0,
+                           orderPrice: post.sumTotal ?? 0,
+                           orderSource: post.companyName,
+                           orderFromAddress: post.addressFrom?.address,
+                           orderToAddress: "\(post.addressTo?.street ?? "") \(post.addressTo?.house ?? "")",
+                           orderAcceptButtonTitle: post.transitions?.title,
+                           orderStatusCode: post.status ?? 0,
+                           orderTime: post.dateTimeStatusFinish ?? "")
             
             cell.contentView.isUserInteractionEnabled = true
             
@@ -431,7 +445,11 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: OrderListCompletedOrdersCell.identifire, for: indexPath) as! OrderListCompletedOrdersCell
             cell.backgroundColor = Colors.backgroundColor
-            cell.configure(orderId: archivePost.id, orderPrice: archivePost.sumTotal, orderSource: archivePost.companyName, orderFromAddress: archivePost.addressFrom.address, orderToAddress: "\(archivePost.addressTo.street) \(archivePost.addressTo.house)")
+            cell.configure(orderId: archivePost.id ?? 0,
+                           orderPrice: archivePost.sumTotal ?? 0,
+                           orderSource: archivePost.companyName,
+                           orderFromAddress: archivePost.addressFrom?.address,
+                           orderToAddress: "\(archivePost.addressTo?.street ?? "") \(archivePost.addressTo?.house ?? "")")
             
             return cell
             
@@ -464,8 +482,8 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
         let rowIndex:Int = sender.tag
         
         presenter?.didStatusTap(model: data[rowIndex])
-        self.orderID = data[rowIndex].id
-        self.orderStatus = data[rowIndex].transitions.status
+        self.orderID = data[rowIndex].id ?? 0
+        self.orderStatus = data[rowIndex].transitions?.status ?? 0
         print("статус id: ", self.orderStatus)
         print("заказ id: ", self.orderID)
     }
@@ -533,12 +551,12 @@ extension OrderListTableView: OrderListTableViewProtocol{
     }
     
     func showStatusAlert(courierOrderResponseElement: CourierOrderResponseElement) {
-        showAlert(name: courierOrderResponseElement.transitions.alertTitle,
-                  message: courierOrderResponseElement.transitions.alertDescription,
+        showAlert(name: courierOrderResponseElement.transitions?.alertTitle,
+                  message: courierOrderResponseElement.transitions?.alertDescription,
                   cancelButtonSelector: #selector(cancelAlertButtonAction),
                   sendButtonSelector: #selector(sendAlertButtonAction),
-                  cancelButtonTitle: courierOrderResponseElement.transitions.alertNegative,
-                  sendButtonTitle: courierOrderResponseElement.transitions.alertPositive)
+                  cancelButtonTitle: courierOrderResponseElement.transitions?.alertNegative,
+                  sendButtonTitle: courierOrderResponseElement.transitions?.alertPositive)
     }
     
 }

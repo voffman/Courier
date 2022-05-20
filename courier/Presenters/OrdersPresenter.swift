@@ -38,7 +38,7 @@ class OrdersPresenter: OrdersViewPresenterProtocol {
     
     func viewWillAppear() {
         api.courierSlotActivity() { post in
-            if post.status {
+            if post.status ?? false {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startSession"), object: nil)
                 self.view?.goToOrderListTableView()
             }

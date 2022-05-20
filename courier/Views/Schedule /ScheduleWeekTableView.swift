@@ -33,7 +33,7 @@ class ScheduleWeekTableView: MVPController {
     
     @objc func refresh(_ sender: AnyObject) {
        // Code to refresh table view
-        presenter?.viewWillAppear(id: String(dataPosts.id))
+        presenter?.viewWillAppear(id: String(dataPosts.id ?? 0))
         refreshControl.endRefreshing()
     }
     
@@ -60,7 +60,7 @@ class ScheduleWeekTableView: MVPController {
     }
     
     @objc func submitScheduleAction(){
-        presenter?.submitScheduleButtonTapped(id: String(dataPosts.id))
+        presenter?.submitScheduleButtonTapped(id: String(dataPosts.id ?? 0))
     }
 }
 
@@ -109,8 +109,8 @@ extension ScheduleWeekTableView: UITableViewDelegate, UITableViewDataSource{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        createNavigationBar(title: dateManager.convert(dateString: dataPosts.dateStart, convertToDateFormat: "dd MMM") + " - " + dateManager.convert(dateString: dataPosts.dateEnd, convertToDateFormat: "dd MMM"))
-        presenter?.viewWillAppear(id: String(dataPosts.id))
+        createNavigationBar(title: dateManager.convert(dateString: dataPosts.dateStart ?? "", convertToDateFormat: "dd MMM") + " - " + dateManager.convert(dateString: dataPosts.dateEnd ?? "", convertToDateFormat: "dd MMM"))
+        presenter?.viewWillAppear(id: String(dataPosts.id ?? 0))
     }
     
     override func viewDidLayoutSubviews() {
@@ -169,7 +169,7 @@ extension ScheduleWeekTableView: ScheduleWeekTableViewProtocol{
             print("Кол-во постов по айди \(posts.count)")
             self.data = posts
             self.tableView.reloadData()
-            self.scheduleFooterView.createFooterView(isHidden: self.dataPosts.isConfirmed)
+            self.scheduleFooterView.createFooterView(isHidden: self.dataPosts.isConfirmed ?? false)
             self.tableView.tableFooterView = self.scheduleFooterView // грузить после того как загрузятся ячейки или данные
         }
     }

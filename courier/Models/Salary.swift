@@ -8,9 +8,9 @@
 import Foundation
 
 struct Salary: Codable {
-    let countSuccessOrders, workHours, hoursAmount, orderAmount: Double
-    let penaltyAmount, totalAmount, bonusAmount, balance: Double
-    let cashDeliveryAmount, holdingAmount, distance : Double
+    let countSuccessOrders, workHours, hoursAmount, orderAmount: Double?
+    let penaltyAmount, totalAmount, bonusAmount, balance: Double?
+    let cashDeliveryAmount, holdingAmount, distance : Double?
 }
 
 // typealias Salary = [String: Double]
