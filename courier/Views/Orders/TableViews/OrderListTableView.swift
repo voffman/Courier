@@ -402,7 +402,15 @@ extension OrderListTableView: UITableViewDelegate, UITableViewDataSource {
                 else {
                     
                     let min = String(minutes)
-                    let sec = String(seconds)
+                    var sec = String(seconds)
+                    
+                    if sec.count < 2 {
+                        sec = "0" + sec
+                    }
+                    
+                    if sec.count > 2 {
+                        sec.remove(at: sec.startIndex)
+                    }
                     
                     visibleCell?.orderTimerLabel.text = String("\(min):\(sec)")
                 }

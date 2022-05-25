@@ -117,6 +117,9 @@ class OrderListCell: UITableViewCell {
         let minutes = Int(numberOfSecondsPassed) / 60 // % 60
         let seconds = Int(numberOfSecondsPassed) % 60
         
+        let min = String(minutes)
+        var sec = String(seconds)
+        
         if numberOfSecondsPassed < 60 {
             changeTimerToRed()
         } else {
@@ -126,7 +129,15 @@ class OrderListCell: UITableViewCell {
             self.orderTimerLabel.text = "00:00"
         }
         else {
-            self.orderTimerLabel.text = String(format:"%02i:%03i", minutes, seconds)
+            if sec.count < 2 {
+                sec = "0" + sec
+            }
+            
+            if sec.count > 2 {
+                sec.remove(at: sec.startIndex)
+            }
+            
+            self.orderTimerLabel.text = String("\(min):\(sec)")
         }
     }
     
