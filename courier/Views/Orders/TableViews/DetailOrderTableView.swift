@@ -118,8 +118,6 @@ class DetailOrderTableView: MVPController {
     @objc func sendAlertButtonAction(){
         print("статус меняется...")
         presenter?.sendAlertButtonTapped(orderId: String(dataPosts.id ?? 0), status: String(dataPosts.transitions?.status ?? 0), completion: { post in
-            print("статус изменен ", post.statusName)
-            print("статус изменен на ", post.status)
             
             if self.dataPosts.transitions?.status == 100 {
                 let thanksView = ThanksView(statusResponse: post)
@@ -137,7 +135,7 @@ class DetailOrderTableView: MVPController {
     }
 
     @objc func stateButtonAction(sender: UIButton){
-        print("статус: ",dataPosts.status)
+        
         switch dataPosts.status ?? 0 {
             
         case 0...13:
@@ -294,22 +292,17 @@ extension DetailOrderTableView: UITableViewDelegate, UITableViewDataSource {
 
             
         case 20:
-            // заведение - надпись ЗАБЕРИТЕ ЗАКАЗ, только кнопка ПОЗВОНИТЬ
-            // клиент - ничего не меняется
+
             shopSubview.setupNewStateOne()
             break
 
         case 50:
-            // заведение - НЕТ НАДПИСИ заберите заказ/ только кнопка ПОЗВОНИТЬ
-            // клиент - надпись ДОСТАВЬТЕ ЗАКАЗ КУРЬЕРУ, две кнопки
             
             shopSubview.setupNewStateTwo()
             clientSubview.setupNewStateOne()
             break
             
         case 75:
-            // заведение - ничего не меняется с момента состояния 50
-            // клиент - одна кнопка ПОЗВОНИТЬ (на 0-20 маршрут), надпись такая как на состоянии 50
             
             shopSubview.setupNewStateTwo()
             clientSubview.setupNewStateTwo()

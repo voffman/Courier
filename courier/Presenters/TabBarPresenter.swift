@@ -7,7 +7,6 @@
 
 import Foundation
 
-// То, что выполняю в здесь
 protocol TabBarPresenterProtocol: AnyObject {
     init(view: TabBarProtocol)
     func tabBarIsLoaded()

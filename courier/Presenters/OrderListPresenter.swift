@@ -7,7 +7,7 @@
 
 import Foundation
 
-// То, что выполняю в здесь
+
 protocol OrderListTableViewPresenterProtocol: AnyObject {
     init(view: OrderListTableViewProtocol)
     func actionOrdersTabIsOpen()
@@ -20,7 +20,7 @@ protocol OrderListTableViewPresenterProtocol: AnyObject {
 
 class OrderListPresenter: OrderListTableViewPresenterProtocol {
     weak var view: OrderListTableViewProtocol?
-    // Тут можно объявить модель
+
     required init(view: OrderListTableViewProtocol) {
         self.view = view
     }

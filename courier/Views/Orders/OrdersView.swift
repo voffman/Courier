@@ -128,10 +128,6 @@ class OrdersView: MVPController {
         navigationItem.rightBarButtonItem?.tintColor = Colors.red
     }
     
-//    @objc func startSession() {
-//        self.navigationController?.pushViewController(OrderListTableView(), animated: true)
-//    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter?.viewWillAppear()

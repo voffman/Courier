@@ -7,7 +7,6 @@
 
 import Foundation
 
-// То, что выполняю в здесь
 protocol ScheduleTableViewPresenterProtocol: AnyObject {
     init(view: ScheduleTableViewProtocol)
     func viewWillAppear(page: String)

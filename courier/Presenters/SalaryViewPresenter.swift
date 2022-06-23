@@ -7,7 +7,6 @@
 
 import Foundation
 
-// То, что выполняю в здесь
 protocol SalaryViewPresenterProtocol: AnyObject {
     init(view: SalaryViewProtocol)
     func viewNeedsUpdateDate(dateStart: String, dateEnd: String)
@@ -17,7 +16,7 @@ protocol SalaryViewPresenterProtocol: AnyObject {
 class SalaryPresenter: SalaryViewPresenterProtocol {
     
     weak var view: SalaryViewProtocol?
-    // Тут можно объявить модель
+    
     required init(view: SalaryViewProtocol) {
         self.view = view
     }

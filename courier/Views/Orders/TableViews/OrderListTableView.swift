@@ -45,11 +45,8 @@ class OrderListTableView: MVPController {
     
     @objc func sendAlertButtonAction(){
 
-        print("статус меняется...")
 
         presenter?.orderStateAlertSendButtonTapped(orderId: String(orderID), status: String(orderStatus), completion: { post in
-            // Из-за ошибки ответа может не выполняться здесь код
-            print("статус изменен на: ", post.statusName)
             
             if self.orderStatus == 100 {
                 let thanksView = ThanksView(statusResponse: post)
@@ -72,7 +69,6 @@ class OrderListTableView: MVPController {
             presenter?.archiveOrdersTabIsOpen()
 
         default:
-            print("Ошибка pull to refresh")
             refreshControl.endRefreshing()
         }
         refreshControl.endRefreshing()
@@ -258,7 +254,6 @@ class OrderListTableView: MVPController {
             print(error)
         }
         
-        print("updateTableViewIfPush")
     }
     
 
@@ -307,7 +302,6 @@ class OrderListTableView: MVPController {
     override func viewWillAppear(_ animated: Bool) {
         presenter?.actionOrdersTabIsOpen()
         presenter?.viewIsLoaded()
-        print("дата перезагружена")
     }
     
 }

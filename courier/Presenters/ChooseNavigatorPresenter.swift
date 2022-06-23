@@ -8,7 +8,6 @@
 import Foundation
 
 
-// То, что выполняю в здесь
 protocol ChooseNavigatorPresenterProtocol: AnyObject {
     init(view: ChooseNavigatorViewProtocol)
     func gisButtonTapped()
@@ -18,7 +17,7 @@ protocol ChooseNavigatorPresenterProtocol: AnyObject {
 class ChooseNavigatorPresenter: ChooseNavigatorPresenterProtocol {
 
     weak var view: ChooseNavigatorViewProtocol?
-    // Тут можно объявить модель
+
     required init(view: ChooseNavigatorViewProtocol) {
         self.view = view
     }

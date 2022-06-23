@@ -8,11 +8,9 @@
 import Foundation
 import Alamofire
 
-// url зашиты здесь
-// базовый метод http://courier.emenu.softlab.kz/v1/ + константа
-// цель отдть данные
 
-private let baseURL = "http://courier.emenu.softlab.kz/v1/"
+
+private let baseURL = "Базовый URL"
 
 // Auth
 private let smsURL = baseURL + "auth/auth"

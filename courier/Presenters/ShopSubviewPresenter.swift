@@ -7,7 +7,6 @@
 
 import Foundation
 
-// То, что выполняю в здесь
 protocol ShopSubviewPresenterProtocol: AnyObject {
     init(view: ShopSubviewProtocol)
     func routeButtonTapped(latitude: String, longitude: String)

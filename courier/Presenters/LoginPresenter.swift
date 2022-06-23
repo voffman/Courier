@@ -8,7 +8,6 @@
 import Foundation
 
 
-// То, что выполняю в здесь
 protocol LoginViewPresenterProtocol: AnyObject {
     init(view: LoginViewProtocol)
     func buttonTapped(phoneNumber: String?)
@@ -17,7 +16,7 @@ protocol LoginViewPresenterProtocol: AnyObject {
 class LoginPresenter: LoginViewPresenterProtocol {
 
     weak var view: LoginViewProtocol?
-    // Тут можно объявить модель
+
     required init(view: LoginViewProtocol) {
         self.view = view
     }

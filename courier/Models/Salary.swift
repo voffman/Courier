@@ -12,5 +12,3 @@ struct Salary: Codable {
     let penaltyAmount, totalAmount, bonusAmount, balance: Double?
     let cashDeliveryAmount, holdingAmount, distance : Double?
 }
-
-// typealias Salary = [String: Double]

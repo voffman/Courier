@@ -7,7 +7,6 @@
 
 import Foundation
 
-// То, что выполняю в здесь
 protocol ConfirmLoginViewPresenterProtocol: AnyObject {
     init(view: ConfirmLoginViewProtocol)
     func confirmButtonTapped(phoneNumber: String, smsCode: String)
@@ -17,7 +16,7 @@ protocol ConfirmLoginViewPresenterProtocol: AnyObject {
 
 class ConfirmLoginPresenter: ConfirmLoginViewPresenterProtocol {
     weak var view: ConfirmLoginViewProtocol?
-    // Тут можно объявить модель
+
     required init(view: ConfirmLoginViewProtocol) {
         self.view = view
     }

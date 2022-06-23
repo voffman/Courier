@@ -8,7 +8,6 @@
 import Foundation
 
 
-// То, что выполняю в здесь
 protocol ClientSubviewPresenterProtocol: AnyObject {
     init(view: ClientSubviewProtocol)
     func routeButtonTapped(latitude: String, longitude: String)
@@ -18,7 +17,7 @@ protocol ClientSubviewPresenterProtocol: AnyObject {
 
 class ClientSubviewPresenter: ClientSubviewPresenterProtocol {
     weak var view: ClientSubviewProtocol?
-    // Тут можно объявить модель
+    
     required init(view: ClientSubviewProtocol) {
         self.view = view
     }

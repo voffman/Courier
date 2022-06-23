@@ -164,7 +164,6 @@ class ChooseNavigatorView: MVPController {
     }
 }
 
-// То, что выполняю во вью
 protocol ChooseNavigatorViewProtocol: AnyObject, MVPControllerProtocol {
 
 }

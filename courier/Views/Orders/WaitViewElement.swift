@@ -56,7 +56,6 @@ class WaitViewElement: UIView {
     }
     
     
-    
     func setupView(){
 
         setupNonActiveOrdersCardView()

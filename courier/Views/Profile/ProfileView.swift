@@ -36,7 +36,6 @@ class ProfileView: MVPController {
     let fourthDividerView = CustomViews(style: .divider)
     let exitImage = UIImageView(image: UIImage(named: "ExitArrow")?.withRenderingMode(.alwaysTemplate))
     let exitTitleLabel = CustomLabels(title: "Выйти из аккаунта", textSize: 16, style: .regular)
-//    let exitArrowButtonImage = UIImageView(image: UIImage(named: "Arrow"))
     let exitButton = CustomButtons(title: "", style: .transparent)
     
     private var presenter: ProfileViewPresenterProtocol?
@@ -243,13 +242,6 @@ class ProfileView: MVPController {
 
     }
     
-//    func setupNavigationArrowButtonImage(){
-//        view.addSubview(navigationSettingArrowButtonImage)
-//
-//        navigationSettingArrowButtonImage.translatesAutoresizingMaskIntoConstraints = false
-//        navigationSettingArrowButtonImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 285).isActive = true
-//        navigationSettingArrowButtonImage.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
-//    }
     
     func setupNavigationSettingButton(){
         view.addSubview(navigationSettingButton)
@@ -292,13 +284,6 @@ class ProfileView: MVPController {
         exitTitleLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: 56).isActive = true
     }
     
-//    func setupExitArrowButtonImage(){
-//        view.addSubview(exitArrowButtonImage)
-//
-//        exitArrowButtonImage.translatesAutoresizingMaskIntoConstraints = false
-//        exitArrowButtonImage.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 348).isActive = true
-//        exitArrowButtonImage.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -18).isActive = true
-//    }
     
     func setupExitButton(){
         view.addSubview(exitButton)
@@ -347,12 +332,10 @@ class ProfileView: MVPController {
         setupNavigationTitleLabel()
         setupNavigationImage()
         setupNavigationLabel()
-      //  setupNavigationArrowButtonImage()
         setupNavigationSettingButton()
         setupFourthLineImage()
         setupExitImage()
         setupExitTitleLabel()
-      //  setupExitArrowButtonImage() // вместо этого используется exitButton.imageEdgeInsets
         setupExitButton()
 
     }
